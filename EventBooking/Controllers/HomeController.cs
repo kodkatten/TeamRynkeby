@@ -10,7 +10,7 @@ namespace EventBooking.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Message = "Ride On";
+            ViewBag.Message = "Ride on";
 
             return View();
         }

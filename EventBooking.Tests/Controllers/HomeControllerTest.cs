@@ -22,7 +22,7 @@ namespace EventBooking.Tests.Controllers
             ViewResult result = controller.Index() as ViewResult;
 
             // Assert
-            Assert.AreEqual("Ride On", result.ViewBag.Message);
+            Assert.AreEqual("Ride on", result.ViewBag.Message);
         }
 
         [TestMethod]
