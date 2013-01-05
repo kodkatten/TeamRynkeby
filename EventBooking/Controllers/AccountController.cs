@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using DotNetOpenAuth.AspNet;
+using EventBooking.DatabaseContexts;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using EventBooking.Filters;
