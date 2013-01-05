@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Web.Mvc;
+using EventBooking.DatabaseContexts;
 using WebMatrix.WebData;
 using EventBooking.Models;
 
@@ -25,7 +26,7 @@ namespace EventBooking.Filters
         {
             public SimpleMembershipInitializer()
             {
-                Database.SetInitializer<UsersContext>(null);
+                Database.SetInitializer<UsersContext>(new DropCreateDatabaseIfModelChanges<UsersContext>());
 
                 try
                 {
