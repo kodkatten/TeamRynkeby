@@ -5,7 +5,6 @@ using System.Threading;
 using System.Web.Mvc;
 using EventBooking.DatabaseContexts;
 using WebMatrix.WebData;
-using EventBooking.Models;
 
 namespace EventBooking.Filters
 {
@@ -26,7 +25,7 @@ namespace EventBooking.Filters
         {
             public SimpleMembershipInitializer()
             {
-                Database.SetInitializer<UsersContext>(new DropCreateDatabaseIfModelChanges<UsersContext>());
+                Database.SetInitializer<UsersContext>(null);
 
                 try
                 {
