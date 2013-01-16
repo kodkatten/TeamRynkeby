@@ -10,6 +10,6 @@ namespace EventBooking.DatabaseContexts
         {
         }
 
-        public DbSet<UserProfile> UserProfiles { get; set; }
+        public DbSet<User> UserProfiles { get; set; }
     }
 }
