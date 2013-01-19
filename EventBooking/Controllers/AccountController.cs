@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using DotNetOpenAuth.AspNet;
+using EventBooking.Models;
 using EventBooking.DatabaseContexts;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
@@ -176,7 +177,7 @@ namespace EventBooking.Controllers
             else
             {
                 // User does not have a local password so remove any validation errors caused by a missing
-                // OldPassword field
+                // OldPassword Default
                 ModelState state = ModelState["OldPassword"];
                 if (state != null)
                 {
@@ -266,12 +267,12 @@ namespace EventBooking.Controllers
                 // Insert a new user into the database
                 using (UsersContext db = new UsersContext())
                 {
-                    User user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
+                    UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
                     // Check if user already exists
                     if (user == null)
                     {
                         // Insert name into the profile table
-                        db.UserProfiles.Add(new User { UserName = model.UserName });
+                        db.UserProfiles.Add(new UserProfile { UserName = model.UserName });
                         db.SaveChanges();
 
                         OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);

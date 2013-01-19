@@ -1,13 +1,13 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
-namespace EventBooking.Models
+namespace EventBooking.Data
 {
     public class Session
     {
         public DateTime FromTime { get; set; }
         public DateTime ToTime { get; set; }
         public Activity Activity { get; set; }
-        public ICollection<User> Volunteers { get; set; } 
+        public ICollection<User> Volunteers { get; set; }
     }
 }

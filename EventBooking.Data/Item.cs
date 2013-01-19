@@ -1,4 +1,4 @@
-﻿namespace EventBooking.Models
+namespace EventBooking.Data
 {
     public class Item
     {

@@ -1,10 +1,10 @@
-﻿namespace EventBooking.Models
+namespace EventBooking.Data
 {
     public enum ActivityType
     {
+        Training,
         Sponsor,
         Preliminary,
-        Training,
-        Public
+        Public,
     }
 }

@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
-namespace EventBooking.Models
+namespace EventBooking.Data
 {
     public class Team
     {
