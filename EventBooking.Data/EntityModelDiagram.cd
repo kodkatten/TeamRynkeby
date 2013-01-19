@@ -8,6 +8,7 @@
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Team" />
+      <Property Name="Type" />
     </ShowAsAssociation>
   </Class>
   <Class Name="EventBooking.Data.Session">
@@ -56,6 +57,13 @@
     <TypeIdentifier>
       <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAQgA=</HashCode>
       <FileName>ActivityType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EventBooking.Data.UserType">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UserType.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Font Name="Segoe UI" Size="9.05" />

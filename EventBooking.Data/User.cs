@@ -14,5 +14,6 @@ namespace EventBooking.Data
         public DateTime Created { get; set; }
         public Team Team { get; set; }
         public ICollection<Session> Sessions { get; set; }
+        public UserType Type { get; set; }
     }
 }
