@@ -172,7 +172,6 @@
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\RegisterExternalLoginModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
-    <Compile Include="DatabaseContexts\UsersContext.cs" />
     <Compile Include="Models\UserProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -290,6 +289,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="DatabaseContexts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -2,16 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using DotNetOpenAuth.AspNet;
+using EventBooking.Data;
 using EventBooking.Models;
-using EventBooking.DatabaseContexts;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using EventBooking.Filters;
-using EventBooking.Models;
 
 namespace EventBooking.Controllers
 {
@@ -265,14 +263,14 @@ namespace EventBooking.Controllers
             if (ModelState.IsValid)
             {
                 // Insert a new user into the database
-                using (UsersContext db = new UsersContext())
+                using (EventBookingContext db = new EventBookingContext())
                 {
-                    UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
+                    User user = db.Users.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
                     // Check if user already exists
                     if (user == null)
                     {
                         // Insert name into the profile table
-                        db.UserProfiles.Add(new UserProfile { UserName = model.UserName });
+                        db.Users.Add(new User { UserName = model.UserName });
                         db.SaveChanges();
 
                         OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);

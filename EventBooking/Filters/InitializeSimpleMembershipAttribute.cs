@@ -3,7 +3,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Web.Mvc;
-using EventBooking.DatabaseContexts;
+using EventBooking.Data;
 using WebMatrix.WebData;
 
 namespace EventBooking.Filters
@@ -25,11 +25,11 @@ namespace EventBooking.Filters
         {
             public SimpleMembershipInitializer()
             {
-                Database.SetInitializer<UsersContext>(null);
+                Database.SetInitializer<EventBookingContext>(null);
 
                 try
                 {
-                    using (var context = new UsersContext())
+                    using (var context = new EventBookingContext())
                     {
                         if (!context.Database.Exists())
                         {
@@ -38,7 +38,7 @@ namespace EventBooking.Filters
                         }
                     }
 
-                    WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "UserName", autoCreateTables: true);
+                    WebSecurity.InitializeDatabaseConnection("DefaultConnection", "User", "UserId", "UserName", autoCreateTables: true);
                 }
                 catch (Exception ex)
                 {
