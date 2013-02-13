@@ -1,32 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using EventBooking.Filters;
+using WebMatrix.WebData;
 
 namespace EventBooking.Controllers
 {
+    [InitializeSimpleMembership]
     public class HomeController : Controller
     {
+        //
+        // GET: /Home/
+
         public ActionResult Index()
         {
-            ViewBag.Message = "Ride on";
-
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult SignUp()
         {
-            ViewBag.Message = "Your app description page.";
-
             return View();
         }
 
-        public ActionResult Contact()
+        [HttpPost]
+        public ActionResult SignUp(SignUpModel model)
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            WebSecurity.CreateUserAndAccount(model.Email, model.Password);
+            WebSecurity.Login(model.Email, model.Password);
+            return RedirectToAction("Index", "Home");
         }
+    }
+
+    public class SignUpModel
+    {
+        [Required]
+        public string Email { get; set; }
+
+        [Required]
+        public string Password { get; set; }
+
+        [Required]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Lösenorden stämmer inte med varandra.")]
+        public string ConfirmPassword { get; set; }
     }
 }

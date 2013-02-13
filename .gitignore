@@ -42,6 +42,7 @@
 
 # ReSharper is a .NET coding add-in
 _ReSharper*
+*.DotSettings
 
 # Click-Once directory
 publish

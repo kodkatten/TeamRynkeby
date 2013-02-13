@@ -1,0 +1,33 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "Registrera konto";
+}
+
+<h2>Registrera dig</h2>
+
+<form class="form-horizontal" method="POST">
+    <div class="control-group">
+        <label class="control-label" for="Email">Epostadress</label>
+        <div class="controls">
+            <input type="text" id="Email" name="Email" placeholder="Epostadress">
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="Password">Lösenord</label>
+        <div class="controls">
+            <input type="password" id="Password" name="Password" placeholder="Lösenord">
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="ConfirmPassword">Bekräfta lösenord</label>
+        <div class="controls">
+            <input type="password" id="ConfirmPassword" name="ConfirmPassword" placeholder="Bekräfta lösenord">
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <button type="submit" class="btn">Skapa konto</button>
+        </div>
+    </div>
+</form>

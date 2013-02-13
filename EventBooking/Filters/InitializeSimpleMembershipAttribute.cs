@@ -25,7 +25,7 @@ namespace EventBooking.Filters
         {
             public SimpleMembershipInitializer()
             {
-                Database.SetInitializer<EventBookingContext>(null);
+                Database.SetInitializer(new DropCreateDatabaseAlways<EventBookingContext>());
 
                 try
                 {
@@ -38,7 +38,7 @@ namespace EventBooking.Filters
                         }
                     }
 
-                    WebSecurity.InitializeDatabaseConnection("DefaultConnection", "User", "UserId", "UserName", autoCreateTables: true);
+                    WebSecurity.InitializeDatabaseConnection("DefaultConnection", "Users", "Id", "Email", autoCreateTables: true);
                 }
                 catch (Exception ex)
                 {
