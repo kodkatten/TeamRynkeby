@@ -6,7 +6,7 @@
         {
             this.Name = activityData.Name;
             this.OrganizingTeam = activityData.OrganizingTeam.Name;
-            this.DateFormatted = activityData.Date.ToShortDateString();
+            this.DateFormatted = activityData.Date.ToSwedishShortDateString();
             this.Description = activityData.Description;
         }
 
