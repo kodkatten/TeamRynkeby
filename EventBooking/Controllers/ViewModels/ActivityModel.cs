@@ -2,9 +2,20 @@
 {
     public class ActivityModel
     {
-        public string Description { get; internal set; }
-        public string DateFormatted { get; internal set; }
-        public string Name { get; internal set; }
-		public string OrganizingTeam { get; internal set; }
+        public ActivityModel(Data.Activity activityData)
+        {
+            this.Name = activityData.Name;
+            this.OrganizingTeam = activityData.OrganizingTeam.Name;
+            this.DateFormatted = activityData.Date.ToShortDateString();
+            this.Description = activityData.Description;
+        }
+
+        public string Description { get; private set; }
+
+        public string DateFormatted { get; private set; }
+
+        public string Name { get; private set; }
+
+		public string OrganizingTeam { get; private set; }
     }
 }
