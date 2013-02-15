@@ -29,11 +29,33 @@ namespace EventBooking.Filters
                 roles.AddUsersToRoles(new[] { "admin_test" }, new[] { UserType.Administrator.ToString() });
 
             SeedActivitieshacketyHackBlaBla(context);
+            CreateAwesomeUsers(membership, context);
+        }
+
+        private void CreateAwesomeUsers(SimpleMembershipProvider membership, EventBookingContext context)
+        {
+            EnsureUserExists(membership, context, "a@b.c");
+            EnsureUserExists(membership,context, "email@email.com", new User { Cellphone = "3457", Name = "dodo", Team = context.Teams.First() });
+        }
+
+
+        private static void EnsureUserExists(SimpleMembershipProvider membership, EventBookingContext context,
+                                             string email, User specification = null)
+        {
+            if (membership.GetUser(email, false) != null) return;
+            membership.CreateUserAndAccount(email, email,
+                                            new Dictionary<string, object> {{"Created", DateTime.Now}});
+            var userId = membership.GetUserId(email);
+            var user = specification ?? new User {Name = "One of the three very beared wise men"};
+            user.Id = userId;
+            user.Created = DateTime.UtcNow;
+            context.Users.Add(user);
+            context.SaveChanges();
         }
 
         private static void SeedActivitieshacketyHackBlaBla(EventBookingContext context)
         {
-            var team = new Team() {Name = "I R DA AWESOME TEAM"};
+            var team = new Team {Name = "I R DA AWESOME TEAM"};
 
             context.Teams.Add(team);
 
@@ -52,6 +74,8 @@ namespace EventBooking.Filters
                 Date = new DateTime(2013, 02, 27),
                 OrganizingTeam = team
             });
+
+            context.SaveChanges();
         }
     }
 }
