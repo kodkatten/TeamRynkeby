@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using EventBooking.Data;
 using WebMatrix.WebData;
 
 namespace EventBooking.Controllers
@@ -12,7 +13,13 @@ namespace EventBooking.Controllers
 
         public ActionResult Index()
         {
-            return View();
+			var activities = new[]
+			{
+				new Activity { Description = "Bacon ipsum dolor sit amet boudin turducken fatback pancetta kielbasa pastrami doner cow capicola short ribs drumstick tail. ", Date = DateTime.Now, Name = "Awesome aktivet uno" },
+				new Activity { Description = "Ham andouille spare ribs tongue pork loin tenderloin brisket. Sausage spare ribs pork loin cow flank ground round jerky beef ribs swine rump.", Date = DateTime.Now, Name = "More awesome stuff." },
+			};
+
+            return View(activities);
         }
 
         public ActionResult SignUp()
