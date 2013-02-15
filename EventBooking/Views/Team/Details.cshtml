@@ -1,4 +1,4 @@
-﻿@model EventBooking.Data.Team
+﻿@model EventBooking.Controllers.ViewModels.TeamActivitiesModel
 
 @{
     ViewBag.Title = "Team " + Model.Name;
@@ -7,14 +7,14 @@
 <h2>Team @Model.Name</h2>
 
 <div>
-    @foreach (var eventGroup in Model.Activities.GroupBy(activity => activity.Date.Month))
+    @foreach (var eventGroup in Model.Activities)
     {
         <h3>@eventGroup.Key</h3>
         <ul>
             @foreach (var e in eventGroup)
             {
                 <li>
-                    <span>@e.Date</span>
+                    <span class="month">@e.Date</span>
                     Html.ActionLink(e.Name, "Details", "Activity");
                 </li>
             }

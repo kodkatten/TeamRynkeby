@@ -14,6 +14,7 @@ namespace EventBooking.Filters
     {
         protected void Seed(EventBookingContext context)
         {
+            Database.SetInitializer(new CreateDatabaseIfNotExists<EventBookingContext>());
             WebSecurity.InitializeDatabaseConnection("DefaultConnection", "Users", "Id", "Email", autoCreateTables: true);
 
             var seeder = new FluentMembership((SimpleMembershipProvider) Membership.Provider, (SimpleRoleProvider) Roles.Provider);

@@ -133,6 +133,7 @@
     <Compile Include="Controllers\ViewModels\LandingPageModel.cs" />
     <Compile Include="Controllers\ViewModels\SignUpModel.cs" />
     <Compile Include="Controllers\TeamController.cs" />
+    <Compile Include="Controllers\ViewModels\TeamEventsModel.cs" />
     <Compile Include="Extensions\DateExtensions.cs" />
     <Compile Include="Extensions\IntegerExtensions.cs" />
     <Compile Include="Filters\EventBookingSeedInitializer.cs" />
