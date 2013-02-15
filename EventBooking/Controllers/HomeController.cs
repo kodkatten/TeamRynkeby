@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
-using EventBooking.Data;
+using System.Web.Mvc;
+using EventBooking.Controllers.ViewModels;
 using WebMatrix.WebData;
+using Activity = EventBooking.Controllers.ViewModels.Activity;
 
 namespace EventBooking.Controllers
 {
@@ -14,7 +15,26 @@ namespace EventBooking.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            var model = new LandingPage()
+                {
+                    Activities = new[]
+                        {
+                            new Activity
+                                {
+                                    Description = "Bacon ipsum dolor sit amet boudin turducken fatback pancetta kielbasa pastrami doner cow capicola short ribs drumstick tail. ",
+                                    DateFormatted = DateTime.Now.ToShortDateString(),
+                                    Name = "Awesome aktivet uno"
+                                },
+                            new Activity
+                                {
+                                    Description = "Ham andouille spare ribs tongue pork loin tenderloin brisket. Sausage spare ribs pork loin cow flank ground round jerky beef ribs swine rump.",
+                                    DateFormatted = DateTime.Now.ToShortDateString(),
+                                    Name = "More awesome stuff."
+                                }
+                        }
+                };
+
+            return View(model);
         }
 
         public ActionResult SignUp()
@@ -40,61 +60,5 @@ namespace EventBooking.Controllers
         {
             return View();
         }
-    }
-
-    public class SignUpModel
-    {
-        [Required(ErrorMessage = "*")]
-        [EmailAddress(ErrorMessage = "Du måste ange en korrekt epostadress")]
-        [Display(Name="Epostadress")]
-        public string Email { get; set; }
-
-        [Required(ErrorMessage = "*")]
-        [MinLength(6, ErrorMessage = "6 tecken eller fler")]
-        [Display(Name="Lösenord")]
-        public string Password { get; set; }
-
-        [Required(ErrorMessage = "*")]
-        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Lösenorden stämmer inte med varandra.")]
-        [Display(Name="Bekräfta lösenord")]
-        public string ConfirmPassword { get; set; }
-
-        [Required]
-        [Display(Name="Kom ihåg mi")]
-        public bool RememberMe { get; set; }
-    }
-
-    public class ProfileModel
-    {
-        [Required]
-        [Display(Name="Namn")]
-        public string Name { get; set; }
-
-        [Display(Name="Gatuadress")]
-        public string StreetAddress { get; set; }
-        
-        [Display(Name="Postnummer")]
-        public string ZipCode { get; set; }
-        
-        [Display(Name = "Ort")]
-        public string City { get; set; }
-        
-        [Required]
-        [Display(Name = "Mobiltelefon")]
-        public string Cellphone { get; set; }
-        
-        [Display(Name = "Telefon")]
-        public string Phone { get; set; }
-        
-        [Required]
-        [Display(Name = "Epostadress")]
-        public string Epost { get; set; }
-        
-        [Display(Name = "Födelsedatum")]
-        public DateTime Birthdate { get; set; }
-        
-        [Required]
-        [Display(Name = "Team")]
-        public Team Team { get; set; }
     }
 }

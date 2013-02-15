@@ -1,7 +1,45 @@
-﻿@model dynamic
+﻿@model EventBooking.Controllers.ViewModels.LandingPage
 
 @{
-    ViewBag.Title = "Home";
+    ViewBag.Title = "Team Rynkeby | Kommande aktiviter";
 }
 
-<h2>Homies</h2>
+<h2>Team Rynkeby</h2>
+
+<div class="row-fluid">
+    <div class="span12">
+        <div class="span6">
+            <p class="">
+                Team Rynkeby är ett nordiskt välgörenhetsinitiativ som syftar till att samla in pengar till Barncancerfonden i Sverige, Sylva i Finland och Børnecancerfonden i Danmark.
+            </p>
+
+            <p>
+                Varje sommar i juli cyklar 1.000 personer från Sverige, Finland och Danmark till Paris för att stödja barn med cancer och deras familjer. Under året deltar cyklister i olika team för att samla in sponsorpengar och arrangera olika events. Under året tränar även de olika teamen tillsammans som förberedelse inför cykelloppet till Paris.
+            </p>
+
+            <p>
+                Deltagarna i Team Rynkeby är motionscyklister, kvinnor och män, i alla åldrar med vitt skilda yrken, utbildningar och bakgrund. Deltagarnas olikheter och deras geografiska spridning i Sverige, Finland og Danmark gör det lättare för Team Rynkeby att sprida budskapet om insamlingen för barn med cancer och deras familjer.
+            </p>
+
+            <p>
+                2012 samlade Team Rynkeby in 18 Mkr i kampen mot barncancer.
+            </p>
+        </div>
+
+        <div class="span6">
+            <h3>Kommande aktiviteter</h3>
+            <ul class="activity-list-short">
+                @foreach (var activity in Model.Activities)
+                {
+                    <li>
+                        <a href="" class="link" rel="tooltip" data-original-title="Use model tooltop here!">
+                            <span class="activity-team">@activity.OrganizingTeam</span>
+                            <span class="activity-date">@activity.DateFormatted</span>
+                            <span class="activity-name">@activity.Name</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
