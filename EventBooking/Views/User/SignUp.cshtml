@@ -1,0 +1,43 @@
+﻿@model EventBooking.Controllers.ViewModels.SignUpModel
+
+@{
+    ViewBag.Title = "Registrera konto";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("SignUp", "User", FormMethod.Post, new{@class="form-horizontal"}))
+{
+    <div class="control-group">
+        @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextBoxFor(m => m.Email, new { placeholder = "Epostadress" })
+            @Html.ValidationMessageFor(m => m.Email)
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+        <div class="controls">
+            @Html.PasswordFor(m => m.Password, new { placeholder = "Lösenord" })
+            @Html.ValidationMessageFor(m => m.Password)
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label" })
+        <div class="controls">
+            @Html.PasswordFor(m => m.ConfirmPassword, new { placeholder = "Bekräfta lösenord" })
+            @Html.ValidationMessageFor(m => m.ConfirmPassword)
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.RememberMe, new { @class = "control-label" })
+        <div class="controls">
+            @Html.CheckBoxFor(m => m.RememberMe, new { @checked = "checked" })
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <button type="submit" class="btn">Skapa konto</button>
+        </div>
+    </div>   
+}

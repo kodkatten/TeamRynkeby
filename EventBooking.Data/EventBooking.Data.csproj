@@ -47,12 +47,16 @@
     <Compile Include="Entities\Activity.cs" />
     <Compile Include="Entities\ActivityType.cs" />
     <Compile Include="Entities\Item.cs" />
+    <Compile Include="Extensions\DateExtensions.cs" />
+    <Compile Include="Extensions\IntegerExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\Session.cs" />
     <Compile Include="Entities\Team.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="EventBookingContext.cs" />
     <Compile Include="Entities\UserType.cs" />
+    <Compile Include="Queries\GetActivitiesByMonthQuery.cs" />
+    <Compile Include="Queries\GetTeamByIdQuery.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="EntityModelDiagram.cd" />

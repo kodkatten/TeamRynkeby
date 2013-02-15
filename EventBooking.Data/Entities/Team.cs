@@ -8,5 +8,6 @@ namespace EventBooking.Data
 
         public string Name { get; set; }
         public ICollection<User> Volunteers { get; set; }
+        public ICollection<Activity> Activities { get; set; } 
     }
 }

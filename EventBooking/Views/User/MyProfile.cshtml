@@ -1,0 +1,67 @@
+﻿@model EventBooking.Controllers.ViewModels.MyProfileModel
+
+@{
+    ViewBag.Title = "Berätta mer om dig själv";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("MyProfile", "User", FormMethod.Post, new {@class = "form-horizontal"}))
+{
+    <div class="control-group">
+        @Html.LabelFor(m => m.Name, new{@class="control-label"})
+        <div class="controls">
+            @Html.TextBoxFor(m => m.Name, new {placeholder="Namn"})
+            @Html.ValidationMessageFor(m => m.Name)
+        </div>
+    </div>
+
+    <div class="control-group">
+        @Html.LabelFor(m => m.StreetAddress, new{@class="control-label"})
+        <div class="controls">
+            @Html.TextBoxFor(m => m.StreetAddress, new {placeholder="Gatuadress"})
+            @Html.ValidationMessageFor(m => m.StreetAddress)
+        </div>
+    </div>
+
+    <div class="control-group">
+        @Html.LabelFor(m => m.ZipCode, new{@class="control-label"})
+        <div class="controls">
+            @Html.TextBoxFor(m => m.ZipCode, new {placeholder="Postnummer"})
+            @Html.ValidationMessageFor(m => m.ZipCode)
+        </div>
+    </div>
+
+    <div class="control-group">
+        @Html.LabelFor(m => m.City, new{@class="control-label"})
+        <div class="controls">
+            @Html.TextBoxFor(m => m.City, new {placeholder="Ort"})
+            @Html.ValidationMessageFor(m => m.City)
+        </div>
+    </div>
+
+    <div class="control-group">
+        @Html.LabelFor(m => m.Cellphone, new{@class="control-label"})
+        <div class="controls">
+            @Html.TextBoxFor(m => m.Cellphone, new {placeholder="Mobiltelefon"})
+            @Html.ValidationMessageFor(m => m.Cellphone)
+        </div>
+    </div>
+
+    <div class="control-group">
+        @Html.LabelFor(m => m.Phone, new{@class="control-label"})
+        <div class="controls">
+            @Html.TextBoxFor(m => m.Phone, new {placeholder="Telefon"})
+            @Html.ValidationMessageFor(m => m.Phone)
+        </div>
+    </div>
+
+    <div class="control-group">
+        @Html.LabelFor(m => m.Birthdate, new{@class="control-label"})
+        <div class="controls">
+            @Html.TextBoxFor(m => m.Birthdate, new {placeholder="Födelsedatum"})
+            @Html.ValidationMessageFor(m => m.Birthdate)
+        </div>
+    </div>
+
+}

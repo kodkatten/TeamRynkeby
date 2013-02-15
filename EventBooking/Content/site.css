@@ -1,0 +1,12 @@
+﻿body {
+    padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+}
+
+ul {
+    list-style: none; 
+}
+
+
+.activity-list-short li {
+    padding: 6px 0 6px;
+}
