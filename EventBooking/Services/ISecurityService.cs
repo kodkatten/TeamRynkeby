@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EventBooking.Data;
+using WebMatrix.WebData;
 
 namespace EventBooking.Services
 {
@@ -16,7 +17,14 @@ namespace EventBooking.Services
     {
         public virtual User GetUser(string userName, string password)
         {
-            throw new NotImplementedException();
+            if (!WebSecurity.Login(userName, password))
+                return null;
+
+            var userId = WebSecurity.GetUserId(userName);
+            using (var context = new EventBookingContext())
+            {
+                return context.Users.Find(userId);
+            }
         }
     }
 
