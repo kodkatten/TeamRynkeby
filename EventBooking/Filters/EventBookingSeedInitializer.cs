@@ -10,9 +10,9 @@ using WebMatrix.WebData;
 
 namespace EventBooking.Filters
 {
-    internal class EventBookingSeedInitializer : IDatabaseInitializer<EventBookingContext>
+    internal class EventBookingSeedInitializer : /*IDatabaseInitializer<EventBookingContext>*/ DropCreateDatabaseAlways<EventBookingContext>
     {
-        protected void Seed(EventBookingContext context)
+        protected override void Seed(EventBookingContext context)
         {
             Database.SetInitializer(new CreateDatabaseIfNotExists<EventBookingContext>());
             WebSecurity.InitializeDatabaseConnection("DefaultConnection", "Users", "Id", "Email", autoCreateTables: true);
@@ -20,6 +20,31 @@ namespace EventBooking.Filters
             var seeder = new FluentMembership((SimpleMembershipProvider) Membership.Provider, (SimpleRoleProvider) Roles.Provider);
             seeder.CreateUser("admin_test").WithRole(UserType.Administrator);
             seeder.CreateRole(UserType.Default).ForUser("default_test");
+
+            SeedActivitieshacketyHackBlaBla(context);
+        }
+
+        private static void SeedActivitieshacketyHackBlaBla(EventBookingContext context)
+        {
+            var team = new Team() {Name = "I R DA AWESOME TEAM"};
+
+            context.Teams.Add(team);
+
+            context.Activities.Add(new Activity
+            {
+                Name = "More awesome stuff.",
+                Description = "Ham andouille spare ribs tongue pork loin tenderloin brisket. Sausage spare ribs pork loin cow flank ground round jerky beef ribs swine rump.",
+                Date = new DateTime(2013, 02, 11),
+                OrganizingTeam = team
+            });
+
+            context.Activities.Add(new Activity
+            {
+                Name = "Awesome aktivet uno",
+                Description = "Bacon ipsum dolor sit amet boudin turducken fatback pancetta kielbasa pastrami doner cow capicola short ribs drumstick tail. ",
+                Date = new DateTime(2013, 02, 03),
+                OrganizingTeam = team
+            });
         }
 
         internal class FluentMembership
