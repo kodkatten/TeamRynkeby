@@ -8,7 +8,9 @@ namespace EventBooking.Data.Queries
     {
         private readonly int month;
 
-        public GetActivitiesByMonthQuery(int month)
+        public delegate GetActivitiesByMonthQuery Factory(int month);
+
+        public GetActivitiesByMonthQuery(EventBookingContext context, int month)
         {
             this.month = month;
         }

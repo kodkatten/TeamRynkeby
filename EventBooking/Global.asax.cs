@@ -4,7 +4,8 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-
+using Autofac;
+using Autofac.Integration.Mvc;
 using EventBooking.Data;
 using EventBooking.Filters;
 
@@ -14,6 +15,16 @@ namespace EventBooking
     {
         protected void Application_Start()
         {
+            var builder = new ContainerBuilder();
+            builder.RegisterControllers(typeof(MvcApplication).Assembly);
+            builder.RegisterModule(new DataDependencyModule());
+            
+            
+            var container = builder.Build();
+            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+
+
+
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
