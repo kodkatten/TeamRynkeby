@@ -1,39 +1,43 @@
-﻿@model dynamic
+﻿@model EventBooking.Controllers.SignUpModel
 
 @{
     ViewBag.Title = "Registrera konto";
 }
 
-<h2>Registrera dig</h2>
+<h2>@ViewBag.Title</h2>
 
-<form class="form-horizontal" method="POST">
+@using (Html.BeginForm("SignUp", "Home", FormMethod.Post, new{@class="form-horizontal"}))
+{
     <div class="control-group">
-        <label class="control-label" for="Email">Epostadress</label>
+        @Html.LabelFor(m => m.Email, new { @class = "control-label" })
         <div class="controls">
-            <input type="text" id="Email" name="Email" placeholder="Epostadress">
+            @Html.TextBoxFor(m => m.Email, new { placeholder = "Epostadress" })
+            @Html.ValidationMessageFor(m => m.Email)
         </div>
     </div>
     <div class="control-group">
-        <label class="control-label" for="Password">Lösenord</label>
+        @Html.LabelFor(m => m.Password, new { @class = "control-label" })
         <div class="controls">
-            <input type="password" id="Password" name="Password" placeholder="Lösenord">
+            @Html.PasswordFor(m => m.Password, new { placeholder = "Lösenord" })
+            @Html.ValidationMessageFor(m => m.Password)
         </div>
     </div>
     <div class="control-group">
-        <label class="control-label" for="ConfirmPassword">Bekräfta lösenord</label>
+        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label" })
         <div class="controls">
-            <input type="password" id="ConfirmPassword" name="ConfirmPassword" placeholder="Bekräfta lösenord">
+            @Html.PasswordFor(m => m.ConfirmPassword, new { placeholder = "Bekräfta lösenord" })
+            @Html.ValidationMessageFor(m => m.ConfirmPassword)
         </div>
     </div>
     <div class="control-group">
-        <label class="control-label" for="RememberMe">Kom ihåg mig</label>
+        @Html.LabelFor(m => m.RememberMe, new { @class = "control-label" })
         <div class="controls">
-            <input type="checkbox" id="RememberMe" name="RememberMe" checked="checked">
+            @Html.CheckBoxFor(m => m.RememberMe, new { @checked = "checked" })
         </div>
     </div>
     <div class="control-group">
         <div class="controls">
             <button type="submit" class="btn">Skapa konto</button>
         </div>
-    </div>
-</form>
+    </div>   
+}

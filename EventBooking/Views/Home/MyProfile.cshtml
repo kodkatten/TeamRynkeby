@@ -1,0 +1,76 @@
+﻿@model EventBooking.Controllers.ProfileModel
+
+@{
+    ViewBag.Title = "Berätta mer om dig själv";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("MyProfile", "Home", FormMethod.Post, new {@class = "form-horizontal"}))
+{
+    @Html.ValidationSummary(true)
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Name)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.Name)
+        @Html.ValidationMessageFor(model => model.Name)
+    </div>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.StreetAddress)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.StreetAddress)
+        @Html.ValidationMessageFor(model => model.StreetAddress)
+    </div>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.ZipCode)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.ZipCode)
+        @Html.ValidationMessageFor(model => model.ZipCode)
+    </div>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.City)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.City)
+        @Html.ValidationMessageFor(model => model.City)
+    </div>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Cellphone)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.Cellphone)
+        @Html.ValidationMessageFor(model => model.Cellphone)
+    </div>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Phone)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.Phone)
+        @Html.ValidationMessageFor(model => model.Phone)
+    </div>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Epost)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.Epost)
+        @Html.ValidationMessageFor(model => model.Epost)
+    </div>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Birthdate)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.Birthdate)
+        @Html.ValidationMessageFor(model => model.Birthdate)
+    </div>
+}
