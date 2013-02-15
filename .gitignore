@@ -10,6 +10,9 @@
 *.user
 *.sln.docstates
 
+*App_Data/EventBooking_log.mdf
+*App_Data/EventBooking.mdf
+
 # Build results
 [Dd]ebug/
 [Rr]elease/

@@ -17,5 +17,7 @@
         public string Name { get; private set; }
 
 		public string OrganizingTeam { get; private set; }
-    }
+
+		public string Url { get; private set; }
+	}
 }

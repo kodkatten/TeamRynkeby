@@ -4,11 +4,27 @@
     ViewBag.Title = "Team Rynkeby | Kommande aktiviter";
 }
 
-<h2>Team Rynkeby</h2>
-
 <div class="row-fluid">
     <div class="span12">
+        
         <div class="span6">
+            <h3>Kommande aktiviteter</h3>
+            <ul class="activity-list-short">
+                @foreach (var activity in Model.Activities)
+                {
+                    <li>
+                        <a href="@activity.Url" class="link" rel="tooltip" data-original-title="Use model tooltop here!">
+                            <span class="label label-info">@activity.OrganizingTeam</span>
+                            <span class="activity-date">@activity.DateFormatted</span>
+                            <span class="activity-name">@activity.Name</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <div class="span6">
+            <h2>Team Rynkeby</h2>
             <p class="">
                 Team Rynkeby är ett nordiskt välgörenhetsinitiativ som syftar till att samla in pengar till Barncancerfonden i Sverige, Sylva i Finland och Børnecancerfonden i Danmark.
             </p>
@@ -26,20 +42,6 @@
             </p>
         </div>
 
-        <div class="span6">
-            <h3>Kommande aktiviteter</h3>
-            <ul class="activity-list-short">
-                @foreach (var activity in Model.Activities)
-                {
-                    <li>
-                        <a href="" class="link" rel="tooltip" data-original-title="Use model tooltop here!">
-                            <span class="activity-team">@activity.OrganizingTeam</span>
-                            <span class="activity-date">@activity.DateFormatted</span>
-                            <span class="activity-name">@activity.Name</span>
-                        </a>
-                    </li>
-                }
-            </ul>
-        </div>
+        
     </div>
 </div>

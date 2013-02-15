@@ -11,6 +11,7 @@ namespace EventBooking
             
 			bundles.Add(new StyleBundle("~/Content/bootstrap")
 				.Include("~/Content/bootstrap.css")
+				.Include("~/Content/site.css")
 				.Include("~/Content/bootstrap-responsive.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/general").Include("~/Scripts/general.js"));
