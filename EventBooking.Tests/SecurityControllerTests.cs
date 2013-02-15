@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using EventBooking.Controllers;
 using EventBooking.Controllers.ViewModels;
+using EventBooking.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace EventBooking.Tests
@@ -29,12 +30,23 @@ namespace EventBooking.Tests
 
 
         [TestMethod]
-        public void Given_a_nobody_When_nobody_logs_in_As_somebody_Then_somebody_gets_redirected_to_Team_Index()
+        public void Given_a_nobody_When_nobody_logs_in_As_somebody_and_Exists_Then_somebody_gets_redirected_to_Home_Index()
         {
-            var controller = new SecurityController();
-            var model = new LoginModel() { ElectronicMailAddress = "a@b.c", Password = "you know it" };
+            const string expectedEmailAddress = "dennis@jessica.com";
+            const string expectedPassword = "jordnötter";
+            var mockupSecurityService = new MockupSecurityService
+                {
+                    AcceptedEmail = expectedEmailAddress,
+                    AcceptedPassword = expectedPassword
+                };
+            var controller = new SecurityController(mockupSecurityService);
+            var model = new LoginModel { ElectronicMailAddress = expectedEmailAddress, Password = expectedPassword };
 
-            var result = controller.LogIn(model);
+            var result = controller.LogIn(model) as RedirectToRouteResult;
+            Assert.IsNotNull(result, "We're expected a redirect");
+            Assert.AreEqual("Index", result.RouteValues["action"]);
+            Assert.AreEqual("Home", result.RouteValues["controller"]);
+            
         }
 
         [TestMethod]
