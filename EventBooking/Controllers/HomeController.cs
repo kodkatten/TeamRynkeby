@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Web.Mvc;
-using System.Web.Mvc;
+
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data.Queries;
+
 using WebMatrix.WebData;
-using Activity = EventBooking.Controllers.ViewModels.Activity;
 
 namespace EventBooking.Controllers
 {
     public class HomeController : Controller
     {
-        //
-        // GET: /Home/
-
         public ActionResult Index()
         {
             var query = new GetActivitiesByMonthQuery(DateTime.Now.Month);
