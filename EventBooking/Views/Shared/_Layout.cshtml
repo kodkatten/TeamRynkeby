@@ -22,6 +22,7 @@
                         @if (!Request.IsAuthenticated)
                         {
                             <li>@Html.ActionLink("Sign up", "SignUp", "Home")</li>
+                            <li>@Html.ActionLink("Sign in", "Checkpoint", "Security")</li>
                         }
                         else
                         {
