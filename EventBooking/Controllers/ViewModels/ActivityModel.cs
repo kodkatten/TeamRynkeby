@@ -1,6 +1,6 @@
 ﻿namespace EventBooking.Controllers.ViewModels
 {
-    public class Activity
+    public class ActivityModel
     {
         public string Description { get; internal set; }
         public string DateFormatted { get; internal set; }
