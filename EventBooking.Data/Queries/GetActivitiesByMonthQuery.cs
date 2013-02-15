@@ -22,7 +22,7 @@ namespace EventBooking.Data.Queries
 
         public IEnumerable<Activity> Execute()
         {
-            return this.activities.Where(activity => activity.Date.Month == this.month);
+            return this.activities.Where(activity => activity.Date.Month == this.month).Include(activity => activity.OrganizingTeam);
         }
     }
 }
