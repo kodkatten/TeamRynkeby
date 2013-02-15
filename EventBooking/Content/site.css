@@ -10,3 +10,11 @@ ul {
 .activity-list-short li {
     padding: 6px 0 6px;
 }
+.rotater div {
+    display: inline-block;
+    width: 500px;
+}
+
+.month h3{
+    text-transform: capitalize;
+}

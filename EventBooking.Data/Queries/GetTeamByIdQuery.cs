@@ -41,6 +41,17 @@ namespace EventBooking.Data.Queries
                                     RequiredItems = new Item[] {},
                                     Sessions = new Session[0],
                                     Type = ActivityType.Public
+                                },
+                            new Activity
+                                {
+                                    Name = "Fake activity3",
+                                    Description = "A description",
+                                    Date = 60.Days().FromNow(),
+                                    Summary = "A summary",
+                                    Coordinator = new User {Name = "Tomten"},
+                                    RequiredItems = new Item[] {},
+                                    Sessions = new Session[0],
+                                    Type = ActivityType.Public
                                 }
                         },
                     Name = "Malmö"

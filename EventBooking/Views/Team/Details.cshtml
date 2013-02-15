@@ -5,19 +5,26 @@
 }
 
 <h2>Team @Model.Name</h2>
+<div class="rotater">
+        @foreach (var eventGroup in Model.Activities)
+        {
+            <div class="month">
 
-<div>
-    @foreach (var eventGroup in Model.Activities)
-    {
-        <h3>@eventGroup.Key</h3>
-        <ul>
-            @foreach (var e in eventGroup)
-            {
-                <li>
-                    <span class="month">@e.Date</span>
-                    Html.ActionLink(e.Name, "Details", "Activity");
-                </li>
-            }
-        </ul>
-    }
+                <h3>@eventGroup.Key</h3>
+                <ul>
+                    @foreach (var e in eventGroup)
+                    {
+                        <li>
+                            <span>@e.Date</span>
+                            @e.Name
+
+                            <!-- TODO: add this when activity page exists Html.ActionLink(e.Name, "Details", "Activity");-->
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
 </div>
+
+@Html.ActionLink("<- Tidigare", "Details", "Team", new { }, new { @class = "prev" })
+@Html.ActionLink("Senare ->", "Details", new { }, new { @class = "next" })
