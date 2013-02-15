@@ -7,6 +7,36 @@ ul {
     margin-left: 0; 
 }
 
+#banner {
+    width: 100%;
+    background: #f6f6f6;
+    border-top: 1px;
+    border-bottom: 1px;
+    border-color: #d3d3d5;
+    border-style: solid;
+}
+
+#expo {
+    width: 940px;
+    height: 430px;
+    margin-left: auto;
+    margin-right: auto;
+    background-image: url(/content/images/expo.png);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#expo span {
+    position: relative;
+    font-family: "MuseoSlab500Regular";
+    font-size: 32px;
+    display: block;
+    width: 300px;
+    line-height: 40px;
+    top: 120px;
+    left: 65px;
+}
+
 
 .activity-list-short li {
     padding: 6px 0 6px 0;
@@ -19,4 +49,15 @@ ul {
 
 .month h3{
     text-transform: capitalize;
+}
+
+@font-face {
+    font-family: 'MuseoSlab500Regular';
+    src: url('/Content/images/Museo_Slab_500-webfont.eot');
+    src: url('/Content/images/Museo_Slab_500-webfont.eot?#iefix') format('embedded-opentype'),
+        url('/Content/images/Museo_Slab_500-webfont.woff') format('woff'),
+        url('/Content/images/Museo_Slab_500-webfont.ttf') format('truetype'),
+        url('/Content/images/Museo_Slab_500-webfont.svg#MuseoSlab500Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
 }
