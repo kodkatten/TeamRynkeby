@@ -21,11 +21,11 @@
                     <ul class="nav">
                         @if (!Request.IsAuthenticated)
                         {
-                            <li>@Html.ActionLink("Sign up", "SignUp", "Home")</li>
+                            <li>@Html.ActionLink("Sign up", "SignUp", "User")</li>
                         }
                         else
                         {
-                            <li>@Html.ActionLink(User.Identity.Name, "MyProfile", "Home")</li>
+                            <li>@Html.ActionLink(User.Identity.Name, "MyProfile", "User")</li>
                         }
 
                     </ul>

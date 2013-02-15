@@ -6,7 +6,7 @@
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("MyProfile", "Home", FormMethod.Post, new {@class = "form-horizontal"}))
+@using (Html.BeginForm("MyProfile", "User", FormMethod.Post, new {@class = "form-horizontal"}))
 {
     @Html.ValidationSummary(true)
 
