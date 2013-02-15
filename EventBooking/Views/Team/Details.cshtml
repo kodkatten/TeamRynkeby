@@ -1,0 +1,23 @@
+﻿@model EventBooking.Data.Team
+
+@{
+    ViewBag.Title = "Team " + Model.Name;
+}
+
+<h2>Team @Model.Name</h2>
+
+<div>
+    @foreach (var eventGroup in Model.Activities.GroupBy(activity => activity.Date.Month))
+    {
+        <h3>@eventGroup.Key</h3>
+        <ul>
+            @foreach (var e in eventGroup)
+            {
+                <li>
+                    <span>@e.Date</span>
+                    Html.ActionLink(e.Name, "Details", "Activity");
+                </li>
+            }
+        </ul>
+    }
+</div>
