@@ -30,6 +30,11 @@ namespace EventBooking.Controllers
         [Authorize]
         public ActionResult MyProfile()
         {
+            if (ModelState.IsValid)
+            {
+                return View();
+            }
+
             return View();
         }
     }

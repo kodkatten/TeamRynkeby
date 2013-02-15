@@ -129,7 +129,7 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ViewModels\ActivityModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ViewModels\ProfileModel.cs" />
+    <Compile Include="Controllers\ViewModels\MyProfileModel.cs" />
     <Compile Include="Controllers\ViewModels\LandingPageModel.cs" />
     <Compile Include="Controllers\ViewModels\SignUpModel.cs" />
     <Compile Include="Filters\EventBookingSeedInitializer.cs" />

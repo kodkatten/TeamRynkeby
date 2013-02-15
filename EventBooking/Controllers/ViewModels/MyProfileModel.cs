@@ -4,7 +4,7 @@ using EventBooking.Data;
 
 namespace EventBooking.Controllers.ViewModels
 {
-    public class ProfileModel
+    public class MyProfileModel
     {
         [Required]
         [Display(Name="Namn")]
@@ -25,10 +25,6 @@ namespace EventBooking.Controllers.ViewModels
         
         [Display(Name = "Telefon")]
         public string Phone { get; set; }
-        
-        [Required]
-        [Display(Name = "Epostadress")]
-        public string Epost { get; set; }
         
         [Display(Name = "Födelsedatum")]
         public DateTime Birthdate { get; set; }
