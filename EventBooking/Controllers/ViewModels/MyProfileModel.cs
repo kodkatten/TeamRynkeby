@@ -6,8 +6,8 @@ namespace EventBooking.Controllers.ViewModels
 {
     public class MyProfileModel
     {
-        [Required]
         [Display(Name="Namn")]
+        [Required]
         public string Name { get; set; }
 
         [Display(Name="Gatuadress")]
@@ -19,8 +19,8 @@ namespace EventBooking.Controllers.ViewModels
         [Display(Name = "Ort")]
         public string City { get; set; }
         
-        [Required]
         [Display(Name = "Mobiltelefon")]
+        [Required]
         public string Cellphone { get; set; }
         
         [Display(Name = "Telefon")]
@@ -29,8 +29,8 @@ namespace EventBooking.Controllers.ViewModels
         [Display(Name = "Födelsedatum")]
         public DateTime Birthdate { get; set; }
         
-        [Required]
         [Display(Name = "Team")]
+        [Required]
         public Team Team { get; set; }
     }
 }

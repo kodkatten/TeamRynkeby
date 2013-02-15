@@ -68,6 +68,7 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="TechTalk.SpecFlow">
       <HintPath>..\packages\SpecFlow.1.9.0\lib\net35\TechTalk.SpecFlow.dll</HintPath>
     </Reference>
@@ -87,6 +88,7 @@
   <ItemGroup>
     <Compile Include="CreateActivityTests.cs" />
     <Compile Include="UnitTest1.cs" />
+    <Compile Include="SecurityControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -96,6 +98,7 @@
   <ItemGroup>
     <ProjectReference Include="..\EventBooking\EventBooking.csproj">
       <Project>{2a54b809-3e76-43c9-b0be-e47ae731fbc9}</Project>
+      <Project>{2A54B809-3E76-43C9-B0BE-E47AE731FBC9}</Project>
       <Name>EventBooking</Name>
     </ProjectReference>
   </ItemGroup>
