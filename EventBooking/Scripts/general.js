@@ -1,6 +1,8 @@
 ﻿
 $(document).ready(function () {
-    $('[rel=tooltip]').tooltip();
+    $('[rel=tooltip]').tooltip({
+        placement: "right"
+    });
 });
 
 $(function () {
