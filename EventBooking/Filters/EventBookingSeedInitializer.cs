@@ -10,9 +10,9 @@ using WebMatrix.WebData;
 
 namespace EventBooking.Filters
 {
-    internal class EventBookingSeedInitializer : DropCreateDatabaseAlways<EventBookingContext>
+    internal class EventBookingSeedInitializer : IDatabaseInitializer<EventBookingContext>
     {
-        protected override void Seed(EventBookingContext context)
+        protected void Seed(EventBookingContext context)
         {
             WebSecurity.InitializeDatabaseConnection("DefaultConnection", "Users", "Id", "Email", autoCreateTables: true);
 
@@ -97,6 +97,11 @@ namespace EventBooking.Filters
                     return this;
                 }
             }
+        }
+
+        public void InitializeDatabase(EventBookingContext context)
+        {
+            Seed(context);
         }
     }
 }
