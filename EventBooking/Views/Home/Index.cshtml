@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EventBooking.Data.Activity>
+﻿@model EventBooking.Controllers.ViewModels.LandingPage
 
 @{
     ViewBag.Title = "Team Rynkeby | Kommande aktiviter";
@@ -25,7 +25,7 @@
 <div class="row6">
     <h3>Kommande aktiviteter</h3>
     <ul class="activity-list-short">
-        @foreach (var activity in Model)
+        @foreach (var activity in Model.Activities)
         {
             <li>
                 <a href="">
