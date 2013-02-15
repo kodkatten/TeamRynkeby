@@ -21,20 +21,6 @@
                 Deltagarna i Team Rynkeby är motionscyklister, kvinnor och män, i alla åldrar med vitt skilda yrken, utbildningar och bakgrund. Deltagarnas olikheter och deras geografiska spridning i Sverige, Finland og Danmark gör det lättare för Team Rynkeby att sprida budskapet om insamlingen för barn med cancer och deras familjer.
             </p>
 
-<div class="row6">
-    <h3>Kommande aktiviteter</h3>
-    <ul class="activity-list-short">
-        @foreach (var activity in Model.Activities)
-        {
-            <li>
-                <a href="">
-                    <span class="activity-event"></span>
-                    <span class="activity-date"></span>
-                    <span class="activity-description">@activity.Name</span>
-                </a>
-            </li>
-        }
-    </ul>
             <p>
                 2012 samlade Team Rynkeby in 18 Mkr i kampen mot barncancer.
             </p>
@@ -46,7 +32,7 @@
                 @foreach (var activity in Model.Activities)
                 {
                     <li>
-                        <a href="">
+                        <a href="" class="link" rel="tooltip" data-original-title="Use model tooltop here!">
                             <span class="activity-team">@activity.OrganizingTeam</span>
                             <span class="activity-date">@activity.DateFormatted</span>
                             <span class="activity-name">@activity.Name</span>
@@ -56,18 +42,4 @@
             </ul>
         </div>
     </div>
-<div class="row6">
-    <h3>Kommande aktiviteter</h3>
-    <ul class="activity-list-short">
-        @foreach (var activity in Model.Activities)
-        {
-            <li>
-                <a href="" class="link" rel="tooltip" data-original-title="Use model tooltop here!">
-                    <span class="activity-event"></span>
-                    <span class="activity-date"></span>
-                    <span class="activity-description">@activity.Name</span>
-                </a>
-            </li>
-        }
-    </ul>
 </div>
