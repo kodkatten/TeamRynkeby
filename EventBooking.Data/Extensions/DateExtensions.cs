@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EventBooking.Extensions
+namespace EventBooking.Data.Extensions
 {
     public static class TimeSpanExtensions
     {
