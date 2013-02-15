@@ -25,7 +25,7 @@
                         }
                         else
                         {
-                            <li>Hello, @User.Identity.Name</li>
+                            <li>@Html.ActionLink(User.Identity.Name, "MyProfile", "Home")</li>
                         }
 
                     </ul>

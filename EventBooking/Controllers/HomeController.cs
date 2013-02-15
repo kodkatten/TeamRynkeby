@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using EventBooking.Filters;
 using WebMatrix.WebData;
 
 namespace EventBooking.Controllers
 {
-    [InitializeSimpleMembership]
     public class HomeController : Controller
     {
         //
@@ -28,9 +23,15 @@ namespace EventBooking.Controllers
         [HttpPost]
         public ActionResult SignUp(SignUpModel model)
         {
-            WebSecurity.CreateUserAndAccount(model.Email, model.Password);
-            WebSecurity.Login(model.Email, model.Password);
+            WebSecurity.CreateUserAndAccount(model.Email, model.Password, new {Created = DateTime.Now});
+            WebSecurity.Login(model.Email, model.Password, model.RememberMe);
             return RedirectToAction("Index", "Home");
+        }
+
+        [Authorize]
+        public ActionResult MyProfile()
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -43,7 +44,11 @@ namespace EventBooking.Controllers
         public string Password { get; set; }
 
         [Required]
-        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Lösenorden stämmer inte med varandra.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password",
+            ErrorMessage = "Lösenorden stämmer inte med varandra.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        public bool RememberMe { get; set; }
     }
 }
