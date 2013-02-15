@@ -126,10 +126,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="Controllers\ViewModels\Activity.cs" />
+    <Compile Include="Controllers\ViewModels\ActivityModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ViewModels\LandingPage.cs" />
     <Compile Include="Controllers\ViewModels\ProfileModel.cs" />
+    <Compile Include="Controllers\ViewModels\LandingPageModel.cs" />
     <Compile Include="Controllers\ViewModels\SignUpModel.cs" />
     <Compile Include="Filters\EventBookingSeedInitializer.cs" />
     <Compile Include="Global.asax.cs">
