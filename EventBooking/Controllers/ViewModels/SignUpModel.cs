@@ -4,23 +4,23 @@ namespace EventBooking.Controllers.ViewModels
 {
     public class SignUpModel
     {
+        [Display(Name="Epostadress")]
         [Required(ErrorMessage = "*")]
         [EmailAddress(ErrorMessage = "Du måste ange en korrekt epostadress")]
-        [Display(Name="Epostadress")]
         public string Email { get; set; }
 
+        [Display(Name="Lösenord")]
         [Required(ErrorMessage = "*")]
         [MinLength(6, ErrorMessage = "6 tecken eller fler")]
-        [Display(Name="Lösenord")]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "*")]
-        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Lösenorden stämmer inte med varandra.")]
         [Display(Name="Bekräfta lösenord")]
+        [Required(ErrorMessage = "*")]
+        [Compare("Password", ErrorMessage = "Lösenorden stämmer inte med varandra.")]
         public string ConfirmPassword { get; set; }
 
+        [Display(Name="Kom ihåg mig")]
         [Required]
-        [Display(Name="Kom ihåg mi")]
         public bool RememberMe { get; set; }
     }
 }

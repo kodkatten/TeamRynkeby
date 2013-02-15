@@ -2,7 +2,7 @@
 using System.Web.Mvc;
 
 using EventBooking.Controllers.ViewModels;
-
+using EventBooking.Data;
 using WebMatrix.WebData;
 
 namespace EventBooking.Controllers
@@ -32,6 +32,11 @@ namespace EventBooking.Controllers
         {
             if (ModelState.IsValid)
             {
+                using (var context = new EventBookingContext())
+                {
+                    
+                }
+
                 return View();
             }
 
