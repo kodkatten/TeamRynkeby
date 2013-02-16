@@ -7,9 +7,9 @@ namespace EventBooking.Data.Queries
     {
         public delegate GetTeamsQuery Factory();
 
-        private readonly DbSet<Team> teams;
+        private readonly IDbSet<Team> teams;
 
-        public GetTeamsQuery(EventBookingContext context)
+        public GetTeamsQuery(IEventBookingContext context)
         {
             this.teams = context.Teams;
         }

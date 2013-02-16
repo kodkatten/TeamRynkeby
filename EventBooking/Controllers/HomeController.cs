@@ -1,23 +1,25 @@
 ﻿using System.Web.Mvc;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data.Queries;
+using EventBooking.Data.Repositories;
+using System;
+using System.Linq;
 
 namespace EventBooking.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly GetUpcomingActivitiesQuery.Factory getUpcomingActivitiesCommandFactory;
+        private readonly IActivityRepository _activities;
 
-        public HomeController(GetUpcomingActivitiesQuery.Factory getUpcomingActivitiesCommandFactory)
+        public HomeController(IActivityRepository activities)
         {
-            this.getUpcomingActivitiesCommandFactory = getUpcomingActivitiesCommandFactory;
+            _activities = activities;
         }
 
         public ActionResult Index()
         {
-            var query = this.getUpcomingActivitiesCommandFactory();
-            var model = new LandingPageModel(query.Execute());
-
+            var query =  _activities.GetActivityByMonth(DateTime.Now.Year, DateTime.Now.Month);
+            var model = new LandingPageModel(query.ToArray() /* Materialize the query */);
             return View(model);
         }
     }
