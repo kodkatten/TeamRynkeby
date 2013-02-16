@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
@@ -44,27 +45,29 @@ namespace EventBooking.Controllers
 			StoreActivity(activity);
 			return RedirectToAction("Index", "Home");
 		}
-        
-        public ActionResult Upcoming()
+
+	    public static int NumberOfActivities = 10;
+
+        public ActionResult Upcoming(int skip = 0)
         {
-            IQueryable<Activity> query = null;
+            IEnumerable<Activity> query = null;
             if (_securityService.IsLoggedIn)
             {
                 var user = _securityService.CurrentUser;
                 if (user.IsMemberOfATeam())
                 {
-                    query = _activityRepository.GetUpcomingActivitiesByTeam(user.Team.Id);
+                    query = _activityRepository.GetUpcomingActivitiesByTeam(user.Team.Id, skip, NumberOfActivities);
                 }
             }
 
             if (query == null)
             {
-                query = _activityRepository.GetUpcomingActivities();
+                query = _activityRepository.GetUpcomingActivities(skip, NumberOfActivities);
             }
 
-            var model = query.ToArray().Select(data => new ActivityModel(data));
+            var viewModel = new UpcomingActivitiesModel(query.ToArray());
 
-            return this.PartialView(model);
+            return this.PartialView(viewModel);
         }
 
 		protected virtual void StoreActivity(Activity activity)
