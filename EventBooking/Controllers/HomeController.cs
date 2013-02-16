@@ -3,7 +3,6 @@ using System.Linq;
 using System.Web.Mvc;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
-using EventBooking.Data.Queries;
 using EventBooking.Data.Repositories;
 using EventBooking.Services;
 
@@ -11,6 +10,7 @@ namespace EventBooking.Controllers
 {
     public class HomeController : Controller
     {
+
         private readonly IActivityRepository _activities;
         private readonly ISecurityService _security;
         private readonly ITeamRepository _team;
@@ -52,7 +52,6 @@ namespace EventBooking.Controllers
             // Create the model.
             var model = new LandingPageModel(query.ToArray());
             model.IsNobody = isNobody;
-
             return View(model);
         }
     }

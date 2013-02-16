@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Security;
-
+using AutoMapper;
+using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
 
 using WebMatrix.WebData;
@@ -15,6 +16,7 @@ namespace EventBooking.Filters
         protected override void Seed(EventBookingContext context)
         {
             WebSecurity.InitializeDatabaseConnection("DefaultConnection", "Users", "Id", "Email", autoCreateTables: true);
+            UserMapper.SetupMapper();
 
             var membership = (SimpleMembershipProvider)Membership.Provider;
             var roles = (SimpleRoleProvider)Roles.Provider;
@@ -29,12 +31,34 @@ namespace EventBooking.Filters
                 roles.AddUsersToRoles(new[] { "admin_test" }, new[] { UserType.Administrator.ToString() });
 
             SeedActivitieshacketyHackBlaBla(context);
+            CreateAwesomeUsers(membership, context);
+        }
+
+        private void CreateAwesomeUsers(SimpleMembershipProvider membership, EventBookingContext context)
+        {
+            EnsureUserExists(membership, context, "a@b.c");
+            EnsureUserExists(membership,context, "email@email.com", new User { Cellphone = "3457", Name = "dodo", Team = context.Teams.First() });
+        }
+
+
+        private static void EnsureUserExists(SimpleMembershipProvider membership, EventBookingContext context,
+                                             string email, User specification = null)
+        {
+            if (membership.GetUser(email, false) != null) return;
+            membership.CreateUserAndAccount(email, email,
+                                            new Dictionary<string, object> {{"Created", DateTime.Now}});
+            var user = context.Users.First(user1 => user1.Email == email);
+            specification = specification ?? new User {Name = "One of the three very beared wise men"};
+            Mapper.Map(specification, user);
+            user.Created = DateTime.UtcNow;
+            context.SaveChanges();
         }
 
         private static void SeedActivitieshacketyHackBlaBla(EventBookingContext context)
         {
-            // Team #1
-            var team = new Team() {Name = "I R DA AWESOME TEAM"};
+
+            var team = new Team {Name = "I R DA AWESOME TEAM"};
+
             context.Teams.Add(team);
             context.Activities.Add(new Activity
             {
@@ -89,6 +113,8 @@ namespace EventBooking.Filters
                 OrganizingTeam = team2
             });
             context.Teams.Add(team2);
+
+            context.SaveChanges();
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Data.Entity;
+using System.Linq;
 using EventBooking.Data;
 using WebMatrix.WebData;
 
@@ -20,7 +22,7 @@ namespace EventBooking.Services
             int userId = WebSecurity.GetUserId(userName);
             using (var context = new EventBookingContext())
             {
-                return context.Users.Find(userId);
+                return context.Users.Where(u => u.Id == userId).Include(t => t.Team).First();
             }
         }
         
@@ -70,6 +72,9 @@ namespace EventBooking.Services
         {
             get { return _isLoggedin; }
         }
+
+        public User ReturnUser { get; set; }
+
         public override bool SignIn(string userName, string password)
         {
             if (userName == AcceptedEmail && password == AcceptedPassword)
@@ -85,7 +90,7 @@ namespace EventBooking.Services
             if (userName == AcceptedEmail)
             {
                 _isLoggedin = true;
-                return new User();
+                return ReturnUser ?? new User();
             }
             return null;
         }

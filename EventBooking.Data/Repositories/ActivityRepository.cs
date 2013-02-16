@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Data.Entity;
 
 namespace EventBooking.Data.Repositories
 {
-    public sealed class ActivityRepository : IActivityRepository
+    internal sealed class ActivityRepository : IActivityRepository
     {
         private readonly IEventBookingContext _context;
 
@@ -26,6 +22,19 @@ namespace EventBooking.Data.Repositories
                 query = query.Where(x => x.OrganizingTeam.Id == teamId);
             }
             return query;
+        }
+
+        public IQueryable<Activity> GetUpcomingActivities(int skip = 0, int take = 10)
+        {
+            return this._context.Activities.UpcomingActivities().Page(skip, take).Include(activity => activity.OrganizingTeam);
+        }
+
+        public IQueryable<Activity> GetUpcomingActivitiesByTeam(int teamId, int skip = 0, int take = 10)
+        {
+            return this._context.Activities
+                                .UpcomingActivities()
+                                .Where(activity => activity.OrganizingTeam.Id == teamId)
+                                .Page(skip, take);
         }
     }
 }

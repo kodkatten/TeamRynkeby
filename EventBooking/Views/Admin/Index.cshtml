@@ -1,0 +1,9 @@
+﻿@model EventBooking.Controllers.ViewModels.AdministratorPageModel
+
+@{
+    ViewBag.Title = "index";
+}
+
+<h2>Teams</h2>
+
+ @Html.Partial("Partials/Teams", Model.Teams)

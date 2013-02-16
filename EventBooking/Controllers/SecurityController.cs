@@ -43,7 +43,10 @@ namespace EventBooking.Controllers
             {
                 return Redirect(model.ReturnUrl);
             }
-            return RedirectToAction("Index", "Home");
+
+            var user = _securityService.GetUser(model.ElectronicMailAddress);
+
+            return RedirectToAction("Details", "Team", new {id=user.Team.Id});
         }
 
         public ActionResult SignOff()

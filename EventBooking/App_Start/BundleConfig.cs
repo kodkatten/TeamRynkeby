@@ -12,9 +12,13 @@ namespace EventBooking
 			bundles.Add(new StyleBundle("~/Content/bootstrap")
 				.Include("~/Content/bootstrap.css")
 				.Include("~/Content/site.css")
-				.Include("~/Content/bootstrap-responsive.css"));
+				.Include("~/Content/landingpage.css")
+				.Include("~/Content/bootstrap-responsive.css")
+				.Include("~/Content/landingpage-phone.css")
+				.Include("~/Content/landingpage-tablet.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/general").Include("~/Scripts/general.js"));
+			bundles.Add( new ScriptBundle( "~/bundles/pickadate" ).Include( "~/Scripts/pickadate.js" ) );
 
         }
     }

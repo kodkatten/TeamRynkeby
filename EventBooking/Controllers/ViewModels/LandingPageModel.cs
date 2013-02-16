@@ -3,6 +3,7 @@ using System.Linq;
 
 namespace EventBooking.Controllers.ViewModels
 {
+
     public class  LandingPageModel
     {
         public bool IsNobody { get; set; }
@@ -19,4 +20,5 @@ namespace EventBooking.Controllers.ViewModels
             return new ActivityModel(activityData);
         }
     }
+
 }
