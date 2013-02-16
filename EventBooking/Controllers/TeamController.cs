@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
+using EventBooking.Data.Repositories;
 using EventBooking.Services;
 
 namespace EventBooking.Controllers
@@ -10,13 +11,15 @@ namespace EventBooking.Controllers
     public class TeamController : Controller
     {
         private readonly ISecurityService _securityService;
+	    private readonly ITeamRepository _teamRepository;
 
-        public TeamController(ISecurityService securityService)
+	    public TeamController(ISecurityService securityService, ITeamRepository teamRepository)
         {
-            _securityService = securityService;
+	        _securityService = securityService;
+	        _teamRepository = teamRepository;
         }
 
-        public ActionResult Details()
+	    public ActionResult Details()
         {
             if (!_securityService.IsLoggedIn)
             {
@@ -30,12 +33,9 @@ namespace EventBooking.Controllers
                 return RedirectToAction("MyProfile", "User");
             }
 
-            using (var context = new EventBookingContext())
-            {
-                var realTeam = context.Teams.Where(t => t.Id == team.Id).Include(t => t.Activities).First();
-                var model = new TeamActivitiesModel(realTeam);
-                return View(model);
-            }
+			var realTeam = _teamRepository.Get( team.Id );
+			var model = new TeamActivitiesModel( realTeam );
+			return View( model );
         }
     }
 }
