@@ -11,6 +11,7 @@ namespace EventBooking.Services
     public interface ISecurityService
     {
         User GetUser(string userName, string password);
+        User GetUser(string userName);
         void SignOff();
     }
 
@@ -25,6 +26,14 @@ namespace EventBooking.Services
             using (var context = new EventBookingContext())
             {
                 return context.Users.Find(userId);
+            }
+        }
+
+        public User GetUser(string userName)
+        {
+            using (var context = new EventBookingContext())
+            {
+                return context.Users.Find(WebSecurity.GetUserId(userName));
             }
         }
 

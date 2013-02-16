@@ -63,6 +63,7 @@
     <Compile Include="EventBookingContext.cs" />
     <Compile Include="Entities\UserType.cs" />
     <Compile Include="Queries\GetActivitiesByMonthQuery.cs" />
+    <Compile Include="Queries\GetTeamActivitiesByMonthQuery.cs" />
     <Compile Include="Queries\GetTeamByIdQuery.cs" />
   </ItemGroup>
   <ItemGroup>

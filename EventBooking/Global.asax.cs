@@ -8,6 +8,7 @@ using Autofac;
 using Autofac.Integration.Mvc;
 using EventBooking.Data;
 using EventBooking.Filters;
+using EventBooking.Services;
 
 namespace EventBooking
 {
@@ -18,6 +19,7 @@ namespace EventBooking
             var builder = new ContainerBuilder();
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
             builder.RegisterModule(new DataDependencyModule());
+            builder.RegisterType<SecurityService>().As<ISecurityService>().SingleInstance();
             
             
             var container = builder.Build();
