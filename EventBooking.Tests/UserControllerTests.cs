@@ -22,7 +22,7 @@ namespace EventBooking.Tests
         {
             this.security = new Mock<ISecurityService>();
             this.userRepository = new Mock<IUserRepository>();
-            this.userController = new UserController(security.Object, userRepository.Object);
+            this.userController = new UserController(security.Object, userRepository.Object, null);
         }
 
         [Test]

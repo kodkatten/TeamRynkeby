@@ -17,7 +17,9 @@ namespace EventBooking.Data.Repositories
             if (user.Team != null)
                 user.Team = context.Teams.Find(user.Team.Id);
 
-            this.context.Entry(user).State = EntityState.Modified;
+            
+
+            //this.context.Entry(user).State = EntityState.Modified;
             this.context.SaveChanges();
         }
     }
