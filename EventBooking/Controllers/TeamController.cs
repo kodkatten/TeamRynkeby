@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Data.Entity;
+using System.Linq;
 using System.Web.Mvc;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
@@ -19,7 +20,7 @@ namespace EventBooking.Controllers
         {
             if (!_securityService.IsLoggedIn)
             {
-                return RedirectToAction("Checkpoint", "Security", new { returnUrl = Url.Action("Details") });
+                return RedirectToAction("Checkpoint", "Security", new {returnUrl = Url.Action("Details")});
             }
 
             var team = _securityService.CurrentUser.Team;
@@ -28,9 +29,13 @@ namespace EventBooking.Controllers
             {
                 return RedirectToAction("MyProfile", "User");
             }
-            var model = new TeamActivitiesModel(team);
-            return View(model);
-        }
 
+            using (var context = new EventBookingContext())
+            {
+                var realTeam = context.Teams.Where(t => t.Id == team.Id).Include(t => t.Activities).First();
+                var model = new TeamActivitiesModel(realTeam);
+                return View(model);
+            }
+        }
     }
-}       
+}
