@@ -32,7 +32,6 @@ namespace EventBooking.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 security.CreateUserAndAccount(model.Email, model.Password, created: DateTime.UtcNow);
                 security.SignIn(model.Email, model.Password);
 
@@ -46,8 +45,7 @@ namespace EventBooking.Controllers
         public ActionResult MyProfile()
         {
             var query = getTeamsCommandFactory.Invoke();
-            var model = new MyProfileModel(query.Execute());
-
+            var model = new MyProfileModel(security.CurrentUser(), query.Execute());
             return View(model);
         }
 
@@ -61,7 +59,10 @@ namespace EventBooking.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            return View();
+            var query = getTeamsCommandFactory.Invoke();
+            var viewModel = new MyProfileModel(model.ToUser(), query.Execute());
+
+            return View(viewModel);
         }
     }
 }
