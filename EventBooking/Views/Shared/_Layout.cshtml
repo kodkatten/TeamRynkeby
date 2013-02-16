@@ -6,6 +6,12 @@
     <title>@ViewBag.Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @Styles.Render("~/Content/bootstrap")
+    
+    @if (IsSectionDefined("styles"))
+    {
+        @RenderSection("styles")
+    }
+
 </head>
 <body>
     
@@ -19,6 +25,12 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
      @Scripts.Render("~/bundles/general")
+    
+    
+    @if (IsSectionDefined("scriptfiles"))
+    {
+            @RenderSection("scriptfiles")
+    }
 
     @if (IsSectionDefined("scripts"))
     {

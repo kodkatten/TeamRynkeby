@@ -1,9 +1,23 @@
-﻿@model EventBooking.Controllers.ViewModels.AdministratorPageModel
+﻿@using System.Web.Optimization
+@model EventBooking.Controllers.ViewModels.AdministratorPageModel
 
-@{
-    ViewBag.Title = "index";
+@section styles {
+    <link href="/Content/admin.css" rel="stylesheet"/>
 }
 
-<h2>Teams</h2>
+@section scriptfiles {
+    <script type="text/javascript" src="/Scripts/admin.js"></script>
+}
 
- @Html.Partial("Partials/Teams", Model.Teams)
+@{
+    ViewBag.Title = "Administration";
+}
+    
+
+
+@Html.Partial("Partials/Teams", Model.Teams)
+
+@Html.Partial("Partials/TeamMembers")    
+
+
+

@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using EventBooking.Controllers;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
+using EventBooking.Data.Repositories;
 using EventBooking.Services;
 using NUnit.Framework;
 
@@ -11,7 +12,6 @@ namespace EventBooking.Tests
 	[SetUpFixture]
 	internal class ClassSetup
 	{
-
 		[SetUp]
 		public void Setup()
 		{
@@ -22,35 +22,16 @@ namespace EventBooking.Tests
 	[TestFixture]
 	public class CreateActivityTests
 	{
+		[SetUp]
+		public void SetUp()
+		{
+			SecurityService = new MockupSecurityService {ReturnUser = new User {Team = new Team {Name = "The team"}}};
+		}
+
 		public static readonly DateTime Tomorrow = DateTime.Now.AddDays(1);
 		public static readonly DateTime Yesterday = DateTime.Now.AddDays(-1);
 
-		[Test]
-		public void RedirectsToHomeAfterSuccessfulCreation()
-		{
-			var controller = new ActivityControllerShunt();
-
-			var result = CreateValidActivity(controller) as RedirectToRouteResult;
-
-			Assert.NotNull(result);
-			Assert.AreEqual("Index", result.RouteValues["Action"]);
-			Assert.AreEqual("Home", result.RouteValues["controller"]);
-		}
-
-		[Test]
-		public void GivenDataForNewActivityIsPersisted()
-		{
-			var controller = new ActivityControllerShunt();
-
-			CreateValidActivity(controller);
-
-			Assert.IsNotNull( controller.CreatedActivity );
-			Assert.AreEqual( "Name", controller.CreatedActivity.Name );
-			Assert.AreEqual( Tomorrow, controller.CreatedActivity.Date );
-			Assert.AreEqual( "Description", controller.CreatedActivity.Description );
-			Assert.AreEqual( "Summary", controller.CreatedActivity.Summary );
-			Assert.AreEqual( ActivityType.Preliminary, controller.CreatedActivity.Type );
-		}
+		protected MockupSecurityService SecurityService { get; set; }
 
 		private static ActionResult CreateValidActivity(ActivityControllerShunt controller)
 		{
@@ -69,33 +50,73 @@ namespace EventBooking.Tests
 				};
 		}
 
-		[Test,Ignore]
+		[Test]
+		public void GivenDataForNewActivityIsPersisted()
+		{
+			var controller = CreateController();
+
+			CreateValidActivity(controller);
+
+			Assert.IsNotNull(controller.CreatedActivity);
+			Assert.AreEqual("Name", controller.CreatedActivity.Name);
+			Assert.AreEqual(Tomorrow, controller.CreatedActivity.Date);
+			Assert.AreEqual("Description", controller.CreatedActivity.Description);
+			Assert.AreEqual("Summary", controller.CreatedActivity.Summary);
+			Assert.AreEqual(ActivityType.Preliminary, controller.CreatedActivity.Type);
+			Assert.AreEqual(SecurityService.ReturnUser.Team.Name, controller.CreatedActivity.OrganizingTeam.Name);
+		}
+
+		[Test]
+		public void RedirectsToHomeAfterSuccessfulCreation()
+		{
+			var controller = CreateController();
+
+			var result = CreateValidActivity(controller) as RedirectToRouteResult;
+
+			Assert.NotNull(result);
+			Assert.AreEqual("Index", result.RouteValues["Action"]);
+			Assert.AreEqual("Home", result.RouteValues["controller"]);
+		}
+
+		[Test, Ignore]
 		public void StaysOnViewIfTryingToCreateActivity_ForYesterday()
 		{
-			var controller = new ActivityControllerShunt();
-			var forYesterday = NewModel();
+			var controller = CreateController();
+			CreateActivityModel forYesterday = NewModel();
 			forYesterday.Date = Yesterday;
 
-			var result = controller.Create(forYesterday);
+			ActionResult result = controller.Create(forYesterday);
 
 			Assert.NotNull(result);
 			Assert.IsInstanceOf<ViewResult>(result);
+		}
+
+		private ActivityControllerShunt CreateController()
+		{
+			return new ActivityControllerShunt(new ActivityRepositoryShunt(), SecurityService);
+		}
+	}
+
+	public class ActivityRepositoryShunt : ActivityRepository
+	{
+		public ActivityRepositoryShunt()
+			: base(null)
+		{
 		}
 	}
 
 	public class ActivityControllerShunt : ActivityController
 	{
-		public ActivityControllerShunt()
-			: base( new MockupSecurityService(), null )
+		public ActivityControllerShunt(ActivityRepository activityRepository, ISecurityService securityService)
+			: base(securityService, activityRepository)
 		{
-			
-		}
-
-		protected override void StoreActivity( Activity activity )
-		{
-			CreatedActivity = activity;
 		}
 
 		public Activity CreatedActivity { get; set; }
+
+		protected override void StoreActivity(Activity activity)
+		{
+			CreatedActivity = activity;
+		}
 	}
 }

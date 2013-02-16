@@ -44,7 +44,7 @@ namespace EventBooking.Controllers
         [Authorize]
         public ActionResult MyProfile()
         {
-            var model = new MyProfileModel(security.CurrentUser(), teamRepository.GetTeams());
+            var model = new MyProfileModel(security.CurrentUser, teamRepository.GetTeams());
             return View(model);
         }
 
@@ -54,7 +54,8 @@ namespace EventBooking.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = Mapper.Map(model, security.CurrentUser());
+                var user = Mapper.Map(model, security.CurrentUser);
+                //userRepository.Save();
 
                 using (var context = new EventBookingContext())
                 {
