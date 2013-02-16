@@ -95,6 +95,7 @@
     <Compile Include="CreateActivityTests.cs" />
     <Compile Include="SecurityControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TeamControllerTests.cs" />
     <Compile Include="UserControllerTests.cs" />
   </ItemGroup>
   <ItemGroup>
