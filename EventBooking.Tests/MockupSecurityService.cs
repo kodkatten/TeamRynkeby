@@ -18,6 +18,16 @@ namespace EventBooking.Tests
 
 		public override User CurrentUser { get { return ReturnUser; } }
 
+		public override void CreateUserAndAccount( string email, string password, System.DateTime created )
+		{
+			
+		}
+
+		public override User GetUser( string userName )
+		{
+			return ReturnUser;
+		}
+
 		public override bool SignIn(string userName, string password)
 		{
 			if (userName == AcceptedEmail && password == AcceptedPassword)

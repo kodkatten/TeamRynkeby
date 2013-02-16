@@ -55,6 +55,7 @@
     <Compile Include="Entities\Activity.cs" />
     <Compile Include="Entities\ActivityType.cs" />
     <Compile Include="Entities\Item.cs" />
+    <Compile Include="Entities\PredefinedActivityItem.cs" />
     <Compile Include="Extensions\DateExtensions.cs" />
     <Compile Include="Extensions\IntegerExtensions.cs" />
     <Compile Include="IEventBookingContext.cs" />
@@ -69,7 +70,9 @@
     <Compile Include="Repositories\IActivityRepository.cs" />
     <Compile Include="Repositories\IInterviewQuestionRepository.cs" />
     <Compile Include="Repositories\InterviewQuestionRepository.cs" />
+    <Compile Include="Repositories\IPrefedinedItemRepository.cs" />
     <Compile Include="Repositories\ITeamRepository.cs" />
+    <Compile Include="Repositories\PrefedinedItemRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
     <Compile Include="Entities\InterviewQuestion.cs" />
     <Compile Include="Repositories\TeamRepository.cs" />

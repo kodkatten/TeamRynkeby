@@ -15,7 +15,37 @@ namespace EventBooking.Data.Repositories
 
         public IEnumerable<Team> GetTeams()
         {
-            return context.Teams;
+            return context.Teams.Where(x => x.IsDeleted == false).ToList();
         }
+
+	    public Team Get(int teamId)
+	    {
+		    return context.Teams.Find(teamId);
+	    }
+	    public Team CreateTeam(string name)
+	    {
+		    var entity = new Team { Name = name };
+		    context.Teams.Add(entity);
+			context.SaveChanges();
+		    return entity;
+	    }
+		
+		public Team TryGetTeam(int id)
+		{
+			return context.Teams.FirstOrDefault(x => x.Id == id);
+	    }
+
+	    public void DeleteTeam(int teamId)
+	    {
+		    var team = context.Teams.FirstOrDefault(x => x.Id == teamId);
+
+		    foreach (var volonteer in team.Volunteers)
+		    {
+			    volonteer.Team = null;
+		    }
+		    
+		    team.IsDeleted = true;
+			context.SaveChanges();
+	    }
     }
 }

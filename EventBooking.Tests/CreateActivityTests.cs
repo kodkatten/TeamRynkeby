@@ -25,7 +25,7 @@ namespace EventBooking.Tests
 		[SetUp]
 		public void SetUp()
 		{
-			SecurityService = new MockupSecurityService {ReturnUser = new User {Team = new Team {Name = "The team"}}};
+			SecurityService = new MockupSecurityService { ReturnUser = new User { Team = new Team { Name = "The team" } } };
 		}
 
 		public static readonly DateTime Tomorrow = DateTime.Now.AddDays(1);
@@ -93,7 +93,7 @@ namespace EventBooking.Tests
 
 		private ActivityControllerShunt CreateController()
 		{
-			return new ActivityControllerShunt(new ActivityRepositoryShunt(), SecurityService);
+			return new ActivityControllerShunt(new ActivityRepositoryShunt(), SecurityService, null);
 		}
 	}
 
@@ -107,8 +107,8 @@ namespace EventBooking.Tests
 
 	public class ActivityControllerShunt : ActivityController
 	{
-		public ActivityControllerShunt(ActivityRepository activityRepository, ISecurityService securityService)
-			: base(securityService, activityRepository)
+		public ActivityControllerShunt(ActivityRepository activityRepository, ISecurityService securityService, IPrefedinedItemRepository items)
+			: base(securityService, activityRepository, items)
 		{
 		}
 

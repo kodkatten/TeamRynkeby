@@ -19,7 +19,10 @@ namespace EventBooking
 
             bundles.Add(new StyleBundle("~/bundles/admincss").Include("~/Content/admin.css"));
 
-            bundles.Add(new ScriptBundle("~/bundles/general").Include("~/Scripts/general.js"));
+            bundles.Add(new ScriptBundle("~/bundles/general")
+                .Include("~/Scripts/general.js")
+                .Include("~/Scripts/upcomingEvents.js"));
+
 			bundles.Add( new ScriptBundle( "~/bundles/pickadate" ).Include( "~/Scripts/pickadate.js" ) );
 
             bundles.Add(new ScriptBundle("~/bundles/adminscripts").Include("~/Scripts/admin.js"));

@@ -6,6 +6,7 @@ using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
 using EventBooking.Data.Repositories;
 using EventBooking.Services;
+using WebMatrix.WebData;
 
 namespace EventBooking.Controllers
 {
@@ -22,57 +23,66 @@ namespace EventBooking.Controllers
             this.teamRepository = teamRepository;
         }
 
-        public ActionResult SignUp()
-        {
-            return View();
-        }
+		public ActionResult SignUp()
+		{
+			return View();
+		}
 
-        [HttpPost]
-        public ActionResult SignUp(SignUpModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                security.CreateUserAndAccount(model.Email, model.Password, created: DateTime.UtcNow);
-                security.SignIn(model.Email, model.Password);
+		[HttpPost]
+		public ActionResult SignUp(SignUpModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				if (userRepository.Exists(model.Email))
+				{
+					ModelState.AddModelError("Email", "E-postaddressen finns redan registrerad.");
+					return View();
+				}
 
-                return RedirectToAction("MyProfile");
-            }
+				security.CreateUserAndAccount(model.Email, model.Password, created: DateTime.UtcNow);
+				security.SignIn(model.Email, model.Password);
 
-            return View();
-        }
+				return RedirectToAction("MyProfile");
+			}
 
-        [Authorize]
-        public ActionResult MyProfile()
-        {
-            var model = new MyProfileModel(security.CurrentUser, teamRepository.GetTeams());
-            return View(model);
-        }
+			return View();
+		}
 
-        [Authorize]
-        [HttpPost]
-        public ActionResult MyProfile(MyProfileModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = Mapper.Map(model, security.CurrentUser);
-                //userRepository.Save();
+	    [Authorize]
+	    [HttpPost]
+	    public ActionResult MyProfile(MyProfileModel model)
+	    {
+		    if (ModelState.IsValid)
+		    {
+			    var user = security.CurrentUser;
+			    user.Birthdate = model.Birthdate;
+			    user.Cellphone = model.Cellphone;
+			    user.City = model.City;
+			    user.Name = model.Name;
+			    user.StreetAddress = model.StreetAddress;
+			    if (!string.IsNullOrWhiteSpace(model.ZipCode))
+				    user.Zipcode = int.Parse(model.ZipCode.Replace(" ", string.Empty));
+			    user.Team = model.Team == null ? null : teamRepository.Get(model.Team.Id);
 
-                using (var context = new EventBookingContext())
-                {
-                    if (user.Team != null)
-                        user.Team = context.Teams.Find(user.Team.Id);
+			    userRepository.Save(user);
 
-                    context.Users.Attach(user);
-                    context.Entry(user).State = EntityState.Modified;
-                    context.SaveChanges();
-                }
+				return RedirectToAction("Index", "Home");
+		    }
 
-                return RedirectToAction("Index", "Home");
-            }
+			var viewModel = new MyProfileModel(model.ToUser(), teamRepository.GetTeams());
+			return View(viewModel);
+	    }
 
-            var viewModel = new MyProfileModel(model.ToUser(), teamRepository.GetTeams());
+	    public ActionResult AlreadyRegistrered(string message)
+		{
+			return View();
+		}
 
-            return View(viewModel);
-        }
-    }
+		[Authorize]
+		public ActionResult MyProfile()
+		{
+			var model = new MyProfileModel(security.CurrentUser, teamRepository.GetTeams());
+			return View(model);
+		}
+	}
 }

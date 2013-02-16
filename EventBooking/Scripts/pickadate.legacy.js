@@ -129,7 +129,7 @@
                         }
 
 
-                        // Update the calendar items
+                        // Update the calendar RequiredItems
                         CALENDAR.items = getUpdatedCalendarItems()
 
 
@@ -154,7 +154,7 @@
                         CALENDAR.isOpen = 1
 
 
-                        // Toggle the tabindex of "focusable" calendar items
+                        // Toggle the tabindex of "focusable" calendar RequiredItems
                         toggleCalendarElements( 0 )
 
 
@@ -248,7 +248,7 @@
                         CALENDAR.isOpen = 0
 
 
-                        // Toggle the tabindex of "focusable" calendar items
+                        // Toggle the tabindex of "focusable" calendar RequiredItems
                         toggleCalendarElements( -1 )
 
 
@@ -683,7 +683,7 @@
                 // Create the calendar holder with a new wrapped calendar and bind the events
                 $HOLDER = $( createNode( STRING_DIV, createCalendarWrapped(), CLASSES.holder ) ).on( 'mousedown', function( event ) {
 
-                    // If the target of the event is not one of the calendar items,
+                    // If the target of the event is not one of the calendar RequiredItems,
                     // prevent default action to keep focus on the input element
                     if ( CALENDAR.items.indexOf( event.target ) < 0 ) {
                         event.preventDefault()
@@ -1086,7 +1086,7 @@
 
             /**
              * Create the class and data binding for a looped date node.
-             * Returns an array with 2 items:
+             * Returns an array with 2 RequiredItems:
              * 1) The classes string
              * 2) The data binding string
              */
@@ -1163,7 +1163,7 @@
 
             /**
              * Create the wrapped calendar using the collection
-             * of all calendar items and a new table body
+             * of all calendar RequiredItems and a new table body
              */
             function createCalendarWrapped() {
 
@@ -1353,7 +1353,7 @@
 
             /**
              * Toggle the calendar elements as "tab-able" by mapping
-             * through the calendar items and updating the tabindex.
+             * through the calendar RequiredItems and updating the tabindex.
              */
             function toggleCalendarElements( tabindex ) {
                 CALENDAR.items.map( function( item ) {
@@ -1363,7 +1363,7 @@
 
 
             /**
-             * Get an updated collection of calendar items.
+             * Get an updated collection of calendar RequiredItems.
              */
             function getUpdatedCalendarItems() {
 
@@ -1420,7 +1420,7 @@
                 // Create a new wrapped calendar and place it within the holder
                 $HOLDER.html( createCalendarWrapped() )
 
-                // Update the calendar items
+                // Update the calendar RequiredItems
                 CALENDAR.items = getUpdatedCalendarItems()
             } //calendarRender
 

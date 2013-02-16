@@ -16,8 +16,7 @@ namespace EventBooking.Filters
         protected override void Seed(EventBookingContext context)
         {
             WebSecurity.InitializeDatabaseConnection("DefaultConnection", "Users", "Id", "Email", autoCreateTables: true);
-            UserMapper.SetupMapper();
-
+            
             var membership = (SimpleMembershipProvider)Membership.Provider;
             var roles = (SimpleRoleProvider)Roles.Provider;
 
@@ -33,6 +32,7 @@ namespace EventBooking.Filters
                 roles.AddUsersToRoles(new[] { "admin_test" }, new[] { UserType.Administrator.ToString() });
 
             CreateAwesomeUsers(membership, context);
+	        CreatePredefinedActivityItems(context);
         }
 
         private void CreateAwesomeUsers(SimpleMembershipProvider membership, EventBookingContext context)
@@ -42,23 +42,33 @@ namespace EventBooking.Filters
             EnsureUserExists(membership,context, "a", new User { Cellphone = "3457", Name = "dodo2", Team = context.Teams.First() });
         }
 
+		private void CreatePredefinedActivityItems(EventBookingContext context)
+		{
+			context.PredefinedActivityItems.Add(new PredefinedActivityItem() { Name = "Cykel" });
+			context.PredefinedActivityItems.Add(new PredefinedActivityItem() { Name = "Trainer" });
+			context.PredefinedActivityItems.Add(new PredefinedActivityItem() { Name = "Tält" });
+			context.PredefinedActivityItems.Add(new PredefinedActivityItem() { Name = "Bord" });
+			context.PredefinedActivityItems.Add(new PredefinedActivityItem() { Name = "Priser" });
+		}
 
         private static void EnsureUserExists(SimpleMembershipProvider membership, EventBookingContext context,
                                              string email, User specification = null)
         {
-            if (membership.GetUser(email, false) != null) return;
-            membership.CreateUserAndAccount(email, email,
-                                            new Dictionary<string, object> {{"Created", DateTime.Now}});
+            if (membership.GetUser(email, false) != null)
+            {
+                return;
+            }
+
+            var result = membership.CreateUserAndAccount(email, email, new Dictionary<string, object> {{"Created", DateTime.Now}});
             var user = context.Users.First(user1 => user1.Email == email);
             specification = specification ?? new User {Name = "One of the three very beared wise men"};
-            Mapper.Map(specification, user);
+            UserMapper.MapUserTemp(user, specification);          
             user.Created = DateTime.UtcNow;
             context.SaveChanges();
         }
 
         private static void SeedActivitieshacketyHackBlaBla(EventBookingContext context)
         {
-
             var team = new Team {Name = "I R DA AWESOME TEAM"};
 
             context.Teams.Add(team);
@@ -67,14 +77,31 @@ namespace EventBooking.Filters
                 Name = "More awesome stuff.",
                 Description = "Ham andouille spare ribs tongue pork loin tenderloin brisket. Sausage spare ribs pork loin cow flank ground round jerky beef ribs swine rump.",
                 Date = new DateTime(2013, 02, 17),
-                OrganizingTeam = team
+                OrganizingTeam = team, Type =ActivityType.Preliminary
             });
             context.Activities.Add(new Activity
             {
                 Name = "Awesome aktivet uno",
                 Description = "Bacon ipsum dolor sit amet boudin turducken fatback pancetta kielbasa pastrami doner cow capicola short ribs drumstick tail. ",
                 Date = new DateTime(2013, 02, 27),
-                OrganizingTeam = team
+                OrganizingTeam = team,
+                Type = ActivityType.Public
+            }); 
+            context.Activities.Add(new Activity
+            {
+                Name = "More awesome stuffies.",
+                Description = "Ham andouille spare ribs tongue pork loin tenderloin brisket. Sausage spare ribs pork loin cow flank ground round jerky beef ribs swine rump.",
+                Date = new DateTime(2013, 03, 17),
+                OrganizingTeam = team,
+                Type = ActivityType.Sponsor
+            });
+            context.Activities.Add(new Activity
+            {
+                Name = "Awesome aktivet douce",
+                Description = "Bacon ipsum dolor sit amet boudin turducken fatback pancetta kielbasa pastrami doner cow capicola short ribs drumstick tail. ",
+                Date = new DateTime(2013, 03, 27),
+                OrganizingTeam = team,
+                Type = ActivityType.Training
             });
 
             // Team #2

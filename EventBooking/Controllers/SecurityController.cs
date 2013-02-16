@@ -37,6 +37,11 @@ namespace EventBooking.Controllers
 		[HttpPost]
 		public ActionResult LogIn(LoginModel model)
 		{
+		    TryValidateModel(model);
+            if (!ModelState.IsValid)
+            {
+                return View("Checkpoint",model);
+            }
 			bool signedin = _securityService.SignIn(model.ElectronicMailAddress, model.Password);
 			if (!signedin)
 			{
@@ -47,8 +52,8 @@ namespace EventBooking.Controllers
 			{
 				return Redirect(model.ReturnUrl);
 			}
-
-			User user = _securityService.CurrentUser;
+            
+			User user = _securityService.GetUser(model.ElectronicMailAddress);
 
 			return RedirectToAction("Details", "Team", new {id = user.Team.Id});
 		}

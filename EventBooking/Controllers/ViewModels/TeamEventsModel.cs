@@ -8,7 +8,7 @@ namespace EventBooking.Controllers.ViewModels
     {
         public TeamActivitiesModel(Team team)
         {
-            Activities = team.Activities.GroupBy(activity => activity.Date.ToString("MMMM"));
+            Activities = (team.Activities ?? new Activity[0]).GroupBy(activity => activity.Date.ToString("MMMM"));
             Name = team.Name;
         }
 

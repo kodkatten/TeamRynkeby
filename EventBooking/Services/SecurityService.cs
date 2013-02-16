@@ -8,8 +8,12 @@ namespace EventBooking.Services
 {
 	public class SecurityService : ISecurityService
 	{
-		private User GetUser(string userName)
+		public virtual User GetUser(string userName)
 		{
+            if (string.IsNullOrWhiteSpace(userName))
+            {
+                return null;
+            }
 			int userId = WebSecurity.GetUserId(userName);
 			using (var context = new EventBookingContext())
 			{
@@ -19,10 +23,14 @@ namespace EventBooking.Services
 
 		public virtual bool SignIn(string userName, string password)
 		{
-			return WebSecurity.Login(userName, password);
+			if (WebSecurity.Login(userName, password))
+			{
+			    return true;
+			}
+		    return false;
 		}
 
-		public void CreateUserAndAccount(string email, string password, DateTime created)
+		public virtual void CreateUserAndAccount(string email, string password, DateTime created)
 		{
 			DateTime earlier = DateTime.UtcNow;
 

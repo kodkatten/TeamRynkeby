@@ -10,16 +10,20 @@ namespace EventBooking.Data
         {
         }
 
+
         public IDbSet<User> Users { get; set; }
         public IDbSet<Activity> Activities { get; set; }
         public IDbSet<Team> Teams { get; set; }
         public IDbSet<InterviewQuestion> InterviewQuestions { get; set; }
         public IDbSet<TrainingQuestion> TrainingQuestions { get; set; }
+        public IDbSet<PredefinedActivityItem> PredefinedActivityItems { get; set; }
+
 
         void IEventBookingContext.SaveChanges()
         {
             this.SaveChanges();
         }
+
 
         DbEntityEntry IEventBookingContext.Entry<TEntity>(TEntity entity)
         {
@@ -33,3 +37,4 @@ namespace EventBooking.Data
         }
     }
 }
+

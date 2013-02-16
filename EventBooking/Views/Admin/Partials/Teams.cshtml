@@ -8,8 +8,12 @@
         @foreach (var team in Model)
         {
             <li>
-                @Html.CheckBox("testa")
-                <a class="btn-link">@team.Name</a>
+                <a 
+                    href="@Url.Content("~/admin/team/"+team.Id)"
+                    class="btn-link" >
+                    @team.Name
+                </a>
+                <a href="@Url.Action("DeleteTeam", new { id = team.Id })" class="btn"><i class="icon icon-trash"> </i></a>
             </li>
         }
     </ul>

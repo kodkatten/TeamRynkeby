@@ -1,0 +1,28 @@
+﻿@model EventBooking.Controllers.ViewModels.ContributedInventoryModel
+
+@{
+    ViewBag.Title = "title";
+}
+
+<h2>What uuuuup?</h2>
+@using (Html.BeginForm("AddContributedItem", "Activity", FormMethod.Post))
+{
+    @Html.DropDownListFor(x => x.CurrentlySelectedItem, this.Model.SuggestedItems.Select(x => new SelectListItem() {Text = x, Value = x}))
+    @Html.DropDownListFor(x => x.ItemQuantity, Enumerable.Range(1, 100).Select(x => new SelectListItem() {Text = x.ToString(), Value = x.ToString()}))
+
+    @:[@String.Join(", ", Model.ContributedItems.Select(x => String.Concat(x.Quantity, "st. ", x.Name)))]
+
+    // Save some view state dataz
+    for (int i = 0; i < Model.ContributedItems.Count; i++)
+    {
+        @Html.HiddenFor(m => m.ContributedItems[i].Name)
+        @Html.HiddenFor(m => m.ContributedItems[i].Quantity)
+    }
+
+    for (int i = 0; i < Model.SuggestedItems.Count; i++)
+    {
+        @Html.HiddenFor(m => m.SuggestedItems[i])
+    }
+
+    <input type="submit" value="Lägg till" />
+}
