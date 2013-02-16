@@ -11,13 +11,8 @@ ul {
     padding: 6px 0 6px 0;
 }
 
-.rotater div {
-    display: inline-block;
-    width: 500px;
-}
-
-.month h3{
-    text-transform: capitalize;
+.page-header > h3 {
+    line-height: 20px;
 }
 
 @font-face {

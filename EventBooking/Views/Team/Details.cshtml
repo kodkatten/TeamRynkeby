@@ -1,30 +1,59 @@
-﻿@model EventBooking.Controllers.ViewModels.TeamActivitiesModel
+﻿@using EventBooking.Controllers.ViewModels
+@model EventBooking.Controllers.ViewModels.TeamActivitiesModel
 
 @{
     ViewBag.Title = "Team " + Model.Name;
 }
 
-<h2>Team @Model.Name</h2>
-<div class="rotater">
-        @foreach (var eventGroup in Model.Activities)
-        {
-            <div class="month">
-
-                <h3>@eventGroup.Key</h3>
-                <ul>
-                    @foreach (var e in eventGroup)
-                    {
-                        <li>
-                            <span>@e.Date</span>
-                            @e.Name
-
-                            <!-- TODO: add this when activity page exists Html.ActionLink(e.Name, "Details", "Activity");-->
-                        </li>
-                    }
-                </ul>
-            </div>
-        }
+<div class="page-header">
+  <h1>@Model.Name</h1>
 </div>
 
-@Html.ActionLink("<- Tidigare", "Details", "Team", new { }, new { @class = "prev" })
-@Html.ActionLink("Senare ->", "Details", new { }, new { @class = "next" })
+<div class="row">
+    <div class="span8">
+        <div class="row">
+            @foreach (var eventGroup in Model.Activities)
+            {
+
+                <div class="span4">
+                    <div class="page-header">
+                        <h3>@eventGroup.Key</h3>
+                    </div>
+                    <ul>
+                        @foreach (var e in eventGroup)
+                        {
+
+                            <li>
+                                <a href="@Url.Action("Details", "Activity", new { @e.Id })" class="link" rel="tooltip" data-original-title="@e.Description">
+                                    <span class="badge @Html.BadgeColorPicker(@e.Type)">@e.Date.DayOfWeek @e.Date.Day</span>
+                                @e.Name
+
+                                <!-- TODO: add this when activity page exists Html.ActionLink(e.Name, "Details", "Activity");-->
+                                    </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+        
+            }
+            
+        </div>
+        <div class="row">
+            <div class="span8">
+                <ul class="pager">
+                    <li class="previous">@Html.ActionLink("Tidigare", "Details", "Team", new { }, new { @class = "prev" })</li>
+                    <li class="next">@Html.ActionLink("Senare", "Details", new { }, new { @class = "next" })</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="span4">
+        <div class="page-header">
+            <h3>Mina aktiviteter</h3>
+        </div>
+    </div>
+</div>
+
+
+
+

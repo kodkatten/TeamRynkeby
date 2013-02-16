@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using EventBooking.Controllers.ViewModels;
@@ -12,12 +13,14 @@ namespace EventBooking.Controllers
     {
         private readonly ISecurityService _securityService;
 	    private readonly ITeamRepository _teamRepository;
-
-	    public TeamController(ISecurityService securityService, ITeamRepository teamRepository)
+     
+        public TeamController(ISecurityService securityService, ITeamRepository teamRepository)
         {
 	        _securityService = securityService;
 	        _teamRepository = teamRepository;
         }
+
+       
 
 	    public ActionResult Details()
         {
