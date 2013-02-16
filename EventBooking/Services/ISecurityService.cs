@@ -23,7 +23,7 @@ namespace EventBooking.Services
                 return context.Users.Find(userId);
             }
         }
-
+        
         public virtual bool SignIn(string userName, string password)
         {
             return WebSecurity.Login(userName, password);
