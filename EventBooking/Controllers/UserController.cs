@@ -3,6 +3,7 @@ using System.Web.Mvc;
 
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data.Queries;
+using EventBooking.Data.Repositories;
 using EventBooking.Services;
 
 namespace EventBooking.Controllers
@@ -11,11 +12,13 @@ namespace EventBooking.Controllers
     {
         private readonly GetTeamsQuery.Factory getTeamsCommandFactory;
         private readonly ISecurityService security;
+        private readonly IUserRepository userRepository;
 
-        public UserController(GetTeamsQuery.Factory getTeamsCommandFactory, ISecurityService security)
+        public UserController(GetTeamsQuery.Factory getTeamsCommandFactory, ISecurityService security, IUserRepository userRepository)
         {
             this.getTeamsCommandFactory = getTeamsCommandFactory;
             this.security = security;
+            this.userRepository = userRepository;
         }
 
         public ActionResult SignUp()
@@ -51,6 +54,7 @@ namespace EventBooking.Controllers
         {
             if (ModelState.IsValid)
             {
+                userRepository.Save(model.ToUser());
                 return RedirectToAction("Index", "Home");
             }
 

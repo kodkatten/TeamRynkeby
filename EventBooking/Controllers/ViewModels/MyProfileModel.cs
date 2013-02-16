@@ -54,5 +54,10 @@ namespace EventBooking.Controllers.ViewModels
         {
             return new TeamModel(team);
         }
+
+        public User ToUser()
+        {
+            return new User();
+        }
     }
 }

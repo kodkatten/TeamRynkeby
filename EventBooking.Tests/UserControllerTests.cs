@@ -4,6 +4,7 @@ using EventBooking.Controllers;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
 using EventBooking.Data.Queries;
+using EventBooking.Data.Repositories;
 using EventBooking.Services;
 using Moq;
 using NUnit.Framework;
@@ -15,14 +16,16 @@ namespace EventBooking.Tests
     {
         private UserController userController;
         private Mock<ISecurityService> security;
+        private Mock<IUserRepository> userRepository;
 
         [SetUp]
         public void SetUp()
         {
             var context = new Mock<EventBookingContext>();
             this.security = new Mock<ISecurityService>();
+            this.userRepository = new Mock<IUserRepository>();
 
-            this.userController = new UserController(() => new GetTeamsQuery(context.Object), this.security.Object);
+            this.userController = new UserController(() => new GetTeamsQuery(context.Object), this.security.Object, this.userRepository.Object);
         }
 
         [Test]
@@ -87,6 +90,8 @@ namespace EventBooking.Tests
         {
             var view = this.userController.MyProfile(new MyProfileModel()) as RedirectToRouteResult;
             Assert.IsNotNull(view);
+
+            userRepository.Verify(r => r.Save(It.IsAny<User>()));
         }
     }
 }
