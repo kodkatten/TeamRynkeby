@@ -6,7 +6,20 @@
 
 <div id="banner">
     <div id="expo">
-        <span>Team Rynkeby aktiviteter</span>
+        <h3 class="banner-header">Kommande aktiviteter</h3>
+        
+        <ul>
+            <li>
+                <span class="header-label label-city">Malmö</span><br />
+                <span class="header-label label-name rotate-right">A awsome activity</span>
+            </li>    
+            <li>
+                <span class="header-label label-city">Malmö</span><br />
+                <span class="header-label label-name rotate-right">A awsome activity</span>
+            </li>    
+
+        </ul>
+        
     </div>
 </div>
 
@@ -19,7 +32,7 @@
                 @foreach (var activity in Model.Activities)
                 {
                     <li>
-                        <a href="@activity.Url" class="link" rel="tooltip" data-original-title="@activity.Description">
+                        <a href= @UrlHelper.GenerateUrl(null, activity.Id, "Activity", "http", "", String.Empty, null, RouteTable.Routes, this.Request.RequestContext, false) class="link" rel="tooltip" data-original-title="@activity.Description">
                             <span class="label label-info">@activity.OrganizingTeam</span>
                             <span class="activity-date">@activity.DateFormatted</span>
                             <span class="activity-name">@activity.Name</span>

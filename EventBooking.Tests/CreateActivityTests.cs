@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using EventBooking.Controllers;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
+using EventBooking.Services;
 using NUnit.Framework;
 
 namespace EventBooking.Tests
@@ -84,6 +85,12 @@ namespace EventBooking.Tests
 
 	public class ActivityControllerShunt : ActivityController
 	{
+		public ActivityControllerShunt()
+			: base( new MockupSecurityService() )
+		{
+			
+		}
+
 		protected override void StoreActivity( Activity activity )
 		{
 			CreatedActivity = activity;

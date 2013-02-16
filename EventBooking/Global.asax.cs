@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Autofac;
+using Autofac.Core;
 using Autofac.Integration.Mvc;
 using EventBooking.Data;
 using EventBooking.Filters;
@@ -18,7 +19,7 @@ namespace EventBooking
             var builder = new ContainerBuilder();
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
             builder.RegisterModule(new DataDependencyModule());
-            
+            builder.RegisterModule(new ControllerDependencyModule());
             
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
