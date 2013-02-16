@@ -54,7 +54,6 @@
     #banner {
         height: 200px;
         width: 100%;
-        background-position: center right;
     }
 
     body {
@@ -63,7 +62,9 @@
     }
 
     #expo {
-        width: 100%;
+        width: 99%;
+        margin-left: 0;
+        background-position: center right;
     }
 
     .navbar-fixed-top {
