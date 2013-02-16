@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
+using Autofac;
 using EventBooking.Controllers;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
@@ -15,7 +16,9 @@ namespace EventBooking.Tests
 		[SetUp]
 		public void Setup()
 		{
-			EventBookingMapper.SetupMappers();
+			var builder = new ContainerBuilder();
+			builder.RegisterType<MockupSecurityService>().As<ISecurityService>().InstancePerLifetimeScope();
+			EventBookingMapper.SetupMappers(builder.Build());
 		}
 	}
 

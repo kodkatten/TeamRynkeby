@@ -51,7 +51,7 @@ namespace EventBooking.Controllers.ViewModels
 
         private static TeamModel AsTeamModel(Team team)
         {
-            return new TeamModel(team);
+	        return Mapper.Map<TeamModel>(team);
         }
 
         public User ToUser()

@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
 using EventBooking.Data.Repositories;
@@ -40,13 +41,13 @@ namespace EventBooking.Controllers
 		public ActionResult Team(int id)
 		{
 			// TODO: check permissions
-
 			var team = _teamRepository.TryGetTeam(id);
-			
-			if(team == null)
+
+			if (team == null)
 				throw new HttpException(404, "Could not find team");
-			
-			return View("ViewTeam", team);
+
+			var teamModel = Mapper.Map<Team, TeamModel>(team);
+			return View("ViewTeam", teamModel);
 
 		}
 
