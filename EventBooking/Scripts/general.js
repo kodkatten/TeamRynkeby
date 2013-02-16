@@ -33,5 +33,9 @@ $(function () {
     });
 
     $('.datepicker').pickadate();
-
+    $('.timepicker').timepicker({
+        minuteStep: 15,
+        showSeconds: false,
+        showMeridian: false
+    });
 });

@@ -4,29 +4,42 @@
 
 ul {
     list-style: none;
-    margin-left: 0; 
+    margin-left: 0;
 }
 
 .activity-list-short li {
     padding: 6px 0 6px 0;
 }
 
+<<<<<<< HEAD
+.rotater div {
+    display: inline-block;
+    width: 500px;
+}
+
+.month h3 {
+    text-transform: capitalize;
+=======
 .page-header > h3 {
     line-height: 20px;
+>>>>>>> 6e3d669a8b40a017aa7d87cef708d5e5c1b88cb7
 }
 
 @font-face {
     font-family: 'MuseoSlab500Regular';
     src: url('/Content/images/Museo_Slab_500-webfont.eot');
-    src: url('/Content/images/Museo_Slab_500-webfont.eot?#iefix') format('embedded-opentype'),
-        url('/Content/images/Museo_Slab_500-webfont.woff') format('woff'),
-        url('/Content/images/Museo_Slab_500-webfont.ttf') format('truetype'),
-        url('/Content/images/Museo_Slab_500-webfont.svg#MuseoSlab500Regular') format('svg');
+    src: url('/Content/images/Museo_Slab_500-webfont.eot?#iefix') format('embedded-opentype'), url('/Content/images/Museo_Slab_500-webfont.woff') format('woff'), url('/Content/images/Museo_Slab_500-webfont.ttf') format('truetype'), url('/Content/images/Museo_Slab_500-webfont.svg#MuseoSlab500Regular') format('svg');
     font-weight: normal;
     font-style: normal;
 }
+<<<<<<< HEAD
+=======
 
 .row-fluid {
   margin: 20px 0 0 0;
+  
+.disabled {
+    color: gray;
 }
 
+>>>>>>> 6e3d669a8b40a017aa7d87cef708d5e5c1b88cb7

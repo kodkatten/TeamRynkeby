@@ -15,6 +15,7 @@ namespace EventBooking.Controllers
 		private readonly ISecurityService _securityService;
 		private readonly ActivityRepository _activityRepository;
 		private readonly IPrefedinedItemRepository _prefedinedItems;
+        	private static int NumberOfActivitiesPerPage = 10;
 
 		public ActivityController(ISecurityService securityService, ActivityRepository activityRepository, IPrefedinedItemRepository prefedinedItems)
 		{
@@ -25,57 +26,61 @@ namespace EventBooking.Controllers
 
 		public ActionResult Create()
 		{
-			if (!_securityService.IsLoggedIn)
+			if ( !_securityService.IsLoggedIn )
 			{
-				return RedirectToAction("Checkpoint", "Security", new { returnUrl = Url.Action("Create") });
+				return RedirectToAction( "Checkpoint", "Security", new { returnUrl = Url.Action( "Create" ) } );
 			}
 			return View();
 		}
 
 		public ActionResult Index()
 		{
-			return RedirectToAction("Upcoming");
+			return RedirectToAction( "Upcoming" );
 		}
 
 		[HttpPost]
-		public ActionResult Create(CreateActivityModel model)
+		public ActionResult Create( CreateActivityModel model )
 		{
-			if (!ModelState.IsValid)
+			if ( !ModelState.IsValid )
 				return View();
-			var activity = Mapper.Map<Activity>(model);
+			var activity = Mapper.Map<Activity>( model );
 			activity.OrganizingTeam = _securityService.CurrentUser.Team;
+			model.Session.FromTime = activity.Date.Date.AddHours(model.Session.FromTime.Hour).AddMinutes(model.Session.FromTime.Minute);
+			model.Session.ToTime = activity.Date.Date.AddHours(model.Session.ToTime.Hour).AddMinutes(model.Session.ToTime.Minute);
+			activity.Sessions = new List<Session> { Mapper.Map<Session>( model.Session ) };
 		    activity.Coordinator = _securityService.CurrentUser;
 			StoreActivity(activity);
 			return RedirectToAction("Index", "Home");
 		}
 
-		public static int NumberOfActivities = 10;
-
-		public ActionResult Upcoming(int skip = 0)
+        public ActionResult Upcoming(int page = 0)
 		{
+            page = page < 0 ? 0 : page;
+            var skip = NumberOfActivitiesPerPage * page;
 			IEnumerable<Activity> query = null;
-			if (_securityService.IsLoggedIn)
+
+			if ( _securityService.IsLoggedIn )
 			{
 				var user = _securityService.CurrentUser;
-				if (user.IsMemberOfATeam())
+				if ( user.IsMemberOfATeam() )
 				{
-					query = _activityRepository.GetUpcomingActivitiesByTeam(user.Team.Id, skip, NumberOfActivities);
+		                    query = _activityRepository.GetUpcomingActivitiesByTeam(user.Team.Id, skip, NumberOfActivitiesPerPage);
 				}
 			}
 
-			if (query == null)
+			if ( query == null )
 			{
-				query = _activityRepository.GetUpcomingActivities(skip, NumberOfActivities);
+                		query = _activityRepository.GetUpcomingActivities(skip, NumberOfActivitiesPerPage);
 			}
 
-			var viewModel = new UpcomingActivitiesModel(query.ToArray());
+		        var viewModel = query.ToArray().Select(data => new ActivityModel(data));
 
-			return this.PartialView(viewModel);
+			return this.PartialView( viewModel );
 		}
 
-		protected virtual void StoreActivity(Activity activity)
+		protected virtual void StoreActivity( Activity activity )
 		{
-			_activityRepository.Add(activity);
+			_activityRepository.Add( activity );
 		}
 
 		public ActionResult Details(int id)

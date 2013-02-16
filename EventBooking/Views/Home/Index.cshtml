@@ -41,11 +41,11 @@
                 </select>
             }
             <h3>Kommande aktiviteter</h3>
-            <div class="upcoming-activity-list">
+            <div class="upcoming-activity-list" data-update-uri="http://localhost:49385/Activity/Upcoming">
                 @Html.Action("Upcoming", "Activity")    
             </div>
-            <a href="http://localhost:49385/Activity/Upcoming" class="update-activities-list-command">Föregående</a>
-            <a href="http://localhost:49385/Activity/Upcoming?skip=3" class="update-activities-list-command">Nästa</a>
+            <a href="#" class="previous-activities-list-command">Föregående</a>
+            <a href="#" class="next-activities-list-command">Nästa</a>
             
         </div>
         <div class="span6">
@@ -76,6 +76,6 @@
     });
     
     (function(intiUpcomingEventsUpdate, $, undefined) {
-        intiUpcomingEventsUpdate($('.update-activities-list-command'), $('.upcoming-activity-list'));
+        intiUpcomingEventsUpdate($('.previous-activities-list-command'), $('.next-activities-list-command'), $('.upcoming-activity-list'));
     }(teamrynkebyse.intiUpcomingEventsUpdate, jQuery));
 }

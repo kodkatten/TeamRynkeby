@@ -26,7 +26,8 @@ namespace EventBooking
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
 
             AreaRegistration.RegisterAllAreas();
-
+			HtmlHelper.ClientValidationEnabled = true;
+			HtmlHelper.UnobtrusiveJavaScriptEnabled = true;
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
