@@ -23,6 +23,11 @@ namespace EventBooking.Controllers
             }
 
             var team = _securityService.CurrentUser.Team;
+
+            if (null == team)
+            {
+                return RedirectToAction("MyProfile", "User");
+            }
             var model = new TeamActivitiesModel(team);
             return View(model);
         }
