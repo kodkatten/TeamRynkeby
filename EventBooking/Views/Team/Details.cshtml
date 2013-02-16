@@ -23,10 +23,12 @@
                         {
 
                             <li>
+                                <a href="@Url.Action("Details", "Activity", new { @e.Id })" class="link" rel="tooltip" data-original-title="@e.Description">
                                 <span class="badge badge-info">@e.Date.DayOfWeek @e.Date.Day</span>
                                 @e.Name
 
                                 <!-- TODO: add this when activity page exists Html.ActionLink(e.Name, "Details", "Activity");-->
+                                    </a>
                             </li>
                         }
                     </ul>
