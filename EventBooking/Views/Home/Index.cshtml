@@ -15,14 +15,13 @@
             <h3 class="visible-phone">Vi kämpar för livet</h3>
 
             <ul class="hidden-phone">
-                <li>
-                    <span class="header-label label-city">Malmö</span><br />
-                    <span class="header-label label-name rotate-right">A awsome activity</span>
-                </li>
-                <li>
-                    <span class="header-label label-city">Malmö</span><br />
-                    <span class="header-label label-name rotate-right">A awsome activity</span>
-                </li>
+                @foreach (var activity in Model.Activities.Take(2))
+                {
+                    <li>
+                        <span class="header-label label-city">@activity.OrganizingTeam</span><br />
+                        <span class="header-label label-name rotate-right">@activity.Name</span>
+                    </li>
+                }                
             </ul>
         </div>
     </div>
