@@ -86,7 +86,7 @@ namespace EventBooking.Tests
 	public class ActivityControllerShunt : ActivityController
 	{
 		public ActivityControllerShunt()
-			: base( new MockupSecurityService() )
+			: base( new MockupSecurityService(), null )
 		{
 			
 		}

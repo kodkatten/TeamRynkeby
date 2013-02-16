@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
+using EventBooking.Data.Repositories;
 using EventBooking.Services;
 
 namespace EventBooking.Controllers
@@ -11,12 +13,15 @@ namespace EventBooking.Controllers
 	{
 		private readonly ISecurityService _securityService;
 
-		public ActivityController(ISecurityService securityService)
-		{
-			_securityService = securityService;
-		}
+        private readonly IActivityRepository _activityRepository;
 
-		public ActionResult Create()
+        public ActivityController(ISecurityService securityService, IActivityRepository activityRepository)
+        {
+            _securityService = securityService;
+            this._activityRepository = activityRepository;
+        }
+
+	    public ActionResult Create()
 		{
 			if (!_securityService.IsLoggedIn)
 			{
@@ -24,6 +29,11 @@ namespace EventBooking.Controllers
 			}
 			return View();
 		}
+
+        public ActionResult Index()
+        {
+            return RedirectToAction("Upcoming");
+        }
 
 		[HttpPost]
 		public ActionResult Create(CreateActivityModel model)
@@ -33,6 +43,29 @@ namespace EventBooking.Controllers
 			StoreActivity(Mapper.Map<Activity>(model));
 			return RedirectToAction("Index", "Home");
 		}
+        
+        public ActionResult Upcoming()
+        {
+            IQueryable<Activity> query = null;
+            if (User.Identity.IsAuthenticated)
+            {
+                User user = _securityService.GetUser(User.Identity.Name);
+                if (user.IsMemberOfATeam())
+                {
+                    // TODO: Fix to accept team here!
+                    query = _activityRepository.GetUpcomingActivities();
+                }
+            }
+
+            if (query == null)
+            {
+                query = _activityRepository.GetUpcomingActivities();
+            }
+
+            var model = query.ToArray().Select(data => new ActivityModel(data));
+
+            return this.PartialView(model);
+        }
 
 		protected virtual void StoreActivity(Activity activity)
 		{
@@ -47,8 +80,5 @@ namespace EventBooking.Controllers
             }
 	        return View();
 	    }
-
-
-
 	}
 }
