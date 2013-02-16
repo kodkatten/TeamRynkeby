@@ -48,7 +48,7 @@ namespace EventBooking.Controllers
 				return Redirect(model.ReturnUrl);
 			}
 
-			User user = _securityService.GetUser(model.ElectronicMailAddress);
+			User user = _securityService.CurrentUser;
 
 			return RedirectToAction("Details", "Team", new {id = user.Team.Id});
 		}

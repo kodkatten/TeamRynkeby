@@ -48,9 +48,9 @@ namespace EventBooking.Controllers
         public ActionResult Upcoming()
         {
             IQueryable<Activity> query = null;
-            if (User.Identity.IsAuthenticated)
+            if (_securityService.IsLoggedIn)
             {
-                var user = _securityService.GetUser(User.Identity.Name);
+                var user = _securityService.CurrentUser;
                 if (user.IsMemberOfATeam())
                 {
                     query = _activityRepository.GetUpcomingActivitiesByTeam(user.Team.Id);
