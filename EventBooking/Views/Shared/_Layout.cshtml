@@ -19,6 +19,14 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
      @Scripts.Render("~/bundles/general")
+
+    @if (IsSectionDefined("scripts"))
+    {
+        <script type="text/javascript" language="javascript">
+            @RenderSection("scripts")
+        </script>
+    }
+
      @Scripts.Render("~/bundles/pickadate")
 </body>
 </html>

@@ -68,6 +68,7 @@
     <Compile Include="Repositories\IActivityRepository.cs" />
     <Compile Include="Repositories\ITeamRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
+    <Compile Include="Repositories\TeamRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="SystemTime.cs" />
   </ItemGroup>
