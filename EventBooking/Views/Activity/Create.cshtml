@@ -7,40 +7,40 @@
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("Create", "Activity", FormMethod.Post, new{@class="form-horizontal"}))
+@using (Html.BeginForm("Create", "Activity", FormMethod.Post, new {@class = "form-horizontal"}))
 {
     <div class="control-group">
-        @Html.LabelFor(m => m.Name, new { @class = "control-label" })
+        @Html.LabelFor(m => m.Name, new {@class = "control-label"})
         <div class="controls">
-            @Html.TextBoxFor(m => m.Name, new { placeholder = "Rubrik" })
+            @Html.TextBoxFor(m => m.Name, new {placeholder = "Rubrik"})
             @Html.ValidationMessageFor(m => m.Name)
         </div>
     </div>
     <div class="control-group">
-        @Html.LabelFor(m => m.Description, new { @class = "control-label" })
+        @Html.LabelFor(m => m.Description, new {@class = "control-label"})
         <div class="controls">
-            @Html.TextAreaFor(m => m.Description, new { placeholder = "Beskrivning" })
+            @Html.TextAreaFor(m => m.Description, new {placeholder = "Beskrivning"})
             @Html.ValidationMessageFor(m => m.Description)
         </div>
     </div>
     <div class="control-group">
-        @Html.LabelFor(m => m.Summary, new { @class = "control-label" })
+        @Html.LabelFor(m => m.Summary, new {@class = "control-label"})
         <div class="controls">
-            @Html.TextAreaFor(m => m.Summary, new { placeholder = "Mer information" })
+            @Html.TextAreaFor(m => m.Summary, new {placeholder = "Mer information"})
             @Html.ValidationMessageFor(m => m.Summary)
         </div>
     </div>
     <div class="control-group">
-        @Html.LabelFor(m => m.Type, new { @class = "control-label" })
+        @Html.LabelFor(m => m.Type, new {@class = "control-label"})
         <div class="controls">
-            @Html.RadioButtonForEnum(m => m.Type )
+            @Html.RadioButtonForEnum(m => m.Type)
             @Html.ValidationMessageFor(m => m.Type)
         </div>
     </div>
     <div class="control-group">
-        @Html.LabelFor(m => m.Date, new { @class = "control-label" })
+        @Html.LabelFor(m => m.Date, new {@class = "control-label"})
         <div class="controls">
-            @Html.TextBoxFor(m => m.Date, new { placeholder = "Datum" })
+            @Html.TextBoxFor(m => m.Date, new {placeholder = "Datum", @class = "datepicker"})
             @Html.ValidationMessageFor(m => m.Date)
         </div>
     </div>
@@ -48,5 +48,5 @@
         <div class="controls">
             <button type="submit" class="btn">Skapa event</button>
         </div>
-    </div>   
+    </div>
 }

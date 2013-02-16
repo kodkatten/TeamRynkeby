@@ -31,4 +31,7 @@ $(function () {
         rotater.children().hide().slice(currentIndex, currentIndex + 2).show();
         return false;
     });
+
+    $('.datepicker').pickadate();
+
 });

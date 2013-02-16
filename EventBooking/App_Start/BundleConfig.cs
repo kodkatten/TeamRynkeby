@@ -15,6 +15,7 @@ namespace EventBooking
 				.Include("~/Content/bootstrap-responsive.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/general").Include("~/Scripts/general.js"));
+			bundles.Add( new ScriptBundle( "~/bundles/pickadate" ).Include( "~/Scripts/pickadate.js" ) );
 
         }
     }
