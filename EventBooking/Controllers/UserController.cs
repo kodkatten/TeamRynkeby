@@ -55,15 +55,20 @@ namespace EventBooking.Controllers
             if (ModelState.IsValid)
             {
                 var user = Mapper.Map(model, security.CurrentUser());
-                //userRepository.Save();
 
                 using (var context = new EventBookingContext())
                 {
+                    // GIEF TEAM!!111!!
                     if (user.Team != null)
+                    {
                         user.Team = context.Teams.Find(user.Team.Id);
+                        if (user.Team == null)
+                        {
+                            string message = string.Format("Could not find team (id={0}).", user.Team.Id);
+                            throw new InvalidOperationException(message);
+                        }
+                    }
 
-                    context.Users.Attach(user);
-                    context.Entry(user).State = EntityState.Modified;
                     context.SaveChanges();
                 }
 
