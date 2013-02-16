@@ -44,7 +44,7 @@ namespace EventBooking.Controllers
                                     {
                                         new User()
                                             {
-                                                Id = 1,
+                                                Id = 2,
                                                 Name = "Bug Buggson"
                                                 
                                             }
@@ -56,6 +56,34 @@ namespace EventBooking.Controllers
 
 
             return View(model);
+        }
+
+        [HttpGet]
+        public JsonResult ListTeamMembers(int teamId)
+        {
+            List<User> data = new List<User>
+                {
+                    new User()
+                        {
+                            Id = 2,
+                            Name = "Bug Buggson"
+                            
+
+                        },
+                    new User()
+                        {
+                            Id = 1,
+                            Name = "Fulhacke Fulhacksson"
+
+                        }
+
+                };
+            return new JsonResult
+            {
+                Data = data,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+
+            };
         }
 
     }

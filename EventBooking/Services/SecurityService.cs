@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Data.Entity;
+using System.Linq;
 using EventBooking.Data;
 using WebMatrix.WebData;
 
@@ -6,12 +8,12 @@ namespace EventBooking.Services
 {
 	public class SecurityService : ISecurityService
 	{
-		public virtual User GetUser(string userName)
+		private User GetUser(string userName)
 		{
 			int userId = WebSecurity.GetUserId(userName);
 			using (var context = new EventBookingContext())
 			{
-				return context.Users.Find(userId);
+				return context.Users.Where( u => u.Id == userId ).Include( t => t.Team ).First();
 			}
 		}
 
@@ -45,7 +47,7 @@ namespace EventBooking.Services
 
 		public virtual User CurrentUser
 		{
-			get { return GetUser(WebSecurity.CurrentUserName); }
+            get { return WebSecurity.CurrentUserName != null ? GetUser(WebSecurity.CurrentUserName) : null; }
 		}
 
 		public virtual bool IsLoggedIn

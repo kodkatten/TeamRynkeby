@@ -17,8 +17,17 @@ namespace EventBooking.Controllers
 
         public ActionResult Details()
         {
-            var user = GetUser();
-            var team = GetTeam();
+            if (!_securityService.IsLoggedIn)
+            {
+                return RedirectToAction("Checkpoint", "Security", new { returnUrl = Url.Action("Details") });
+            }
+
+            var team = _securityService.CurrentUser.Team;
+
+            if (null == team)
+            {
+                return RedirectToAction("MyProfile", "User");
+            }
             var model = new TeamActivitiesModel(team);
             return View(model);
         }

@@ -5,16 +5,13 @@ namespace EventBooking.Tests
 {
 	public class MockupSecurityService : SecurityService
 	{
-		private bool _isLoggedin;
-		private User _currentUser;
-
-		public string AcceptedEmail { get; set; }
+	    public string AcceptedEmail { get; set; }
 
 		public string AcceptedPassword { get; set; }
 
 		public override bool IsLoggedIn
 		{
-			get { return _isLoggedin; }
+			get { return null != CurrentUser; }
 		}
 
 		public User ReturnUser { get; set; }
@@ -25,20 +22,10 @@ namespace EventBooking.Tests
 		{
 			if (userName == AcceptedEmail && password == AcceptedPassword)
 			{
-				_isLoggedin = true;
+			    ReturnUser = ReturnUser ?? new User {Email = userName};
 				return true;
 			}
 			return false;
-		}
-
-		public override User GetUser(string userName)
-		{
-			if (userName == AcceptedEmail)
-			{
-				_isLoggedin = true;
-				return ReturnUser ?? new User();
-			}
-			return null;
 		}
 	}
 }

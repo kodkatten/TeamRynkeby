@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using EventBooking.Controllers;
+using EventBooking.Data;
 using EventBooking.Services;
 using Moq;
 using NUnit.Framework;
@@ -18,15 +19,6 @@ namespace EventBooking.Tests
     [TestFixture]
     public class TeamControllerTests
     {
-        [Test]
-        public void When_Somebody_wants_to_see_the_team_view_they_are_allowed_to()
-        {
-            var teamController = GetTeamController(loggedin: true);
-
-            var viewResult = teamController.Details() as ViewResult;
-
-            Assert.IsNotNull(viewResult);
-        }
 
         [Test]
         public void When_Nobody_wants_to_see_the_team_view_they_should_be_redirected_to_login_with_correct_redirect_url()
@@ -38,13 +30,41 @@ namespace EventBooking.Tests
             Assert.AreEqual("Checkpoint", activityOverview.RouteValues["Action"]);
         }
 
-        private static TeamController GetTeamController(bool loggedin = false)
+        [Test]
+        public void When_Somebody_wants_to_see_the_team_view_but_not_in_any_team_should_redirect_to_profile()
         {
-            var mockSecurityService = new MockupSecurityService { AcceptedEmail = string.Empty, AcceptedPassword = string.Empty };
-            if (loggedin)
-            {
-                mockSecurityService.SignIn(string.Empty, string.Empty);
-            }
+            var user = new User
+                {
+                    Created = DateTime.UtcNow,
+                    Name = "maaaah",
+                    Team = null
+                };
+            
+            var viewResult = GetTeamView<RedirectToRouteResult>(c => c.Details(), user);
+
+            Assert.IsNotNull(viewResult);
+            Assert.AreEqual("User", viewResult.RouteValues["Controller"]);
+            Assert.AreEqual("MyProfile", viewResult.RouteValues["Action"]);
+        }
+
+        [Test]
+        public void When_Somebody_wants_to_see_the_team_view_they_are_allowed_to()
+        {
+            var teamController = GetTeamController(new User { Team =  new Team { Id = 1337, Activities = new Activity[0]}});
+
+            var viewResult = teamController.Details() as ViewResult;
+
+            Assert.IsNotNull(viewResult);
+        }
+
+        private static TeamController GetTeamController(User user = null)
+        {
+            var mockSecurityService = new MockupSecurityService
+                {
+                    AcceptedEmail = string.Empty,
+                    AcceptedPassword = string.Empty,
+                    ReturnUser = user
+                };
             var request = new Mock<HttpRequestBase>();
             request.Setup(r => r.HttpMethod).Returns("GET");
             var mockHttpContext = new Mock<HttpContextBase>();
@@ -59,9 +79,9 @@ namespace EventBooking.Tests
         }
 
 
-        private static T GetTeamView<T>(Func<TeamController, ActionResult> navigate, bool loggedin = false) where T : class
+        private static T GetTeamView<T>(Func<TeamController, ActionResult> navigate, User user = null) where T : class
         {
-            var activityController = GetTeamController(loggedin);
+            var activityController = GetTeamController(user);
             var activityOverview = navigate(activityController) as T;
             return activityOverview;
         }

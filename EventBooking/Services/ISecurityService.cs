@@ -9,7 +9,6 @@ namespace EventBooking.Services
 	{
 		bool IsLoggedIn { get; }
 		User CurrentUser { get; }
-		User GetUser(string userName);
 		void SignOff();
 		bool SignIn(string username, string password);
 		void CreateUserAndAccount(string email, string password, DateTime created);
