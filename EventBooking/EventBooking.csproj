@@ -222,7 +222,7 @@
     <Content Include="Views\Admin\Partials\TeamMembers.cshtml" />
     <Content Include="Views\Shared\_LayoutWithBanner.cshtml" />
     <Content Include="Views\Shared\NavigationBar.cshtml" />
-    <Content Include="Views\Questions\Index.cshtml" />
+    <Content Include="Views\Questions\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -265,7 +265,6 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>61922</DevelopmentServerPort>
           <DevelopmentServerPort>49170</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:49385/</IISUrl>

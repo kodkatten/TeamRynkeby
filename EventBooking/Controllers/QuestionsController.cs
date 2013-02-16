@@ -11,19 +11,11 @@ namespace EventBooking.Controllers
         //
         // GET: /Questions/
 
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-
-        //
-        // GET: /Questions/Create
-
         public ActionResult Create()
         {
             return View();
         }
+
 
         //
         // POST: /Questions/Create
