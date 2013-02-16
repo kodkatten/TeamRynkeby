@@ -1,4 +1,5 @@
-﻿using EventBooking.Data;
+﻿using System;
+using EventBooking.Data;
 using WebMatrix.WebData;
 
 namespace EventBooking.Services
@@ -9,6 +10,7 @@ namespace EventBooking.Services
         User GetUser(string userName);
         void SignOff();
         bool SignIn(string username, string password);
+        void CreateUserAndAccount(string email, string password, DateTime created);
     }
 
     public class SecurityService : ISecurityService
@@ -25,6 +27,24 @@ namespace EventBooking.Services
         public virtual bool SignIn(string userName, string password)
         {
             return WebSecurity.Login(userName, password);
+        }
+
+        public void CreateUserAndAccount(string email, string password, DateTime created)
+        {
+            var earlier = DateTime.UtcNow;
+
+            WebSecurity.CreateUserAndAccount(email, password, new { Created = earlier });
+
+            using (var context = new EventBookingContext())
+            {
+                context.Users.Add(new User
+                {
+                    Email = email,
+                    Id = WebSecurity.GetUserId(email),
+                    Created = earlier
+                });
+                context.SaveChanges();
+            }
         }
 
         public void SignOff()

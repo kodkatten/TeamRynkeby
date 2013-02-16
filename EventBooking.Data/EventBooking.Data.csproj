@@ -66,6 +66,7 @@
     <Compile Include="Queries\GetActivitiesByMonthQuery.cs" />
     <Compile Include="Queries\GetTeamByIdQuery.cs" />
     <Compile Include="Queries\GetTeamsQuery.cs" />
+    <Compile Include="Repositories\IUserRepository.cs" />
     <Compile Include="SystemTime.cs" />
   </ItemGroup>
   <ItemGroup>
