@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EventBooking.Data
 {
@@ -16,6 +14,7 @@ namespace EventBooking.Data
         public int? Zipcode { get; set; }
         public string City { get; set; }
         public DateTime Created { get; set; }
+        public DateTime? Birthdate { get; set; }
         public Team Team { get; set; }
         public ICollection<Session> Sessions { get; set; }
 

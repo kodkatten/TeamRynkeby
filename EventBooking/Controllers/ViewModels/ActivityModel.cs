@@ -8,7 +8,7 @@ namespace EventBooking.Controllers.ViewModels
 		{
 			Id = activityData.Id.ToString();
 			Name = activityData.Name;
-			OrganizingTeam = activityData.OrganizingTeam.Name;
+			OrganizingTeam = activityData.OrganizingTeam == null ? "" : activityData.OrganizingTeam.Name;
 			DateFormatted = activityData.Date.ToSwedishShortDateString();
 			Description = activityData.Description;
 		}

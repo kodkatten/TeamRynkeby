@@ -16,13 +16,15 @@ namespace EventBooking.Tests
         private UserController userController;
         private Mock<ISecurityService> security;
         private Mock<IUserRepository> userRepository;
+        private Mock<ITeamRepository> teamRepository;
 
         [SetUp]
         public void SetUp()
         {
             this.security = new Mock<ISecurityService>();
             this.userRepository = new Mock<IUserRepository>();
-            this.userController = new UserController(security.Object, userRepository.Object);
+            this.teamRepository = new Mock<ITeamRepository>();
+            this.userController = new UserController(security.Object, userRepository.Object, teamRepository.Object);
         }
 
         [Test]

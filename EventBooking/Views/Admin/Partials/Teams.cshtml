@@ -2,7 +2,15 @@
 
 @model IEnumerable<EventBooking.Data.Team>
 
-@foreach (var team in Model)
-{
-    <span>@team.Name</span>
-}
+<div id="teams-container">
+    <h2>Teams</h2>
+    <ul id="teams-list">
+        @foreach (var team in Model)
+        {
+            <li>
+                @Html.CheckBox("testa")
+                <a class="btn-link">@team.Name</a>
+            </li>
+        }
+    </ul>
+</div>
