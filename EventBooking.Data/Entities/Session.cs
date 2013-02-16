@@ -11,5 +11,6 @@ namespace EventBooking.Data
         public DateTime ToTime { get; set; }
         public Activity Activity { get; set; }
         public ICollection<User> Volunteers { get; set; }
+		public int VolunteersNeeded { get; set; }
     }
 }

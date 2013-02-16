@@ -8,6 +8,7 @@ namespace EventBooking.Controllers.ViewModels
 		public static void SetupMappers()
 		{
 			Mapper.CreateMap<CreateActivityModel, Activity>();
+			Mapper.CreateMap<SessionModel, Session>();
 		    Mapper.CreateMap<MyProfileModel, User>();
 		    Mapper.CreateMap<User, MyProfileModel>();
 		}

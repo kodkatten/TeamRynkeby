@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using EventBooking.Data;
 
@@ -25,5 +26,30 @@ namespace EventBooking.Controllers.ViewModels
 
 		[Display( Name = "Mer information" )]
 		public string Summary { get; set; }
+
+		[Display( Name = "Pass" )]
+		[Required( ErrorMessage = "*" )]
+		public SessionModel Session { get; set; }
+	}
+
+	public class SessionModel
+	{
+		public SessionModel()
+		{
+			VolunteersNeeded = 0;
+		}
+
+		[Display( Name = "Start" )]
+		[Required( ErrorMessage = "*" )]
+		public DateTime FromTime { get; set; }
+
+		[Display( Name = "Slut" )]
+		[Required( ErrorMessage = "*" )]
+		[IsDateAfter("FromTime", true, ErrorMessage="Sluttiden måste vara efter starttiden")]
+		public DateTime ToTime { get; set; }
+
+		[Display( Name = "Deltagare" )]
+		[Required( ErrorMessage = "*" )]
+		public int VolunteersNeeded { get; set; }
 	}
 }

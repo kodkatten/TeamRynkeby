@@ -14,6 +14,7 @@ namespace EventBooking
 				.Include("~/Content/site.css")
 				.Include("~/Content/landingpage.css")
 				.Include("~/Content/bootstrap-responsive.css")
+				.Include("~/Content/bootstrap-timepicker.css")
 				.Include("~/Content/landingpage-phone.css")
 				.Include("~/Content/landingpage-tablet.css"));
 
@@ -24,6 +25,7 @@ namespace EventBooking
                 .Include("~/Scripts/upcomingEvents.js"));
 
 			bundles.Add( new ScriptBundle( "~/bundles/pickadate" ).Include( "~/Scripts/pickadate.js" ) );
+			bundles.Add( new ScriptBundle( "~/bundles/timepicker" ).Include( "~/Scripts/bootstrap-timepicker.js" ) );
 
             bundles.Add(new ScriptBundle("~/bundles/adminscripts").Include("~/Scripts/admin.js"));
 
