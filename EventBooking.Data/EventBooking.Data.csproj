@@ -63,6 +63,7 @@
     <Compile Include="Entities\User.cs" />
     <Compile Include="EventBookingContext.cs" />
     <Compile Include="Entities\UserType.cs" />
+    <Compile Include="Repositories\ActivityQueries.cs" />
     <Compile Include="Repositories\ActivityRepository.cs" />
     <Compile Include="Repositories\IActivityRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
