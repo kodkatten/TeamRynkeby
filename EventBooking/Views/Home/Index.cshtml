@@ -18,8 +18,10 @@
                 @foreach (var activity in Model.Activities)
                 {
                     <li>
-                        <span class="header-label label-city">@activity.OrganizingTeam.Name</span><br />
-                        <span class="header-label label-name rotate-right">@activity.Name</span>
+                        <a href="@Url.Action("Details", "Activity", new { id = activity.Id })">
+                                  <span class="header-label label-city">@activity.OrganizingTeam.Name</span><br />
+                                  <span class="header-label label-name rotate-right">@activity.Name</span>
+                        </a>
                     </li>
                 }                
             </ul>
