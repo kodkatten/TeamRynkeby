@@ -64,6 +64,7 @@
     <Compile Include="Entities\UserType.cs" />
     <Compile Include="Queries\GetActivitiesByMonthQuery.cs" />
     <Compile Include="Queries\GetTeamByIdQuery.cs" />
+    <Compile Include="Queries\GetTeamsQuery.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="EntityModelDiagram.cd" />

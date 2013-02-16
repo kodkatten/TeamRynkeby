@@ -146,6 +146,7 @@
     <Compile Include="Controllers\ViewModels\MyProfileModel.cs" />
     <Compile Include="Controllers\ViewModels\SignUpModel.cs" />
     <Compile Include="Controllers\ViewModels\TeamEventsModel.cs" />
+    <Compile Include="Controllers\ViewModels\TeamModel.cs" />
     <Compile Include="Filters\EventBookingSeedInitializer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -158,10 +159,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Content Include="App_Data\EventBooking.mdf" />
-    <Content Include="App_Data\EventBooking_log.ldf">
-      <DependentUpon>EventBooking.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap-responsive.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -191,7 +188,9 @@
     <Content Include="Views\User\MyProfile.cshtml" />
     <Content Include="Views\User\SignUp.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

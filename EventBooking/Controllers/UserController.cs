@@ -2,13 +2,20 @@
 using System.Web.Mvc;
 
 using EventBooking.Controllers.ViewModels;
-using EventBooking.Data;
+using EventBooking.Data.Queries;
 using WebMatrix.WebData;
 
 namespace EventBooking.Controllers
 {
     public class UserController : Controller
     {
+        private readonly GetTeamsQuery.Factory getTeamsCommandFactory;
+
+        public UserController(GetTeamsQuery.Factory getTeamsCommandFactory)
+        {
+            this.getTeamsCommandFactory = getTeamsCommandFactory;
+        }
+
         public ActionResult SignUp()
         {
             return View();
@@ -30,13 +37,18 @@ namespace EventBooking.Controllers
         [Authorize]
         public ActionResult MyProfile()
         {
+            var query = getTeamsCommandFactory.Invoke();
+            var model = new MyProfileModel(query.Execute());
+
+            return View(model);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult MyProfile(MyProfileModel model)
+        {
             if (ModelState.IsValid)
             {
-                using (var context = new EventBookingContext())
-                {
-                    
-                }
-
                 return View();
             }
 

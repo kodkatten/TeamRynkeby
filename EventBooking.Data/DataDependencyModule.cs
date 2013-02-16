@@ -9,6 +9,7 @@ namespace EventBooking.Data
         {
             builder.RegisterType<EventBookingContext>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<GetActivitiesByMonthQuery>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<GetTeamsQuery>().AsSelf().InstancePerLifetimeScope();
         }
     }
 }
