@@ -13,6 +13,7 @@ namespace EventBooking.Data
 		public IDbSet<User> Users { get; set; }
 		public IDbSet<Activity> Activities { get; set; }
 		public IDbSet<Team> Teams { get; set; }
+		public IDbSet<Session> Sessions { get; set; }
 		public IDbSet<PredefinedActivityItem> PredefinedActivityItems { get; set; }
 
 		void IEventBookingContext.SaveChanges()

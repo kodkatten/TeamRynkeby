@@ -6,7 +6,7 @@
 }
 
 <div class="page-header">
-  <h1>@Model.Name</h1>
+    <h1>@Model.Name</h1>
 </div>
 
 <div class="row">
@@ -26,17 +26,17 @@
                             <li>
                                 <a href="@Url.Action("Details", "Activity", new { @e.Id })" class="link" rel="tooltip" data-original-title="@e.Description">
                                     <span class="badge @Html.BadgeColorPicker(@e.Type)">@e.Date.DayOfWeek @e.Date.Day</span>
-                                @e.Name
+                                    @e.Name
 
-                                <!-- TODO: add this when activity page exists Html.ActionLink(e.Name, "Details", "Activity");-->
-                                    </a>
+                                    <!-- TODO: add this when activity page exists Html.ActionLink(e.Name, "Details", "Activity");-->
+                                </a>
                             </li>
                         }
                     </ul>
                 </div>
         
             }
-            
+
         </div>
         <div class="row">
             <div class="span8">
@@ -51,6 +51,19 @@
         <div class="page-header">
             <h3>Mina aktiviteter</h3>
         </div>
+
+        <ul>
+            @foreach (var e in Model.MyActivites)
+            {
+
+                <li>
+                    <a href="@Url.Action("Details", "Activity", new { @e.Id })" class="link" rel="tooltip" data-original-title="@e.Description">
+                        <span class="badge @Html.BadgeColorPicker(@e.Type)">@e.Date.DayOfWeek @e.Date.Day</span>
+                        @e.Name
+                    </a>
+                </li>
+            }
+        </ul>
     </div>
 </div>
 
