@@ -5,6 +5,8 @@ namespace EventBooking.Controllers.ViewModels
 {
     public class  LandingPageModel
     {
+        public bool IsNobody { get; set; }
+        public int SelectedTeamId { get; set; } 
         public IEnumerable<ActivityModel> Activities { get; private set; }
 
         public LandingPageModel(IEnumerable<Data.Activity> activitiesData)
