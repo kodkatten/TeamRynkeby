@@ -189,6 +189,7 @@
     <Content Include="Views\User\MyProfile.cshtml" />
     <Content Include="Views\User\SignUp.cshtml" />
     <Content Include="Views\Activity\details.cshtml" />
+    <Content Include="Views\Home\UpcommingActivities.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
