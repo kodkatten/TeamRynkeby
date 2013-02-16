@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
-
+using AutoMapper;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
 using EventBooking.Data.Queries;
@@ -55,7 +55,7 @@ namespace EventBooking.Controllers
         {
             if (ModelState.IsValid)
             {
-                userRepository.Save(model.ToUser());
+                userRepository.Save(Mapper.Map(model, security.CurrentUser()));
                 return RedirectToAction("Index", "Home");
             }
 

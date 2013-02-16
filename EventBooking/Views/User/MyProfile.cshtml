@@ -62,7 +62,7 @@
     <div class="control-group">
         @Html.LabelFor(m => m.Team, new { @class = "control-label" })
         <div class="controls">
-            @Html.DropDownListFor(m => m.Team.Id, new SelectList(Model.Teams, "Id", "Name"))
+            @Html.DropDownListFor(m => m.Team.Id, new SelectList(Model.Teams, "Id", "Name"), Model.Team != null ? new { @disabled = "disabled" } : null)
             @Html.ValidationMessageFor(m => m.Team)
         </div>
     </div>

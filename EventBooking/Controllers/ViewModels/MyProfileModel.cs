@@ -31,7 +31,7 @@ namespace EventBooking.Controllers.ViewModels
         public string Cellphone { get; set; }
         
         [Display(Name = "Födelsedatum")]
-        public DateTime Birthdate { get; set; }
+        public DateTime? Birthdate { get; set; }
         
         [Display(Name = "Team")]
         [Required(ErrorMessage = "*")]
