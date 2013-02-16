@@ -10,11 +10,13 @@ namespace EventBooking.Controllers
     {
         private readonly ISecurityService _securityService;
         private readonly ITeamRepository _team;
+        private readonly ActivityRepository _activityRepository;
 
-        public HomeController(ISecurityService security, ITeamRepository team)
+        public HomeController(ISecurityService security, ITeamRepository team, ActivityRepository activityRepository)
         {
-            _securityService = securityService;
+            _securityService = security;
             _team = team;
+            _activityRepository = activityRepository;
         }
 
         public ActionResult Index(int teamId = 0)
@@ -34,8 +36,10 @@ namespace EventBooking.Controllers
             // Get all teams.
             ViewBag.Teams = _team.GetTeams().ToArray();
 
+            var nextTwoActivities = _activityRepository.GetUpcomingActivities(0, 2);
+
             // Create the model.
-            var model = new LandingPageModel { IsNobody = isNobody };
+            var model = new LandingPageModel(nextTwoActivities) { IsNobody = isNobody };
             return View(model);
         }
     }

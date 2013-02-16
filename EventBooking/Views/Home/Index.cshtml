@@ -15,10 +15,10 @@
             <h3 class="visible-phone">Vi kämpar för livet</h3>
 
             <ul class="hidden-phone">
-                @foreach (var activity in Model.Activities.Take(2))
+                @foreach (var activity in Model.Activities)
                 {
                     <li>
-                        <span class="header-label label-city">@activity.OrganizingTeam</span><br />
+                        <span class="header-label label-city">@activity.OrganizingTeam.Name</span><br />
                         <span class="header-label label-name rotate-right">@activity.Name</span>
                     </li>
                 }                
