@@ -4,7 +4,7 @@ using System.Web.Mvc;
 using AutoMapper;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
-using EventBooking.Data.Queries;
+using EventBooking.Data.Repositories;
 using EventBooking.Services;
 
 namespace EventBooking.Controllers
@@ -13,12 +13,12 @@ namespace EventBooking.Controllers
 	{
 		private readonly ISecurityService _securityService;
 
-        private readonly GetUpcomingActivitiesQuery.Factory getUpcomingEventsQueryFactory;
+        private readonly IActivityRepository _activityRepository;
 
-        public ActivityController(ISecurityService securityService, GetUpcomingActivitiesQuery.Factory getUpcomingEventsQueryFactory)
+        public ActivityController(ISecurityService securityService, IActivityRepository activityRepository)
         {
             _securityService = securityService;
-            this.getUpcomingEventsQueryFactory = getUpcomingEventsQueryFactory;
+            this._activityRepository = activityRepository;
         }
 
 	    public ActionResult Create()
@@ -41,8 +41,23 @@ namespace EventBooking.Controllers
         
         public ActionResult Upcoming()
         {
-            var query = this.getUpcomingEventsQueryFactory();
-            var model = query.Execute().Select(data => new ActivityModel(data));
+            IQueryable<Activity> query = null;
+            if (User.Identity.IsAuthenticated)
+            {
+                User user = _securityService.GetUser(User.Identity.Name);
+                if (user.IsMemberOfATeam())
+                {
+                    // TODO: Fix to accept team here!
+                    query = _activityRepository.GetUpcomingActivities();
+                }
+            }
+
+            if (query == null)
+            {
+                query = _activityRepository.GetUpcomingActivities();
+            }
+
+            var model = query.Select(data => new ActivityModel(data));
 
             return this.PartialView(model);
         }
@@ -60,8 +75,5 @@ namespace EventBooking.Controllers
             }
 	        return View();
 	    }
-
-
-
 	}
 }
