@@ -11,11 +11,13 @@ namespace EventBooking.Controllers
     {
         private readonly ISecurityService security;
         private readonly IUserRepository userRepository;
+        private readonly ITeamRepository teamRepository;
 
-        public UserController(ISecurityService security, IUserRepository userRepository)
+        public UserController(ISecurityService security, IUserRepository userRepository, ITeamRepository teamRepository)
         {
             this.security = security;
             this.userRepository = userRepository;
+            this.teamRepository = teamRepository;
         }
 
         public ActionResult SignUp()
@@ -40,7 +42,7 @@ namespace EventBooking.Controllers
         [Authorize]
         public ActionResult MyProfile()
         {
-            var model = new MyProfileModel();
+            var model = new MyProfileModel(security.CurrentUser(), teamRepository.GetTeams());
             return View(model);
         }
 
@@ -54,7 +56,7 @@ namespace EventBooking.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var viewModel = new MyProfileModel(model.ToUser(), null);
+            var viewModel = new MyProfileModel(model.ToUser(), teamRepository.GetTeams());
 
             return View(viewModel);
         }
