@@ -8,5 +8,11 @@ namespace EventBooking.Controllers
 		{
 			return RedirectToAction("Index", "Home");
 		}
+
+
+	    public ActionResult Details(int id)
+	    {
+	        return View();
+	    }
 	}
 }

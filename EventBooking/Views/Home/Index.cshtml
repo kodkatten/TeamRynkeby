@@ -19,7 +19,7 @@
                 @foreach (var activity in Model.Activities)
                 {
                     <li>
-                        <a href="@activity.Url" class="link" rel="tooltip" data-original-title="@activity.Description">
+                        <a href= @UrlHelper.GenerateUrl(null, activity.Id, "Activity", "http", "", String.Empty, null, RouteTable.Routes, this.Request.RequestContext, false) class="link" rel="tooltip" data-original-title="@activity.Description">
                             <span class="label label-info">@activity.OrganizingTeam</span>
                             <span class="activity-date">@activity.DateFormatted</span>
                             <span class="activity-name">@activity.Name</span>
