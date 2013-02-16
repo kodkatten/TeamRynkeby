@@ -18,8 +18,8 @@ namespace EventBooking.Data
         {
             this.SaveChanges();
         }
-
-        DbEntityEntry IEventBookingContext.Entry<TEntity>(TEntity entity)
+		
+		DbEntityEntry IEventBookingContext.Entry<TEntity>(TEntity entity)
         {
             return this.Entry(entity);
         }
