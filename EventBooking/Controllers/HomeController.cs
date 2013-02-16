@@ -11,12 +11,13 @@ namespace EventBooking.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly GetUpcomingActivitiesQuery.Factory getUpcomingActivitiesCommandFactory;
         private readonly IActivityRepository _activities;
         private readonly ISecurityService _security;
-
-        public HomeController(IActivityRepository activities, ISecurityService security)
+        public HomeController(IActivityRepository activities, ISecurityService security, GetUpcomingActivitiesQuery.Factory getUpcomingActivitiesCommandFactory)
         {
             _activities = activities;
+            this.getUpcomingActivitiesCommandFactory = getUpcomingActivitiesCommandFactory;
             _security = security;
         }
 

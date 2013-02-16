@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
+using EventBooking.Data.Queries;
 using EventBooking.Services;
 
 namespace EventBooking.Controllers
@@ -11,12 +13,15 @@ namespace EventBooking.Controllers
 	{
 		private readonly ISecurityService _securityService;
 
-		public ActivityController(ISecurityService securityService)
-		{
-			_securityService = securityService;
-		}
+        private readonly GetUpcomingActivitiesQuery.Factory getUpcomingEventsQueryFactory;
 
-		public ActionResult Create()
+        public ActivityController(ISecurityService securityService, GetUpcomingActivitiesQuery.Factory getUpcomingEventsQueryFactory)
+        {
+            _securityService = securityService;
+            this.getUpcomingEventsQueryFactory = getUpcomingEventsQueryFactory;
+        }
+
+	    public ActionResult Create()
 		{
 			if (!_securityService.IsLoggedIn)
 			{
@@ -33,6 +38,14 @@ namespace EventBooking.Controllers
 			StoreActivity(Mapper.Map<Activity>(model));
 			return RedirectToAction("Index", "Home");
 		}
+        
+        public ActionResult Upcoming()
+        {
+            var query = this.getUpcomingEventsQueryFactory();
+            var model = query.Execute().Select(data => new ActivityModel(data));
+
+            return this.PartialView(model);
+        }
 
 		protected virtual void StoreActivity(Activity activity)
 		{
