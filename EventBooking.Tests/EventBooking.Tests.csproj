@@ -96,6 +96,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EventBooking.Data\EventBooking.Data.csproj">
+      <Project>{4F7A1658-6752-4920-8D8F-67A391E548F4}</Project>
+      <Name>EventBooking.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EventBooking\EventBooking.csproj">
       <Project>{2a54b809-3e76-43c9-b0be-e47ae731fbc9}</Project>
       <Project>{2A54B809-3E76-43C9-B0BE-E47AE731FBC9}</Project>

@@ -51,6 +51,9 @@
     <Reference Include="Autofac.Integration.Mvc">
       <HintPath>..\packages\Autofac.Mvc4.3.0.0\lib\net40\Autofac.Integration.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.2.2.0\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -142,6 +145,7 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ViewModels\ActivityModel.cs" />
     <Compile Include="Controllers\ViewModels\DateTimeExtensions.cs" />
+    <Compile Include="Controllers\ViewModels\EventBookingMapper.cs" />
     <Compile Include="Controllers\ViewModels\LandingPageModel.cs" />
     <Compile Include="Controllers\ViewModels\MyProfileModel.cs" />
     <Compile Include="Controllers\ViewModels\SignUpModel.cs" />
@@ -190,6 +194,7 @@
     <Content Include="Views\Team\Details.cshtml" />
     <Content Include="Views\User\MyProfile.cshtml" />
     <Content Include="Views\User\SignUp.cshtml" />
+    <Content Include="Views\Activity\Create.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
