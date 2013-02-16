@@ -10,12 +10,10 @@ using WebMatrix.WebData;
 
 namespace EventBooking.Filters
 {
-    internal class EventBookingSeedInitializer : IDatabaseInitializer<EventBookingContext>
+    internal class EventBookingSeedInitializer : DropCreateDatabaseAlways<EventBookingContext>
     {
-
-        public void InitializeDatabase(EventBookingContext context)
+        protected override void Seed(EventBookingContext context)
         {
-            Database.SetInitializer(new CreateDatabaseIfNotExists<EventBookingContext>());
             WebSecurity.InitializeDatabaseConnection("DefaultConnection", "Users", "Id", "Email", autoCreateTables: true);
 
             var membership = (SimpleMembershipProvider)Membership.Provider;
