@@ -20,7 +20,7 @@ namespace EventBooking.Controllers
 		{
 			if (!_securityService.IsLoggedIn)
 			{
-				return RedirectToAction("Checkpoint", "Security");
+                return RedirectToAction("Checkpoint", "Security", new { returnUrl = Url.Action("Create") });
 			}
 			return View();
 		}
@@ -39,18 +39,16 @@ namespace EventBooking.Controllers
 			throw new NotImplementedException();
 		}
 
-		public ActionResult Index()
-		{
-			if (!_securityService.IsLoggedIn)
-			{
-				return RedirectToAction("Checkpoint", "Security");
-			}
-			return new ViewResult();
-		}
+	    public ActionResult Details(int id)
+	    {
+            if (!_securityService.IsLoggedIn)
+            {
+                return RedirectToAction("Checkpoint", "Security", new { returnUrl = Url.Action("Details", id) });
+            }
+	        return View();
+	    }
 
-		public ActionResult Details(int id)
-		{
-			return View();
-		}
+
+
 	}
 }
