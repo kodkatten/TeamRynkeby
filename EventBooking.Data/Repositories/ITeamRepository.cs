@@ -7,5 +7,7 @@ namespace EventBooking.Data.Repositories
     public interface ITeamRepository
     {
         IEnumerable<Team> GetTeams();
-    }
+
+		Team Get( int teamId );
+	}
 }

@@ -22,7 +22,7 @@ namespace EventBooking.Services
 			return WebSecurity.Login(userName, password);
 		}
 
-		public void CreateUserAndAccount(string email, string password, DateTime created)
+		public virtual void CreateUserAndAccount(string email, string password, DateTime created)
 		{
 			DateTime earlier = DateTime.UtcNow;
 

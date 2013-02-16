@@ -17,5 +17,10 @@ namespace EventBooking.Data.Repositories
         {
             return context.Teams;
         }
+
+	    public Team Get(int teamId)
+	    {
+		    return context.Teams.Find(teamId);
+	    }
     }
 }

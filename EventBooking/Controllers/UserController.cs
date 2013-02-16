@@ -15,14 +15,12 @@ namespace EventBooking.Controllers
         private readonly ISecurityService security;
         private readonly IUserRepository userRepository;
         private readonly ITeamRepository teamRepository;
-        private readonly IEventBookingContext context;
 
-        public UserController(ISecurityService security, IUserRepository userRepository, ITeamRepository teamRepository, IEventBookingContext context)
+        public UserController(ISecurityService security, IUserRepository userRepository, ITeamRepository teamRepository)
         {
             this.security = security;
             this.userRepository = userRepository;
             this.teamRepository = teamRepository;
-            this.context = context;
         }
 
         public ActionResult SignUp()
@@ -57,7 +55,7 @@ namespace EventBooking.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = context.Users.Find(WebSecurity.CurrentUserId);
+	            var user = security.CurrentUser;
                 user.Birthdate = model.Birthdate;
                 user.Cellphone = model.Cellphone;
                 user.City = model.City;
@@ -65,9 +63,9 @@ namespace EventBooking.Controllers
                 user.StreetAddress = model.StreetAddress;
                 if (!string.IsNullOrWhiteSpace(model.ZipCode))
                     user.Zipcode = int.Parse(model.ZipCode.Replace(" ", string.Empty));
-                user.Team = context.Teams.Find(model.Team.Id);
+	            user.Team = model.Team == null ? null : teamRepository.Get(model.Team.Id);
 
-                context.SaveChanges();
+				userRepository.Save(user);
 
                 return RedirectToAction("Index", "Home");
             }
