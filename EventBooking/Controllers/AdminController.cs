@@ -11,11 +11,44 @@ namespace EventBooking.Controllers
 {
     public class AdminController : Controller
     {
-        //
-        // GET: /Admin/
-
-        public ActionResult Index()
+        public ActionResult EditTeams()
         {
+	        return View("EditTeams");
+        }
+
+		public ActionResult ExcludeFromTeam(int userId)
+		{
+			return RedirectToAction("EditTeams");
+		}
+
+		public ActionResult ViewTeam(int teamId)
+        {
+			// TODO: check permissions
+
+			var team = new Team()
+				{
+					Activities = null,
+					Id = 1,
+					Name = "Team Lund",
+					Volunteers = new Collection<User>()
+						             {
+							             new User()
+								             {
+									             Id = 1,
+									             Name = "Fulhacke Fulhacksson"
+
+								             }
+						             }
+
+				};
+
+	        return View("ViewTeam", team);
+        }
+
+		public ActionResult TeamMembers()
+        {
+			// TODO: check permissions
+
             AdministratorPageModel model = new AdministratorPageModel(new List<Team>()
                 {
                     new Team()

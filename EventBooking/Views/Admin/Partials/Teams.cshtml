@@ -8,8 +8,7 @@
         @foreach (var team in Model)
         {
             <li>
-                @Html.CheckBox("testa")
-                <a class="btn-link">@team.Name</a>
+                @Html.ActionLink(team.Name, "ViewTeam", "Admin", new{ teamId = team.Id },  new { @class="btn-link" })
             </li>
         }
     </ul>
