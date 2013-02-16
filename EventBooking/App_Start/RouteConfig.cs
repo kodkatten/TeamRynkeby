@@ -13,13 +13,6 @@ namespace EventBooking
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-
-            routes.MapRoute(
-                name: "ActivityDetails",
-                url: "Activity/{id}",
-                defaults: new { controller = "Activity", action = "Details", id = UrlParameter.Optional }
-            );
-
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
