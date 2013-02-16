@@ -57,12 +57,14 @@ namespace EventBooking.Controllers
         {
             if (ModelState.IsValid)
             {
-                var currentUser = security.CurrentUser;
-                //var user = Mapper.Map(model, UserMapper.MapUserTemp(new Data.User(){Id = currentUser.Id, Email = currentUser.Email}, currentUser));
-
                 var user = context.Users.Find(WebSecurity.CurrentUserId);
-                user.Name = model.Name;
+                user.Birthdate = model.Birthdate;
                 user.Cellphone = model.Cellphone;
+                user.City = model.City;
+                user.Name = model.Name;
+                user.StreetAddress = model.StreetAddress;
+                if (!string.IsNullOrWhiteSpace(model.ZipCode))
+                    user.Zipcode = int.Parse(model.ZipCode.Replace(" ", string.Empty));
                 user.Team = context.Teams.Find(model.Team.Id);
 
                 context.SaveChanges();
