@@ -26,13 +26,12 @@ namespace EventBooking.Data.Repositories
 
         public IQueryable<Activity> GetUpcomingActivities(int skip = 0, int take = 10)
         {
-            return this._context.Activities.UpcomingActivities().Page(skip, take);
+            return this._context.Activities.UpcomingActivities().Page(skip, take).Include(activity => activity.OrganizingTeam);
         }
 
         public IQueryable<Activity> GetUpcomingActivitiesByTeam(int teamId, int skip = 0, int take = 10)
         {
             return this._context.Activities
-                                .Include(activity => activity.OrganizingTeam)
                                 .UpcomingActivities()
                                 .Where(activity => activity.OrganizingTeam.Id == teamId)
                                 .Page(skip, take);
