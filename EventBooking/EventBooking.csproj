@@ -195,6 +195,7 @@
     <Content Include="Scripts\general.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
+    <Content Include="Scripts\upcomingEvents.js" />
     <Content Include="Scripts\pickadate.js" />
     <Content Include="Scripts\pickadate.legacy.js" />
     <Content Include="Scripts\pickadate.legacy.min.js" />
