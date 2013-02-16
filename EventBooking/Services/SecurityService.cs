@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Data.Entity;
+using System.Linq;
 using EventBooking.Data;
 using WebMatrix.WebData;
 
@@ -11,7 +13,7 @@ namespace EventBooking.Services
 			int userId = WebSecurity.GetUserId(userName);
 			using (var context = new EventBookingContext())
 			{
-				return context.Users.Find(userId);
+				return context.Users.Where( u => u.Id == userId ).Include( t => t.Team ).First();
 			}
 		}
 
