@@ -25,21 +25,24 @@ namespace EventBooking.Controllers
         //
         // GET: /Security/
 
-        public ActionResult Checkpoint()
+        public ActionResult Checkpoint(string returnurl = null)
         {
-            return View(new LoginModel());
+            return View(new LoginModel { ReturnUrl = returnurl});
         }
 
         [HttpPost]
         public ActionResult LogIn(LoginModel model)
         {
-            var user = _securityService.GetUser(model.ElectronicMailAddress, model.Password);
-            if (user == null)
+            var signedin = _securityService.SignIn(model.ElectronicMailAddress, model.Password);
+            if (!signedin)
             {
                 model.ErrorMessage = "E-postadress eller lösenord är felaktigt";
                 return View("Checkpoint", model);
             }
-
+            if (!string.IsNullOrWhiteSpace(model.ReturnUrl))
+            {
+                return Redirect(model.ReturnUrl);
+            }
             return RedirectToAction("Index", "Home");
         }
 
