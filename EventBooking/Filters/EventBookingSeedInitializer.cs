@@ -22,13 +22,14 @@ namespace EventBooking.Filters
             if (!roles.RoleExists(UserType.Administrator.ToString()))
                 roles.CreateRole(UserType.Administrator.ToString());
 
-            if (membership.GetUser("admin_test", false) == null)
-                membership.CreateUserAndAccount("admin_test", "admin_test", new Dictionary<string, object> { { "Created", DateTime.Now } });
+			SeedActivitieshacketyHackBlaBla( context );
+			
+			if ( membership.GetUser( "admin_test", false ) == null )
+				EnsureUserExists( membership, context, "admin_test", new User { Cellphone = "3457", Name = "dodo", Team = context.Teams.First() } );
 
             if (!roles.GetRolesForUser("admin_test").Contains(UserType.Administrator.ToString()))
                 roles.AddUsersToRoles(new[] { "admin_test" }, new[] { UserType.Administrator.ToString() });
 
-            SeedActivitieshacketyHackBlaBla(context);
             CreateAwesomeUsers(membership, context);
         }
 
