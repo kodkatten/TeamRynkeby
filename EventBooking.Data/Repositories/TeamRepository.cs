@@ -1,19 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace EventBooking.Data.Repositories
 {
-    internal sealed class TeamRepository : ITeamRepository
+    public class TeamRepository : ITeamRepository
     {
-        private readonly IEventBookingContext _context;
+        private readonly IEventBookingContext context;
 
-        public TeamRepository(IEventBookingContext eventBookingContext)
+        public TeamRepository(IEventBookingContext context)
         {
-            _context = eventBookingContext;
+            this.context = context;
         }
-        public IQueryable<Team> GetAllTeams()
+
+        public IEnumerable<Team> GetTeams()
         {
-            return _context.Teams;
+            return context.Teams;
         }
     }
 }

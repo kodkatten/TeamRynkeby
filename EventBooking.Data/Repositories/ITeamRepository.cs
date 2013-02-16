@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+﻿using System.Collections.Generic;
+﻿using System.Linq;
 
 namespace EventBooking.Data.Repositories
 {
     public interface ITeamRepository
     {
-        IQueryable<Team> GetAllTeams();
+        IEnumerable<Team> GetTeams();
     }
 }

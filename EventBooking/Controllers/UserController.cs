@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
-
+using AutoMapper;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data.Repositories;
 using EventBooking.Services;
@@ -11,11 +11,13 @@ namespace EventBooking.Controllers
     {
         private readonly ISecurityService security;
         private readonly IUserRepository userRepository;
+        private readonly ITeamRepository teamRepository;
 
-        public UserController(ISecurityService security, IUserRepository userRepository)
+        public UserController(ISecurityService security, IUserRepository userRepository, ITeamRepository teamRepository)
         {
             this.security = security;
             this.userRepository = userRepository;
+            this.teamRepository = teamRepository;
         }
 
         public ActionResult SignUp()
@@ -28,7 +30,6 @@ namespace EventBooking.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 security.CreateUserAndAccount(model.Email, model.Password, created: DateTime.UtcNow);
                 security.SignIn(model.Email, model.Password);
 
@@ -41,8 +42,7 @@ namespace EventBooking.Controllers
         [Authorize]
         public ActionResult MyProfile()
         {
-            var model = new MyProfileModel();
-
+            var model = new MyProfileModel(security.CurrentUser(), teamRepository.GetTeams());
             return View(model);
         }
 
@@ -52,11 +52,13 @@ namespace EventBooking.Controllers
         {
             if (ModelState.IsValid)
             {
-                userRepository.Save(model.ToUser());
+                userRepository.Save(Mapper.Map(model, security.CurrentUser()));
                 return RedirectToAction("Index", "Home");
             }
 
-            return View();
+            var viewModel = new MyProfileModel(model.ToUser(), teamRepository.GetTeams());
+
+            return View(viewModel);
         }
     }
 }

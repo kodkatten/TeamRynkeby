@@ -47,7 +47,7 @@ namespace EventBooking.Controllers
             }
 
             // Get all teams.
-            ViewBag.Teams = _team.GetAllTeams().ToArray();
+            ViewBag.Teams = _team.GetTeams().ToArray();
 
             // Create the model.
             var model = new LandingPageModel(query.ToArray());
