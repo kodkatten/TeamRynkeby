@@ -199,7 +199,6 @@
     <Content Include="Views\User\SignUp.cshtml" />
     <Content Include="Views\Activity\Create.cshtml" />
     <Content Include="Views\Activity\details.cshtml" />
-    <Content Include="Views\Home\UpcommingActivities.cshtml" />
     <Content Include="Views\Activity\Upcoming.cshtml" />
   </ItemGroup>
   <ItemGroup>

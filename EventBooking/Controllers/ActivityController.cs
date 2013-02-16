@@ -30,6 +30,11 @@ namespace EventBooking.Controllers
 			return View();
 		}
 
+        public ActionResult Index()
+        {
+            return RedirectToAction("Upcoming");
+        }
+
 		[HttpPost]
 		public ActionResult Create(CreateActivityModel model)
 		{
@@ -57,7 +62,7 @@ namespace EventBooking.Controllers
                 query = _activityRepository.GetUpcomingActivities();
             }
 
-            var model = query.Select(data => new ActivityModel(data));
+            var model = query.ToArray().Select(data => new ActivityModel(data));
 
             return this.PartialView(model);
         }
