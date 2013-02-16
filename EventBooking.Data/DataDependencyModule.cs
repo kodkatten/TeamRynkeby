@@ -19,7 +19,7 @@ namespace EventBooking.Data
 
             // Register repositories.
             builder.RegisterType<UserRepository>().As<IUserRepository>().InstancePerLifetimeScope();
-            builder.RegisterType<ActivityRepository>().As<IActivityRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<ActivityRepository>().AsSelf().As<IActivityRepository>().InstancePerLifetimeScope();
         }
     }
 }
