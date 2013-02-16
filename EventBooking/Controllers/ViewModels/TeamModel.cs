@@ -7,8 +7,11 @@ namespace EventBooking.Controllers.ViewModels
         public TeamModel(Team team)
         {
             this.Name = team.Name;
+            this.Id = team.Id;
         }
 
         public string Name { get; set; }
+
+        public int Id { get; set; }
     }
 }

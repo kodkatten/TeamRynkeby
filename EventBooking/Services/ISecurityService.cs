@@ -13,6 +13,7 @@ namespace EventBooking.Services
         void SignOff();
         bool SignIn(string username, string password);
         void CreateUserAndAccount(string email, string password, DateTime created);
+        User CurrentUser();
     }
 
     public class SecurityService : ISecurityService
@@ -25,7 +26,12 @@ namespace EventBooking.Services
                 return context.Users.Where(u => u.Id == userId).Include(t => t.Team).First();
             }
         }
-        
+
+        public virtual User CurrentUser()
+        {
+            return GetUser(WebSecurity.CurrentUserName);
+        }
+
         public virtual bool SignIn(string userName, string password)
         {
             return WebSecurity.Login(userName, password);

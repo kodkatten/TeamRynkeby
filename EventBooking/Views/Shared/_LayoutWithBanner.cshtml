@@ -8,18 +8,16 @@
     @Styles.Render("~/Content/bootstrap")
 </head>
 <body>
-    
     @Html.Partial("NavigationBar")
-
-    <div class="container">
+    <div>
         @RenderBody()
     </div>
-
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
      @Scripts.Render("~/bundles/general")
 
+    
     @if (IsSectionDefined("scripts"))
     {
         <script type="text/javascript" language="javascript">
@@ -28,5 +26,7 @@
     }
 
      @Scripts.Render("~/bundles/pickadate")
+
+
 </body>
 </html>

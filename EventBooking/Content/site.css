@@ -1,78 +1,11 @@
 ﻿body {
-    padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+    padding-top: 40px; /* 60px to make the container go all the way to the bottom of the topbar */
 }
 
 ul {
     list-style: none;
     margin-left: 0; 
 }
-
-#banner {
-    width: 100%;
-    background: #f6f6f6;
-    border-top: 1px;
-    border-bottom: 1px;
-    border-color: #d3d3d5;
-    border-style: solid;
-}
-
-#expo {
-    width: 940px;
-    height: 430px;
-    margin-left: auto;
-    margin-right: auto;
-    background-image: url(/content/images/expo.png);
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-#expo ul {
-    position: relative;
-    top: 150px;
-}
-
-#expo li {
-    margin-bottom: 35px;
-}
-
-.header-label {
-    background: black;
-    padding: 4px 8px 4px 8px;
-    color: white;
-    display: inline-block;
-    font-size: 24px;
-}
-
-.label-city {
-    background: #a3ca60;
-    color: black;
-    font-size: 14px;
-}
-
-.label-name {
-    color: #a3ca60;
-}
-
-#expo li:first-child {
-    transform:rotate(-7deg);
-    -ms-transform:rotate(-7deg); /* IE 9 */
-    -moz-transform:rotate(-7deg); /* Firefox */
-    -webkit-transform:rotate(-7deg); /* Safari and Chrome */
-    -o-transform:rotate(-7deg); /* Opera */
-}
-
-
-#expo .banner-header {
-    position: relative;
-    font-family: "MuseoSlab500Regular";
-    font-size: 32px;
-    display: block;
-    width: 400px;
-    line-height: 40px;
-    top: 120px;
-    left: 0px;
-}
-
 
 .activity-list-short li {
     padding: 6px 0 6px 0;

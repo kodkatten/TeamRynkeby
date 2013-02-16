@@ -5,7 +5,6 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Autofac;
-using Autofac.Core;
 using Autofac.Integration.Mvc;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
