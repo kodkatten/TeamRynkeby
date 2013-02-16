@@ -62,9 +62,9 @@ namespace EventBooking.Controllers
                 query = _activityRepository.GetUpcomingActivities();
             }
 
-            var model = query.ToArray().Select(data => new ActivityModel(data));
+            var viewModel = new UpcomingActivitiesModel(query.ToArray());
 
-            return this.PartialView(model);
+            return this.PartialView(viewModel);
         }
 
 		protected virtual void StoreActivity(Activity activity)

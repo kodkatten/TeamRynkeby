@@ -159,6 +159,7 @@
     <Compile Include="Controllers\ViewModels\SignUpModel.cs" />
     <Compile Include="Controllers\ViewModels\TeamEventsModel.cs" />
     <Compile Include="Controllers\ViewModels\TeamModel.cs" />
+    <Compile Include="Controllers\ViewModels\UpcomingActivitiesModel.cs" />
     <Compile Include="Controllers\ViewModels\UserMapper.cs" />
     <Compile Include="Filters\EventBookingSeedInitializer.cs" />
     <Compile Include="Global.asax.cs">
