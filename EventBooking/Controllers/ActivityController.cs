@@ -53,7 +53,7 @@ namespace EventBooking.Controllers
 			return RedirectToAction("Index", "Home");
 		}
 
-        public ActionResult Upcoming(int page = 0){
+        public ActionResult Upcoming(int page = 0, string teamIds = ""){
             page = page < 0 ? 0 : page;
             var skip = NumberOfActivitiesPerPage * page;
 			IEnumerable<Activity> query = null;

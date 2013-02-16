@@ -37,15 +37,16 @@
             <div>
                 @if (this.Model.IsNobody)
                 {
-                    <button class="btn btn-mini btn-primary activity-filter-all" type="button"  data-team-id="-1">Alla</button>
+                    <button class="btn btn-mini btn-primary btn-select-all-teams" type="button"  data-team-id="-1">Alla</button>
 
                     foreach (var team in Model.Teams)
                     {
-                        <button class="btn btn-mini" type="button" data-team-id="@team.Id">@team.Name</button>
+                        <button class="btn btn-mini btn-select-team" type="button" data-team-id="@team.Id">@team.Name</button>
                     }
 
                 }
             </div>
+            
 
             <div class="upcoming-activity-list" data-update-uri="http://localhost:49385/Activity/Upcoming">
                 @Html.Action("Upcoming", "Activity")
@@ -72,7 +73,6 @@
     </div>
 </div>
 @section scripts {
-    <!-- Called when the selected team is changed. -->
    
     (function(intiUpcomingEventsUpdate, $, undefined) {
     
@@ -80,31 +80,9 @@
     
     upcomingEventsModule.init($('.previous-activities-list-command'), $('.next-activities-list-command'), $('.upcoming-activity-list'));
     
-    var allTeamIds = $(".btn-mini").map(function(){
-        return $(this).data("team-id");
-    });
     
-    upcomingEventsModule.setTeams(allTeamIds);
+    upcomingEventsModule.setTeamButtons($(".btn-select-team"),  (".btn-select-all-teams"));
     
-    $(".btn-mini").click(function(){
-        upcomingEventsModule.toggleTeam($(this).data("team-id"));
-    });
-        
-
-  
-        
-    @*    $(".btn-mini").click(function(){
-        var isOn =  $(this).hasClass("btn-primary");
-        if (isOn === true)
-        {
-            $(this).removeClass("btn-primary");
-        }
-        else
-        {
-            $(this).addClass("btn-primary");
-        }
-        }
-    );*@
         
     
     }(teamrynkebyse.intiUpcomingEventsUpdate, jQuery));
