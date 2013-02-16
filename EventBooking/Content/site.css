@@ -25,3 +25,8 @@ ul {
     font-weight: normal;
     font-style: normal;
 }
+
+.row-fluid {
+  margin: 20px 0 0 0;
+}
+

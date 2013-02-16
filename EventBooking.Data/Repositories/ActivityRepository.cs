@@ -45,5 +45,10 @@ namespace EventBooking.Data.Repositories
                                 .Where(activity => activity.OrganizingTeam.Id == teamId)
                                 .Page(skip, take);
         }
-    }
+
+	    public Activity GetActivityById(int id)
+	    {
+	        return this._context.Activities.Include(x => x.OrganizingTeam).SingleOrDefault(x => x.Id == id);
+	    }
+	}
 }

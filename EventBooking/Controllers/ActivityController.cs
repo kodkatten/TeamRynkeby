@@ -79,11 +79,11 @@ namespace EventBooking.Controllers
 
 		public ActionResult Details(int id)
 		{
-			if (!_securityService.IsLoggedIn)
-			{
-				return RedirectToAction("Checkpoint", "Security", new { returnUrl = Url.Action("Details", id) });
-			}
-			return View();
+		    var activity = _activityRepository.GetActivityById(id);
+
+		    var viewModel = new ActivityModel(activity);
+
+            return View(viewModel);
 		}
 
 		public ActionResult SelectExistingItem()
