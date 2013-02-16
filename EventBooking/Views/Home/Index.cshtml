@@ -19,11 +19,11 @@
                 {
                     <li>
                         <a href="@Url.Action("Details", "Activity", new { id = activity.Id })">
-                                  <span class="header-label label-city">@activity.OrganizingTeam.Name</span><br />
-                                  <span class="header-label label-name rotate-right">@activity.Name</span>
+                            <span class="header-label label-city">@activity.OrganizingTeam.Name</span><br />
+                            <span class="header-label label-name rotate-right">@activity.Name</span>
                         </a>
                     </li>
-                }                
+                }
             </ul>
         </div>
     </div>
@@ -32,21 +32,34 @@
 <div class="container">
     <div class="row-fluid">
         <div class="span6">
+                <h3>Kommande aktiviteter</h3>
             @*<option value="@team.Id" selected="@{team.Id == this.Model.SelectedTeamId ? "True" : ""; }">@team.Name</option>*@
 
             @if (this.Model.IsNobody)
             {
                 <!-- Team selector -->
-                <select id="_teamSelector">
-                </select>
+                <div  class="landing-page-select-team">
+                    <div style="margin-right:5px;  float:left; margin-top:5px !important; display: inline-block">Team</div>
+                    <div style="float: right">
+                        <select id="_teamSelector" class="landing-page-team-selector">
+                            <option value="-1">Alla</option>
+                            @foreach (var team in Model.Teams)
+                            {
+                                <option value="@team.Id">@team.Name</option>
+                            }
+                        </select>
+
+                    </div>
+                    
+                </div>
             }
-            <h3>Kommande aktiviteter</h3>
+        
             <div class="upcoming-activity-list">
-                @Html.Action("Upcoming", "Activity")    
+                @Html.Action("Upcoming", "Activity")
             </div>
             <a href="http://localhost:49385/Activity/Upcoming" class="update-activities-list-command">Föregående</a>
             <a href="http://localhost:49385/Activity/Upcoming?skip=3" class="update-activities-list-command">Nästa</a>
-            
+
         </div>
         <div class="span6">
             <h2>Team Rynkeby</h2>
