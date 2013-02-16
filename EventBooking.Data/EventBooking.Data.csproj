@@ -62,10 +62,12 @@
     <Compile Include="Entities\User.cs" />
     <Compile Include="EventBookingContext.cs" />
     <Compile Include="Entities\UserType.cs" />
+    <Compile Include="Queries\GetUpcomingActivitiesQuery.cs" />
     <Compile Include="Queries\GetActivitiesByMonthQuery.cs" />
     <Compile Include="Queries\GetTeamByIdQuery.cs" />
     <Compile Include="Queries\GetTeamsQuery.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
+    <Compile Include="SystemTime.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="EntityModelDiagram.cd" />
