@@ -42,5 +42,11 @@ namespace EventBooking.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        public ActionResult SignOff()
+        {
+            _securityService.SignOff();
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

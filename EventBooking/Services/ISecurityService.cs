@@ -11,6 +11,7 @@ namespace EventBooking.Services
     public interface ISecurityService
     {
         User GetUser(string userName, string password);
+        void SignOff();
     }
 
     public class SecurityService : ISecurityService
@@ -25,6 +26,11 @@ namespace EventBooking.Services
             {
                 return context.Users.Find(userId);
             }
+        }
+
+        public void SignOff()
+        {
+            WebSecurity.Logout();
         }
     }
 
