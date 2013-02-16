@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using EventBooking.Controllers;
+using EventBooking.Services;
 using NUnit.Framework;
 
 namespace EventBooking.Tests
@@ -10,7 +11,8 @@ namespace EventBooking.Tests
 		[Test]
 		public void RedirectsToHomeAfterSuccessfulCreation()
 		{
-			var controller = new ActivityController();
+		    ISecurityService mockupSecurityService = new MockupSecurityService();
+		    var controller = new ActivityController(mockupSecurityService);
 
 			RedirectToRouteResult result = controller.Create();
 
