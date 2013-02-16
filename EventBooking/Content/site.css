@@ -11,6 +11,7 @@ ul {
     padding: 6px 0 6px 0;
 }
 
+<<<<<<< HEAD
 .rotater div {
     display: inline-block;
     width: 500px;
@@ -18,6 +19,10 @@ ul {
 
 .month h3 {
     text-transform: capitalize;
+=======
+.page-header > h3 {
+    line-height: 20px;
+>>>>>>> 6e3d669a8b40a017aa7d87cef708d5e5c1b88cb7
 }
 
 @font-face {
@@ -27,3 +32,11 @@ ul {
     font-weight: normal;
     font-style: normal;
 }
+<<<<<<< HEAD
+=======
+
+.row-fluid {
+  margin: 20px 0 0 0;
+}
+
+>>>>>>> 6e3d669a8b40a017aa7d87cef708d5e5c1b88cb7

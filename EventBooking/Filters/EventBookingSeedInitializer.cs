@@ -23,6 +23,9 @@ namespace EventBooking.Filters
             if (!roles.RoleExists(UserType.Administrator.ToString()))
                 roles.CreateRole(UserType.Administrator.ToString());
 
+            if (!roles.RoleExists(UserType.PowerUser.ToString()))
+                roles.CreateRole(UserType.PowerUser.ToString());
+
 			SeedActivitieshacketyHackBlaBla( context );
 			
 			if ( membership.GetUser( "admin_test", false ) == null )
@@ -30,8 +33,15 @@ namespace EventBooking.Filters
 
             if (!roles.GetRolesForUser("admin_test").Contains(UserType.Administrator.ToString()))
                 roles.AddUsersToRoles(new[] { "admin_test" }, new[] { UserType.Administrator.ToString() });
+            
+            if (membership.GetUser("poweruser", false) == null)
+                EnsureUserExists(membership, context, "poweruser", new User { Cellphone = "3457", Name = "najz", Team = context.Teams.First() });
+
+            if (!roles.GetRolesForUser("poweruser").Contains(UserType.PowerUser.ToString()))
+                roles.AddUsersToRoles(new[] { "poweruser" }, new[] { UserType.PowerUser.ToString() });
 
             CreateAwesomeUsers(membership, context);
+	        CreatePredefinedActivityItems(context);
         }
 
         private void CreateAwesomeUsers(SimpleMembershipProvider membership, EventBookingContext context)
@@ -40,6 +50,15 @@ namespace EventBooking.Filters
             EnsureUserExists(membership,context, "email@email.com", new User { Cellphone = "3457", Name = "dodo", Team = context.Teams.First() });
             EnsureUserExists(membership,context, "a", new User { Cellphone = "3457", Name = "dodo2", Team = context.Teams.First() });
         }
+
+		private void CreatePredefinedActivityItems(EventBookingContext context)
+		{
+			context.PredefinedActivityItems.Add(new PredefinedActivityItem() { Name = "Cykel" });
+			context.PredefinedActivityItems.Add(new PredefinedActivityItem() { Name = "Trainer" });
+			context.PredefinedActivityItems.Add(new PredefinedActivityItem() { Name = "Tält" });
+			context.PredefinedActivityItems.Add(new PredefinedActivityItem() { Name = "Bord" });
+			context.PredefinedActivityItems.Add(new PredefinedActivityItem() { Name = "Priser" });
+		}
 
         private static void EnsureUserExists(SimpleMembershipProvider membership, EventBookingContext context,
                                              string email, User specification = null)
@@ -67,14 +86,31 @@ namespace EventBooking.Filters
                 Name = "More awesome stuff.",
                 Description = "Ham andouille spare ribs tongue pork loin tenderloin brisket. Sausage spare ribs pork loin cow flank ground round jerky beef ribs swine rump.",
                 Date = new DateTime(2013, 02, 17),
-                OrganizingTeam = team
+                OrganizingTeam = team, Type =ActivityType.Preliminary
             });
             context.Activities.Add(new Activity
             {
                 Name = "Awesome aktivet uno",
                 Description = "Bacon ipsum dolor sit amet boudin turducken fatback pancetta kielbasa pastrami doner cow capicola short ribs drumstick tail. ",
                 Date = new DateTime(2013, 02, 27),
-                OrganizingTeam = team
+                OrganizingTeam = team,
+                Type = ActivityType.Public
+            }); 
+            context.Activities.Add(new Activity
+            {
+                Name = "More awesome stuffies.",
+                Description = "Ham andouille spare ribs tongue pork loin tenderloin brisket. Sausage spare ribs pork loin cow flank ground round jerky beef ribs swine rump.",
+                Date = new DateTime(2013, 03, 17),
+                OrganizingTeam = team,
+                Type = ActivityType.Sponsor
+            });
+            context.Activities.Add(new Activity
+            {
+                Name = "Awesome aktivet douce",
+                Description = "Bacon ipsum dolor sit amet boudin turducken fatback pancetta kielbasa pastrami doner cow capicola short ribs drumstick tail. ",
+                Date = new DateTime(2013, 03, 27),
+                OrganizingTeam = team,
+                Type = ActivityType.Training
             });
 
             // Team #2

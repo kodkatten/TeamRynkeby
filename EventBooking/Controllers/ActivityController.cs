@@ -14,11 +14,13 @@ namespace EventBooking.Controllers
 	{
 		private readonly ISecurityService _securityService;
 		private readonly ActivityRepository _activityRepository;
+		private readonly IPrefedinedItemRepository _prefedinedItems;
 
-		public ActivityController( ISecurityService securityService, ActivityRepository activityRepository )
+		public ActivityController(ISecurityService securityService, ActivityRepository activityRepository, IPrefedinedItemRepository prefedinedItems)
 		{
 			_securityService = securityService;
 			_activityRepository = activityRepository;
+			_prefedinedItems = prefedinedItems;
 		}
 
 		public ActionResult Create()
@@ -78,13 +80,43 @@ namespace EventBooking.Controllers
 			_activityRepository.Add( activity );
 		}
 
-		public ActionResult Details( int id )
+		public ActionResult Details(int id)
 		{
 			if ( !_securityService.IsLoggedIn )
 			{
 				return RedirectToAction( "Checkpoint", "Security", new { returnUrl = Url.Action( "Details", id ) } );
-			}
-			return View();
+			} 
+			
+			var activity = _activityRepository.GetActivityById( id );
+
+		    var viewModel = new ActivityModel(activity);
+
+            return View(viewModel);
+		}
+
+		public ActionResult SelectExistingItem()
+		{
+			// Create the model.
+			var inventoryModel = new ContributedInventoryModel();
+			inventoryModel.SuggestedItems = new List<string>();
+			inventoryModel.ContributedItems = new List<ContributedInventoryItemModel>();
+
+			// Populate the suggested prefedinedItems.
+			inventoryModel.SuggestedItems.AddRange(_prefedinedItems.GetPredefinedActivityItems().Select(i => i.Name));
+
+			// Return the view.
+			return View(inventoryModel);
+		}
+
+		[HttpPost]
+		public ActionResult AddContributedItem(ContributedInventoryModel model)
+		{
+			model.ContributedItems.Add(new ContributedInventoryItemModel
+			{
+				Name = model.CurrentlySelectedItem,
+				Quantity = model.ItemQuantity
+			});
+			return View("SelectExistingItem", model);
 		}
 	}
 }

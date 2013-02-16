@@ -1,4 +1,6 @@
-﻿using EventBooking.Data;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
+using EventBooking.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +10,19 @@ namespace EventBooking.Controllers.ViewModels
 {
     public class QuestionsModel
     {
-        public IList<Question> InterviewQuestions { get; set; }
-        public IList<Question> TrainingQuestions { get; set; }
+        public QuestionsModel()
+        {
+            InterviewQuestions = new List<string>();
+            TrainingQuestions = new List<string>();
+        }
+        public IList<string> InterviewQuestions { get; set; }
+        public IList<string> TrainingQuestions { get; set; }
+        
+        [Required]
+        [HiddenInput]
         public int TeamId { get; set; }
+
+        public int NumberOfQuestionRows { get; set; }
     }
-    
-    public class Question
-    {
-        public string QuestionText { get; set; }
-    }
+
 }

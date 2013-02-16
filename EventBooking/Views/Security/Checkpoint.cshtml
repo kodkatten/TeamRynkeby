@@ -4,42 +4,47 @@
     ViewBag.Title = "Checkpoint";
 }
 
-<h2>Checkpoint</h2>
+<div class="page-header">
+    <h1>Inloggning</h1>
+</div>
 
 @if (!String.IsNullOrEmpty(Model.ErrorMessage))
 {
     <div class="alert alert-error">@Model.ErrorMessage</div>
 }
 
-@using (Html.BeginForm("LogIn", "Security", FormMethod.Post)) {
+@using (Html.BeginForm("LogIn", "Security", FormMethod.Post))
+{
     @Html.ValidationSummary(true)
 
-    <fieldset>
-        <legend>LoginModel</legend>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.ElectronicMailAddress)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.ElectronicMailAddress)
-            @Html.ValidationMessageFor(model => model.ElectronicMailAddress)
+    <div class="span5">
+    <fieldset class="form-horizontal">
+        <div class="control-group pull-right">
+            @Html.LabelFor(model => model.ElectronicMailAddress, new Dictionary<string, object>{
+                {"class", "control-label"}
+            })
+            <div class="controls">
+                @Html.EditorFor(model => model.ElectronicMailAddress)
+                @Html.ValidationMessageFor(model => model.ElectronicMailAddress)
+            </div>
+
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Password)
-        </div>
-        <div class="editor-field">
-            @Html.PasswordFor(model => model.Password)
-            @Html.ValidationMessageFor(model => model.Password)
+        <div class="control-group pull-right">
+            @Html.LabelFor(model => model.Password, new Dictionary<string, object>{
+                {"class", "control-label"}
+                })
+            <div class="controls">
+                @Html.PasswordFor(model => model.Password)
+                @Html.ValidationMessageFor(model => model.Password)
+            </div>
+                @Html.HiddenFor(m => m.ReturnUrl)
         </div>
 
         <p>
-            <input type="submit" value="Logga in" />
+            <input type="submit" value="Logga in" class="btn pull-right" />
         </p>
     </fieldset>
-    @Html.HiddenFor(m => m.ReturnUrl)
+        </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Checkpoint")
-</div>

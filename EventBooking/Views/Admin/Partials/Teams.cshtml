@@ -13,7 +13,7 @@
                     class="btn-link" >
                     @team.Name
                 </a>
-                <a href="@Url.Action("ExcludeFromTeam", new { id = team.Id })" class="btn"><i class="icon icon-trash"> </i></a>
+                <a href="@Url.Action("DeleteTeam", new { id = team.Id })" class="btn"><i class="icon icon-trash"> </i></a>
             </li>
         }
     </ul>
