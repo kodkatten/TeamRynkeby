@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using EventBooking.Controllers;
 using EventBooking.Controllers.ViewModels;
+using EventBooking.Data;
 using EventBooking.Services;
 using NUnit.Framework;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
@@ -64,22 +65,26 @@ namespace EventBooking.Tests
 
 
         [Test]
-        public void Given_a_nobody_When_nobody_logs_in_As_somebody_and_Exists_Then_somebody_gets_redirected_to_Home_Index()
+        public void Given_a_nobody_When_nobody_logs_in_As_somebody_and_Exists_Then_somebody_gets_redirected_to_Team_Details_With_correct_teamId()
         {
             const string expectedEmailAddress = "dennis@jessica.com";
             const string expectedPassword = "jordnötter";
+            const int expectedTeamId = 42; // goes without saying, really. REALLY.
             var mockupSecurityService = new MockupSecurityService
                 {
                     AcceptedEmail = expectedEmailAddress,
-                    AcceptedPassword = expectedPassword
+                    AcceptedPassword = expectedPassword,
+                    ReturnUser = new User() {Email = expectedEmailAddress, Team = new Team {Id=expectedTeamId}}
                 };
             var controller = new SecurityController(mockupSecurityService);
             var model = new LoginModel { ElectronicMailAddress = expectedEmailAddress, Password = expectedPassword };
 
             var result = controller.LogIn(model) as RedirectToRouteResult;
+
             Assert.IsNotNull(result, "We're expected a redirect");
-            Assert.AreEqual("Index", result.RouteValues["action"]);
-            Assert.AreEqual("Home", result.RouteValues["controller"]);
+            Assert.AreEqual("Details", result.RouteValues["action"]);
+            Assert.AreEqual("Team", result.RouteValues["controller"]);
+            Assert.AreEqual(expectedTeamId, result.RouteValues["id"]);
             
         }
 

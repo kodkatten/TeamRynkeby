@@ -23,7 +23,7 @@ namespace EventBooking.Services
                 return context.Users.Find(userId);
             }
         }
-
+        
         public virtual bool SignIn(string userName, string password)
         {
             return WebSecurity.Login(userName, password);
@@ -70,6 +70,9 @@ namespace EventBooking.Services
         {
             get { return _isLoggedin; }
         }
+
+        public User ReturnUser { get; set; }
+
         public override bool SignIn(string userName, string password)
         {
             if (userName == AcceptedEmail && password == AcceptedPassword)
@@ -85,7 +88,7 @@ namespace EventBooking.Services
             if (userName == AcceptedEmail)
             {
                 _isLoggedin = true;
-                return new User();
+                return ReturnUser ?? new User();
             }
             return null;
         }

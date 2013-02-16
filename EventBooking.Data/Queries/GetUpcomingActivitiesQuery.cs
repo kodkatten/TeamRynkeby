@@ -9,13 +9,13 @@ namespace EventBooking.Data.Queries
     {
         public delegate GetUpcomingActivitiesQuery Factory(int skip = 0, int take = 10);
 
-        private readonly DbSet<Activity> activities;
+        private readonly IDbSet<Activity> activities;
 
         private readonly int skip;
 
         private readonly int take;
 
-        public GetUpcomingActivitiesQuery(EventBookingContext context, int skip, int take)
+        public GetUpcomingActivitiesQuery(IEventBookingContext context, int skip, int take)
         {
             this.skip = skip;
             this.take = take;

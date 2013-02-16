@@ -4,16 +4,22 @@ using EventBooking.Data.Repositories;
 
 namespace EventBooking.Data
 {
-    public class DataDependencyModule : Autofac.Module
+    public class DataDependencyModule : Module
     {
-        protected override void Load(Autofac.ContainerBuilder builder)
+        protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<EventBookingContext>().AsSelf().InstancePerLifetimeScope();
+            // Register core stuff.
+            builder.RegisterType<EventBookingContext>().As<IEventBookingContext>().InstancePerLifetimeScope();
+
+            // Register queries.
             builder.RegisterType<GetActivitiesByMonthQuery>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<GetTeamsQuery>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<GetTeamActivitiesByMonthQuery>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<GetUpcomingActivitiesQuery>().AsSelf().InstancePerLifetimeScope();
 
+            // Register repositories.
             builder.RegisterType<UserRepository>().As<IUserRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<ActivityRepository>().As<IActivityRepository>().InstancePerLifetimeScope();
         }
     }
 }
