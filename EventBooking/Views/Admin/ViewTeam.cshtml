@@ -8,26 +8,27 @@
 
 <h3>Members</h3>
 
-    @{
-        int rowIndex = 0;
-    }
+@foreach (var volonteer in Model.Volunteers.OrderBy(x => x.Name))
+{    
+    <div class="span4 volonteer card" data-volonteer-id="@volonteer.Id">
+        <div>
+            <h3>@volonteer.Name</h3>
+            <p>@volonteer.Email</p>
+            <a href="#" title="Team admin" class="btn toggle-admin"><i class="icon icon-user"></i></a>
+            <a href="#" title="Ta bort från lag" class="btn btn-danger exclude"><i class="icon icon-white icon-thumbs-down"></i></a>
+        </div>
+    </div>  
+}
 
-    <div class="row">
-        @foreach (var volonteer in Model.Volunteers.OrderBy(x => x.Name))
-        {    
-            <div class="span4 volonteer card">
-                <div>
-                    <h3>@volonteer.Name</h3>
-                    <p>@volonteer.Email</p>
-                    <a href="@Url.Action("ExcludeFromTeam", new { id = volonteer.Id })" title="Team admin" class="btn"><i class="icon-check"></i></a>
-                    <a href="@Url.Action("ExcludeFromTeam", new { id = volonteer.Id })" title="Ta bort från lag" class="btn btn-danger"><i class="icon-white icon-thumbs-down"></i></a>
-                </div>
-            </div>  
-
-            if (++rowIndex % 3 == 0) 
-            {
-                 @:</div>
-            }
-        }
-    </div>
-
+<div id="errorModal" class="modal hide fade">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Ooops</h3>
+  </div>
+  <div class="modal-body">
+    <p>Tyvärr kunde vi inte göra den där grejen du ville göra. Testa igen om en stund eller gå och se På spåret eller nåt.</p>
+  </div>
+  <div class="modal-footer">
+    <a href="#" data-dismiss="modal" class="btn">Close</a>
+  </div>
+</div>

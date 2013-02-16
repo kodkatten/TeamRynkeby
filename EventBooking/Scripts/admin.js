@@ -1,32 +1,29 @@
 ﻿
-$(document).ready(function () {
-    $('#teams-list a').on("click", onTeamClicked);
+$(function() {
+    $('.exclude').on('click', function() {
+        alert('hello');
+    });
+    
+
+    $('.toggle-admin').on('click', function () {
+        var that = $(this);
+        var id = that.parents('.volonteer').data('volonteer-id');
+
+        that.addClass('disabled');
+
+        $.ajax({ url: "/admin/toogleadmin/" + id })
+            .done(function(data) {
+                if (data.isTeamAdmin) {
+                    that.addClass('btn-success');
+                    $('.icon', that).addClass('icon-white');
+                } else {
+                    that.removeClass('btn-success');
+                    $('.icon', that).removeClass('icon-white');
+                }
+            })
+            .fail(function() {
+                $('#errorModal').modal('show');
+            })
+            .always(function () { that.removeClass('disabled'); });
+    });
 });
-
-function onTeamClicked() {
-
-    var $link = $(this);
-
-    $("#team-members-container h2").text("Team medlemmar i " + $link.text());
-
-    $.ajax({
-        dataType: "json",
-        url: "/admin/ListTeamMembers",
-        data: { teamId: 1 },
-        success: function(data, textStatus, jqXHR) {
-            UpdateTeamMembers(data);
-        }
-    });
-}
-
-function UpdateTeamMembers(data) {
-    var $list = $("#team-members-container ul");
-    $list.empty();
-
-    $.each(data, function (index, user) {
-        var $li = $("<li/>").addClass("team-member");
-        $li.text(user.Name);
-
-        $list.append($li);
-    });
-}

@@ -32,6 +32,12 @@ namespace EventBooking.Controllers
 			_teamRepository.DeleteTeam(id);
 			return RedirectToAction("ViewTeams");
 		}
+		
+		 
+		public JsonResult ToogleAdmin(int id)
+		{
+			return Json(new { isTeamAdmin = true }, JsonRequestBehavior.AllowGet);
+		}
 
 		public ActionResult ExcludeFromTeam(int id)
 		{
