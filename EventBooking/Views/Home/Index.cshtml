@@ -15,10 +15,10 @@
             <h3 class="visible-phone">Vi kämpar för livet</h3>
 
             <ul class="hidden-phone">
-                @foreach (var activity in Model.Activities.Take(2))
+                @foreach (var activity in Model.Activities)
                 {
                     <li>
-                        <span class="header-label label-city">@activity.OrganizingTeam</span><br />
+                        <span class="header-label label-city">@activity.OrganizingTeam.Name</span><br />
                         <span class="header-label label-name rotate-right">@activity.Name</span>
                     </li>
                 }                
@@ -38,9 +38,13 @@
                 <select id="_teamSelector">
                 </select>
             }
-
             <h3>Kommande aktiviteter</h3>
-            @Html.Action("Upcoming", "Activity")
+            <div class="upcoming-activity-list">
+                @Html.Action("Upcoming", "Activity")    
+            </div>
+            <a href="http://localhost:49385/Activity/Upcoming" class="update-activities-list-command">Föregående</a>
+            <a href="http://localhost:49385/Activity/Upcoming?skip=3" class="update-activities-list-command">Nästa</a>
+            
         </div>
         <div class="span6">
             <h2>Team Rynkeby</h2>
@@ -67,5 +71,9 @@
             var teamId = $(this).val();
                 window.location = '@Url.Action("Index", "Home")?teamId=' + teamId;
             });
-        });
+    });
+    
+    (function(intiUpcomingEventsUpdate, $, undefined) {
+        intiUpcomingEventsUpdate($('.update-activities-list-command'), $('.upcoming-activity-list'));
+    }(teamrynkebyse.intiUpcomingEventsUpdate, jQuery));
 }

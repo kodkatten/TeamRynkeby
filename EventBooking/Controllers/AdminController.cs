@@ -6,118 +6,57 @@ using System.Web;
 using System.Web.Mvc;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
+using EventBooking.Data.Repositories;
 
 namespace EventBooking.Controllers
 {
-    public class AdminController : Controller
-    {
-        public ActionResult EditTeams()
-        {
-	        return View("EditTeams");
-        }
+	public class AdminController : Controller
+	{
+		private readonly ITeamRepository _teamRepository;
 
-		public ActionResult ExcludeFromTeam(int userId)
+		public AdminController(ITeamRepository teamRepository)
 		{
-			return RedirectToAction("EditTeams");
+			_teamRepository = teamRepository;
 		}
 
-		public ActionResult ViewTeam(int teamId)
-        {
+		[HttpPost]
+		public ActionResult CreateTeam(string name)
+		{
+			_teamRepository.CreateTeam(name);
+			return Redirect("ViewTeams");
+		}	
+		
+		public ActionResult DeleteTeam(int id)
+		{
+			_teamRepository.DeleteTeam(id);
+			return RedirectToAction("ViewTeams");
+		}
+
+		public ActionResult ExcludeFromTeam(int id)
+		{
+			return RedirectToAction("Team");
+		}
+
+		public ActionResult Team(int id)
+		{
 			// TODO: check permissions
 
-			var team = new Team()
-				{
-					Activities = null,
-					Id = 1,
-					Name = "Team Lund",
-					Volunteers = new Collection<User>()
-						             {
-							             new User()
-								             {
-									             Id = 1,
-									             Name = "Fulhacke Fulhacksson"
+			var team = _teamRepository.TryGetTeam(id);
+			
+			if(team == null)
+				throw new HttpException(404, "Could not find team");
+			
+			return View("ViewTeam", team);
 
-								             }
-						             }
+		}
 
-				};
-
-	        return View("ViewTeam", team);
-        }
-
-		public ActionResult TeamMembers()
-        {
+		public ActionResult ViewTeams()
+		{
 			// TODO: check permissions
 
-            AdministratorPageModel model = new AdministratorPageModel(new List<Team>()
-                {
-                    new Team()
-                        {
-                                Activities = null,
-                                Id = 1,
-                                Name = "Team Lund",
-                                Volunteers = new Collection<User>()
-                                    {
-                                        new User()
-                                            {
-                                                Id = 1,
-                                                Name = "Fulhacke Fulhacksson"
-                                                
-                                            }
-                                    }
-
-                        },
-
-                     new Team()
-                        {
-                                Activities = null,
-                                Id = 1,
-                                Name = "Team Stockholm",
-                                Volunteers = new Collection<User>()
-                                    {
-                                        new User()
-                                            {
-                                                Id = 2,
-                                                Name = "Bug Buggson"
-                                                
-                                            }
-                                    }
-
-                        }
-                });
-
-
-
-            return View(model);
-        }
-
-        [HttpGet]
-        public JsonResult ListTeamMembers(int teamId)
-        {
-            List<User> data = new List<User>
-                {
-                    new User()
-                        {
-                            Id = 2,
-                            Name = "Bug Buggson"
-                            
-
-                        },
-                    new User()
-                        {
-                            Id = 1,
-                            Name = "Fulhacke Fulhacksson"
-
-                        }
-
-                };
-            return new JsonResult
-            {
-                Data = data,
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-
-            };
-        }
-
-    }
+			var teams = _teamRepository.GetTeams();
+			AdministratorPageModel model = new AdministratorPageModel(teams);
+			return View(model);
+		}
+	}
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
@@ -13,9 +14,9 @@ namespace EventBooking.Data.Repositories
 			_context = context;
 		}
 
-		public IQueryable<Activity> GetActivityByMonth(int year, int month, int teamId = 0)
+        public IEnumerable<Activity> GetActivityByMonth(int year, int month, int teamId = 0)
 		{
-			IQueryable<Activity> query = _context.Activities.Include(x => x.OrganizingTeam)
+			var query = _context.Activities.Include(x => x.OrganizingTeam)
 			                                     .Where(x => x.Date.Year == year && x.Date.Month == month);
 			if (teamId > 0)
 			{
@@ -32,12 +33,12 @@ namespace EventBooking.Data.Repositories
 			_context.SaveChanges();
 		}
 
-        public IQueryable<Activity> GetUpcomingActivities(int skip = 0, int take = 10)
+        public IEnumerable<Activity> GetUpcomingActivities(int skip, int take)
         {
             return this._context.Activities.UpcomingActivities().Page(skip, take).Include(activity => activity.OrganizingTeam);
         }
 
-        public IQueryable<Activity> GetUpcomingActivitiesByTeam(int teamId, int skip = 0, int take = 10)
+        public IEnumerable<Activity> GetUpcomingActivitiesByTeam(int teamId, int skip, int take)
         {
             return this._context.Activities
                                 .UpcomingActivities()

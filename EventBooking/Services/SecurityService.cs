@@ -8,7 +8,7 @@ namespace EventBooking.Services
 {
 	public class SecurityService : ISecurityService
 	{
-		public User GetUser(string userName)
+		public virtual User GetUser(string userName)
 		{
             if (string.IsNullOrWhiteSpace(userName))
             {
@@ -30,7 +30,7 @@ namespace EventBooking.Services
 		    return false;
 		}
 
-		public void CreateUserAndAccount(string email, string password, DateTime created)
+		public virtual void CreateUserAndAccount(string email, string password, DateTime created)
 		{
 			DateTime earlier = DateTime.UtcNow;
 

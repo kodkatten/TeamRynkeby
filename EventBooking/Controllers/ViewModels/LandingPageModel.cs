@@ -1,23 +1,23 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using EventBooking.Data;
 
 namespace EventBooking.Controllers.ViewModels
 {
-
     public class  LandingPageModel
     {
         public bool IsNobody { get; set; }
-        public int SelectedTeamId { get; set; } 
-        public IEnumerable<ActivityModel> Activities { get; private set; }
+        public int SelectedTeamId { get; set; }
+        public IEnumerable<Activity> Activities { get; private set; } 
 
-        public LandingPageModel(IEnumerable<Data.Activity> activitiesData)
+        public LandingPageModel()
         {
-            this.Activities = activitiesData.Select(AsActivityModel);
+            Activities = new Activity[] { };
         }
 
-        private static ActivityModel AsActivityModel(Data.Activity activityData)
+
+        public LandingPageModel(IEnumerable<Activity> activities )
         {
-            return new ActivityModel(activityData);
+            Activities = activities;
         }
     }
 
