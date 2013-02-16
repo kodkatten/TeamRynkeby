@@ -49,11 +49,10 @@ namespace EventBooking.Controllers
             IQueryable<Activity> query = null;
             if (User.Identity.IsAuthenticated)
             {
-                User user = _securityService.GetUser(User.Identity.Name);
+                var user = _securityService.GetUser(User.Identity.Name);
                 if (user.IsMemberOfATeam())
                 {
-                    // TODO: Fix to accept team here!
-                    query = _activityRepository.GetUpcomingActivities();
+                    query = _activityRepository.GetUpcomingActivitiesByTeam(user.Team.Id);
                 }
             }
 

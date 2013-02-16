@@ -26,14 +26,16 @@ namespace EventBooking.Data.Repositories
 
         public IQueryable<Activity> GetUpcomingActivities(int skip = 0, int take = 10)
         {
-            var today = SystemTime.Now();
+            return this._context.Activities.UpcomingActivities().Page(skip, take);
+        }
 
+        public IQueryable<Activity> GetUpcomingActivitiesByTeam(int teamId, int skip = 0, int take = 10)
+        {
             return this._context.Activities
-                       .Include(activity => activity.OrganizingTeam)
-                       .Where(activity => activity.Date >= today)
-                       .OrderBy(activity => activity.Date)
-                       .Skip(skip)
-                       .Take(take);
+                                .Include(activity => activity.OrganizingTeam)
+                                .UpcomingActivities()
+                                .Where(activity => activity.OrganizingTeam.Id == teamId)
+                                .Page(skip, take);
         }
     }
 }
