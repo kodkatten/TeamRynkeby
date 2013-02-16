@@ -26,15 +26,51 @@ ul {
     background-repeat: no-repeat;
 }
 
-#expo span {
+#expo ul {
+    position: relative;
+    top: 150px;
+}
+
+#expo li {
+    margin-bottom: 35px;
+}
+
+.header-label {
+    background: black;
+    padding: 4px 8px 4px 8px;
+    color: white;
+    display: inline-block;
+    font-size: 24px;
+}
+
+.label-city {
+    background: #a3ca60;
+    color: black;
+    font-size: 14px;
+}
+
+.label-name {
+    color: #a3ca60;
+}
+
+#expo li:first-child {
+    transform:rotate(-7deg);
+    -ms-transform:rotate(-7deg); /* IE 9 */
+    -moz-transform:rotate(-7deg); /* Firefox */
+    -webkit-transform:rotate(-7deg); /* Safari and Chrome */
+    -o-transform:rotate(-7deg); /* Opera */
+}
+
+
+#expo .banner-header {
     position: relative;
     font-family: "MuseoSlab500Regular";
     font-size: 32px;
     display: block;
-    width: 300px;
+    width: 400px;
     line-height: 40px;
     top: 120px;
-    left: 65px;
+    left: 0px;
 }
 
 

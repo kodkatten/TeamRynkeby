@@ -1,13 +1,14 @@
-﻿using System;
+﻿using System.Diagnostics;
 using System.Web.Mvc;
 using EventBooking.Controllers;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Services;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace EventBooking.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class SecurityControllerTests
     {
         private SecurityController _controller;
@@ -19,17 +20,50 @@ namespace EventBooking.Tests
         }
 
 
-        [TestMethod]
+        [Test]
         public void Index_Returns_View()
         {
             var viewResult = GimmeIndexView();
-
+            
             Assert.IsNotNull(viewResult);
             Assert.IsInstanceOfType(viewResult.Model, typeof(LoginModel));
         }
 
+        [Test]
+        public void When_Nobody_Signs_in_they_are_redirected_to_the_page_they_wanted_to_goto()
+        {
+            ISecurityService mocksecurityService = new MockupSecurityService { AcceptedEmail = string.Empty, AcceptedPassword = string.Empty};
+            var controller = new SecurityController(mocksecurityService);
 
-        [TestMethod]
+            const string returnurl = "www.google.com";
+            var result = controller.LogIn(new LoginModel
+                {
+                    ElectronicMailAddress = string.Empty,
+                    Password = string.Empty,
+                    ReturnUrl = returnurl,
+                }) as RedirectResult;
+
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(returnurl, result.Url);
+        } 
+        
+        [Test]
+        public void Given_A_return_url_when_someone_goes_to_the_checkpoint_The_login_model_will_keep_the_url()
+        {
+            ISecurityService mocksecurityService = new MockupSecurityService { AcceptedEmail = string.Empty, AcceptedPassword = string.Empty};
+            var controller = new SecurityController(mocksecurityService);
+
+            const string returnurl = "www.google.com";
+            var result = controller.Checkpoint(returnurl) as ViewResult;
+
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(returnurl, ((LoginModel)result.Model).ReturnUrl);
+        }
+
+
+        [Test]
         public void Given_a_nobody_When_nobody_logs_in_As_somebody_and_Exists_Then_somebody_gets_redirected_to_Home_Index()
         {
             const string expectedEmailAddress = "dennis@jessica.com";
@@ -49,10 +83,11 @@ namespace EventBooking.Tests
             
         }
 
-        [TestMethod]
+        [Test]
         public void Given_a_nobody_When_nobody_tries_to_log_As_somebody_but_doesnt_exist_Then_return_checkpoint_view_responding_vaguely() // for sec. reasons (checkpoint!).
         {
-            var controller = new SecurityController();
+            ISecurityService mockupSecurityService = new MockupSecurityService();
+            var controller = new SecurityController(mockupSecurityService);
             var model = new LoginModel() { ElectronicMailAddress = "a@b.c", Password = "you don't know it" };
 
             var result = controller.LogIn(model) as ViewResult;

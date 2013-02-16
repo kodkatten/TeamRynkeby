@@ -11,7 +11,7 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
-                <a class="brand" href="#">Team Rynkeby</a>
+                <a class="brand" href="/">Team Rynkeby</a>
                 <div class="nav-collapse collapse">
                     <ul class="nav">
                         @if (!Request.IsAuthenticated)
@@ -22,6 +22,7 @@
                         else
                         {
                             <li>@Html.ActionLink(User.Identity.Name, "MyProfile", "User")</li>
+                            <li>@Html.ActionLink("Skapa event", "Create", "Activity")</li>
                             <li>@Html.ActionLink("Logga ut", "SignOff", "Security")</li>
                         }
 
