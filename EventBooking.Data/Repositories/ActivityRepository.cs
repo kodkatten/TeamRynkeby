@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -45,6 +46,13 @@ namespace EventBooking.Data.Repositories
             return this._context.Activities
                                 .UpcomingActivities()
                                 .Where(activity => activity.OrganizingTeam.Id == teamId)
+                                .Page(skip, take);
+        }
+
+        public IEnumerable<Activity> GetUpcomingActivitiesByTeams(IEnumerable<int> teamIds, int skip, int take)
+        {
+            return this._context.Activities
+                                .UpcomingActivities().Where(act => teamIds.Contains(act.OrganizingTeam.Id))
                                 .Page(skip, take);
         }
 

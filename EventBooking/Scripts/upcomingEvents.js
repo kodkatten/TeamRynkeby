@@ -1,6 +1,5 @@
 ﻿var teamrynkebyse = teamrynkebyse === undefined ? {} : teamrynkebyse;
 
-
 teamrynkebyse.upcomingEvents = function() {
     var teams = [];
     var prevLink;
@@ -9,16 +8,23 @@ teamrynkebyse.upcomingEvents = function() {
     var baseUri;
     var currentPage = 0;
     var showAllTeamsBtn;
-    var buttonSelectedClass = "btn-primary";
+    var buttonSelectedClass = "btn-success";
     
-    var activityUrl = function(page) {
-           return baseUri + '/?page=' + page;
+    var activityUrl = function (page) {
+        var selectedTeamIds = [];
+        for (var i = 0; i < teams.length; i++) {
+            if (teams[i].selected === true) {
+                selectedTeamIds.push(teams[i].id);
+            }
+        }
+        
+        return baseUri + '/?page=' + page +'&teamIds=' + selectedTeamIds.join(",");
     };
 
     function setupLinks() {
             nextLink.click(function () {
                 var nextPage = currentPage + 1;
-                loadPage(nextPage);
+                loadNextPage(nextPage);
                 return false;
             });
             prevLink.click(function () {
@@ -33,15 +39,18 @@ teamrynkebyse.upcomingEvents = function() {
         prevLink.toggleClass("disabled", currentPage <= 0);
     };
     
-    function loadPage(nextPageNumber) {
-        $.get(activityUrl(nextPageNumber), function (result) {
+    function loadNextPage(nextPageNumber) {
+        var uri = activityUrl(nextPageNumber);
+        $.get(uri, function (result) {
             // Brain br0ken have a hack!
             if ($("li", result).size() !== 0) {
                 container.html(result);
                 currentPage = nextPageNumber;
+                
+            } else {
                 nextLink.toggleClass("disabled", true);
             }
-            updateLinks();
+            
         });
     };
 
@@ -60,8 +69,19 @@ teamrynkebyse.upcomingEvents = function() {
         
         $.each(teams, function (i, team) {
             team.button.removeClass(buttonSelectedClass);
+            team.selected = false;
         });
-        
+        load();
+    }
+
+    function isATeamSelected() {
+        var isSelected = false;
+        $.each(teams, function (i, team) {
+            if (team.selected === true) {
+                isSelected = true;
+            }
+        });
+        return isSelected;
     }
     
     function toggleTeam(teamId) {
@@ -77,26 +97,23 @@ teamrynkebyse.upcomingEvents = function() {
             team.button.removeClass(buttonSelectedClass);
             team.selected = false;
         }
+        if (!isATeamSelected()) {
+            showAllTeams();
+            return;
+        }
+
         load();
     }
     
     function load() {
-        var selectedTeamIds = [];
-        for (var i = 0; i < teams.length; i++) {
-            if (teams[i].selected === true) {
-                selectedTeamIds.push(teams[i].id);
-            }
-        }
-
         currentPage = 0;
-        var uri = activityUrl(0) + '&teamIds=' + selectedTeamIds.join(",");
+        var uri = activityUrl(0);
             
         $.get(uri, function (result) {
             container.html(result);
         });
     }
 
-    
     return {
         init: function (prevPage, nextPage, activityContainer) {
             prevLink = prevPage;

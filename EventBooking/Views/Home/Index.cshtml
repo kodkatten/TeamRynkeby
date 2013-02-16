@@ -34,10 +34,10 @@
         <div class="span6">
             <h3>Kommande aktiviteter</h3>
             
-            <div>
+            <div class="landing-page-select-team">
                 @if (this.Model.IsNobody)
                 {
-                    <button class="btn btn-mini btn-primary btn-select-all-teams" type="button"  data-team-id="-1">Alla</button>
+                    <button class="btn btn-mini btn-success btn-select-all-teams" type="button"  data-team-id="-1">Alla</button>
 
                     foreach (var team in Model.Teams)
                     {
