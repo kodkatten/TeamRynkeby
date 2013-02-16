@@ -106,6 +106,11 @@ namespace EventBooking.Tests
 			: base(null)
 		{
 		}
+
+        public override Activity GetActivityById(int id)
+        {
+           return new Activity();
+        }
 	}
 
 	public class ActivityControllerShunt : ActivityController
@@ -121,5 +126,6 @@ namespace EventBooking.Tests
 		{
 			CreatedActivity = activity;
 		}
+
 	}
 }

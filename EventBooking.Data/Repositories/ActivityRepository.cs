@@ -48,7 +48,7 @@ namespace EventBooking.Data.Repositories
                                 .Page(skip, take);
         }
 
-	    public Activity GetActivityById(int id)
+	    public virtual Activity GetActivityById(int id)
 	    {
 	        return this._context.Activities.Include(x => x.OrganizingTeam).SingleOrDefault(x => x.Id == id);
 	    }
