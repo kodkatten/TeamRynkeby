@@ -18,6 +18,7 @@
                     else
                     {
                         <li>@Html.ActionLink(User.Identity.Name, "MyProfile", "User")</li>
+                        <li>@Html.ActionLink("Mitt lag", "Details", "Team")</li>
                         <li>@Html.ActionLink("Skapa event", "Create", "Activity")</li>
                         <li>@Html.ActionLink("Logga ut", "SignOff", "Security")</li>
                     }

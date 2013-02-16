@@ -16,8 +16,7 @@ namespace EventBooking.Filters
         protected override void Seed(EventBookingContext context)
         {
             WebSecurity.InitializeDatabaseConnection("DefaultConnection", "Users", "Id", "Email", autoCreateTables: true);
-            UserMapper.SetupMapper();
-
+            
             var membership = (SimpleMembershipProvider)Membership.Provider;
             var roles = (SimpleRoleProvider)Roles.Provider;
 

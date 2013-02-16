@@ -32,14 +32,5 @@ namespace EventBooking.Controllers
             return View(model);
         }
 
-        private User GetUser()
-        {
-            return new User();
-        }
-
-        private Team GetTeam()
-        {
-            return new Team { Activities = new Collection<Activity> { new Activity() } };
-        }
     }
 }       
