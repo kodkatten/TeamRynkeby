@@ -37,6 +37,11 @@ namespace EventBooking.Controllers
 		[HttpPost]
 		public ActionResult LogIn(LoginModel model)
 		{
+		    TryValidateModel(model);
+            if (!ModelState.IsValid)
+            {
+                return View("Checkpoint",model);
+            }
 			bool signedin = _securityService.SignIn(model.ElectronicMailAddress, model.Password);
 			if (!signedin)
 			{
