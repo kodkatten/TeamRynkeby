@@ -24,7 +24,12 @@ namespace EventBooking.Controllers
 	        {
 	            return RedirectToAction("Checkpoint", "Security");
 	        }
-            return new ViewResult();
+	        return new ViewResult();
+	    }
+
+	    public ActionResult Details(int id)
+	    {
+	        return View();
 	    }
 	}
 }
