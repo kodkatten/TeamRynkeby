@@ -21,6 +21,11 @@ namespace EventBooking.Services
 			}
 		}
 
+		public bool IsUserTeamAdmin()
+		{
+			return true;
+		}
+
 		public virtual bool SignIn(string userName, string password)
 		{
 			if (WebSecurity.Login(userName, password))

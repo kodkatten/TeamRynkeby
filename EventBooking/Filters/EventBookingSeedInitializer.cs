@@ -24,6 +24,9 @@ namespace EventBooking.Filters
             if (!roles.RoleExists(UserType.Administrator.ToString()))
                 roles.CreateRole(UserType.Administrator.ToString());
 
+            if (!roles.RoleExists(UserType.PowerUser.ToString()))
+                roles.CreateRole(UserType.PowerUser.ToString());
+
 			SeedActivitieshacketyHackBlaBla( context );
 			
 			if ( membership.GetUser( "admin_test", false ) == null )
@@ -31,6 +34,12 @@ namespace EventBooking.Filters
 
             if (!roles.GetRolesForUser("admin_test").Contains(UserType.Administrator.ToString()))
                 roles.AddUsersToRoles(new[] { "admin_test" }, new[] { UserType.Administrator.ToString() });
+            
+            if (membership.GetUser("poweruser", false) == null)
+                EnsureUserExists(membership, context, "poweruser", new User { Cellphone = "3457", Name = "najz", Team = context.Teams.First() });
+
+            if (!roles.GetRolesForUser("poweruser").Contains(UserType.PowerUser.ToString()))
+                roles.AddUsersToRoles(new[] { "poweruser" }, new[] { UserType.PowerUser.ToString() });
 
             CreateAwesomeUsers(membership, context);
 	        CreatePredefinedActivityItems(context);

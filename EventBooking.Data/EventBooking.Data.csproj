@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\TrainingQuestion.cs" />
     <Compile Include="DataDependencyModule.cs" />
     <Compile Include="Entities\Activity.cs" />
     <Compile Include="Entities\ActivityType.cs" />
@@ -67,11 +68,15 @@
     <Compile Include="Repositories\ActivityQueries.cs" />
     <Compile Include="Repositories\ActivityRepository.cs" />
     <Compile Include="Repositories\IActivityRepository.cs" />
+    <Compile Include="Repositories\IInterviewQuestionRepository.cs" />
+    <Compile Include="Repositories\InterviewQuestionRepository.cs" />
     <Compile Include="Repositories\IPrefedinedItemRepository.cs" />
     <Compile Include="Repositories\ITeamRepository.cs" />
     <Compile Include="Repositories\PrefedinedItemRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
+    <Compile Include="Entities\InterviewQuestion.cs" />
     <Compile Include="Repositories\TeamRepository.cs" />
+    <Compile Include="Repositories\TrainingQuestionRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="SystemTime.cs" />
   </ItemGroup>

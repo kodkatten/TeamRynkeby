@@ -6,6 +6,7 @@
 @using (Html.BeginForm())
 {
     @Html.ValidationSummary(true)
+    @Html.HiddenFor(m => m.TeamId)
     
     <fieldset>
         <legend>QuestionsModel</legend>
@@ -15,20 +16,20 @@
                 <th>Intervjufrågor</th>
                 <th>Träningsfrågor</th>
             </tr>
-            @for (int i = 1; i <= 15; i++)
+            @for (int i = 0; i < Model.NumberOfQuestionRows; i++)
             {
                 <tr>
                     <td>
-                        @Html.LabelFor(m => m.InterviewQuestions[i].QuestionText, "Fråga " + i)
+                        @Html.LabelFor(m => m.InterviewQuestions[i], "Fråga " + (i+1))
                     </td>
                     <td>
-                        @Html.TextBoxFor(m => m.InterviewQuestions[i].QuestionText)
+                        @Html.TextBoxFor(m => m.InterviewQuestions[i])
                     </td>
                     <td>
-                        @Html.LabelFor(m => m.TrainingQuestions[i].QuestionText, "Fråga " + i)
+                        @Html.LabelFor(m => m.TrainingQuestions[i], "Fråga " + (i+1))
                     </td>
                     <td>
-                        @Html.TextBoxFor(m => m.TrainingQuestions[i].QuestionText)
+                        @Html.TextBoxFor(m => m.TrainingQuestions[i])
                     </td>
                     <td>
                 </tr>
@@ -38,6 +39,7 @@
 
         <p>
             <input type="submit" value="Spara" />
+            <span>@ViewBag.Feedback</span>
         </p>
     </fieldset>
 }

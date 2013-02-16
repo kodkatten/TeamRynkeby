@@ -18,6 +18,7 @@ namespace EventBooking.Data
         public virtual Team Team { get; set; }
         public virtual ICollection<Session> Sessions { get; set; }
 
+
         public bool IsMemberOfATeam()
         {
             return this.Team != null;

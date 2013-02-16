@@ -31,7 +31,7 @@ namespace EventBooking
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-			EventBookingMapper.SetupMappers();
+			EventBookingMapper.SetupMappers(container);
             Database.SetInitializer(new EventBookingSeedInitializer());
             using (var context = new EventBookingContext())
             {
