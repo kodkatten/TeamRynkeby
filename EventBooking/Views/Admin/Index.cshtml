@@ -1,9 +1,15 @@
-﻿@model EventBooking.Controllers.ViewModels.AdministratorPageModel
+﻿@using System.Web.Optimization
+@model EventBooking.Controllers.ViewModels.AdministratorPageModel
 
 @{
-    ViewBag.Title = "index";
+    ViewBag.Title = "Administration";
 }
+    
 
-<h2>Teams</h2>
 
- @Html.Partial("Partials/Teams", Model.Teams)
+@Html.Partial("Partials/Teams", Model.Teams)
+
+@Html.Partial("Partials/TeamMembers")    
+
+
+

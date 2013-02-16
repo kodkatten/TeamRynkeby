@@ -6,6 +6,12 @@
     <title>@ViewBag.Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @Styles.Render("~/Content/bootstrap")
+@*     @if (Request.IsAuthenticated)*@
+@*     {*@
+@*         Styles.Render("~/bundles/admin");*@
+@*     }*@
+
+    @Styles.Render("~/bundles/admincss")
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -40,7 +46,15 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-     @Scripts.Render("~/bundles/general")
-     @Scripts.Render("~/bundles/pickadate")
+    @Scripts.Render("~/bundles/general")
+    @Scripts.Render("~/bundles/pickadate")
+    
+@*    @if (Request.IsAuthenticated)*@
+@*    {*@
+@*        Scripts.Render("~/bundles/admin");*@
+@*    } *@
+    
+    @Scripts.Render("~/bundles/adminscripts")
+
 </body>
 </html>
