@@ -24,6 +24,7 @@
 
     #banner-info {
         padding-top: 10px;
+        padding-left: 20px;
     }
 
     #banner-info h3 {
@@ -63,26 +64,20 @@
 
     #expo {
         width: 100%;
-        
     }
 
-    .navbar-inner {
-        margin-left: 20px;
-        margin-right: 20px;
-    }
-
-    #banner-info h3:nth-child(3) {
-        color: #a3ca60;
-        margin-top: -15px;
-    }
-
-    .banner-container {
-        margin-left: 20px;
-        margin-right: 20px;
+    .navbar-fixed-top {
+        margin-right: 0;
+        margin-left: 0;
     }
 
     .container {
         padding-left: 20px;
         padding-right: 20px;
+    }
+
+    #banner-info h3:nth-child(3) {
+        color: #a3ca60;
+        margin-top: -15px;
     }
 }
