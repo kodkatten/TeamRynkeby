@@ -6,6 +6,7 @@ using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
 using EventBooking.Data.Repositories;
 using EventBooking.Services;
+using WebMatrix.WebData;
 
 namespace EventBooking.Controllers
 {
@@ -14,12 +15,14 @@ namespace EventBooking.Controllers
         private readonly ISecurityService security;
         private readonly IUserRepository userRepository;
         private readonly ITeamRepository teamRepository;
+        private readonly IEventBookingContext context;
 
-        public UserController(ISecurityService security, IUserRepository userRepository, ITeamRepository teamRepository)
+        public UserController(ISecurityService security, IUserRepository userRepository, ITeamRepository teamRepository, IEventBookingContext context)
         {
             this.security = security;
             this.userRepository = userRepository;
             this.teamRepository = teamRepository;
+            this.context = context;
         }
 
         public ActionResult SignUp()
@@ -54,24 +57,15 @@ namespace EventBooking.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = Mapper.Map(model, security.CurrentUser);
-                //userRepository.Save();
+                var currentUser = security.CurrentUser;
+                //var user = Mapper.Map(model, UserMapper.MapUserTemp(new Data.User(){Id = currentUser.Id, Email = currentUser.Email}, currentUser));
 
-                using (var context = new EventBookingContext())
-                {
-                    // GIEF TEAM!!111!!
-                    if (user.Team != null)
-                    {
-                        user.Team = context.Teams.Find(user.Team.Id);
-                        if (user.Team == null)
-                        {
-                            string message = string.Format("Could not find team (id={0}).", user.Team.Id);
-                            throw new InvalidOperationException(message);
-                        }
-                    }
+                var user = context.Users.Find(WebSecurity.CurrentUserId);
+                user.Name = model.Name;
+                user.Cellphone = model.Cellphone;
+                user.Team = context.Teams.Find(model.Team.Id);
 
-                    context.SaveChanges();
-                }
+                context.SaveChanges();
 
                 return RedirectToAction("Index", "Home");
             }

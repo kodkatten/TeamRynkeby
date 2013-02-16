@@ -42,23 +42,24 @@ namespace EventBooking.Filters
             EnsureUserExists(membership,context, "a", new User { Cellphone = "3457", Name = "dodo2", Team = context.Teams.First() });
         }
 
-
         private static void EnsureUserExists(SimpleMembershipProvider membership, EventBookingContext context,
                                              string email, User specification = null)
         {
-            if (membership.GetUser(email, false) != null) return;
-            membership.CreateUserAndAccount(email, email,
-                                            new Dictionary<string, object> {{"Created", DateTime.Now}});
+            if (membership.GetUser(email, false) != null)
+            {
+                return;
+            }
+
+            var result = membership.CreateUserAndAccount(email, email, new Dictionary<string, object> {{"Created", DateTime.Now}});
             var user = context.Users.First(user1 => user1.Email == email);
             specification = specification ?? new User {Name = "One of the three very beared wise men"};
-            Mapper.Map(specification, user);
+            UserMapper.MapUserTemp(user, specification);          
             user.Created = DateTime.UtcNow;
             context.SaveChanges();
         }
 
         private static void SeedActivitieshacketyHackBlaBla(EventBookingContext context)
         {
-
             var team = new Team {Name = "I R DA AWESOME TEAM"};
 
             context.Teams.Add(team);

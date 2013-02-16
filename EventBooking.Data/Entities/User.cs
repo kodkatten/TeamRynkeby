@@ -15,8 +15,8 @@ namespace EventBooking.Data
         public string City { get; set; }
         public DateTime Created { get; set; }
         public DateTime? Birthdate { get; set; }
-        public Team Team { get; set; }
-        public ICollection<Session> Sessions { get; set; }
+        public virtual Team Team { get; set; }
+        public virtual ICollection<Session> Sessions { get; set; }
 
         public bool IsMemberOfATeam()
         {
