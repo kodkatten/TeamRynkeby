@@ -3,17 +3,19 @@ using System.Web.Mvc;
 
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data.Queries;
-using WebMatrix.WebData;
+using EventBooking.Services;
 
 namespace EventBooking.Controllers
 {
     public class UserController : Controller
     {
         private readonly GetTeamsQuery.Factory getTeamsCommandFactory;
+        private readonly ISecurityService security;
 
-        public UserController(GetTeamsQuery.Factory getTeamsCommandFactory)
+        public UserController(GetTeamsQuery.Factory getTeamsCommandFactory, ISecurityService security)
         {
             this.getTeamsCommandFactory = getTeamsCommandFactory;
+            this.security = security;
         }
 
         public ActionResult SignUp()
@@ -26,8 +28,8 @@ namespace EventBooking.Controllers
         {
             if (ModelState.IsValid)
             {
-                WebSecurity.CreateUserAndAccount(model.Email, model.Password, new { Created = DateTime.Now });
-                WebSecurity.Login(model.Email, model.Password, model.RememberMe);
+                security.CreateUserAndAccount(model.Email, model.Password, created: DateTime.UtcNow);
+                security.SignIn(model.Email, model.Password);
                 return RedirectToAction("MyProfile");
             }
 
@@ -49,7 +51,7 @@ namespace EventBooking.Controllers
         {
             if (ModelState.IsValid)
             {
-                return View();
+                return RedirectToAction("Index", "Home");
             }
 
             return View();
