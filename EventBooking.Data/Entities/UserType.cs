@@ -9,5 +9,6 @@ namespace EventBooking.Data
     {
         Default,
         Administrator,
+        PowerUser
     }
 }
