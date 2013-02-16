@@ -1,7 +1,50 @@
-﻿@model dynamic
+﻿@model EventBooking.Controllers.ViewModels.CreateActivityModel
 
 @{
     ViewBag.Title = "Skapa event";
 }
 
-<h2>Skapa event</h2>
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Create", "Activity", FormMethod.Post, new{@class="form-horizontal"}))
+{
+    <div class="control-group">
+        @Html.LabelFor(m => m.Name, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextBoxFor(m => m.Name, new { placeholder = "Rubrik" })
+            @Html.ValidationMessageFor(m => m.Name)
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.Description, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextAreaFor(m => m.Description, new { placeholder = "Beskrivning" })
+            @Html.ValidationMessageFor(m => m.Description)
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.Summary, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextAreaFor(m => m.Description, new { placeholder = "Mer information" })
+            @Html.ValidationMessageFor(m => m.Description)
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.Type, new { @class = "control-label" })
+        <div class="controls">
+            @Html.RadioButtonFor(m => m.Type, new { placeholder = "Typ" })
+            @Html.ValidationMessageFor(m => m.Type)
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.Date, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextBoxFor(m => m.Date, new { placeholder = "Datum" })
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <button type="submit" class="btn">Skapa konto</button>
+        </div>
+    </div>   
+}

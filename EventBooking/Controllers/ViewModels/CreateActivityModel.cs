@@ -17,12 +17,10 @@ namespace EventBooking.Controllers.ViewModels
 
 		[Display( Name = "Rubrik" )]
 		[Required( ErrorMessage = "*" )]
-		[EmailAddress( ErrorMessage = "Eventet måste ha en rubrik" )]
 		public string Name { get; set; }
 
 		[Display( Name = "Typ" )]
 		[Required( ErrorMessage = "*" )]
-		[EmailAddress( ErrorMessage = "Du måste ange typ av event" )]
 		public ActivityType Type { get; set; }
 
 		[Display( Name = "Mer information" )]
