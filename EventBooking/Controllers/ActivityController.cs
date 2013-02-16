@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using AutoMapper;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
+using EventBooking.Data.Repositories;
 using EventBooking.Services;
 
 namespace EventBooking.Controllers
@@ -10,10 +11,12 @@ namespace EventBooking.Controllers
 	public class ActivityController : Controller
 	{
 		private readonly ISecurityService _securityService;
+		private readonly ActivityRepository _activityRepository;
 
-		public ActivityController(ISecurityService securityService)
+		public ActivityController(ISecurityService securityService, ActivityRepository activityRepository)
 		{
 			_securityService = securityService;
+			_activityRepository = activityRepository;
 		}
 
 		public ActionResult Create()
@@ -30,13 +33,15 @@ namespace EventBooking.Controllers
 		{
 			if (!ModelState.IsValid)
 				return View();
-			StoreActivity(Mapper.Map<Activity>(model));
+			var activity = Mapper.Map<Activity>(model);
+			activity.OrganizingTeam = _securityService.CurrentUser.Team;
+			StoreActivity(activity);
 			return RedirectToAction("Index", "Home");
 		}
 
 		protected virtual void StoreActivity(Activity activity)
 		{
-			throw new NotImplementedException();
+			_activityRepository.Add(activity);
 		}
 
 	    public ActionResult Details(int id)

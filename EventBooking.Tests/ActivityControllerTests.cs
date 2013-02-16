@@ -53,7 +53,7 @@ namespace EventBooking.Tests
             var mockHttpContext = new Mock<HttpContextBase>();
             mockHttpContext.Setup(c => c.Request).Returns(request.Object);
             var controllerContext = new ControllerContext(mockHttpContext.Object, new RouteData(), new Mock<ControllerBase>().Object);
-            var activityController = new ActivityController(securityService)
+            var activityController = new ActivityController(securityService, new ActivityRepositoryShunt())
                 {
                     ControllerContext = controllerContext,
                     Url = new UrlHelper(controllerContext.RequestContext)
