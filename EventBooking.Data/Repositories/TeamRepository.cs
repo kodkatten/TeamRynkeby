@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 namespace EventBooking.Data.Repositories
@@ -20,7 +21,13 @@ namespace EventBooking.Data.Repositories
 
 	    public Team Get(int teamId)
 	    {
-		    return context.Teams.Find(teamId);
+	        return context.Teams
+	                      .Where(t => t.Id == teamId)
+	                      .Include("Activities")
+	                      .Include("Activities.Coordinator")
+                          .Include("Activities.Sessions")
+                          .Include("Activities.Sessions.Volunteers")
+	                      .First();
 	    }
 	    public Team CreateTeam(string name)
 	    {

@@ -29,15 +29,15 @@ namespace EventBooking.Controllers
                 return RedirectToAction("Checkpoint", "Security", new {returnUrl = Url.Action("Details")});
             }
 
-            var team = _securityService.CurrentUser.Team;
+            var currentUser = _securityService.CurrentUser;
 
-            if (null == team)
+            if (null == currentUser.Team)
             {
                 return RedirectToAction("MyProfile", "User");
             }
 
-			var realTeam = _teamRepository.Get( team.Id );
-			var model = new TeamActivitiesModel( realTeam );
+			var realTeam = _teamRepository.Get( currentUser.Team.Id );
+			var model = new TeamActivitiesModel( realTeam, currentUser );
 			return View( model );
         }
     }

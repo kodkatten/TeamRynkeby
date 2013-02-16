@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Security;
@@ -42,6 +43,9 @@ namespace EventBooking.Filters
 
             CreateAwesomeUsers(membership, context);
 	        CreatePredefinedActivityItems(context);
+            var session = context.Activities.First();
+            session.Coordinator = context.Users.First();
+            context.SaveChanges();
         }
 
         private void CreateAwesomeUsers(SimpleMembershipProvider membership, EventBookingContext context)
@@ -73,21 +77,33 @@ namespace EventBooking.Filters
             specification = specification ?? new User {Name = "One of the three very beared wise men"};
             UserMapper.MapUserTemp(user, specification);          
             user.Created = DateTime.UtcNow;
+            context.Sessions.First().Volunteers.Add(user);
             context.SaveChanges();
         }
 
         private static void SeedActivitieshacketyHackBlaBla(EventBookingContext context)
         {
-            var team = new Team {Name = "I R DA AWESOME TEAM"};
-
+            var team = new Team {Name = "Team Treebeard"};
             context.Teams.Add(team);
-            context.Activities.Add(new Activity
-            {
-                Name = "More awesome stuff.",
-                Description = "Ham andouille spare ribs tongue pork loin tenderloin brisket. Sausage spare ribs pork loin cow flank ground round jerky beef ribs swine rump.",
-                Date = new DateTime(2013, 02, 17),
-                OrganizingTeam = team, Type =ActivityType.Preliminary
-            });
+            var dateTime = new DateTime(2013, 02, 17);
+
+            var activity = new Activity
+                {
+                    Name = "More awesome stuff.",
+                    Description = "Ham andouille spare ribs tongue pork loin tenderloin brisket. Sausage spare ribs pork loin cow flank ground round jerky beef ribs swine rump.", 
+                    Date = dateTime, 
+                    OrganizingTeam = team, 
+                    Type = ActivityType.Preliminary,
+                    
+                };
+            var session = new Session {
+                FromTime = dateTime.AddHours(8),
+                ToTime = dateTime.AddHours(10),
+                Activity = activity,
+                Volunteers = new Collection<User>()
+            };
+            context.Activities.Add(activity);
+            context.Sessions.Add(session);
             context.Activities.Add(new Activity
             {
                 Name = "Awesome aktivet uno",

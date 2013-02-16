@@ -47,8 +47,9 @@ namespace EventBooking.Controllers
 			model.Session.FromTime = activity.Date.Date.AddHours(model.Session.FromTime.Hour).AddMinutes(model.Session.FromTime.Minute);
 			model.Session.ToTime = activity.Date.Date.AddHours(model.Session.ToTime.Hour).AddMinutes(model.Session.ToTime.Minute);
 			activity.Sessions = new List<Session> { Mapper.Map<Session>( model.Session ) };
-			StoreActivity( activity );
-			return RedirectToAction( "Index", "Home" );
+		    activity.Coordinator = _securityService.CurrentUser;
+			StoreActivity(activity);
+			return RedirectToAction("Index", "Home");
 		}
 
 		public static int NumberOfActivities = 10;
