@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
 using EventBooking.Controllers.ViewModels;
@@ -19,7 +20,7 @@ namespace EventBooking.Controllers
 			_activityRepository = activityRepository;
 		}
 
-		public ActionResult Create()
+	    public ActionResult Create()
 		{
 			if (!_securityService.IsLoggedIn)
 			{
@@ -27,6 +28,11 @@ namespace EventBooking.Controllers
 			}
 			return View();
 		}
+
+        public ActionResult Index()
+        {
+            return RedirectToAction("Upcoming");
+        }
 
 		[HttpPost]
 		public ActionResult Create(CreateActivityModel model)
@@ -38,6 +44,28 @@ namespace EventBooking.Controllers
 			StoreActivity(activity);
 			return RedirectToAction("Index", "Home");
 		}
+        
+        public ActionResult Upcoming()
+        {
+            IQueryable<Activity> query = null;
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = _securityService.GetUser(User.Identity.Name);
+                if (user.IsMemberOfATeam())
+                {
+                    query = _activityRepository.GetUpcomingActivitiesByTeam(user.Team.Id);
+                }
+            }
+
+            if (query == null)
+            {
+                query = _activityRepository.GetUpcomingActivities();
+            }
+
+            var model = query.ToArray().Select(data => new ActivityModel(data));
+
+            return this.PartialView(model);
+        }
 
 		protected virtual void StoreActivity(Activity activity)
 		{
@@ -52,8 +80,5 @@ namespace EventBooking.Controllers
             }
 	        return View();
 	    }
-
-
-
 	}
 }

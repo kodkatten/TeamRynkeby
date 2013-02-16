@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Security;
-
+using AutoMapper;
+using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
 
 using WebMatrix.WebData;
@@ -15,6 +16,7 @@ namespace EventBooking.Filters
         protected override void Seed(EventBookingContext context)
         {
             WebSecurity.InitializeDatabaseConnection("DefaultConnection", "Users", "Id", "Email", autoCreateTables: true);
+            UserMapper.SetupMapper();
 
             var membership = (SimpleMembershipProvider)Membership.Provider;
             var roles = (SimpleRoleProvider)Roles.Provider;
@@ -46,20 +48,19 @@ namespace EventBooking.Filters
             if (membership.GetUser(email, false) != null) return;
             membership.CreateUserAndAccount(email, email,
                                             new Dictionary<string, object> {{"Created", DateTime.Now}});
-            var userId = membership.GetUserId(email);
-            var user = specification ?? new User {Name = "One of the three very beared wise men"};
-            user.Id = userId;
+            var user = context.Users.First(user1 => user1.Email == email);
+            specification = specification ?? new User {Name = "One of the three very beared wise men"};
+            Mapper.Map(specification, user);
             user.Created = DateTime.UtcNow;
-            context.Users.Add(user);
             context.SaveChanges();
         }
 
         private static void SeedActivitieshacketyHackBlaBla(EventBookingContext context)
         {
+
             var team = new Team {Name = "I R DA AWESOME TEAM"};
 
             context.Teams.Add(team);
-
             context.Activities.Add(new Activity
             {
                 Name = "More awesome stuff.",
@@ -67,7 +68,6 @@ namespace EventBooking.Filters
                 Date = new DateTime(2013, 02, 17),
                 OrganizingTeam = team
             });
-
             context.Activities.Add(new Activity
             {
                 Name = "Awesome aktivet uno",
@@ -75,6 +75,45 @@ namespace EventBooking.Filters
                 Date = new DateTime(2013, 02, 27),
                 OrganizingTeam = team
             });
+
+            // Team #2
+            var team2 = new Team() {Name = "Team Stockholm"};
+            team2.Activities = new List<Activity>();
+            team2.Activities.Add(new Activity()
+            {
+                Name = "Tanter på stan",
+                Description = "Dessa skall alltså rånas.",
+                Summary = "En gång var jag två gånger.",
+                Date = new DateTime(2013, 02, 22),
+                OrganizingTeam = team2
+            });
+
+            team2.Activities.Add(new Activity()
+            {
+                Name = "Samla in pengar på stan",
+                Summary = "Stora högtidsdagen då alla vill skänka pengar",
+                Description = "Det är inte alla som har pengar, men de kan alltid skänka en lite slant, och många bäckar små, eller många slantar små, leder till en rikedom för mig",
+                Date = new DateTime(2013, 03, 03),
+                OrganizingTeam = team2
+            });
+            team2.Activities.Add(new Activity()
+            {
+                Name = "En annan aktivitet",
+                Summary = "Stora tiggardagen",
+                Description = "Vi skänker våra själar till satan.",
+                Date = new DateTime(2013, 03, 03),
+                OrganizingTeam = team2
+            });
+
+            team2.Activities.Add(new Activity()
+            {
+                Name = "adfa",
+                Summary = "adfasdfa",
+                Description = "adfafafdsdfasdfasdf.",
+                Date = new DateTime(2013, 02, 28),
+                OrganizingTeam = team2
+            });
+            context.Teams.Add(team2);
 
             context.SaveChanges();
         }

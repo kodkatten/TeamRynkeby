@@ -53,7 +53,7 @@ namespace EventBooking.Tests
 		[Test]
 		public void GivenDataForNewActivityIsPersisted()
 		{
-			var controller = new ActivityControllerShunt(SecurityService);
+			var controller = CreateController();
 
 			CreateValidActivity(controller);
 
@@ -109,11 +109,6 @@ namespace EventBooking.Tests
 	{
 		public ActivityControllerShunt(ActivityRepository activityRepository, ISecurityService securityService)
 			: base(securityService, activityRepository)
-		{
-		}
-
-		public ActivityControllerShunt(ISecurityService securityController)
-			: base(securityController, new ActivityRepositoryShunt())
 		{
 		}
 

@@ -3,7 +3,6 @@ using System.Web.Mvc;
 using EventBooking.Controllers;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
-using EventBooking.Data.Queries;
 using EventBooking.Data.Repositories;
 using EventBooking.Services;
 using Moq;
@@ -17,15 +16,15 @@ namespace EventBooking.Tests
         private UserController userController;
         private Mock<ISecurityService> security;
         private Mock<IUserRepository> userRepository;
+        private Mock<ITeamRepository> teamRepository;
 
         [SetUp]
         public void SetUp()
         {
-            var context = new Mock<EventBookingContext>();
             this.security = new Mock<ISecurityService>();
             this.userRepository = new Mock<IUserRepository>();
-
-            this.userController = new UserController(() => new GetTeamsQuery(context.Object), this.security.Object, this.userRepository.Object);
+            this.teamRepository = new Mock<ITeamRepository>();
+            this.userController = new UserController(security.Object, userRepository.Object, teamRepository.Object);
         }
 
         [Test]

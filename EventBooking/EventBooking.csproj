@@ -68,8 +68,9 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Web.Optimization">
-      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.0.0\lib\net40\System.Web.Optimization.dll</HintPath>
+    <Reference Include="System.Web.Optimization, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.0-alpha1\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
@@ -140,9 +141,9 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="ControllerDependencyModule.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ViewModels\ActivityModel.cs" />
     <Compile Include="Controllers\ViewModels\CreateActivityModel.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="Controllers\ViewModels\SignUpModel.cs" />
     <Compile Include="Controllers\ViewModels\TeamEventsModel.cs" />
     <Compile Include="Controllers\ViewModels\TeamModel.cs" />
+    <Compile Include="Controllers\ViewModels\UserMapper.cs" />
     <Compile Include="Filters\EventBookingSeedInitializer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -163,6 +165,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ISecurityService.cs" />
     <Compile Include="Services\SecurityService.cs" />
+    <Compile Include="Views\Admin\AdministratorPageModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -172,14 +175,19 @@
     <Content Include="Content\bootstrap-responsive.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\admin.css" />
+    <Content Include="Content\landingpage-tablet.css" />
+    <Content Include="Content\landingpage-phone.css" />
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
+    <Content Include="Content\landingpage.css" />
     <Content Include="Content\site.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="myBalsamiqProject.pdf" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="Scripts\admin.js" />
     <Content Include="Scripts\general.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
@@ -203,6 +211,12 @@
     <Content Include="Views\Activity\Create.cshtml" />
     <Content Include="Views\Activity\details.cshtml" />
     <Content Include="Views\Home\UpcommingActivities.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\Partials\Teams.cshtml" />
+    <Content Include="Views\Activity\Upcoming.cshtml" />
+    <Content Include="Views\Admin\Partials\TeamMembers.cshtml" />
+    <Content Include="Views\Shared\_LayoutWithBanner.cshtml" />
+    <Content Include="Views\Shared\NavigationBar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -246,6 +260,7 @@
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>61922</DevelopmentServerPort>
+          <DevelopmentServerPort>49170</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:49385/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

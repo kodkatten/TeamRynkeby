@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using EventBooking.Data.Queries;
 using EventBooking.Data.Repositories;
 
 namespace EventBooking.Data
@@ -11,15 +10,10 @@ namespace EventBooking.Data
             // Register core stuff.
             builder.RegisterType<EventBookingContext>().As<IEventBookingContext>().InstancePerLifetimeScope();
 
-            // Register queries.
-            builder.RegisterType<GetActivitiesByMonthQuery>().AsSelf().InstancePerLifetimeScope();
-            builder.RegisterType<GetTeamsQuery>().AsSelf().InstancePerLifetimeScope();
-            builder.RegisterType<GetTeamActivitiesByMonthQuery>().AsSelf().InstancePerLifetimeScope();
-            builder.RegisterType<GetUpcomingActivitiesQuery>().AsSelf().InstancePerLifetimeScope();
-
             // Register repositories.
             builder.RegisterType<UserRepository>().As<IUserRepository>().InstancePerLifetimeScope();
             builder.RegisterType<ActivityRepository>().AsSelf().As<IActivityRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<TeamRepository>().As<ITeamRepository>().InstancePerLifetimeScope();
         }
     }
 }

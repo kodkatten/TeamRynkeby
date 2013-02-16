@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Data.Entity;
+using System.Linq;
 using EventBooking.Data;
 
 namespace EventBooking.Services

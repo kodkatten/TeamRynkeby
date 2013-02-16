@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data.Entity;
 using System.Linq;
 
@@ -30,5 +30,18 @@ namespace EventBooking.Data.Repositories
 			_context.Activities.Add(activity);
 			_context.SaveChanges();
 		}
-	}
+
+        public IQueryable<Activity> GetUpcomingActivities(int skip = 0, int take = 10)
+        {
+            return this._context.Activities.UpcomingActivities().Page(skip, take).Include(activity => activity.OrganizingTeam);
+        }
+
+        public IQueryable<Activity> GetUpcomingActivitiesByTeam(int teamId, int skip = 0, int take = 10)
+        {
+            return this._context.Activities
+                                .UpcomingActivities()
+                                .Where(activity => activity.OrganizingTeam.Id == teamId)
+                                .Page(skip, take);
+        }
+    }
 }
