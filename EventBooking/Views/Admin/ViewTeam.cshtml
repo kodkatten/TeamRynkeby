@@ -3,15 +3,31 @@
     ViewBag.Title = "ViewTeam";
 }
 
+
 <h2>@Model.Name</h2>
-<ul>
-@foreach (var volonteer in Model.Volunteers)
-{
-    <li class="volonteer">
-        <h3>@volonteer.Name</h3>
-        <p>@volonteer.Email</p>
-        <a href="@Url.Action("ExcludeFromTeam", new { id = volonteer.Id })" title="Team admin" class="btn"><i class="icon-check"> </i></a>
-        <a href="@Url.Action("ExcludeFromTeam", new { id = volonteer.Id })" title="Ta bort från lag" class="btn btn-danger"><i class="icon-white icon-thumbs-down"> </i></a>  
-    </li>  
-  }
-</ul>
+
+<h3>Members</h3>
+
+    @{
+        int rowIndex = 0;
+    }
+
+    <div class="row">
+        @foreach (var volonteer in Model.Volunteers.OrderBy(x => x.Name))
+        {    
+            <div class="span4 volonteer card">
+                <div>
+                    <h3>@volonteer.Name</h3>
+                    <p>@volonteer.Email</p>
+                    <a href="@Url.Action("ExcludeFromTeam", new { id = volonteer.Id })" title="Team admin" class="btn"><i class="icon-check"></i></a>
+                    <a href="@Url.Action("ExcludeFromTeam", new { id = volonteer.Id })" title="Ta bort från lag" class="btn btn-danger"><i class="icon-white icon-thumbs-down"></i></a>
+                </div>
+            </div>  
+
+            if (++rowIndex % 3 == 0) 
+            {
+                 @:</div>
+            }
+        }
+    </div>
+

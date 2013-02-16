@@ -10,6 +10,7 @@ namespace EventBooking.Controllers.ViewModels
 		public static void SetupMappers(IContainer container)
 		{
 			Mapper.CreateMap<CreateActivityModel, Activity>();
+			Mapper.CreateMap<SessionModel, Session>();
 		    Mapper.CreateMap<MyProfileModel, User>();
 		    Mapper.CreateMap<User, MyProfileModel>();
 

@@ -1,7 +1,7 @@
-﻿@model EventBooking.Controllers.ViewModels.UpcomingActivitiesModel
+﻿@model IEnumerable<EventBooking.Controllers.ViewModels.ActivityModel>
 
 <ul class="activity-list-short">
-    @foreach (var activity in Model.Activities)
+    @foreach (var activity in Model)
     {
         <li>
             <a href="@Url.Action("Details", "Activity", new { activity.Id })" class="link" rel="tooltip" data-original-title="@activity.Description">

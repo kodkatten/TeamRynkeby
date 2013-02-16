@@ -6,11 +6,15 @@ namespace EventBooking.Controllers.ViewModels
 {
     public class TeamActivitiesModel
     {
-        public TeamActivitiesModel(Team team)
+        public TeamActivitiesModel(Team team, User user)
         {
-            Activities = (team.Activities ?? new Activity[0]).GroupBy(activity => activity.Date.ToString("MMMM"));
+            var activities = (team.Activities ?? new Activity[0]);
+            Activities = activities.GroupBy(activity => activity.Date.ToString("MMMM"));
             Name = team.Name;
+            MyActivites = activities.Where(r=>r.Sessions.Any(s=>s.Volunteers.Any(v=>v.Id == user.Id))).Concat(activities.Where(r=> r.Coordinator != null && r.Coordinator.Id == user.Id)).Distinct();
         }
+
+        public IEnumerable<Activity> MyActivites { get; private set;} 
 
         public IEnumerable<IGrouping<string, Activity>> Activities { get; internal set; }
 

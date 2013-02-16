@@ -37,7 +37,6 @@ namespace EventBooking.Controllers
 		[HttpPost]
 		public ActionResult LogIn(LoginModel model)
 		{
-		    TryValidateModel(model);
             if (!ModelState.IsValid)
             {
                 return View("Checkpoint",model);

@@ -49,7 +49,8 @@ namespace EventBooking.Tests
 					Date = Tomorrow,
 					Description = "Description",
 					Summary = "Summary",
-					Type = ActivityType.Preliminary
+					Type = ActivityType.Preliminary,
+					Session = new SessionModel { FromTime = Tomorrow.AddHours( 10 ), ToTime = Tomorrow.AddHours( 11 ), VolunteersNeeded = 2 }
 				};
 		}
 
@@ -105,6 +106,11 @@ namespace EventBooking.Tests
 		public ActivityRepositoryShunt()
 			: base(null)
 		{
+		}
+
+		public override Activity GetActivityById( int id )
+		{
+			return new Activity();
 		}
 	}
 

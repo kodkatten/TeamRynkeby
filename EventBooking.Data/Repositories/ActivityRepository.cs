@@ -28,7 +28,9 @@ namespace EventBooking.Data.Repositories
 
 		public virtual void Add(Activity activity)
 		{
-			_context.Teams.Attach(activity.OrganizingTeam);
+		    var user = _context.Users.Find(activity.Coordinator.Id);
+		    activity.Coordinator = user;
+		    activity.OrganizingTeam = _context.Teams.Find(activity.OrganizingTeam.Id);
 			_context.Activities.Add(activity);
 			_context.SaveChanges();
 		}
@@ -46,7 +48,7 @@ namespace EventBooking.Data.Repositories
                                 .Page(skip, take);
         }
 
-	    public Activity GetActivityById(int id)
+	    public virtual Activity GetActivityById(int id)
 	    {
 	        return this._context.Activities.Include(x => x.OrganizingTeam).SingleOrDefault(x => x.Id == id);
 	    }

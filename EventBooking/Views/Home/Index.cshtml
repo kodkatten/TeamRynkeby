@@ -1,4 +1,4 @@
-﻿@using EventBooking.Data
+﻿@using EventBooking.Data    
 @model EventBooking.Controllers.ViewModels.LandingPageModel
 
 @{
@@ -32,33 +32,26 @@
 <div class="container">
     <div class="row-fluid">
         <div class="span6">
-                <h3>Kommande aktiviteter</h3>
-            @*<option value="@team.Id" selected="@{team.Id == this.Model.SelectedTeamId ? "True" : ""; }">@team.Name</option>*@
+            <h3>Kommande aktiviteter</h3>
+            
+            <div>
+                @if (this.Model.IsNobody)
+                {
+                    <button class="btn btn-mini btn-primary activity-filter-all" type="button"  data-team-id="-1">Alla</button>
 
-            @if (this.Model.IsNobody)
-            {
-                <!-- Team selector -->
-                <div  class="landing-page-select-team">
-                    <div style="margin-right:5px;  float:left; margin-top:5px !important; display: inline-block">Team</div>
-                    <div style="float: right">
-                        <select id="_teamSelector" class="landing-page-team-selector">
-                            <option value="-1">Alla</option>
-                            @foreach (var team in Model.Teams)
-                            {
-                                <option value="@team.Id">@team.Name</option>
-                            }
-                        </select>
+                    foreach (var team in Model.Teams)
+                    {
+                        <button class="btn btn-mini" type="button" data-team-id="@team.Id">@team.Name</button>
+                    }
 
-                    </div>
-                    
-                </div>
-            }
-        
-            <div class="upcoming-activity-list">
+                }
+            </div>
+
+            <div class="upcoming-activity-list" data-update-uri="http://localhost:49385/Activity/Upcoming">
                 @Html.Action("Upcoming", "Activity")
             </div>
-            <a href="http://localhost:49385/Activity/Upcoming" class="update-activities-list-command">Föregående</a>
-            <a href="http://localhost:49385/Activity/Upcoming?skip=3" class="update-activities-list-command">Nästa</a>
+            <a href="#" class="previous-activities-list-command">Föregående</a>
+            <a href="#" class="next-activities-list-command">Nästa</a>
 
         </div>
         <div class="span6">
@@ -79,16 +72,40 @@
     </div>
 </div>
 @section scripts {
-
     <!-- Called when the selected team is changed. -->
-    $(function() {
-        $("#_teamSelector").change(function() {
-            var teamId = $(this).val();
-                window.location = '@Url.Action("Index", "Home")?teamId=' + teamId;
-            });
+   
+    (function(intiUpcomingEventsUpdate, $, undefined) {
+    
+    var upcomingEventsModule =  teamrynkebyse.upcomingEvents;
+    
+    upcomingEventsModule.init($('.previous-activities-list-command'), $('.next-activities-list-command'), $('.upcoming-activity-list'));
+    
+    var allTeamIds = $(".btn-mini").map(function(){
+        return $(this).data("team-id");
     });
     
-    (function(intiUpcomingEventsUpdate, $, undefined) {
-        intiUpcomingEventsUpdate($('.update-activities-list-command'), $('.upcoming-activity-list'));
+    upcomingEventsModule.setTeams(allTeamIds);
+    
+    $(".btn-mini").click(function(){
+        upcomingEventsModule.toggleTeam($(this).data("team-id"));
+    });
+        
+
+  
+        
+    @*    $(".btn-mini").click(function(){
+        var isOn =  $(this).hasClass("btn-primary");
+        if (isOn === true)
+        {
+            $(this).removeClass("btn-primary");
+        }
+        else
+        {
+            $(this).addClass("btn-primary");
+        }
+        }
+    );*@
+        
+    
     }(teamrynkebyse.intiUpcomingEventsUpdate, jQuery));
 }
