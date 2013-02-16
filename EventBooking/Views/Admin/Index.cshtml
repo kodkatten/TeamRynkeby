@@ -1,6 +1,14 @@
 ﻿@using System.Web.Optimization
 @model EventBooking.Controllers.ViewModels.AdministratorPageModel
 
+@section styles {
+    <link href="/Content/admin.css" rel="stylesheet"/>
+}
+
+@section scriptfiles {
+    <script type="text/javascript" src="/Scripts/admin.js"></script>
+}
+
 @{
     ViewBag.Title = "Administration";
 }
