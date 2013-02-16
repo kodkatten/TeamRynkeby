@@ -6,9 +6,8 @@ namespace EventBooking.Tests
 	public class MockupSecurityService : SecurityService
 	{
 		private bool _isLoggedin;
-		private User _currentUser;
 
-		public string AcceptedEmail { get; set; }
+	    public string AcceptedEmail { get; set; }
 
 		public string AcceptedPassword { get; set; }
 
@@ -29,16 +28,6 @@ namespace EventBooking.Tests
 				return true;
 			}
 			return false;
-		}
-
-		public override User GetUser(string userName)
-		{
-			if (userName == AcceptedEmail)
-			{
-				_isLoggedin = true;
-				return ReturnUser ?? new User();
-			}
-			return null;
 		}
 	}
 }

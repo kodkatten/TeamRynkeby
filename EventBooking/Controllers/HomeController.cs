@@ -12,14 +12,14 @@ namespace EventBooking.Controllers
     {
 
         private readonly IActivityRepository _activities;
-        private readonly ISecurityService _security;
+        private readonly ISecurityService _securityService;
         private readonly ITeamRepository _team;
 
 
-        public HomeController(IActivityRepository activities, ISecurityService security, ITeamRepository team)
+        public HomeController(IActivityRepository activities, ISecurityService securityService, ITeamRepository team)
         {
             _activities = activities;
-            _security = security;
+            _securityService = securityService;
             _team = team;
         }
 
@@ -29,9 +29,9 @@ namespace EventBooking.Controllers
             bool isNobody = true;
 
             // Got an authenticated user?
-            if (User.Identity.IsAuthenticated)
+            if (_securityService.IsLoggedIn)
             {
-                User user = _security.GetUser(User.Identity.Name);
+                User user = _securityService.CurrentUser;
                 if (user.IsMemberOfATeam())
                 {
                     // Only get activities for the user's team.
