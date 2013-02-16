@@ -1,4 +1,5 @@
-﻿@model EventBooking.Controllers.ViewModels.TeamActivitiesModel
+﻿@using EventBooking.Controllers.ViewModels
+@model EventBooking.Controllers.ViewModels.TeamActivitiesModel
 
 @{
     ViewBag.Title = "Team " + Model.Name;
@@ -24,7 +25,7 @@
 
                             <li>
                                 <a href="@Url.Action("Details", "Activity", new { @e.Id })" class="link" rel="tooltip" data-original-title="@e.Description">
-                                <span class="badge badge-info">@e.Date.DayOfWeek @e.Date.Day</span>
+                                    <span class="badge @Html.BadgeColorPicker(@e.Type)">@e.Date.DayOfWeek @e.Date.Day</span>
                                 @e.Name
 
                                 <!-- TODO: add this when activity page exists Html.ActionLink(e.Name, "Details", "Activity");-->

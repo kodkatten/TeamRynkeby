@@ -67,28 +67,31 @@ namespace EventBooking.Filters
                 Name = "More awesome stuff.",
                 Description = "Ham andouille spare ribs tongue pork loin tenderloin brisket. Sausage spare ribs pork loin cow flank ground round jerky beef ribs swine rump.",
                 Date = new DateTime(2013, 02, 17),
-                OrganizingTeam = team
+                OrganizingTeam = team, Type =ActivityType.Preliminary
             });
             context.Activities.Add(new Activity
             {
                 Name = "Awesome aktivet uno",
                 Description = "Bacon ipsum dolor sit amet boudin turducken fatback pancetta kielbasa pastrami doner cow capicola short ribs drumstick tail. ",
                 Date = new DateTime(2013, 02, 27),
-                OrganizingTeam = team
+                OrganizingTeam = team,
+                Type = ActivityType.Public
             }); 
             context.Activities.Add(new Activity
             {
                 Name = "More awesome stuffies.",
                 Description = "Ham andouille spare ribs tongue pork loin tenderloin brisket. Sausage spare ribs pork loin cow flank ground round jerky beef ribs swine rump.",
                 Date = new DateTime(2013, 03, 17),
-                OrganizingTeam = team
+                OrganizingTeam = team,
+                Type = ActivityType.Sponsor
             });
             context.Activities.Add(new Activity
             {
                 Name = "Awesome aktivet douce",
                 Description = "Bacon ipsum dolor sit amet boudin turducken fatback pancetta kielbasa pastrami doner cow capicola short ribs drumstick tail. ",
                 Date = new DateTime(2013, 03, 27),
-                OrganizingTeam = team
+                OrganizingTeam = team,
+                Type = ActivityType.Training
             });
 
             // Team #2
