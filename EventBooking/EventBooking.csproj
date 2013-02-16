@@ -145,12 +145,14 @@
     <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ViewModels\ActivityModel.cs" />
     <Compile Include="Controllers\ViewModels\CreateActivityModel.cs" />
     <Compile Include="Controllers\ViewModels\DateTimeExtensions.cs" />
     <Compile Include="Controllers\ViewModels\EventBookingMapper.cs" />
     <Compile Include="Controllers\ViewModels\FutureDate.cs" />
+    <Compile Include="Controllers\ViewModels\HtmlExtensions.cs" />
     <Compile Include="Controllers\ViewModels\LandingPageModel.cs" />
     <Compile Include="Controllers\ViewModels\MyProfileModel.cs" />
     <Compile Include="Controllers\ViewModels\QuestionsModel.cs" />
@@ -165,6 +167,7 @@
     <Compile Include="Controllers\ViewModels\LoginModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ISecurityService.cs" />
+    <Compile Include="Services\SecurityService.cs" />
     <Compile Include="Views\Admin\AdministratorPageModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -195,7 +198,9 @@
     <Content Include="Scripts\pickadate.legacy.js" />
     <Content Include="Scripts\pickadate.legacy.min.js" />
     <Content Include="Scripts\pickadate.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -260,6 +265,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>61922</DevelopmentServerPort>
           <DevelopmentServerPort>49170</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:49385/</IISUrl>

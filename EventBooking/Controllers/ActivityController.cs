@@ -12,14 +12,13 @@ namespace EventBooking.Controllers
 	public class ActivityController : Controller
 	{
 		private readonly ISecurityService _securityService;
+		private readonly ActivityRepository _activityRepository;
 
-        private readonly IActivityRepository _activityRepository;
-
-        public ActivityController(ISecurityService securityService, IActivityRepository activityRepository)
-        {
-            _securityService = securityService;
-            this._activityRepository = activityRepository;
-        }
+		public ActivityController(ISecurityService securityService, ActivityRepository activityRepository)
+		{
+			_securityService = securityService;
+			_activityRepository = activityRepository;
+		}
 
 	    public ActionResult Create()
 		{
@@ -40,16 +39,18 @@ namespace EventBooking.Controllers
 		{
 			if (!ModelState.IsValid)
 				return View();
-			StoreActivity(Mapper.Map<Activity>(model));
+			var activity = Mapper.Map<Activity>(model);
+			activity.OrganizingTeam = _securityService.CurrentUser.Team;
+			StoreActivity(activity);
 			return RedirectToAction("Index", "Home");
 		}
         
         public ActionResult Upcoming()
         {
             IQueryable<Activity> query = null;
-            if (User.Identity.IsAuthenticated)
+            if (_securityService.IsLoggedIn)
             {
-                var user = _securityService.GetUser(User.Identity.Name);
+                var user = _securityService.CurrentUser;
                 if (user.IsMemberOfATeam())
                 {
                     query = _activityRepository.GetUpcomingActivitiesByTeam(user.Team.Id);
@@ -68,7 +69,7 @@ namespace EventBooking.Controllers
 
 		protected virtual void StoreActivity(Activity activity)
 		{
-			throw new NotImplementedException();
+			_activityRepository.Add(activity);
 		}
 
 	    public ActionResult Details(int id)
