@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Security;
-
+using AutoMapper;
+using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
 
 using WebMatrix.WebData;
@@ -15,6 +16,7 @@ namespace EventBooking.Filters
         protected override void Seed(EventBookingContext context)
         {
             WebSecurity.InitializeDatabaseConnection("DefaultConnection", "Users", "Id", "Email", autoCreateTables: true);
+            UserMapper.SetupMapper();
 
             var membership = (SimpleMembershipProvider)Membership.Provider;
             var roles = (SimpleRoleProvider)Roles.Provider;
@@ -45,11 +47,10 @@ namespace EventBooking.Filters
             if (membership.GetUser(email, false) != null) return;
             membership.CreateUserAndAccount(email, email,
                                             new Dictionary<string, object> {{"Created", DateTime.Now}});
-            var userId = membership.GetUserId(email);
-            var user = specification ?? new User {Name = "One of the three very beared wise men"};
-            user.Id = userId;
+            var user = context.Users.First(user1 => user1.Email == email);
+            specification = specification ?? new User {Name = "One of the three very beared wise men"};
+            Mapper.Map(specification, user);
             user.Created = DateTime.UtcNow;
-            context.Users.Add(user);
             context.SaveChanges();
         }
 

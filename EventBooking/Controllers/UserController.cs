@@ -2,8 +2,6 @@
 using System.Web.Mvc;
 using AutoMapper;
 using EventBooking.Controllers.ViewModels;
-using EventBooking.Data;
-using EventBooking.Data.Queries;
 using EventBooking.Data.Repositories;
 using EventBooking.Services;
 
@@ -11,13 +9,11 @@ namespace EventBooking.Controllers
 {
     public class UserController : Controller
     {
-        private readonly GetTeamsQuery.Factory getTeamsCommandFactory;
         private readonly ISecurityService security;
         private readonly IUserRepository userRepository;
 
-        public UserController(GetTeamsQuery.Factory getTeamsCommandFactory, ISecurityService security, IUserRepository userRepository)
+        public UserController(ISecurityService security, IUserRepository userRepository)
         {
-            this.getTeamsCommandFactory = getTeamsCommandFactory;
             this.security = security;
             this.userRepository = userRepository;
         }
@@ -44,8 +40,7 @@ namespace EventBooking.Controllers
         [Authorize]
         public ActionResult MyProfile()
         {
-            var query = getTeamsCommandFactory.Invoke();
-            var model = new MyProfileModel(security.CurrentUser(), query.Execute());
+            var model = new MyProfileModel();
             return View(model);
         }
 
@@ -59,8 +54,7 @@ namespace EventBooking.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var query = getTeamsCommandFactory.Invoke();
-            var viewModel = new MyProfileModel(model.ToUser(), query.Execute());
+            var viewModel = new MyProfileModel(model.ToUser(), null);
 
             return View(viewModel);
         }
