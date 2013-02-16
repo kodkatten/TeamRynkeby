@@ -14,6 +14,7 @@ namespace EventBooking.Data
             // Register queries.
             builder.RegisterType<GetActivitiesByMonthQuery>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<GetTeamsQuery>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<GetTeamActivitiesByMonthQuery>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<GetUpcomingActivitiesQuery>().AsSelf().InstancePerLifetimeScope();
 
             // Register repositories.

@@ -1,4 +1,5 @@
-﻿@model EventBooking.Controllers.ViewModels.CreateActivityModel
+﻿@using EventBooking.Controllers.ViewModels
+@model EventBooking.Controllers.ViewModels.CreateActivityModel
 
 @{
     ViewBag.Title = "Skapa event";
@@ -25,14 +26,14 @@
     <div class="control-group">
         @Html.LabelFor(m => m.Summary, new { @class = "control-label" })
         <div class="controls">
-            @Html.TextAreaFor(m => m.Description, new { placeholder = "Mer information" })
-            @Html.ValidationMessageFor(m => m.Description)
+            @Html.TextAreaFor(m => m.Summary, new { placeholder = "Mer information" })
+            @Html.ValidationMessageFor(m => m.Summary)
         </div>
     </div>
     <div class="control-group">
         @Html.LabelFor(m => m.Type, new { @class = "control-label" })
         <div class="controls">
-            @Html.RadioButtonFor(m => m.Type, new { placeholder = "Typ" })
+            @Html.RadioButtonForEnum(m => m.Type )
             @Html.ValidationMessageFor(m => m.Type)
         </div>
     </div>
@@ -40,11 +41,12 @@
         @Html.LabelFor(m => m.Date, new { @class = "control-label" })
         <div class="controls">
             @Html.TextBoxFor(m => m.Date, new { placeholder = "Datum" })
+            @Html.ValidationMessageFor(m => m.Date)
         </div>
     </div>
     <div class="control-group">
         <div class="controls">
-            <button type="submit" class="btn">Skapa konto</button>
+            <button type="submit" class="btn">Skapa event</button>
         </div>
     </div>   
 }
