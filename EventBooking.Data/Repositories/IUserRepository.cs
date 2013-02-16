@@ -1,7 +1,8 @@
 ﻿namespace EventBooking.Data.Repositories
 {
-    public interface IUserRepository
-    {
-        void Save(User user);
-    }
+	public interface IUserRepository
+	{
+		bool Exists(string email);
+		void Save(User user);
+	}
 }
