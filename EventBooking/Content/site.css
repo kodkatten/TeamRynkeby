@@ -37,6 +37,9 @@ ul {
 
 .row-fluid {
   margin: 20px 0 0 0;
+  
+.disabled {
+    color: gray;
 }
 
 >>>>>>> 6e3d669a8b40a017aa7d87cef708d5e5c1b88cb7

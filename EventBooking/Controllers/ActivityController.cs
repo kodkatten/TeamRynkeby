@@ -15,6 +15,7 @@ namespace EventBooking.Controllers
 		private readonly ISecurityService _securityService;
 		private readonly ActivityRepository _activityRepository;
 		private readonly IPrefedinedItemRepository _prefedinedItems;
+        	private static int NumberOfActivitiesPerPage = 10;
 
 		public ActivityController(ISecurityService securityService, ActivityRepository activityRepository, IPrefedinedItemRepository prefedinedItems)
 		{
@@ -52,26 +53,27 @@ namespace EventBooking.Controllers
 			return RedirectToAction("Index", "Home");
 		}
 
-		public static int NumberOfActivities = 10;
-
-		public ActionResult Upcoming( int skip = 0 )
+        public ActionResult Upcoming(int page = 0)
 		{
+            page = page < 0 ? 0 : page;
+            var skip = NumberOfActivitiesPerPage * page;
 			IEnumerable<Activity> query = null;
+
 			if ( _securityService.IsLoggedIn )
 			{
 				var user = _securityService.CurrentUser;
 				if ( user.IsMemberOfATeam() )
 				{
-					query = _activityRepository.GetUpcomingActivitiesByTeam( user.Team.Id, skip, NumberOfActivities );
+		                    query = _activityRepository.GetUpcomingActivitiesByTeam(user.Team.Id, skip, NumberOfActivitiesPerPage);
 				}
 			}
 
 			if ( query == null )
 			{
-				query = _activityRepository.GetUpcomingActivities( skip, NumberOfActivities );
+                		query = _activityRepository.GetUpcomingActivities(skip, NumberOfActivitiesPerPage);
 			}
 
-			var viewModel = new UpcomingActivitiesModel( query.ToArray() );
+		        var viewModel = query.ToArray().Select(data => new ActivityModel(data));
 
 			return this.PartialView( viewModel );
 		}
