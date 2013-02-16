@@ -143,7 +143,6 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ViewModels\ActivityModel.cs" />
     <Compile Include="Controllers\ViewModels\CreateActivityModel.cs" />
@@ -155,6 +154,7 @@
     <Compile Include="Controllers\ViewModels\SignUpModel.cs" />
     <Compile Include="Controllers\ViewModels\TeamEventsModel.cs" />
     <Compile Include="Controllers\ViewModels\TeamModel.cs" />
+    <Compile Include="Controllers\ViewModels\UserMapper.cs" />
     <Compile Include="Filters\EventBookingSeedInitializer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -205,6 +205,7 @@
     <Content Include="Views\Home\UpcommingActivities.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\Partials\Teams.cshtml" />
+    <Content Include="Views\Activity\Upcoming.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
