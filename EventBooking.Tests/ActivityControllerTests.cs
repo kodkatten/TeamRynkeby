@@ -19,9 +19,9 @@ namespace EventBooking.Tests
   
 
         [Test]
-        public void When_Nobody_tries_to_see_the_activity_then_Nobody_should_be_asked_to_go_through_the_security_checkpoint()
+        public void When_Nobody_tries_to_create_an_activity_then_Nobody_should_be_asked_to_go_through_the_security_checkpoint()
         {
-            var activityOverview = GetActivityView<RedirectToRouteResult>(c=>c.Index());
+            var activityOverview = GetActivityView<RedirectToRouteResult>(c=>c.Create());
 
             Assert.IsNotNull(activityOverview);
             Assert.AreEqual("Security", activityOverview.RouteValues["Controller"]);
@@ -41,7 +41,7 @@ namespace EventBooking.Tests
         [Test]
         public void When_Somebody_wants_to_see_the_activity_list_they_are_allowed_to()
         {
-            var activityOverview = GetActivityView<ViewResult>(c=>c.Index(), loggedin: true);
+            var activityOverview = GetActivityView<ViewResult>(c=>c.Create(), loggedin: true);
 
             Assert.IsNotNull(activityOverview);
         }
