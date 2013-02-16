@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 
 using EventBooking.Controllers.ViewModels;
+using EventBooking.Data;
 using EventBooking.Data.Queries;
 using WebMatrix.WebData;
 
@@ -26,8 +27,22 @@ namespace EventBooking.Controllers
         {
             if (ModelState.IsValid)
             {
-                WebSecurity.CreateUserAndAccount(model.Email, model.Password, new { Created = DateTime.Now });
+                var earlier = DateTime.UtcNow;
+
+                WebSecurity.CreateUserAndAccount(model.Email, model.Password, new { Created = earlier });
                 WebSecurity.Login(model.Email, model.Password, model.RememberMe);
+
+                using (var context = new EventBookingContext())
+                {
+                    context.Users.Add(new User
+                        {
+                            Email = model.Email, 
+                            Id = WebSecurity.GetUserId(model.Email),
+                            Created = earlier
+                        });
+                    context.SaveChanges();
+                }
+
                 return RedirectToAction("MyProfile");
             }
 

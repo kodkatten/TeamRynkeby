@@ -24,9 +24,7 @@ namespace EventBooking.Services
 
         public virtual bool SignIn(string userName, string password)
         {
-            if (!WebSecurity.Login(userName, password))
-                return true;
-            return false;
+            return WebSecurity.Login(userName, password);
         }
 
         public void SignOff()
