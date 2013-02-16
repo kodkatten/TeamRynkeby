@@ -1,5 +1,10 @@
 ﻿
 
+.team > div > a {
+    float: right;
+    display: block;
+}
+
 .volonteer p {
     color: gray;
     margin-bottom: 50px;

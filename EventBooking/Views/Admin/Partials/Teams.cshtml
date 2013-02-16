@@ -1,20 +1,30 @@
-﻿
-
-@model IEnumerable<EventBooking.Data.Team>
+﻿@model IEnumerable<EventBooking.Data.Team>
 
 <div id="teams-container">
     <h2>Teams</h2>
-    <ul id="teams-list">
-        @foreach (var team in Model)
-        {
-            <li>
-                <a 
-                    href="@Url.Content("~/admin/team/"+team.Id)"
-                    class="btn-link" >
-                    @team.Name
-                </a>
-                <a href="@Url.Action("DeleteTeam", new { id = team.Id })" class="btn"><i class="icon icon-trash"> </i></a>
-            </li>
-        }
-    </ul>
+    
+    <div class="row">
+    @foreach (var team in Model)
+    {
+        <div class="card span4 team">
+            <div>
+                <h3>
+                    <a 
+                        href="@Url.Content("~/admin/team/" + team.Id)"
+                        class="btn-link" >
+                        @team.Name
+                    </a>
+                </h3>
+                    
+                <p class="btn-large">
+                    <i class="icon icon-user"> </i> @team.Volunteers.Count()
+                </p>
+
+                <a href="@Url.Action("DeleteTeam", new { id = team.Id })" class="btn btn-danger"><i class="icon-trash icon-white"></i></a>
+                <p class="clearfix"></p>
+            </div>
+        </div>
+    }
+    </div>
+    
 </div>

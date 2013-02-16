@@ -8,10 +8,11 @@
 
 <h3>Members</h3>
 
+<div class="row">
 @foreach (var volonteer in Model.Volunteers.OrderBy(x => x.Name))
 {    
-    <div class="span4 volonteer card" data-volonteer-id="@volonteer.Id">
-        <div>
+    <div class="span4 volonteer" data-volonteer-id="@volonteer.Id">
+        <div class="card">
             <h3>@volonteer.Name</h3>
             <p>@volonteer.Email</p>
             <a href="#" title="Team admin" class="btn toggle-admin"><i class="icon icon-user"></i></a>
@@ -19,6 +20,7 @@
         </div>
     </div>  
 }
+</div>
 
 <div id="errorModal" class="modal hide fade">
   <div class="modal-header">
