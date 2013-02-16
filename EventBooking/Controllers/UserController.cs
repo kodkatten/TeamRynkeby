@@ -23,56 +23,66 @@ namespace EventBooking.Controllers
             this.teamRepository = teamRepository;
         }
 
-        public ActionResult SignUp()
-        {
-            return View();
-        }
+		public ActionResult SignUp()
+		{
+			return View();
+		}
 
-        [HttpPost]
-        public ActionResult SignUp(SignUpModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                security.CreateUserAndAccount(model.Email, model.Password, created: DateTime.UtcNow);
-                security.SignIn(model.Email, model.Password);
+		[HttpPost]
+		public ActionResult SignUp(SignUpModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				if (userRepository.Exists(model.Email))
+				{
+					ModelState.AddModelError("Email", "E-postaddressen finns redan registrerad.");
+					return View();
+				}
 
-                return RedirectToAction("MyProfile");
-            }
+				security.CreateUserAndAccount(model.Email, model.Password, created: DateTime.UtcNow);
+				security.SignIn(model.Email, model.Password);
 
-            return View();
-        }
+				return RedirectToAction("MyProfile");
+			}
 
-        [Authorize]
-        public ActionResult MyProfile()
-        {
-            var model = new MyProfileModel(security.CurrentUser, teamRepository.GetTeams());
-            return View(model);
-        }
+			return View();
+		}
 
-        [Authorize]
-        [HttpPost]
-        public ActionResult MyProfile(MyProfileModel model)
-        {
-            if (ModelState.IsValid)
-            {
-	            var user = security.CurrentUser;
-                user.Birthdate = model.Birthdate;
-                user.Cellphone = model.Cellphone;
-                user.City = model.City;
-                user.Name = model.Name;
-                user.StreetAddress = model.StreetAddress;
-                if (!string.IsNullOrWhiteSpace(model.ZipCode))
-                    user.Zipcode = int.Parse(model.ZipCode.Replace(" ", string.Empty));
-	            user.Team = model.Team == null ? null : teamRepository.Get(model.Team.Id);
+	    [Authorize]
+	    [HttpPost]
+	    public ActionResult MyProfile(MyProfileModel model)
+	    {
+		    if (ModelState.IsValid)
+		    {
+			    var user = security.CurrentUser;
+			    user.Birthdate = model.Birthdate;
+			    user.Cellphone = model.Cellphone;
+			    user.City = model.City;
+			    user.Name = model.Name;
+			    user.StreetAddress = model.StreetAddress;
+			    if (!string.IsNullOrWhiteSpace(model.ZipCode))
+				    user.Zipcode = int.Parse(model.ZipCode.Replace(" ", string.Empty));
+			    user.Team = model.Team == null ? null : teamRepository.Get(model.Team.Id);
 
-				userRepository.Save(user);
+			    userRepository.Save(user);
 
-                return RedirectToAction("Index", "Home");
-            }
+				return RedirectToAction("Index", "Home");
+		    }
 
-            var viewModel = new MyProfileModel(model.ToUser(), teamRepository.GetTeams());
+			var viewModel = new MyProfileModel(model.ToUser(), teamRepository.GetTeams());
+			return View(viewModel);
+	    }
 
-            return View(viewModel);
-        }
-    }
+	    public ActionResult AlreadyRegistrered(string message)
+		{
+			return View();
+		}
+
+		[Authorize]
+		public ActionResult MyProfile()
+		{
+			var model = new MyProfileModel(security.CurrentUser, teamRepository.GetTeams());
+			return View(model);
+		}
+	}
 }

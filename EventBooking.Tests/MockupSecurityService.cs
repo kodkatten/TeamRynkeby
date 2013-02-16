@@ -23,6 +23,11 @@ namespace EventBooking.Tests
 			
 		}
 
+		public override User GetUser( string userName )
+		{
+			return ReturnUser;
+		}
+
 		public override bool SignIn(string userName, string password)
 		{
 			if (userName == AcceptedEmail && password == AcceptedPassword)

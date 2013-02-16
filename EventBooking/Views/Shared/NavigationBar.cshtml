@@ -18,7 +18,23 @@
                     else
                     {
                         <li>@Html.ActionLink(User.Identity.Name, "MyProfile", "User")</li>
+                        <li>@Html.ActionLink("Mitt lag", "Details", "Team")</li>
                         <li>@Html.ActionLink("Skapa event", "Create", "Activity")</li>
+                        
+                        <!-- Todo: checked if user is admin -->
+                        <li class="dropdown">
+                            @Html.ActionLink(
+                                    "Team",
+                                    "Index",
+                                    "Admin",
+                                    new { @class = "dropdown-toggle", data_toggle = "dropdown" })
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Team medlemmar", "TeamMembers", "Admin")</li>
+                                <li>@Html.ActionLink("Hantera teams", "EditTeams", "Admin")</li>
+                            </ul>
+                        </li>
+                        
+
                         <li>@Html.ActionLink("Logga ut", "SignOff", "Security")</li>
                     }
                 </ul>

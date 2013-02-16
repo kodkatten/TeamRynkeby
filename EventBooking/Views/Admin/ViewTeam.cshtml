@@ -1,0 +1,16 @@
+﻿@model EventBooking.Data.Team
+@{
+    ViewBag.Title = "ViewTeam";
+}
+
+<h2>@Model.Name</h2>
+
+<ul>
+@foreach (var volonteer in Model.Volunteers)
+{
+    <li>
+        @volonteer.Name
+        <a href="@Url.Action("ExcludeFromTeam", new { userId = volonteer.Id })" class="btn"><i class="icon icon-trash"> </i></a>
+    </li>    
+}
+</ul>

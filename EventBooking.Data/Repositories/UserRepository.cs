@@ -1,4 +1,7 @@
-﻿namespace EventBooking.Data.Repositories
+﻿using System;
+using System.Linq;
+
+namespace EventBooking.Data.Repositories
 {
 	internal class UserRepository : IUserRepository
 	{
@@ -13,6 +16,11 @@
 		{
 			context.Users.Attach(user);
 			context.SaveChanges();
+		}
+
+		public bool Exists(string email)
+		{
+			return context.Users.Any(x => x.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
 		}
 	}
 }
