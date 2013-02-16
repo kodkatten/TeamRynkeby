@@ -8,6 +8,7 @@ using Autofac;
 using Autofac.Integration.Mvc;
 using EventBooking.Data;
 using EventBooking.Filters;
+using EventBooking.Services;
 
 namespace EventBooking
 {
