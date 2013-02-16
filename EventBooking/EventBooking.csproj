@@ -216,14 +216,13 @@
     <Content Include="Views\Activity\Create.cshtml" />
     <Content Include="Views\Activity\details.cshtml" />
     <Content Include="Views\Home\UpcommingActivities.cshtml" />
-    <Content Include="Views\Admin\TeamMembers.cshtml" />
+    <Content Include="Views\Admin\ViewTeams.cshtml" />
     <Content Include="Views\Admin\Partials\Teams.cshtml" />
     <Content Include="Views\Activity\Upcoming.cshtml" />
     <Content Include="Views\Admin\Partials\TeamMembers.cshtml" />
     <Content Include="Views\Shared\_LayoutWithBanner.cshtml" />
     <Content Include="Views\Shared\NavigationBar.cshtml" />
     <Content Include="Views\Questions\Create.cshtml" />
-    <Content Include="Views\Admin\EditTeams.cshtml" />
     <Content Include="Views\Admin\ViewTeam.cshtml" />
   </ItemGroup>
   <ItemGroup>

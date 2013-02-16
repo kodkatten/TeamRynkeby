@@ -11,41 +11,26 @@ namespace EventBooking.Controllers
 {
     public class AdminController : Controller
     {
-        public ActionResult EditTeams()
-        {
-	        return View("EditTeams");
-        }
-
-		public ActionResult ExcludeFromTeam(int userId)
+		[HttpPost]
+		public ActionResult CreateTeam(string name)
 		{
-			return RedirectToAction("EditTeams");
+			return Redirect("ViewTeams");
 		}
 
-		public ActionResult ViewTeam(int teamId)
-        {
+		public ActionResult ExcludeFromTeam(int id)
+		{
+			return RedirectToAction("Team");
+		}
+
+		public ActionResult Team(int id)
+		{
 			// TODO: check permissions
 
-			var team = new Team()
-				{
-					Activities = null,
-					Id = 1,
-					Name = "Team Lund",
-					Volunteers = new Collection<User>()
-						             {
-							             new User()
-								             {
-									             Id = 1,
-									             Name = "Fulhacke Fulhacksson"
+			var team = Lund();
+			return View("ViewTeam", team);
+		}
 
-								             }
-						             }
-
-				};
-
-	        return View("ViewTeam", team);
-        }
-
-		public ActionResult TeamMembers()
+	    public ActionResult ViewTeams()
         {
 			// TODO: check permissions
 
@@ -91,7 +76,26 @@ namespace EventBooking.Controllers
             return View(model);
         }
 
-        [HttpGet]
+	    private static Team Lund()
+	    {
+		    var team = new Team()
+			               {
+				               Activities = null,
+				               Id = 1,
+				               Name = "Team Lund",
+				               Volunteers = new Collection<User>()
+					                            {
+						                            new User()
+							                            {
+								                            Id = 1,
+								                            Name = "Fulhacke Fulhacksson"
+							                            }
+					                            }
+			               };
+		    return team;
+	    }
+
+	    [HttpGet]
         public JsonResult ListTeamMembers(int teamId)
         {
             List<User> data = new List<User>
