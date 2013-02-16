@@ -8,7 +8,12 @@
         @foreach (var team in Model)
         {
             <li>
-                @Html.ActionLink(team.Name, "ViewTeam", "Admin", new{ teamId = team.Id },  new { @class="btn-link" })
+                <a 
+                    href="@Url.Content("~/admin/team/"+team.Id)"
+                    class="btn-link" >
+                    @team.Name
+                </a>
+                <a href="@Url.Action("ExcludeFromTeam", new { id = team.Id })" class="btn"><i class="icon icon-trash"> </i></a>
             </li>
         }
     </ul>
