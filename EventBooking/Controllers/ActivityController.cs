@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
@@ -13,26 +14,28 @@ namespace EventBooking.Controllers
 	{
 		private readonly ISecurityService _securityService;
 		private readonly ActivityRepository _activityRepository;
+		private readonly IPrefedinedItemRepository _prefedinedItems;
 
-		public ActivityController(ISecurityService securityService, ActivityRepository activityRepository)
+		public ActivityController(ISecurityService securityService, ActivityRepository activityRepository, IPrefedinedItemRepository prefedinedItems)
 		{
 			_securityService = securityService;
 			_activityRepository = activityRepository;
+			_prefedinedItems = prefedinedItems;
 		}
 
-	    public ActionResult Create()
+		public ActionResult Create()
 		{
 			if (!_securityService.IsLoggedIn)
 			{
-                return RedirectToAction("Checkpoint", "Security", new { returnUrl = Url.Action("Create") });
+				return RedirectToAction("Checkpoint", "Security", new { returnUrl = Url.Action("Create") });
 			}
 			return View();
 		}
 
-        public ActionResult Index()
-        {
-            return RedirectToAction("Upcoming");
-        }
+		public ActionResult Index()
+		{
+			return RedirectToAction("Upcoming");
+		}
 
 		[HttpPost]
 		public ActionResult Create(CreateActivityModel model)
@@ -44,41 +47,66 @@ namespace EventBooking.Controllers
 			StoreActivity(activity);
 			return RedirectToAction("Index", "Home");
 		}
-        
-        public ActionResult Upcoming()
-        {
-            IQueryable<Activity> query = null;
-            if (_securityService.IsLoggedIn)
-            {
-                var user = _securityService.CurrentUser;
-                if (user.IsMemberOfATeam())
-                {
-                    query = _activityRepository.GetUpcomingActivitiesByTeam(user.Team.Id);
-                }
-            }
 
-            if (query == null)
-            {
-                query = _activityRepository.GetUpcomingActivities();
-            }
+		public ActionResult Upcoming()
+		{
+			IQueryable<Activity> query = null;
+			if (_securityService.IsLoggedIn)
+			{
+				var user = _securityService.CurrentUser;
+				if (user.IsMemberOfATeam())
+				{
+					query = _activityRepository.GetUpcomingActivitiesByTeam(user.Team.Id);
+				}
+			}
 
-            var model = query.ToArray().Select(data => new ActivityModel(data));
+			if (query == null)
+			{
+				query = _activityRepository.GetUpcomingActivities();
+			}
 
-            return this.PartialView(model);
-        }
+			var model = query.ToArray().Select(data => new ActivityModel(data));
+
+			return this.PartialView(model);
+		}
 
 		protected virtual void StoreActivity(Activity activity)
 		{
 			_activityRepository.Add(activity);
 		}
 
-	    public ActionResult Details(int id)
-	    {
-            if (!_securityService.IsLoggedIn)
-            {
-                return RedirectToAction("Checkpoint", "Security", new { returnUrl = Url.Action("Details", id) });
-            }
-	        return View();
-	    }
+		public ActionResult Details(int id)
+		{
+			if (!_securityService.IsLoggedIn)
+			{
+				return RedirectToAction("Checkpoint", "Security", new { returnUrl = Url.Action("Details", id) });
+			}
+			return View();
+		}
+
+		public ActionResult SelectExistingItem()
+		{
+			// Create the model.
+			var inventoryModel = new ContributedInventoryModel();
+			inventoryModel.SuggestedItems = new List<string>();
+			inventoryModel.ContributedItems = new List<ContributedInventoryItemModel>();
+
+			// Populate the suggested prefedinedItems.
+			inventoryModel.SuggestedItems.AddRange(_prefedinedItems.GetPredefinedActivityItems().Select(i => i.Name));
+
+			// Return the view.
+			return View(inventoryModel);
+		}
+
+		[HttpPost]
+		public ActionResult AddContributedItem(ContributedInventoryModel model)
+		{
+			model.ContributedItems.Add(new ContributedInventoryItemModel
+			{
+				Name = model.CurrentlySelectedItem,
+				Quantity = model.ItemQuantity
+			});
+			return View("SelectExistingItem", model);
+		}
 	}
 }
