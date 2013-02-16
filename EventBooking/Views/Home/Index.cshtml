@@ -1,29 +1,32 @@
 ﻿@model EventBooking.Controllers.ViewModels.LandingPageModel
 
 @{
+    Layout = "~/Views/Shared/_LayoutWithBanner.cshtml";
     ViewBag.Title = "Team Rynkeby | Kommande aktiviter";
 }
 
 <div id="banner">
     <div id="expo">
-        <h3 class="banner-header">Kommande aktiviteter</h3>
+        <div id="banner-info">
+            <h3>Team Rynkeby</h3>
+            <h3 class="hidden-phone">Kommande aktiviteter</h3>
+            <h3 class="visible-phone">Vi kämpar för livet</h3>
         
-        <ul>
-            <li>
-                <span class="header-label label-city">Malmö</span><br />
-                <span class="header-label label-name rotate-right">A awsome activity</span>
-            </li>    
-            <li>
-                <span class="header-label label-city">Malmö</span><br />
-                <span class="header-label label-name rotate-right">A awsome activity</span>
-            </li>    
-
-        </ul>
-        
+            <ul class="hidden-phone">
+                <li>
+                    <span class="header-label label-city">Malmö</span><br />
+                    <span class="header-label label-name rotate-right">A awsome activity</span>
+                </li>    
+                <li>
+                    <span class="header-label label-city">Malmö</span><br />
+                    <span class="header-label label-name rotate-right">A awsome activity</span>
+                </li>    
+            </ul>
+        </div>
     </div>
 </div>
 
-<div class="row-fluid">
+<div class="row-fluid banner-container">
     <div class="span12">
         
         <div class="span6">

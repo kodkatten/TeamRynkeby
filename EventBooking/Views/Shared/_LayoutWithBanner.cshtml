@@ -8,17 +8,14 @@
     @Styles.Render("~/Content/bootstrap")
 </head>
 <body>
-    
     @Html.Partial("NavigationBar")
-
-    <div class="container">
+    <div>
         @RenderBody()
-    </div>
 
+    </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
      @Scripts.Render("~/bundles/general")
-     @Scripts.Render("~/bundles/pickadate")
 </body>
 </html>
