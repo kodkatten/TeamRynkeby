@@ -25,6 +25,17 @@ namespace EventBooking.Data.Repositories
 			context.SaveChanges();
 		}
 
+		public void RemoveFromTeam(int userId)
+		{
+			var user = context.Users.FirstOrDefault(x => x.Id == userId);
+
+			if(user == null)
+				return;
+
+			user.Team = null;
+			context.SaveChanges();
+		}
+
 		public bool Exists(string email)
 		{
 			return context.Users.Any(x => x.Email.Equals(email, StringComparison.OrdinalIgnoreCase));

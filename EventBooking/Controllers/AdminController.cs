@@ -14,10 +14,12 @@ namespace EventBooking.Controllers
 	public class AdminController : Controller
 	{
 		private readonly ITeamRepository _teamRepository;
+		private readonly IUserRepository _userRepository;
 
-		public AdminController(ITeamRepository teamRepository)
+		public AdminController(ITeamRepository teamRepository, IUserRepository userRepository)
 		{
 			_teamRepository = teamRepository;
+			_userRepository = userRepository;
 		}
 
 		[HttpPost]
@@ -39,9 +41,9 @@ namespace EventBooking.Controllers
 			return Json(new { isTeamAdmin = true }, JsonRequestBehavior.AllowGet);
 		}
 
-		public ActionResult ExcludeFromTeam(int id)
+		public void ExcludeFromTeam(int id)
 		{
-			return RedirectToAction("Team");
+			_userRepository.RemoveFromTeam(id);
 		}
 
 		public ActionResult Team(int id)

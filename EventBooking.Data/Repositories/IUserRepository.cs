@@ -4,5 +4,6 @@
 	{
 		bool Exists(string email);
 		void Save(User user);
+		void RemoveFromTeam(int userId);
 	}
 }
