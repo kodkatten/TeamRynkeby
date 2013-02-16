@@ -55,10 +55,16 @@
     color: #a3ca60;
 }
 
-    #banner-info li:nth-child(2) span {
-        right: 0;
-        position: absolute;
-    }
+#banner-info li:nth-child(2) span:last-child {
+    margin-left: 40px;
+    margin-top: 7px;
+    color: #a3ca60;
+}
+
+#banner-info li:nth-child(2) span {
+    right: 0;
+    position: absolute;
+}
 
 #banner-info li:first-child span:last-child {
     transform: rotate(-5deg);
