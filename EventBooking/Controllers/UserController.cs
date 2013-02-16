@@ -62,8 +62,8 @@ namespace EventBooking.Controllers
 			    user.StreetAddress = model.StreetAddress;
 			    if (!string.IsNullOrWhiteSpace(model.ZipCode))
 				    user.Zipcode = int.Parse(model.ZipCode.Replace(" ", string.Empty));
-			    user.Team = model.Team == null ? null : teamRepository.Get(model.Team.Id);
 
+		        user.Team = model.Team;
 			    userRepository.Save(user);
 
 				return RedirectToAction("Index", "Home");
