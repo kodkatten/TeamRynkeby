@@ -11,7 +11,7 @@ namespace EventBooking.Controllers.ViewModels
             var activities = (team.Activities ?? new Activity[0]);
             Activities = activities.GroupBy(activity => activity.Date.ToString("MMMM"));
             Name = team.Name;
-            MyActivites = activities.Where(r=>r.Sessions.Any(s=>s.Volunteers.Any(v=>v.Id == user.Id)));
+            MyActivites = activities.Where(r=>r.Sessions.Any(s=>s.Volunteers.Any(v=>v.Id == user.Id))).Concat(activities.Where(r=> r.Coordinator != null && r.Coordinator.Id == user.Id)).Distinct();
         }
 
         public IEnumerable<Activity> MyActivites { get; private set;} 

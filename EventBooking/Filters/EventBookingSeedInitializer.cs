@@ -34,6 +34,9 @@ namespace EventBooking.Filters
 
             CreateAwesomeUsers(membership, context);
 	        CreatePredefinedActivityItems(context);
+            var session = context.Activities.First();
+            session.Coordinator = context.Users.First();
+            context.SaveChanges();
         }
 
         private void CreateAwesomeUsers(SimpleMembershipProvider membership, EventBookingContext context)
@@ -81,7 +84,8 @@ namespace EventBooking.Filters
                     Description = "Ham andouille spare ribs tongue pork loin tenderloin brisket. Sausage spare ribs pork loin cow flank ground round jerky beef ribs swine rump.", 
                     Date = dateTime, 
                     OrganizingTeam = team, 
-                    Type = ActivityType.Preliminary
+                    Type = ActivityType.Preliminary,
+                    
                 };
             var session = new Session {
                 FromTime = dateTime.AddHours(8),

@@ -24,6 +24,7 @@ namespace EventBooking.Data.Repositories
 	        return context.Teams
 	                      .Where(t => t.Id == teamId)
 	                      .Include("Activities")
+	                      .Include("Activities.Coordinator")
                           .Include("Activities.Sessions")
                           .Include("Activities.Sessions.Volunteers")
 	                      .First();

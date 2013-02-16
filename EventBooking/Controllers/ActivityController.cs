@@ -44,6 +44,7 @@ namespace EventBooking.Controllers
 				return View();
 			var activity = Mapper.Map<Activity>(model);
 			activity.OrganizingTeam = _securityService.CurrentUser.Team;
+		    activity.Coordinator = _securityService.CurrentUser;
 			StoreActivity(activity);
 			return RedirectToAction("Index", "Home");
 		}
