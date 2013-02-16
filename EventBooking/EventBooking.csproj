@@ -161,6 +161,7 @@
     <Compile Include="Controllers\ViewModels\SignUpModel.cs" />
     <Compile Include="Controllers\ViewModels\TeamEventsModel.cs" />
     <Compile Include="Controllers\ViewModels\TeamModel.cs" />
+    <Compile Include="Controllers\ViewModels\UpcomingActivitiesModel.cs" />
     <Compile Include="Controllers\ViewModels\UserMapper.cs" />
     <Compile Include="Filters\EventBookingSeedInitializer.cs" />
     <Compile Include="Global.asax.cs">
@@ -196,6 +197,7 @@
     <Content Include="Scripts\general.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
+    <Content Include="Scripts\upcomingEvents.js" />
     <Content Include="Scripts\pickadate.js" />
     <Content Include="Scripts\pickadate.legacy.js" />
     <Content Include="Scripts\pickadate.legacy.min.js" />
@@ -218,14 +220,13 @@
     <Content Include="Views\Activity\Create.cshtml" />
     <Content Include="Views\Activity\details.cshtml" />
     <Content Include="Views\Home\UpcommingActivities.cshtml" />
-    <Content Include="Views\Admin\TeamMembers.cshtml" />
+    <Content Include="Views\Admin\ViewTeams.cshtml" />
     <Content Include="Views\Admin\Partials\Teams.cshtml" />
     <Content Include="Views\Activity\Upcoming.cshtml" />
     <Content Include="Views\Admin\Partials\TeamMembers.cshtml" />
     <Content Include="Views\Shared\_LayoutWithBanner.cshtml" />
     <Content Include="Views\Shared\NavigationBar.cshtml" />
     <Content Include="Views\Questions\Create.cshtml" />
-    <Content Include="Views\Admin\EditTeams.cshtml" />
     <Content Include="Views\Admin\ViewTeam.cshtml" />
     <Content Include="Views\Activity\SelectExistingItem.cshtml" />
   </ItemGroup>

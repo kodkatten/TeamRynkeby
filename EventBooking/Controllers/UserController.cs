@@ -10,20 +10,18 @@ using WebMatrix.WebData;
 
 namespace EventBooking.Controllers
 {
-	public class UserController : Controller
-	{
-		private readonly ISecurityService security;
-		private readonly IUserRepository userRepository;
-		private readonly ITeamRepository teamRepository;
-		private readonly IEventBookingContext context;
+    public class UserController : Controller
+    {
+        private readonly ISecurityService security;
+        private readonly IUserRepository userRepository;
+        private readonly ITeamRepository teamRepository;
 
-		public UserController(ISecurityService security, IUserRepository userRepository, ITeamRepository teamRepository, IEventBookingContext context)
-		{
-			this.security = security;
-			this.userRepository = userRepository;
-			this.teamRepository = teamRepository;
-			this.context = context;
-		}
+        public UserController(ISecurityService security, IUserRepository userRepository, ITeamRepository teamRepository)
+        {
+            this.security = security;
+            this.userRepository = userRepository;
+            this.teamRepository = teamRepository;
+        }
 
 		public ActionResult SignUp()
 		{
@@ -50,7 +48,32 @@ namespace EventBooking.Controllers
 			return View();
 		}
 
-		public ActionResult AlreadyRegistrered(string message)
+	    [Authorize]
+	    [HttpPost]
+	    public ActionResult MyProfile(MyProfileModel model)
+	    {
+		    if (ModelState.IsValid)
+		    {
+			    var user = security.CurrentUser;
+			    user.Birthdate = model.Birthdate;
+			    user.Cellphone = model.Cellphone;
+			    user.City = model.City;
+			    user.Name = model.Name;
+			    user.StreetAddress = model.StreetAddress;
+			    if (!string.IsNullOrWhiteSpace(model.ZipCode))
+				    user.Zipcode = int.Parse(model.ZipCode.Replace(" ", string.Empty));
+			    user.Team = model.Team == null ? null : teamRepository.Get(model.Team.Id);
+
+			    userRepository.Save(user);
+
+				return RedirectToAction("Index", "Home");
+		    }
+
+			var viewModel = new MyProfileModel(model.ToUser(), teamRepository.GetTeams());
+			return View(viewModel);
+	    }
+
+	    public ActionResult AlreadyRegistrered(string message)
 		{
 			return View();
 		}
@@ -60,32 +83,6 @@ namespace EventBooking.Controllers
 		{
 			var model = new MyProfileModel(security.CurrentUser, teamRepository.GetTeams());
 			return View(model);
-		}
-
-		[Authorize]
-		[HttpPost]
-		public ActionResult MyProfile(MyProfileModel model)
-		{
-			if (ModelState.IsValid)
-			{
-				var user = context.Users.Find(WebSecurity.CurrentUserId);
-				user.Birthdate = model.Birthdate;
-				user.Cellphone = model.Cellphone;
-				user.City = model.City;
-				user.Name = model.Name;
-				user.StreetAddress = model.StreetAddress;
-				if (!string.IsNullOrWhiteSpace(model.ZipCode))
-					user.Zipcode = int.Parse(model.ZipCode.Replace(" ", string.Empty));
-				user.Team = context.Teams.Find(model.Team.Id);
-
-				context.SaveChanges();
-
-				return RedirectToAction("Index", "Home");
-			}
-
-			var viewModel = new MyProfileModel(model.ToUser(), teamRepository.GetTeams());
-
-			return View(viewModel);
 		}
 	}
 }
