@@ -1,0 +1,43 @@
+﻿@model EventBooking.Controllers.ViewModels.QuestionsModel
+
+@{
+}
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    
+    <fieldset>
+        <legend>QuestionsModel</legend>
+
+        <table>
+            <tr>
+                <th>Intervjufrågor</th>
+                <th>Träningsfrågor</th>
+            </tr>
+            @for (int i = 1; i <= 15; i++)
+            {
+                <tr>
+                    <td>
+                        @Html.LabelFor(m => m.InterviewQuestions[i].QuestionText, "Fråga " + i)
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.InterviewQuestions[i].QuestionText)
+                    </td>
+                    <td>
+                        @Html.LabelFor(m => m.TrainingQuestions[i].QuestionText, "Fråga " + i)
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.TrainingQuestions[i].QuestionText)
+                    </td>
+                    <td>
+                </tr>
+            }
+        </table>
+
+
+        <p>
+            <input type="submit" value="Spara" />
+        </p>
+    </fieldset>
+}

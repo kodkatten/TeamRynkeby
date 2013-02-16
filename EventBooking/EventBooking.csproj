@@ -142,6 +142,7 @@
     <Compile Include="ControllerDependencyModule.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
@@ -154,6 +155,7 @@
     <Compile Include="Controllers\ViewModels\HtmlExtensions.cs" />
     <Compile Include="Controllers\ViewModels\LandingPageModel.cs" />
     <Compile Include="Controllers\ViewModels\MyProfileModel.cs" />
+    <Compile Include="Controllers\ViewModels\QuestionsModel.cs" />
     <Compile Include="Controllers\ViewModels\SignUpModel.cs" />
     <Compile Include="Controllers\ViewModels\TeamEventsModel.cs" />
     <Compile Include="Controllers\ViewModels\TeamModel.cs" />
@@ -220,6 +222,7 @@
     <Content Include="Views\Admin\Partials\TeamMembers.cshtml" />
     <Content Include="Views\Shared\_LayoutWithBanner.cshtml" />
     <Content Include="Views\Shared\NavigationBar.cshtml" />
+    <Content Include="Views\Questions\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
