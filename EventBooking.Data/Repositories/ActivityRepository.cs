@@ -27,6 +27,7 @@ namespace EventBooking.Data.Repositories
 
 		public virtual void Add(Activity activity)
 		{
+			_context.Teams.Attach(activity.OrganizingTeam);
 			_context.Activities.Add(activity);
 			_context.SaveChanges();
 		}
