@@ -6,7 +6,7 @@
     <title>@ViewBag.Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @Styles.Render("~/Content/bootstrap")
-    
+
     @if (IsSectionDefined("styles"))
     {
         @RenderSection("styles")
@@ -14,31 +14,33 @@
 
 </head>
 <body>
-    
-    @Html.Partial("NavigationBar")
+    <div id="wrapper">
+        @Html.Partial("NavigationBar")
 
-    <div class="container">
-        @RenderBody()
-    </div>
+        <div class="container container-offset">
+            @RenderBody()
+        </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/pickadate")
-    @Scripts.Render("~/bundles/timepicker")
-    @Scripts.Render("~/bundles/adminscripts")
-    @Scripts.Render("~/bundles/general")
-    
-    @if (IsSectionDefined("scriptfiles"))
-    {
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/bundles/pickadate")
+        @Scripts.Render("~/bundles/timepicker")
+        @Scripts.Render("~/bundles/adminscripts")
+        @Scripts.Render("~/bundles/general")
+
+        @if (IsSectionDefined("scriptfiles"))
+        {
             @RenderSection("scriptfiles")
-    }
+        }
 
-    @if (IsSectionDefined("scripts"))
-    {
-        <script type="text/javascript" language="javascript">
-            @RenderSection("scripts")
-        </script>
-    }
-
+        @if (IsSectionDefined("scripts"))
+        {
+            <script type="text/javascript" language="javascript">
+                @RenderSection("scripts")
+            </script>
+        }
+        <div id="push"></div>
+    </div>
+    @Html.Partial("Footer")
 </body>
 </html>

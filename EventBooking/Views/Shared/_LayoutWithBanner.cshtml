@@ -8,23 +8,27 @@
     @Styles.Render("~/Content/bootstrap")
 </head>
 <body>
-    @Html.Partial("NavigationBar")
-    <div>
-        @RenderBody()
+    <div id="wrapper">
+        @Html.Partial("NavigationBar")
+        <div class="container-offset">
+            @RenderBody()
+        </div>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/bundles/pickadate")
+        @Scripts.Render("~/bundles/timepicker")
+        @Scripts.Render("~/bundles/general")
+
+        @if (IsSectionDefined("scripts"))
+        {
+            <script type="text/javascript" language="javascript">
+                @RenderSection("scripts")
+            </script>
+        }
+
+        <div id="push"></div>
     </div>
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/pickadate")
-    @Scripts.Render("~/bundles/timepicker")
-    @Scripts.Render("~/bundles/general")
-    
-    @if (IsSectionDefined("scripts"))
-    {
-        <script type="text/javascript" language="javascript">
-            @RenderSection("scripts")
-        </script>
-    }
-
+    @Html.Partial("Footer")
 </body>
 </html>

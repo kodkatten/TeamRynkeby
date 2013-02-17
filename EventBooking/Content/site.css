@@ -1,10 +1,14 @@
-﻿body {
-    padding-top: 40px; /* 60px to make the container go all the way to the bottom of the topbar */
+﻿html, body {
+    height: 100%;
 }
 
 ul {
     list-style: none;
     margin-left: 0;
+}
+
+.container-offset {
+    padding-top: 40px;
 }
 
 .activity-list-short li {
@@ -40,4 +44,20 @@ ul {
     margin-top: 10px;
 }
 
+#wrapper {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -65px; /* Footer height + padding */
+}
 
+#push {
+    height: 65px;
+}
+
+#footer {
+    height:40px;
+    color: #666;
+    background: #222;
+    padding-top: 25px;    
+}
