@@ -101,6 +101,7 @@ namespace EventBooking.Tests
 		{
 			var repoMock = new Mock<SessionRepository>();
 			var controller = CreateController(repoMock.Object);
+			repoMock.Setup(r => r.Save(145, null));
 
 			var result = controller.Save( 145, new SessionModel());
 

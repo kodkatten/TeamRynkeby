@@ -12,7 +12,7 @@ namespace EventBooking.Data.Repositories
 				return ctx.Sessions.Where(s => s.Activity.Id == activityId).Include(s => s.Activity).Include(s => s.Activity.OrganizingTeam).ToArray();
 		}
 
-		public void Save(int activityId, Session session)
+		public virtual void Save(int activityId, Session session)
 		{
 			using (var ctx = new EventBookingContext())
 			{
