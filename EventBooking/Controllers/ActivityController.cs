@@ -126,5 +126,16 @@ namespace EventBooking.Controllers
             });
             return View("SelectExistingItem", model);
         }
+
+        //When entering here, should leave the activity
+        public ActionResult Leave(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ActionResult Edit(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -21,12 +21,12 @@
         @RenderBody()
     </div>
 
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-     @Scripts.Render("~/bundles/general")
-     @Scripts.Render("~/bundles/adminscripts")
-    
+    @Scripts.Render("~/bundles/pickadate")
+    @Scripts.Render("~/bundles/timepicker")
+    @Scripts.Render("~/bundles/adminscripts")
+    @Scripts.Render("~/bundles/general")
     
     @if (IsSectionDefined("scriptfiles"))
     {
@@ -39,10 +39,6 @@
             @RenderSection("scripts")
         </script>
     }
-
-     @Scripts.Render("~/bundles/pickadate")
-     @Scripts.Render("~/bundles/timepicker")
-    
 
 </body>
 </html>
