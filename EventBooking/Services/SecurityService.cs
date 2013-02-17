@@ -10,14 +10,23 @@ namespace EventBooking.Services
 	{
 		public virtual User GetUser(string userName)
 		{
-            if (string.IsNullOrWhiteSpace(userName))
-            {
-                return null;
-            }
+			if (string.IsNullOrWhiteSpace(userName))
+			{
+				return null;
+			}
+
 			int userId = WebSecurity.GetUserId(userName);
+
+			// We think that we're logged in, but we're really not.
+			if (userId == -1 && this.IsLoggedIn)
+			{
+				// Logout-
+				WebSecurity.Logout();
+			}
+
 			using (var context = new EventBookingContext())
 			{
-				return context.Users.Where( u => u.Id == userId ).Include( t => t.Team ).First();
+				return context.Users.Where(u => u.Id == userId).Include(t => t.Team).FirstOrDefault();
 			}
 		}
 
@@ -30,16 +39,16 @@ namespace EventBooking.Services
 		{
 			if (WebSecurity.Login(userName, password))
 			{
-			    return true;
+				return true;
 			}
-		    return false;
+			return false;
 		}
 
 		public virtual void CreateUserAndAccount(string email, string password, DateTime created)
 		{
 			DateTime earlier = DateTime.UtcNow;
 
-			WebSecurity.CreateUserAndAccount(email, password, new {Created = earlier});
+			WebSecurity.CreateUserAndAccount(email, password, new { Created = earlier });
 
 			using (var context = new EventBookingContext())
 			{
@@ -60,12 +69,15 @@ namespace EventBooking.Services
 
 		public virtual User CurrentUser
 		{
-            get { return WebSecurity.CurrentUserName != null ? GetUser(WebSecurity.CurrentUserName) : null; }
+			get { return WebSecurity.CurrentUserName != null ? GetUser(WebSecurity.CurrentUserName) : null; }
 		}
 
 		public virtual bool IsLoggedIn
 		{
-			get { return WebSecurity.IsAuthenticated; }
+			get
+			{
+				return WebSecurity.IsAuthenticated && WebSecurity.CurrentUserId != -1;
+			}
 		}
 	}
 }

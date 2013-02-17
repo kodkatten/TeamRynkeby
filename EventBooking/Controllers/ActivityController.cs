@@ -10,132 +10,132 @@ using EventBooking.Services;
 
 namespace EventBooking.Controllers
 {
-    public class ActivityController : Controller
-    {
-        private readonly ISecurityService _securityService;
-        private readonly ActivityRepository _activityRepository;
-        private readonly IPrefedinedItemRepository _prefedinedItems;
-        private static int NumberOfActivitiesPerPage = 6;
+	public class ActivityController : Controller
+	{
+		private readonly ISecurityService _securityService;
+		private readonly ActivityRepository _activityRepository;
+		private readonly IPrefedinedItemRepository _prefedinedItems;
+		private static int NumberOfActivitiesPerPage = 6;
 
-        public ActivityController(ISecurityService securityService, ActivityRepository activityRepository, IPrefedinedItemRepository prefedinedItems)
-        {
-            _securityService = securityService;
-            _activityRepository = activityRepository;
-            _prefedinedItems = prefedinedItems;
-        }
+		public ActivityController(ISecurityService securityService, ActivityRepository activityRepository, IPrefedinedItemRepository prefedinedItems)
+		{
+			_securityService = securityService;
+			_activityRepository = activityRepository;
+			_prefedinedItems = prefedinedItems;
+		}
 
-        public ActionResult Create()
-        {
-            if (!_securityService.IsLoggedIn)
-            {
-                return RedirectToAction("Checkpoint", "Security", new { returnUrl = Url.Action("Create") });
-            }
-            return View();
-        }
+		public ActionResult Create()
+		{
+			if (!_securityService.IsLoggedIn)
+			{
+				return RedirectToAction("Checkpoint", "Security", new { returnUrl = Url.Action("Create") });
+			}
+			return View();
+		}
 
-        public ActionResult Index()
-        {
-            return RedirectToAction("Upcoming");
-        }
+		public ActionResult Index()
+		{
+			return RedirectToAction("Upcoming");
+		}
 
-        [HttpPost]
-        public ActionResult Create(CreateActivityModel model)
-        {
-            if (!ModelState.IsValid)
-                return View();
-            var activity = Mapper.Map<Activity>(model);
-            activity.OrganizingTeam = _securityService.CurrentUser.Team;
-            model.Session.FromTime = activity.Date.Date.AddHours(model.Session.FromTime.Hour).AddMinutes(model.Session.FromTime.Minute);
-            model.Session.ToTime = activity.Date.Date.AddHours(model.Session.ToTime.Hour).AddMinutes(model.Session.ToTime.Minute);
-            activity.Sessions = new List<Session> { Mapper.Map<Session>(model.Session) };
-            activity.Coordinator = _securityService.CurrentUser;
-            StoreActivity(activity);
-            return RedirectToAction("Index", "Sessions", new { activityId = activity.Id });
-        }
+		[HttpPost]
+		public ActionResult Create(CreateActivityModel model)
+		{
+			if (!ModelState.IsValid)
+				return View();
+			var activity = Mapper.Map<Activity>(model);
+			activity.OrganizingTeam = _securityService.CurrentUser.Team;
+			model.Session.FromTime = activity.Date.Date.AddHours(model.Session.FromTime.Hour).AddMinutes(model.Session.FromTime.Minute);
+			model.Session.ToTime = activity.Date.Date.AddHours(model.Session.ToTime.Hour).AddMinutes(model.Session.ToTime.Minute);
+			activity.Sessions = new List<Session> { Mapper.Map<Session>(model.Session) };
+			activity.Coordinator = _securityService.CurrentUser;
+			StoreActivity(activity);
+			return RedirectToAction("Index", "Sessions", new { activityId = activity.Id });
+		}
 
-        public ActionResult Upcoming(int page = 0, string teamIds = "")
-        {
-            page = page < 0 ? 0 : page;
-            var skip = NumberOfActivitiesPerPage * page;
-            IEnumerable<Activity> query = null;
+		public ActionResult Upcoming(int page = 0, string teamIds = "")
+		{
+			page = page < 0 ? 0 : page;
+			var skip = NumberOfActivitiesPerPage * page;
+			IEnumerable<Activity> query = null;
 
-            List<int> teamIdsToFilterActivitiesOn = new List<int>();
-            if (!String.IsNullOrEmpty(teamIds))
-            {
-                teamIdsToFilterActivitiesOn.AddRange(new List<int>(teamIds.Split(',').Select(int.Parse)));
-            }
+			List<int> teamIdsToFilterActivitiesOn = new List<int>();
+			if (!String.IsNullOrEmpty(teamIds))
+			{
+				teamIdsToFilterActivitiesOn.AddRange(new List<int>(teamIds.Split(',').Select(int.Parse)));
+			}
 
-            if (_securityService.IsLoggedIn)
-            {
-                var user = _securityService.CurrentUser;
-                if (user.IsMemberOfATeam())
-                {
-                    query = _activityRepository.GetUpcomingActivitiesByTeam(user.Team.Id, skip, NumberOfActivitiesPerPage);
-                }
-            }
+			if (_securityService.IsLoggedIn)
+			{
+				var user = _securityService.CurrentUser;
+				if (user != null && user.IsMemberOfATeam())
+				{
+					query = _activityRepository.GetUpcomingActivitiesByTeam(user.Team.Id, skip, NumberOfActivitiesPerPage);
+				}
+			}
 
-            if (query == null)
-            {
-                if (teamIdsToFilterActivitiesOn.Any())
-                    query = _activityRepository.GetUpcomingActivitiesByTeams(teamIdsToFilterActivitiesOn,skip, NumberOfActivitiesPerPage);
-                else
-                    query = _activityRepository.GetUpcomingActivities(skip, NumberOfActivitiesPerPage);
-            }
+			if (query == null)
+			{
+				if (teamIdsToFilterActivitiesOn.Any())
+					query = _activityRepository.GetUpcomingActivitiesByTeams(teamIdsToFilterActivitiesOn, skip, NumberOfActivitiesPerPage);
+				else
+					query = _activityRepository.GetUpcomingActivities(skip, NumberOfActivitiesPerPage);
+			}
 
-            var viewModel = query.ToArray().Select(data => new ActivityModel(data));
+			var viewModel = query.ToArray().Select(data => new ActivityModel(data));
 
-            return this.PartialView(viewModel);
-        }
+			return this.PartialView(viewModel);
+		}
 
-	
-        protected virtual void StoreActivity(Activity activity)
-        {
-            _activityRepository.Add(activity);
-        }
 
-        public ActionResult Details(int id)
-        {
-		    var activity = _activityRepository.GetActivityById(id);
+		protected virtual void StoreActivity(Activity activity)
+		{
+			_activityRepository.Add(activity);
+		}
 
-            var viewModel = new ActivityModel(activity);
+		public ActionResult Details(int id)
+		{
+			var activity = _activityRepository.GetActivityById(id);
 
-            return View(viewModel);
-        }
+			var viewModel = new ActivityModel(activity);
 
-        public ActionResult SelectExistingItem()
-        {
-            // Create the model.
-            var inventoryModel = new ContributedInventoryModel();
-            inventoryModel.SuggestedItems = new List<string>();
-            inventoryModel.ContributedItems = new List<ContributedInventoryItemModel>();
+			return View(viewModel);
+		}
 
-            // Populate the suggested prefedinedItems.
-            inventoryModel.SuggestedItems.AddRange(_prefedinedItems.GetPredefinedActivityItems().Select(i => i.Name));
+		public ActionResult SelectExistingItem()
+		{
+			// Create the model.
+			var inventoryModel = new ContributedInventoryModel();
+			inventoryModel.SuggestedItems = new List<string>();
+			inventoryModel.ContributedItems = new List<ContributedInventoryItemModel>();
 
-            // Return the view.
-            return View(inventoryModel);
-        }
+			// Populate the suggested prefedinedItems.
+			inventoryModel.SuggestedItems.AddRange(_prefedinedItems.GetPredefinedActivityItems().Select(i => i.Name));
 
-        [HttpPost]
-        public ActionResult AddContributedItem(ContributedInventoryModel model)
-        {
-            model.ContributedItems.Add(new ContributedInventoryItemModel
-            {
-                Name = model.CurrentlySelectedItem,
-                Quantity = model.ItemQuantity
-            });
-            return View("SelectExistingItem", model);
-        }
+			// Return the view.
+			return View(inventoryModel);
+		}
 
-        //When entering here, should leave the activity
-        public ActionResult Leave(int id)
-        {
-            throw new NotImplementedException();
-        }
+		[HttpPost]
+		public ActionResult AddContributedItem(ContributedInventoryModel model)
+		{
+			model.ContributedItems.Add(new ContributedInventoryItemModel
+			{
+				Name = model.CurrentlySelectedItem,
+				Quantity = model.ItemQuantity
+			});
+			return View("SelectExistingItem", model);
+		}
 
-        public ActionResult Edit(int id)
-        {
-            throw new NotImplementedException();
-        }
-    }
+		//When entering here, should leave the activity
+		public ActionResult Leave(int id)
+		{
+			throw new NotImplementedException();
+		}
+
+		public ActionResult Edit(int id)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }
