@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
@@ -37,7 +38,8 @@ namespace EventBooking.Controllers
             }
 
 			var realTeam = _teamRepository.Get( currentUser.Team.Id );
-			var model = new TeamActivitiesModel( realTeam, currentUser );
+	        var currentDate = DateTime.UtcNow;
+			var model = new TeamActivitiesModel( realTeam, currentUser, new DateTime(currentDate.Year, currentDate.Month, 1));
 			return View( model );
         }
     }
