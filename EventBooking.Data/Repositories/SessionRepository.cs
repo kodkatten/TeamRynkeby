@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using EventBooking.Data;
+using EventBooking.Data.Repositories;
 
 namespace EventBooking.Data.Repositories
 {
-    public class SessionRepository
+    public class SessionRepository: ISessionRepository
     {
         private readonly IEventBookingContext _context;
 
@@ -25,6 +28,20 @@ namespace EventBooking.Data.Repositories
             session.Activity = _context.Activities.FirstOrDefault(x => x.Id == activityId);
             _context.Sessions.Add(session);
             _context.SaveChanges();
+        }
+    
+	    public Session GetSessionById(int sessionId)
+	    {
+	        return _context.Sessions
+                        .Include(activity => activity.Volunteers)
+                        .Include(activity => activity.Activity)
+                        .Single(session => session.Id == sessionId);
+	    }
+
+
+        public void SaveVolunteers(Session session)
+        {
+            throw new NotImplementedException();
         }
     }
 }

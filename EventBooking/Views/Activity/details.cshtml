@@ -1,11 +1,33 @@
-﻿@model EventBooking.Controllers.ViewModels.ActivityModel
+﻿@model EventBooking.Controllers.ViewModels.DetailActivityViewModel
 
 <div class="row-fluid">
     <h2>@Model.Name</h2>
     <h3>@Model.DateFormatted, @Model.OrganizingTeam</h3>
     <p>
+        <strong>
+            @Model.Summary
+        </strong>
+    </p>
+    @if (@Model.ShouldShowDescription)
+    {
+    <p>
         @Model.Description
     </p>
-    
+    }
+    @if (@Model.ShouldShowSessions)
+    {
+    <h3>Pass</h3>
+    <ul>
+        @foreach (var session in Model.Sessions)
+        {
+            <li><span>@session.FromTimeFormatted - @session.ToTimeFormatted</span>
+                @if (session.CanSignUp)
+                {
+                    <a href="@Url.Action("SignUp", "Sessions", new {session.Id})" class="link">Anmäl mig!</a>
+                }
+            </li>            
+        }
+    </ul>
+    }
     <a href="javascript:history.back()">Tillbaks</a>
 </div>

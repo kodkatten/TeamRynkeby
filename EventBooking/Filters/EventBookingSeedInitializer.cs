@@ -93,14 +93,14 @@ namespace EventBooking.Filters
                     Description = "Under sportlovet kommer Team Rynkeby vara i Täby Centrum", 
                     Date = dateTime, 
                     OrganizingTeam = team, 
-                    Type = ActivityType.Preliminary,
-                    
+                    Type = ActivityType.Preliminary
                 };
             var session = new Session {
                 FromTime = dateTime.AddHours(8),
                 ToTime = dateTime.AddHours(10),
                 Activity = activity,
-                Volunteers = new Collection<User>()
+                Volunteers = new Collection<User>(),
+                VolunteersNeeded = 15
             };
             context.Activities.Add(activity);
             context.Sessions.Add(session);

@@ -58,7 +58,10 @@ namespace EventBooking.Data.Repositories
 
 	    public virtual Activity GetActivityById(int id)
 	    {
-	        return this._context.Activities.Include(x => x.OrganizingTeam).SingleOrDefault(x => x.Id == id);
+	        return this._context.Activities
+                                .Include(x => x.OrganizingTeam)
+                                .Include(x => x.Sessions.Select(session => session.Volunteers))
+                                .SingleOrDefault(x => x.Id == id);
 	    }
 	}
 }

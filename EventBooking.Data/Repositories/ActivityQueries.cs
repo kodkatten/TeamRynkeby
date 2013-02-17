@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace EventBooking.Data.Repositories
 {
@@ -6,7 +7,7 @@ namespace EventBooking.Data.Repositories
     {
         public static IQueryable<Activity> UpcomingActivities(this IQueryable<Activity> self)
         {
-            var today = SystemTime.Now();
+            var today = SystemTime.Now().Date;
 
             return self.Where(activity => activity.Date >= today);
         }

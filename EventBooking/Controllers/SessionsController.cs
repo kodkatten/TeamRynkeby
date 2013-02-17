@@ -1,20 +1,25 @@
 ﻿using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
 using EventBooking.Data.Repositories;
+using EventBooking.Services;
 
 namespace EventBooking.Controllers
 {
     public class SessionsController : Controller
     {
-        private readonly SessionRepository _repository;
+        private readonly ISessionRepository _repository;
 
-        public SessionsController(SessionRepository repository)
+	    private readonly ISecurityService _securityService;
+
+        public SessionsController(ISessionRepository repository, ISecurityService securityService)
         {
             _repository = repository;
+            _securityService = securityService;
         }
 
         public ActionResult Index(int activityId = 0)
@@ -37,6 +42,37 @@ namespace EventBooking.Controllers
             var session = Mapper.Map<Session>(sessionModel.SelectedSession);
             _repository.Save(activityId, session);
             return RedirectToAction("Index", new { activityId });
+        }
+
+        public RedirectToRouteResult SignUp(int id)
+        {
+            var session = _repository.GetSessionById(id);
+            var user = _securityService.CurrentUser;
+
+            if (!session.IsAllowedToSignUp(user))
+            {
+                return RedirectToAction("SignUpFailed", new { id });
+            }
+
+            session.SignUp(user);
+            _repository.SaveVolunteers(session);
+
+            return RedirectToAction("SignUpSuccessful", new { id });
+        }
+
+        public ActionResult SignUpSuccessful(int id)
+        {
+            return View();
+        }
+
+        public ActionResult SignUpFailed(int id)
+        {
+            var session = _repository.GetSessionById(id);
+
+            dynamic viewModel = new ExpandoObject();
+            viewModel.ActivityId = session.Activity.Id;
+
+            return View(viewModel);
         }
 
         public ActionResult NotFound(int activityId)
