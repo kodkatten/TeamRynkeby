@@ -160,7 +160,7 @@
     <Compile Include="Controllers\ViewModels\MyProfileModel.cs" />
     <Compile Include="Controllers\ViewModels\QuestionsModel.cs" />
     <Compile Include="Controllers\ViewModels\SignUpModel.cs" />
-    <Compile Include="Controllers\ViewModels\TeamEventsModel.cs" />
+    <Compile Include="Controllers\ViewModels\TeamActivitiesModel.cs" />
     <Compile Include="Controllers\ViewModels\TeamModel.cs" />
     <Compile Include="Controllers\ViewModels\UserMapper.cs" />
     <Compile Include="Filters\EventBookingSeedInitializer.cs" />
