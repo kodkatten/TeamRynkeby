@@ -4,8 +4,8 @@
     @foreach (var activity in Model)
     {
         <li>
-            <a href="@Url.Action("Details", "Activity", new { activity.Id })" class="link" rel="tooltip" data-original-title="@activity.Description">
-                <span class="label label-success">@activity.OrganizingTeam</span>
+            <a href="@Url.Action("Details", "Activity", new { activity.Id })" class="link" rel="tooltip" data-original-title="@activity.Description" style="color: #333333">
+                <span class="label label-activity">@activity.OrganizingTeam</span>
                 <span class="activity-date">@activity.DateFormatted</span>
                 <span class="activity-name">@activity.Name</span>
             </a>

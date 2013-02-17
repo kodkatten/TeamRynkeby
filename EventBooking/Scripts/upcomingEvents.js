@@ -8,7 +8,7 @@ teamrynkebyse.upcomingEvents = function() {
     var baseUri;
     var currentPage = 0;
     var showAllTeamsBtn;
-    var buttonSelectedClass = "btn-success";
+    var buttonSelectedClass = "btn-inverse";
     
     var activityUrl = function (page) {
         var selectedTeamIds = [];
@@ -101,7 +101,6 @@ teamrynkebyse.upcomingEvents = function() {
             showAllTeams();
             return;
         }
-
         load();
     }
     
