@@ -4,22 +4,27 @@ using System.Linq;
 
 namespace EventBooking.Data.Repositories
 {
-	public class SessionRepository
-	{
-		public virtual IEnumerable<Session> GetSessionsForActivity(int activityId)
-		{
-			using (var ctx = new EventBookingContext())
-				return ctx.Sessions.Where(s => s.Activity.Id == activityId).Include(s => s.Activity).Include(s => s.Activity.OrganizingTeam).ToArray();
-		}
+    public class SessionRepository
+    {
+        private readonly IEventBookingContext _context;
 
-		public virtual void Save(int activityId, Session session)
-		{
-			using (var ctx = new EventBookingContext())
-			{
-                session.Activity = ctx.Activities.FirstOrDefault(x => x.Id == activityId);
-				ctx.Sessions.Add(session);
-				ctx.SaveChanges();
-			}
-		}
-	}
+        public SessionRepository(IEventBookingContext context)
+        {
+            _context = context;
+        }
+
+        public SessionRepository() { }
+
+        public virtual IEnumerable<Session> GetSessionsForActivity(int activityId)
+        {
+            return _context.Sessions.Where(s => s.Activity.Id == activityId).Include(s => s.Activity).Include(s => s.Activity.OrganizingTeam).ToArray();
+        }
+
+        public virtual void Save(int activityId, Session session)
+        {
+            session.Activity = _context.Activities.FirstOrDefault(x => x.Id == activityId);
+            _context.Sessions.Add(session);
+            _context.SaveChanges();
+        }
+    }
 }
