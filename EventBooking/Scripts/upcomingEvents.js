@@ -88,7 +88,6 @@ teamrynkebyse.upcomingEvents = function() {
     
     function toggleTeam(teamId) {
         var team = findTeam(teamId);
-   
         showAllTeamsBtn.removeClass(buttonSelectedClass);
         
         if (team.selected === false) {
@@ -122,7 +121,7 @@ teamrynkebyse.upcomingEvents = function() {
             nextLink = nextPage;
             container = activityContainer;
             baseUri = activityContainer.data('update-uri');
-            prevLink.toggleClass("disabled", true);
+            prevLink.addClass("disabled");
             setupLinks();
         },
     

@@ -73,17 +73,15 @@
     </div>
 </div>
 @section scripts {
-   
     (function(intiUpcomingEventsUpdate, $, undefined) {
     
-    var upcomingEventsModule =  teamrynkebyse.upcomingEvents;
+        var previousButton = $('.previous-activities-list-command');
+        var nextButton = $('.next-activities-list-command');
+        var activityContainer = $('.upcoming-activity-list');
+        var upcomingEventsModule =  teamrynkebyse.upcomingEvents;
     
-    upcomingEventsModule.init($('.previous-activities-list-command'), $('.next-activities-list-command'), $('.upcoming-activity-list'));
-    
-    
-    upcomingEventsModule.setTeamButtons($(".btn-select-team"),  (".btn-select-all-teams"));
-    
-        
+        upcomingEventsModule.init(previousButton,nextButton, activityContainer);
+        upcomingEventsModule.setTeamButtons($(".btn-select-team"),  (".btn-select-all-teams"));
     
     }(teamrynkebyse.intiUpcomingEventsUpdate, jQuery));
 }
