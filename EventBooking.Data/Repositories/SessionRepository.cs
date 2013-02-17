@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
@@ -31,7 +32,10 @@ namespace EventBooking.Data.Repositories
 
         public void SaveVolunteers(Session session)
         {
-            // How? Don't really get what to do here!
+            // Well I'll have to admit it. EF is to smart for me. Objects in different context
+            // etc. Hurts my brain. I'm sure I made something really really bad but I've spent
+            // a lot of time to try figuring it out. If a EF ninja could look at this I would
+            // be grateful.
         }
 
 	    public Session GetSessionById(int sessionId)
