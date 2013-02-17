@@ -25,7 +25,7 @@
                 {"class", "control-label"}
             })
             <div class="controls">
-                @Html.EditorFor(model => model.ElectronicMailAddress)
+                @Html.TextBoxFor(model => model.ElectronicMailAddress, new { autofocus = "autofocus"})
                 @Html.ValidationMessageFor(model => model.ElectronicMailAddress)
             </div>
 
