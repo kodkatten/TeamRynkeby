@@ -21,26 +21,40 @@ namespace EventBooking.Controllers
 	        _teamRepository = teamRepository;
         }
 
-       
+       public ActionResult DetailsWithDate(DateTime currentDate)
+       {
+           if (!_securityService.IsLoggedIn)
+           {
+               return RedirectToAction("Checkpoint", "Security", new { returnUrl = Url.Action("Details") });
+           }
+
+           var currentUser = _securityService.CurrentUser;
+
+           if (null == currentUser.Team)
+           {
+               return RedirectToAction("MyProfile", "User");
+           }
+
+           var realTeam = _teamRepository.Get(currentUser.Team.Id);
+           
+           var startDate = new DateTime(currentDate.Year, currentDate.Month, 1);
+           var model = new TeamActivitiesModel(realTeam, currentUser, startDate);
+           return View("Details", model);
+       }
 
 	    public ActionResult Details()
+	    {
+	        return DetailsWithDate(DateTime.UtcNow);
+	    }
+
+        public ActionResult Previous(DateTime currentDate)
         {
-            if (!_securityService.IsLoggedIn)
-            {
-                return RedirectToAction("Checkpoint", "Security", new {returnUrl = Url.Action("Details")});
-            }
+            return DetailsWithDate(currentDate.AddMonths(-1));
+        }
 
-            var currentUser = _securityService.CurrentUser;
-
-            if (null == currentUser.Team)
-            {
-                return RedirectToAction("MyProfile", "User");
-            }
-
-			var realTeam = _teamRepository.Get( currentUser.Team.Id );
-	        var currentDate = DateTime.UtcNow;
-			var model = new TeamActivitiesModel( realTeam, currentUser, new DateTime(currentDate.Year, currentDate.Month, 1));
-			return View( model );
+        public ActionResult Next(DateTime currentDate)
+        {
+            return DetailsWithDate(currentDate.AddMonths(1));
         }
     }
 }

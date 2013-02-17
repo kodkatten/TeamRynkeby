@@ -14,13 +14,12 @@
              <div class="page-header">
                         <h3>Lagets aktiviteter</h3>
                     </div>
-        <div class="row">
+        <div class="row" style="min-height: 250px;">
             @foreach (var eventGroup in Model.Activities)
             {
 
                 <div class="span4">
                     <small><b>@eventGroup.Key</b></small>
-                    <p>
                         <ul>
                             @foreach (var e in eventGroup)
                             {
@@ -33,7 +32,6 @@
                                 </li>
                         }
                         </ul>
-                    </p>
                 </div>
         
             }
@@ -42,8 +40,8 @@
         <div class="row">
             <div class="span8">
                 <ul class="pager">
-                    <li class="previous">@Html.ActionLink("Tidigare", "Details", "Team", new { }, new { @class = "prev" })</li>
-                    <li class="next">@Html.ActionLink("Senare", "Details", new { }, new { @class = "next" })</li>
+                    <li class="previous"><a href="@Url.Action("Previous", "Team", new { currentDate = @Model.StartDate.ToSwedishShortDateString() })">Tidigare</a></li>
+                    <li><a class="pull-right" href="@Url.Action("Next", "Team", new { currentDate = @Model.StartDate.ToSwedishShortDateString() })">Senare</a></li>
                 </ul>
             </div>
         </div>
@@ -53,7 +51,6 @@
             <h3>Mina aktiviteter</h3>
         </div>
         <small><b>&nbsp;</b></small>
-        <p>
             <ul>
                 @foreach (var e in Model.MyActivites)
                 {
@@ -76,7 +73,6 @@
                     </li>
                         }
             </ul>
-        </p>
     </div>
 </div>
 

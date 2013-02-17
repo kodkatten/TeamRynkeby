@@ -3,6 +3,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using EventBooking.Controllers;
+using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
 using EventBooking.Data.Repositories;
 using Moq;
@@ -92,5 +93,67 @@ namespace EventBooking.Tests
 
 			Assert.IsNotNull(viewResult);
 		}
+
+        [Test]
+        public void When_No_date_is_specified_Model_should_have_current_date()
+        {
+            var teamController = GetTeamController(new User { Team = _leetTeam });
+
+            var viewResult = teamController.Details() as ViewResult;
+            
+            var expectedDate = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month,1);
+            Assert.IsNotNull(viewResult);
+            var teamModel = viewResult.Model as TeamActivitiesModel;
+            Assert.IsNotNull(teamModel, "No team model");
+            Assert.AreEqual(expectedDate, teamModel.StartDate);
+        }
+
+        [Test]
+        public void When_start_date_is_specified_Model_should_have_specified_date()
+        {
+            var user = new User {Team = _leetTeam};
+            var teamController = GetTeamController(user);
+
+            var currentDate = DateTime.UtcNow.AddMonths(2);
+            var expectedDate = new DateTime(currentDate.Year, currentDate.Month, 1);
+            var viewResult = teamController.Details(expectedDate) as ViewResult;
+            
+            Assert.IsNotNull(viewResult);
+            var teamModel = viewResult.Model as TeamActivitiesModel;
+            Assert.IsNotNull(teamModel, "No team model");
+            Assert.AreEqual(expectedDate, teamModel.StartDate);
+        }
+
+        [Test]
+        public void When_doing_previous_on_model_Model_should_get_previous_month()
+        {
+            var user = new User {Team = _leetTeam};
+            var teamController = GetTeamController(user);
+
+            var currentDate = DateTime.UtcNow.AddMonths(2);
+            var expectedDate = new DateTime(currentDate.Year, currentDate.Month, 1).AddMonths(-1);
+            var viewResult = teamController.Previous(currentDate) as ViewResult;
+            
+            Assert.IsNotNull(viewResult);
+            var teamModel = viewResult.Model as TeamActivitiesModel;
+            Assert.IsNotNull(teamModel, "No team model");
+            Assert.AreEqual(expectedDate, teamModel.StartDate);
+        }
+
+        [Test]
+        public void When_doing_next_on_model_Model_should_get_next_month()
+        {
+            var user = new User {Team = _leetTeam};
+            var teamController = GetTeamController(user);
+
+            var currentDate = DateTime.UtcNow.AddMonths(2);
+            var expectedDate = new DateTime(currentDate.Year, currentDate.Month, 1).AddMonths(1);
+            var viewResult = teamController.Next(currentDate) as ViewResult;
+            
+            Assert.IsNotNull(viewResult);
+            var teamModel = viewResult.Model as TeamActivitiesModel;
+            Assert.IsNotNull(teamModel, "No team model");
+            Assert.AreEqual(expectedDate, teamModel.StartDate);
+        }
 	}
 }
