@@ -50,7 +50,7 @@ namespace EventBooking.Controllers
             activity.Sessions = new List<Session> { Mapper.Map<Session>(model.Session) };
             activity.Coordinator = _securityService.CurrentUser;
             StoreActivity(activity);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Sessions", "Activity", new { id = activity.Id });
         }
 
         public ActionResult Upcoming(int page = 0, string teamIds = "")
