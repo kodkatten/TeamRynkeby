@@ -10,18 +10,18 @@ using WebMatrix.WebData;
 
 namespace EventBooking.Controllers
 {
-    public class UserController : Controller
-    {
-        private readonly ISecurityService security;
-        private readonly IUserRepository userRepository;
-        private readonly ITeamRepository teamRepository;
+	public class UserController : Controller
+	{
+		private readonly ISecurityService security;
+		private readonly IUserRepository userRepository;
+		private readonly ITeamRepository teamRepository;
 
-        public UserController(ISecurityService security, IUserRepository userRepository, ITeamRepository teamRepository)
-        {
-            this.security = security;
-            this.userRepository = userRepository;
-            this.teamRepository = teamRepository;
-        }
+		public UserController(ISecurityService security, IUserRepository userRepository, ITeamRepository teamRepository)
+		{
+			this.security = security;
+			this.userRepository = userRepository;
+			this.teamRepository = teamRepository;
+		}
 
 		public ActionResult SignUp()
 		{
@@ -48,32 +48,35 @@ namespace EventBooking.Controllers
 			return View();
 		}
 
-	    [Authorize]
-	    [HttpPost]
-	    public ActionResult MyProfile(MyProfileModel model)
-	    {
-		    if (ModelState.IsValid)
-		    {
-			    var user = security.CurrentUser;
-			    user.Birthdate = model.Birthdate;
-			    user.Cellphone = model.Cellphone;
-			    user.City = model.City;
-			    user.Name = model.Name;
-			    user.StreetAddress = model.StreetAddress;
-			    if (!string.IsNullOrWhiteSpace(model.ZipCode))
-				    user.Zipcode = int.Parse(model.ZipCode.Replace(" ", string.Empty));
+		[Authorize]
+		[HttpPost]
+		public ActionResult MyProfile(MyProfileModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				var user = security.CurrentUser;
+				user.Birthdate = model.Birthdate;
+				user.Cellphone = model.Cellphone;
+				user.City = model.City;
+				user.Name = model.Name;
+				user.StreetAddress = model.StreetAddress;
+				if (!string.IsNullOrWhiteSpace(model.ZipCode))
+				{
+					// Needs validation?
+					user.Zipcode = model.ZipCode.Replace(" ", string.Empty);
+				}
 
-		        user.Team = model.Team;
-			    userRepository.Save(user);
+				user.Team = model.Team;
+				userRepository.Save(user);
 
 				return RedirectToAction("Index", "Home");
-		    }
+			}
 
 			var viewModel = new MyProfileModel(model.ToUser(), teamRepository.GetTeams());
 			return View(viewModel);
-	    }
+		}
 
-	    public ActionResult AlreadyRegistrered(string message)
+		public ActionResult AlreadyRegistrered(string message)
 		{
 			return View();
 		}
