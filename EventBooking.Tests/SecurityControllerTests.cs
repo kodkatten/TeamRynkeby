@@ -1,9 +1,12 @@
 ﻿using System.Diagnostics;
+using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using EventBooking.Controllers;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
 using EventBooking.Services;
+using Moq;
 using NUnit.Framework;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
@@ -33,14 +36,16 @@ namespace EventBooking.Tests
         [Test]
         public void When_Nobody_Signs_in_they_are_redirected_to_the_page_they_wanted_to_goto()
         {
-            ISecurityService mocksecurityService = new MockupSecurityService { AcceptedEmail = string.Empty, AcceptedPassword = string.Empty};
-            var controller = new SecurityController(mocksecurityService);
+            const string validEmail = "sami.lamti@tretton37.com";
+            const string validPassword = "in yo' face!";
+            ISecurityService mocksecurityService = new MockupSecurityService { AcceptedEmail = validEmail, AcceptedPassword = validPassword};
+            var controller = GetSecurityController(mocksecurityService);
 
             const string returnurl = "www.google.com";
             var result = controller.LogIn(new LoginModel
                 {
-                    ElectronicMailAddress = string.Empty,
-                    Password = string.Empty,
+                    ElectronicMailAddress = validEmail,
+                    Password = validPassword,
                     ReturnUrl = returnurl,
                 }) as RedirectResult;
 
@@ -63,6 +68,20 @@ namespace EventBooking.Tests
             Assert.AreEqual(returnurl, ((LoginModel)result.Model).ReturnUrl);
         }
 
+        private static SecurityController GetSecurityController(ISecurityService securityService)
+        {
+            var request = new Mock<HttpRequestBase>();
+            request.Setup(r => r.HttpMethod).Returns("GET");
+            var mockHttpContext = new Mock<HttpContextBase>();
+            mockHttpContext.Setup(c => c.Request).Returns(request.Object);
+            var controllerContext = new ControllerContext(mockHttpContext.Object, new RouteData(), new Mock<ControllerBase>().Object);
+            var activityController = new SecurityController(securityService)
+            {
+                ControllerContext = controllerContext,
+                Url = new UrlHelper(controllerContext.RequestContext)
+            };
+            return activityController;
+        }
 
         [Test]
         public void Given_a_nobody_When_nobody_logs_in_As_somebody_and_Exists_Then_somebody_gets_redirected_to_Team_Details_With_correct_teamId()
@@ -76,7 +95,7 @@ namespace EventBooking.Tests
                     AcceptedPassword = expectedPassword,
                     ReturnUser = new User() {Email = expectedEmailAddress, Team = new Team {Id=expectedTeamId}}
                 };
-            var controller = new SecurityController(mockupSecurityService);
+            var controller = GetSecurityController(mockupSecurityService);
             var model = new LoginModel { ElectronicMailAddress = expectedEmailAddress, Password = expectedPassword };
 
             var result = controller.LogIn(model) as RedirectToRouteResult;
@@ -92,7 +111,7 @@ namespace EventBooking.Tests
         public void Given_a_nobody_When_nobody_tries_to_log_As_somebody_but_doesnt_exist_Then_return_checkpoint_view_responding_vaguely() // for sec. reasons (checkpoint!).
         {
             ISecurityService mockupSecurityService = new MockupSecurityService();
-            var controller = new SecurityController(mockupSecurityService);
+            var controller = GetSecurityController(mockupSecurityService);
             var model = new LoginModel() { ElectronicMailAddress = "a@b.c", Password = "you don't know it" };
 
             var result = controller.LogIn(model) as ViewResult;

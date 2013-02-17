@@ -14,7 +14,25 @@ namespace EventBooking.Data.Repositories
 
 		public void Save(User user)
 		{
-			context.Users.Attach(user);
+		    var databaseUser = context.Users.Find(user.Id);
+		    databaseUser.Name = user.Name;
+		    databaseUser.StreetAddress = user.StreetAddress;
+		    databaseUser.Team = context.Teams.Find(user.Team.Id);
+		    databaseUser.Zipcode = user.Zipcode;
+		    databaseUser.Birthdate = user.Birthdate;
+		    databaseUser.Cellphone = user.Cellphone;
+		    databaseUser.City = user.City;
+			context.SaveChanges();
+		}
+
+		public void RemoveFromTeam(int userId)
+		{
+			var user = context.Users.FirstOrDefault(x => x.Id == userId);
+
+			if(user == null)
+				return;
+
+			user.Team = null;
 			context.SaveChanges();
 		}
 

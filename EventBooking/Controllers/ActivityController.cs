@@ -87,6 +87,7 @@ namespace EventBooking.Controllers
             return this.PartialView(viewModel);
         }
 
+	
         protected virtual void StoreActivity(Activity activity)
         {
             _activityRepository.Add(activity);
@@ -94,7 +95,7 @@ namespace EventBooking.Controllers
 
         public ActionResult Details(int id)
         {
-            var activity = _activityRepository.GetActivityById(id);
+		    var activity = _activityRepository.GetActivityById(id);
 
             var viewModel = new ActivityModel(activity);
 
