@@ -27,17 +27,12 @@ teamrynkebyse.upcomingEvents = function() {
                 return false;
             });
             prevLink.click(function () {
-                --currentPage;
-                container.load(activityUrl(currentPage));
-                updateLinks();
+                var prevPage = currentPage - 1;
+                loadNextPage(prevPage);
                 return false;
             });
     };
 
-    function updateLinks() {
-        prevLink.toggleClass("disabled", currentPage <= 0);
-    };
-    
     function loadNextPage(nextPageNumber) {
         var uri = activityUrl(nextPageNumber);
         $.get(uri, function (result) {
@@ -50,7 +45,6 @@ teamrynkebyse.upcomingEvents = function() {
         if ($("li", result).size() !== 0) {
             container.html(result);
             currentPage = nextPageNumber;
-
         } 
 
         var isThereMorePages = ($("li", result).size() >= 6);
@@ -59,7 +53,7 @@ teamrynkebyse.upcomingEvents = function() {
         } else {
             nextLink.addClass("disabled");
         }
-        updateLinks();
+        prevLink.toggleClass("disabled", currentPage <= 0);
     }
 
     function findTeam(teamId) {
