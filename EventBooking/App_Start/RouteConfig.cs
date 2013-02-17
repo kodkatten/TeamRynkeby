@@ -12,12 +12,13 @@ namespace EventBooking
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-			/* todo 
+
 	        routes.MapRoute(
 		        name: "SessionsForActivity",
-		        url: "Sessions/Index/{activityId}"
+		        url: "Sessions/Index/{activityId}",
+                 defaults: new {controller = "Sessions", action="Index",  activityId = UrlParameter.Optional }
 		        );
-			 */
+
 	        routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

@@ -2,48 +2,46 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using EventBooking.Data;
+using EventBooking.Data.Repositories;
 
 namespace EventBooking.Data.Repositories
 {
-	internal class SessionRepository : ISessionRepository
-	{
-	    private readonly IEventBookingContext context;
+    public class SessionRepository: ISessionRepository
+    {
+        private readonly IEventBookingContext _context;
 
         public SessionRepository(IEventBookingContext context)
         {
-            this.context = context;
+            _context = context;
         }
 
-	    public virtual IEnumerable<Session> GetSessionsForActivity(int activityId)
-		{
-			using (var ctx = new EventBookingContext())
-				return ctx.Sessions.Where(s => s.Activity.Id == activityId).Include(s => s.Activity).Include(s => s.Activity.OrganizingTeam).ToArray();
-		}
+        public SessionRepository() { }
 
-		public virtual void Save(int activityId, Session session)
-		{
-			using (var ctx = new EventBookingContext())
-			{
-                session.Activity = ctx.Activities.FirstOrDefault(x => x.Id == activityId);
-				ctx.Sessions.Add(session);
-				ctx.SaveChanges();
-			}
-		}
-
-        public void SaveVolunteers(Session session)
+        public virtual IEnumerable<Session> GetSessionsForActivity(int activityId)
         {
-            // Well I'll have to admit it. EF is to smart for me. Objects in different context
-            // etc. Hurts my brain. I'm sure I made something really really bad but I've spent
-            // a lot of time to try figuring it out. If a EF ninja could look at this I would
-            // be grateful.
+            return _context.Sessions.Where(s => s.Activity.Id == activityId).Include(s => s.Activity).Include(s => s.Activity.OrganizingTeam).ToArray();
         }
 
+        public virtual void Save(int activityId, Session session)
+        {
+            session.Activity = _context.Activities.FirstOrDefault(x => x.Id == activityId);
+            _context.Sessions.Add(session);
+            _context.SaveChanges();
+        }
+    
 	    public Session GetSessionById(int sessionId)
 	    {
-	        return this.context.Sessions
+	        return _context.Sessions
                         .Include(activity => activity.Volunteers)
                         .Include(activity => activity.Activity)
                         .Single(session => session.Id == sessionId);
 	    }
-	}
+
+
+        public void SaveVolunteers(Session session)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
