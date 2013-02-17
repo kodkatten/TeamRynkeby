@@ -5,6 +5,7 @@ using AutoMapper;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
 using EventBooking.Data.Repositories;
+using EventBooking.Services;
 
 namespace EventBooking.Controllers
 {
@@ -12,9 +13,12 @@ namespace EventBooking.Controllers
     {
         private readonly SessionRepository _repository;
 
-        public SessionsController(SessionRepository repository)
+	private readonly ISecurityService _securityService;
+
+        public SessionsController(SessionRepository repository, ISecurityService securityService)
         {
             _repository = repository;
+            _securityService = securityService;
         }
 
         public ActionResult Index(int activityId = 0)
@@ -37,6 +41,32 @@ namespace EventBooking.Controllers
             var session = Mapper.Map<Session>(sessionModel.SelectedSession);
             _repository.Save(activityId, session);
             return RedirectToAction("Index", new { activityId });
+        }
+
+        public RedirectToRouteResult SignUp(int id)
+        {
+            var session = _repository.GetSessionById(id);
+            var user = _securityService.CurrentUser;
+
+            if (!session.IsAllowedToSignUp(user))
+            {
+                return RedirectToAction("SignUpFailed", new { id });
+            }
+
+            session.SignUp(user);
+            _repository.SaveVolunteers(session);
+
+            return RedirectToAction("SignUpSuccessful", new { id });
+        }
+
+        public ActionResult SignUpSuccessful(int id)
+        {
+            return View();
+        }
+
+        public ActionResult SignUpFailed(int id)
+        {
+            return View();
         }
 
         public ActionResult NotFound(int activityId)

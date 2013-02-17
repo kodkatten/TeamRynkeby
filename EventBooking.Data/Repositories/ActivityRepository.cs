@@ -60,7 +60,7 @@ namespace EventBooking.Data.Repositories
 	    {
 	        return this._context.Activities
                                 .Include(x => x.OrganizingTeam)
-                                .Include(x => x.Sessions)
+                                .Include(x => x.Sessions.Select(session => session.Volunteers))
                                 .SingleOrDefault(x => x.Id == id);
 	    }
 	}

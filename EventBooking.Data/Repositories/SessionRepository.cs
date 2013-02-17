@@ -6,7 +6,14 @@ namespace EventBooking.Data.Repositories
 {
 	public class SessionRepository
 	{
-		public virtual IEnumerable<Session> GetSessionsForActivity(int activityId)
+	    private readonly IEventBookingContext context;
+
+        public SessionRepository(IEventBookingContext context)
+        {
+            this.context = context;
+        }
+
+	    public virtual IEnumerable<Session> GetSessionsForActivity(int activityId)
 		{
 			using (var ctx = new EventBookingContext())
 				return ctx.Sessions.Where(s => s.Activity.Id == activityId).Include(s => s.Activity).Include(s => s.Activity.OrganizingTeam).ToArray();
@@ -21,5 +28,18 @@ namespace EventBooking.Data.Repositories
 				ctx.SaveChanges();
 			}
 		}
+
+        public void SaveVolunteers(Session session)
+        {
+            // How? Don't really get what to do here!
+        }
+
+	    public Session GetSessionById(int sessionId)
+	    {
+	        return this.context.Sessions
+                        .Include(activity => activity.Volunteers)
+                        .Include(activity => activity.Activity)
+                        .Single(session => session.Id == sessionId);
+	    }
 	}
 }

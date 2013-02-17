@@ -239,6 +239,8 @@
     <Content Include="Views\Activity\SelectExistingItem.cshtml" />
     <Content Include="Views\Sessions\Index.cshtml" />
     <Content Include="Views\Sessions\NotFound.cshtml" />
+    <Content Include="Views\Sessions\SignUpSuccessful.cshtml" />
+    <Content Include="Views\Sessions\SignUpFailed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -42,11 +42,13 @@ namespace EventBooking.Controllers.ViewModels
     {
         private readonly bool isLoggedIn;
 
-        public DetailActivityViewModel(Activity activityData, bool isLoggedIn) : base(activityData)
+        public DetailActivityViewModel(Activity activityData, User user) : base(activityData)
         {
-            this.isLoggedIn = isLoggedIn;
+            this.isLoggedIn = user != null;
             this.Description = activityData.Description;
-            this.Sessions = activityData.Sessions != null ? activityData.Sessions.Select(AsSessionViewModel) : Enumerable.Empty<SessionViewModel>();
+            this.Sessions = activityData.Sessions != null ? 
+                    activityData.Sessions.Select(session => AsSessionViewModel(session, user)) : 
+                    Enumerable.Empty<SessionViewModel>();
         }
 
         public string Description { get; private set; }
@@ -57,30 +59,31 @@ namespace EventBooking.Controllers.ViewModels
 
         public bool ShouldShowSessions { get { return isLoggedIn; } }
 
-        private static SessionViewModel AsSessionViewModel(Session data)
+        private static SessionViewModel AsSessionViewModel(Session data, User user)
         {
-            return new SessionViewModel(data);
+            return new SessionViewModel(data, user);
         }
     }
 
     public class SessionViewModel
     {
-        public SessionViewModel(Session sessionData)
+        public SessionViewModel(Session sessionData, User user)
         {
-            this.AvailablePlaces = 10;
-            this.ToTimeFormatted = "11:23";
-            this.FromTimeFormatted = "12:34";
+            this.AvailablePlaces = sessionData.VolunteersNeeded - sessionData.Volunteers.Count();
+            this.ToTimeFormatted = sessionData.ToTime.ToShortTimeString();
+            this.FromTimeFormatted = sessionData.FromTime.ToShortTimeString();
+            this.Id = sessionData.Id;
+            this.CanSignUp = sessionData.IsAllowedToSignUp(user);
         }
 
-        public string FromTimeFormatted { get; set; }
+        public string FromTimeFormatted { get; private set; }
 
-        public string ToTimeFormatted { get; set; }
+        public string ToTimeFormatted { get; private set; }
 
-        public int AvailablePlaces { get; set; }
+        public int AvailablePlaces { get; private set; }
 
-        public bool CanSignUp 
-        { 
-            get { return this.AvailablePlaces > 0; }
-        }
+        public bool CanSignUp { get; private set; }
+
+        public int Id { get; private set; }
     }
 }
