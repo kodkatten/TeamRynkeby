@@ -77,13 +77,7 @@ teamrynkebyse.upcomingEvents = function() {
     }
 
     function isATeamSelected() {
-        var isSelected = false;
-        $.each(teams, function (i, team) {
-            if (team.selected === true) {
-                isSelected = true;
-            }
-        });
-        return isSelected;
+        return $.grep(teams, function (team) { return team.selected === true; }).length > 0;
     }
     
     function toggleTeam(teamId) {
