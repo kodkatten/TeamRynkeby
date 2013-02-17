@@ -7,10 +7,10 @@ namespace EventBooking.Controllers.ViewModels
 		private readonly ActivityModel _activity;
 		private readonly List<SessionModel> _sessions;
 
-		public ActivitySessionsModel(ActivityModel activity, List<SessionModel> sessions)
+		public ActivitySessionsModel(ActivityModel activity, IEnumerable<SessionModel> sessions)
 		{
 			_activity = activity;
-			_sessions = sessions;
+			_sessions = new List<SessionModel>(sessions);
 			SelectedSession = new SessionModel();
 		}
 

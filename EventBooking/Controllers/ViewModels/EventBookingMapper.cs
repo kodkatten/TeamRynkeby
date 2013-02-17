@@ -11,6 +11,7 @@ namespace EventBooking.Controllers.ViewModels
 		{
 			Mapper.CreateMap<CreateActivityModel, Activity>();
 			Mapper.CreateMap<SessionModel, Session>();
+			Mapper.CreateMap<Session, SessionModel>();
 		    Mapper.CreateMap<MyProfileModel, User>();
 		    Mapper.CreateMap<User, MyProfileModel>();
 

@@ -237,6 +237,7 @@
     <Content Include="Views\Admin\ViewTeam.cshtml" />
     <Content Include="Views\Activity\SelectExistingItem.cshtml" />
     <Content Include="Views\Sessions\Index.cshtml" />
+    <Content Include="Views\Sessions\NotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

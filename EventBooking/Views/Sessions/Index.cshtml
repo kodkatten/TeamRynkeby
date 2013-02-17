@@ -7,7 +7,7 @@
 
 <h2>@ViewBag.Title</h2>
 
-@using ( Html.BeginForm( "Create", "Sessions", FormMethod.Post, new { @class = "form-horizontal" } ) )
+@using ( Html.BeginForm( "Save", "Sessions", FormMethod.Post, new { @class = "form-horizontal" } ) )
 {
     <div class="control-group">
         @Html.LabelFor( m => m.Activity.Name, new { @class = "control-label" } )

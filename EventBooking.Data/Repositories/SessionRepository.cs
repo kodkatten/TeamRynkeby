@@ -8,5 +8,10 @@ namespace EventBooking.Data.Repositories
 		{
 			yield break;
 		}
+
+		public void Save(int activityId, Session session)
+		{
+			
+		}
 	}
 }
