@@ -83,14 +83,14 @@ namespace EventBooking.Filters
 
         private static void SeedActivitieshacketyHackBlaBla(EventBookingContext context)
         {
-            var team = new Team {Name = "Team Treebeard"};
+            var team = new Team {Name = "Team Täby"};
             context.Teams.Add(team);
             var dateTime = new DateTime(2013, 02, 17);
 
             var activity = new Activity
                 {
-                    Name = "More awesome stuff.",
-                    Description = "Ham andouille spare ribs tongue pork loin tenderloin brisket. Sausage spare ribs pork loin cow flank ground round jerky beef ribs swine rump.", 
+                    Name = "Insamling i Täby Centrum",
+                    Description = "Under sportlovet kommer Team Rynkeby vara i Täby Centrum", 
                     Date = dateTime, 
                     OrganizingTeam = team, 
                     Type = ActivityType.Preliminary,
@@ -106,24 +106,25 @@ namespace EventBooking.Filters
             context.Sessions.Add(session);
             context.Activities.Add(new Activity
             {
-                Name = "Awesome aktivet uno",
-                Description = "Bacon ipsum dolor sit amet boudin turducken fatback pancetta kielbasa pastrami doner cow capicola short ribs drumstick tail. ",
+                Name = "Insamling i Täby Centrum",
+                Summary = "Stor insamling",
+                Description = "Under sportlovet kommer Team Rynkeby vara i Täby Centrum",
                 Date = new DateTime(2013, 02, 27),
                 OrganizingTeam = team,
                 Type = ActivityType.Public
             }); 
             context.Activities.Add(new Activity
             {
-                Name = "More awesome stuffies.",
-                Description = "Ham andouille spare ribs tongue pork loin tenderloin brisket. Sausage spare ribs pork loin cow flank ground round jerky beef ribs swine rump.",
+                Name = "Insamling vid Pendeltågsstationen",
+                Description = "Skit i 3 koppar latte. Skänk dem till ",
                 Date = new DateTime(2013, 03, 17),
                 OrganizingTeam = team,
                 Type = ActivityType.Sponsor
             });
             context.Activities.Add(new Activity
             {
-                Name = "Awesome aktivet douce",
-                Description = "Bacon ipsum dolor sit amet boudin turducken fatback pancetta kielbasa pastrami doner cow capicola short ribs drumstick tail. ",
+                Name = "Spin of Hope",
+                Description = "Cykla av dig fläsket ",
                 Date = new DateTime(2013, 03, 27),
                 OrganizingTeam = team,
                 Type = ActivityType.Training
