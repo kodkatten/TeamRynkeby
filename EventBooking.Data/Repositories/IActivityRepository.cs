@@ -11,6 +11,9 @@ namespace EventBooking.Data.Repositories
 
         IEnumerable<Activity> GetUpcomingActivitiesByTeam(int teamId, int skip = 0, int take = 10);
 
+        IEnumerable<Activity> GetUpcomingActivitiesByTeams(IEnumerable<int> teamIds, int skip, int take);
+
         Activity GetActivityById(int id);
+
     }
 }

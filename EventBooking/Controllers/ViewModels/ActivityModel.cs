@@ -6,6 +6,11 @@ namespace EventBooking.Controllers.ViewModels
 	{
 		public ActivityModel(Activity activityData)
 		{
+            if (activityData == null)
+            {
+                return;
+            }
+
 			Id = activityData.Id.ToString();
 			Name = activityData.Name;
 			OrganizingTeam = activityData.OrganizingTeam == null ? "" : activityData.OrganizingTeam.Name;

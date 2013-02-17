@@ -46,6 +46,9 @@
     font-size: 0.5em;
 }
 
+.label-activity {
+   background: #333333;
+}
 .label-name {
     color: #a3ca60;
 }

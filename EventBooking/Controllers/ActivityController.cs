@@ -10,113 +10,121 @@ using EventBooking.Services;
 
 namespace EventBooking.Controllers
 {
-	public class ActivityController : Controller
-	{
-		private readonly ISecurityService _securityService;
-		private readonly ActivityRepository _activityRepository;
-		private readonly IPrefedinedItemRepository _prefedinedItems;
-        	private static int NumberOfActivitiesPerPage = 10;
+    public class ActivityController : Controller
+    {
+        private readonly ISecurityService _securityService;
+        private readonly ActivityRepository _activityRepository;
+        private readonly IPrefedinedItemRepository _prefedinedItems;
+        private static int NumberOfActivitiesPerPage = 6;
 
-		public ActivityController(ISecurityService securityService, ActivityRepository activityRepository, IPrefedinedItemRepository prefedinedItems)
-		{
-			_securityService = securityService;
-			_activityRepository = activityRepository;
-			_prefedinedItems = prefedinedItems;
-		}
+        public ActivityController(ISecurityService securityService, ActivityRepository activityRepository, IPrefedinedItemRepository prefedinedItems)
+        {
+            _securityService = securityService;
+            _activityRepository = activityRepository;
+            _prefedinedItems = prefedinedItems;
+        }
 
-		public ActionResult Create()
-		{
-			if ( !_securityService.IsLoggedIn )
-			{
-				return RedirectToAction( "Checkpoint", "Security", new { returnUrl = Url.Action( "Create" ) } );
-			}
-			return View();
-		}
+        public ActionResult Create()
+        {
+            if (!_securityService.IsLoggedIn)
+            {
+                return RedirectToAction("Checkpoint", "Security", new { returnUrl = Url.Action("Create") });
+            }
+            return View();
+        }
 
-		public ActionResult Index()
-		{
-			return RedirectToAction( "Upcoming" );
-		}
+        public ActionResult Index()
+        {
+            return RedirectToAction("Upcoming");
+        }
 
-		[HttpPost]
-		public ActionResult Create( CreateActivityModel model )
-		{
-			if ( !ModelState.IsValid )
-				return View();
-			var activity = Mapper.Map<Activity>( model );
-			activity.OrganizingTeam = _securityService.CurrentUser.Team;
-			model.Session.FromTime = activity.Date.Date.AddHours(model.Session.FromTime.Hour).AddMinutes(model.Session.FromTime.Minute);
-			model.Session.ToTime = activity.Date.Date.AddHours(model.Session.ToTime.Hour).AddMinutes(model.Session.ToTime.Minute);
-			activity.Sessions = new List<Session> { Mapper.Map<Session>( model.Session ) };
-		    activity.Coordinator = _securityService.CurrentUser;
-			StoreActivity(activity);
-			return RedirectToAction("Index", "Home");
-		}
+        [HttpPost]
+        public ActionResult Create(CreateActivityModel model)
+        {
+            if (!ModelState.IsValid)
+                return View();
+            var activity = Mapper.Map<Activity>(model);
+            activity.OrganizingTeam = _securityService.CurrentUser.Team;
+            model.Session.FromTime = activity.Date.Date.AddHours(model.Session.FromTime.Hour).AddMinutes(model.Session.FromTime.Minute);
+            model.Session.ToTime = activity.Date.Date.AddHours(model.Session.ToTime.Hour).AddMinutes(model.Session.ToTime.Minute);
+            activity.Sessions = new List<Session> { Mapper.Map<Session>(model.Session) };
+            activity.Coordinator = _securityService.CurrentUser;
+            StoreActivity(activity);
+            return RedirectToAction("Index", "Home");
+        }
 
-        public ActionResult Upcoming(int page = 0)
-		{
+        public ActionResult Upcoming(int page = 0, string teamIds = "")
+        {
             page = page < 0 ? 0 : page;
             var skip = NumberOfActivitiesPerPage * page;
-			IEnumerable<Activity> query = null;
+            IEnumerable<Activity> query = null;
 
-			if ( _securityService.IsLoggedIn )
-			{
-				var user = _securityService.CurrentUser;
-				if ( user.IsMemberOfATeam() )
-				{
-		                    query = _activityRepository.GetUpcomingActivitiesByTeam(user.Team.Id, skip, NumberOfActivitiesPerPage);
-				}
-			}
+            List<int> teamIdsToFilterActivitiesOn = new List<int>();
+            if (!String.IsNullOrEmpty(teamIds))
+            {
+                teamIdsToFilterActivitiesOn.AddRange(new List<int>(teamIds.Split(',').Select(int.Parse)));
+            }
 
-			if ( query == null )
-			{
-                		query = _activityRepository.GetUpcomingActivities(skip, NumberOfActivitiesPerPage);
-			}
+            if (_securityService.IsLoggedIn)
+            {
+                var user = _securityService.CurrentUser;
+                if (user.IsMemberOfATeam())
+                {
+                    query = _activityRepository.GetUpcomingActivitiesByTeam(user.Team.Id, skip, NumberOfActivitiesPerPage);
+                }
+            }
 
-		        var viewModel = query.ToArray().Select(data => new ActivityModel(data));
+            if (query == null)
+            {
+                if (teamIdsToFilterActivitiesOn.Any())
+                    query = _activityRepository.GetUpcomingActivitiesByTeams(teamIdsToFilterActivitiesOn,skip, NumberOfActivitiesPerPage);
+                else
+                    query = _activityRepository.GetUpcomingActivities(skip, NumberOfActivitiesPerPage);
+            }
 
-			return this.PartialView( viewModel );
-		}
+            var viewModel = query.ToArray().Select(data => new ActivityModel(data));
 
-		protected virtual void StoreActivity( Activity activity )
-		{
-			_activityRepository.Add( activity );
-		}
+            return this.PartialView(viewModel);
+        }
 
-		public ActionResult Details(int id)
-		{
-		    if (!_securityService.IsLoggedIn)
-		        return RedirectToAction("Checkpoint", "Security", new {returnUrl = Url.Action("Details", "Activity", new {id})});
+	
+        protected virtual void StoreActivity(Activity activity)
+        {
+            _activityRepository.Add(activity);
+        }
+
+        public ActionResult Details(int id)
+        {
 		    var activity = _activityRepository.GetActivityById(id);
 
-		    var viewModel = new ActivityModel(activity);
+            var viewModel = new ActivityModel(activity);
 
             return View(viewModel);
-		}
+        }
 
-		public ActionResult SelectExistingItem()
-		{
-			// Create the model.
-			var inventoryModel = new ContributedInventoryModel();
-			inventoryModel.SuggestedItems = new List<string>();
-			inventoryModel.ContributedItems = new List<ContributedInventoryItemModel>();
+        public ActionResult SelectExistingItem()
+        {
+            // Create the model.
+            var inventoryModel = new ContributedInventoryModel();
+            inventoryModel.SuggestedItems = new List<string>();
+            inventoryModel.ContributedItems = new List<ContributedInventoryItemModel>();
 
-			// Populate the suggested prefedinedItems.
-			inventoryModel.SuggestedItems.AddRange(_prefedinedItems.GetPredefinedActivityItems().Select(i => i.Name));
+            // Populate the suggested prefedinedItems.
+            inventoryModel.SuggestedItems.AddRange(_prefedinedItems.GetPredefinedActivityItems().Select(i => i.Name));
 
-			// Return the view.
-			return View(inventoryModel);
-		}
+            // Return the view.
+            return View(inventoryModel);
+        }
 
-		[HttpPost]
-		public ActionResult AddContributedItem(ContributedInventoryModel model)
-		{
-			model.ContributedItems.Add(new ContributedInventoryItemModel
-			{
-				Name = model.CurrentlySelectedItem,
-				Quantity = model.ItemQuantity
-			});
-			return View("SelectExistingItem", model);
-		}
-	}
+        [HttpPost]
+        public ActionResult AddContributedItem(ContributedInventoryModel model)
+        {
+            model.ContributedItems.Add(new ContributedInventoryItemModel
+            {
+                Name = model.CurrentlySelectedItem,
+                Quantity = model.ItemQuantity
+            });
+            return View("SelectExistingItem", model);
+        }
+    }
 }
