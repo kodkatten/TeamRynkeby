@@ -77,7 +77,7 @@ namespace EventBooking.Tests
 			var model = result.ViewData.Model as ActivitySessionsModel;
 			Assert.IsNotNull( model, "No model" );
 			Assert.IsNotNull( model.Activity, "No activity in model" );
-			Assert.AreEqual("1", model.Activity.Id );
+			Assert.AreEqual(1, model.Activity.Id );
 		}
 
 		[Test]
@@ -93,17 +93,21 @@ namespace EventBooking.Tests
 			var model = result.ViewData.Model as ActivitySessionsModel;
 			Assert.IsNotNull( model, "No model" );
 			Assert.AreEqual( 1, model.Sessions.Count, "No sessions in model" );
-			Assert.AreEqual( "19", model.Activity.Id );
+			Assert.AreEqual(19, model.Activity.Id );
 		}
 
 		[Test]
 		public void CanAddSessionToActivity()
 		{
 			var repoMock = new Mock<SessionRepository>();
+            Activity activity = new Activity(){Id = 145};
+
 			var controller = CreateController(repoMock.Object);
 			repoMock.Setup(r => r.Save(145, null));
+		    var activitySessionsModel = new ActivitySessionsModel(new ActivityModel(activity), new List<SessionModel>());
 
-			var result = controller.Save( 145, new SessionModel());
+
+            var result = controller.Save(activitySessionsModel);
 
 			Assert.IsNotNull( result );
 			Assert.AreEqual( "Index", result.RouteValues["Action"] );

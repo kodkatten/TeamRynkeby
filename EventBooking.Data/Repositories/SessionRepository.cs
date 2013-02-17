@@ -16,7 +16,8 @@ namespace EventBooking.Data.Repositories
 		{
 			using (var ctx = new EventBookingContext())
 			{
-				ctx.Sessions.Attach(session);
+                session.Activity = ctx.Activities.FirstOrDefault(x => x.Id == activityId);
+				ctx.Sessions.Add(session);
 				ctx.SaveChanges();
 			}
 		}

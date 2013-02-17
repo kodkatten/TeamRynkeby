@@ -11,14 +11,18 @@ namespace EventBooking.Controllers.ViewModels
                 return;
             }
 
-			Id = activityData.Id.ToString();
+			Id = activityData.Id;
 			Name = activityData.Name;
 			OrganizingTeam = activityData.OrganizingTeam == null ? "" : activityData.OrganizingTeam.Name;
 			DateFormatted = activityData.Date.ToSwedishShortDateString();
 			Description = activityData.Description;
 		}
 
-		public string Id { get; private set; }
+	    public ActivityModel()
+	    {
+	        
+	    }
+		public int Id { get; private set; }
 
 		public string Description { get; private set; }
 

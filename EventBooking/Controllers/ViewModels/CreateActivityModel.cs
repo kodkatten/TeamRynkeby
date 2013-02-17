@@ -34,10 +34,16 @@ namespace EventBooking.Controllers.ViewModels
 
 	public class SessionModel
 	{
-		public SessionModel()
-		{
-			VolunteersNeeded = 0;
-		}
+        public SessionModel(int activityId)
+        {
+            VolunteersNeeded = 0;
+            ActivityId = activityId;
+        }
+
+        public SessionModel()
+        {
+            // TODO: Complete member initialization
+        }
 
 		[Display( Name = "Start" )]
 		[Required( ErrorMessage = "*" )]
@@ -53,5 +59,7 @@ namespace EventBooking.Controllers.ViewModels
 		public int VolunteersNeeded { get; set; }
 
 		public int Id { get; set; }
+
+        public int ActivityId { get; set; }
 	}
 }

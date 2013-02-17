@@ -11,8 +11,13 @@ namespace EventBooking.Controllers.ViewModels
 		{
 			_activity = activity;
 			_sessions = new List<SessionModel>(sessions);
-			SelectedSession = new SessionModel();
+			SelectedSession = new SessionModel(_activity.Id);
 		}
+
+        public ActivitySessionsModel()
+        {
+
+        }
 
 		public ActivityModel Activity { get { return _activity; } }
 		public SessionModel SelectedSession { get; set; }

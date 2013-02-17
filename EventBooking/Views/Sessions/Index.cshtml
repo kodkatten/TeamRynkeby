@@ -3,12 +3,14 @@
 
 @{
     ViewBag.Title = "Hantera pass";
+    
 }
 
 <h2>@ViewBag.Title</h2>
 
 @using ( Html.BeginForm( "Save", "Sessions", FormMethod.Post, new { @class = "form-horizontal" } ) )
 {
+    
     <div class="control-group">
         @Html.LabelFor( m => m.Activity.Name, new { @class = "control-label" } )
         <div class="controls">
@@ -32,6 +34,7 @@
             @Html.ValidationMessageFor( m => m.SelectedSession.FromTime )
         </div>
     </div>
+     @Html.HiddenFor(m => m.SelectedSession.ActivityId)
     <div class="control-group">
         @Html.LabelFor( m => m.SelectedSession.ToTime, new { @class = "control-label" } )
         <div class="controls">
