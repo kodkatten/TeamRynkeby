@@ -96,6 +96,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ActivityControllerTests.cs" />
+    <Compile Include="ClassSetup.cs" />
     <Compile Include="CreateActivityTests.cs" />
     <Compile Include="MockupSecurityService.cs" />
     <Compile Include="SecurityControllerTests.cs" />
