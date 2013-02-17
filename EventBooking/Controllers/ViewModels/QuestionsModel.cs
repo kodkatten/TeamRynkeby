@@ -14,6 +14,7 @@ namespace EventBooking.Controllers.ViewModels
         {
             InterviewQuestions = new List<string>();
             TrainingQuestions = new List<string>();
+            Volunteers = new List<Volunteer>();
         }
         public IList<string> InterviewQuestions { get; set; }
         public IList<string> TrainingQuestions { get; set; }
@@ -23,6 +24,8 @@ namespace EventBooking.Controllers.ViewModels
         public int TeamId { get; set; }
 
         public int NumberOfQuestionRows { get; set; }
+
+        public IList<Volunteer> Volunteers { get; set; }
     }
 
 }

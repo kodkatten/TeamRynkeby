@@ -150,8 +150,10 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ViewModels\ActivityModel.cs" />
     <Compile Include="Controllers\ViewModels\ActivitySessionsModel.cs" />
+    <Compile Include="Controllers\ViewModels\AdministerTeamMembersModel.cs" />
     <Compile Include="Controllers\ViewModels\ContributedInventoryItemModel.cs" />
     <Compile Include="Controllers\ViewModels\ContributedInventoryModel.cs" />
+    <Compile Include="Controllers\ViewModels\Volunteer.cs" />
     <Compile Include="Controllers\ViewModels\UserModel.cs" />
     <Compile Include="Controllers\ViewModels\CreateActivityModel.cs" />
     <Compile Include="Controllers\ViewModels\DateTimeExtensions.cs" />

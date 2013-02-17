@@ -13,12 +13,16 @@ namespace EventBooking.Controllers
     {
         private readonly IInterviewQuestionRepository interviewQuestionRepository;
         private readonly ITrainingQuestionRepository trainingQuestionRepository;
+        private readonly IUserRepository userRepository;
+        private readonly ITeamRepository teamRepository;
 
         public QuestionsController(IInterviewQuestionRepository interviewQuestionRepository,
-            ITrainingQuestionRepository trainingQuestionRepository)
+            ITrainingQuestionRepository trainingQuestionRepository, IUserRepository userRepository, ITeamRepository teamRepository)
         {
             this.interviewQuestionRepository = interviewQuestionRepository;
             this.trainingQuestionRepository = trainingQuestionRepository;
+            this.userRepository = userRepository;
+            this.teamRepository = teamRepository;
         }
 
         //
@@ -26,8 +30,14 @@ namespace EventBooking.Controllers
 
         public ActionResult Create(int teamId)
         {
-            var model = new QuestionsModel {TeamId = teamId};
-            model.NumberOfQuestionRows = 15;
+            var team = teamRepository.Get(teamId);
+
+            var model = new QuestionsModel
+                {
+                    TeamId = teamId,
+                    NumberOfQuestionRows = 15,
+                    Volunteers = team.Volunteers.Select(v => new Volunteer {Id = v.Id, Name = v.Name}).ToList()
+                };
 
             model.InterviewQuestions = Enumerable.Range(0, model.NumberOfQuestionRows).Select(i => String.Empty).ToList();
             model.TrainingQuestions = Enumerable.Range(0, model.NumberOfQuestionRows).Select(i => String.Empty).ToList();
@@ -60,6 +70,16 @@ namespace EventBooking.Controllers
 
             return View(model);
 
+        }
+
+        public ActionResult DeleteVolunteers(IList<Volunteer> volunteers, int teamId, FormCollection form)
+        {
+            foreach (var volunteer in volunteers.Where(v => v.IsSelectedForRemoval))
+            {
+                userRepository.RemoveFromTeam(volunteer.Id);
+            }
+
+            return RedirectToAction("Create", new {teamId });
         }
 
 
