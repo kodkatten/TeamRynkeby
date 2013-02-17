@@ -97,7 +97,7 @@ namespace EventBooking.Controllers
 		{
 			var activity = _activityRepository.GetActivityById(id);
 
-		        var viewModel = new DetailActivityViewModel(activity, _securityService.CurrentUser);
+            var viewModel = new DetailActivityViewModel(activity, _securityService.CurrentUser);
 
 			return View(viewModel);
 		}

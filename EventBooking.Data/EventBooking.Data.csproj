@@ -71,6 +71,7 @@
     <Compile Include="Repositories\IInterviewQuestionRepository.cs" />
     <Compile Include="Repositories\InterviewQuestionRepository.cs" />
     <Compile Include="Repositories\IPrefedinedItemRepository.cs" />
+    <Compile Include="Repositories\ISessionRepository.cs" />
     <Compile Include="Repositories\ITeamRepository.cs" />
     <Compile Include="Repositories\PrefedinedItemRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />

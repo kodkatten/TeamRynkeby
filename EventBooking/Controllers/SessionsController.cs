@@ -12,11 +12,11 @@ namespace EventBooking.Controllers
 {
     public class SessionsController : Controller
     {
-        private readonly SessionRepository _repository;
+        private readonly ISessionRepository _repository;
 
-	private readonly ISecurityService _securityService;
+	    private readonly ISecurityService _securityService;
 
-        public SessionsController(SessionRepository repository, ISecurityService securityService)
+        public SessionsController(ISessionRepository repository, ISecurityService securityService)
         {
             _repository = repository;
             _securityService = securityService;

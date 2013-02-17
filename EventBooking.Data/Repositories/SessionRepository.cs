@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace EventBooking.Data.Repositories
 {
-	public class SessionRepository
+	internal class SessionRepository : ISessionRepository
 	{
 	    private readonly IEventBookingContext context;
 
