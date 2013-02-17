@@ -11,31 +11,29 @@
 
 <div class="row">
     <div class="span8">
-             <div class="page-header">
-                        <h3>Lagets aktiviteter</h3>
-                    </div>
-        <div class="row">
+        <div class="page-header">
+            <h3>Lagets aktiviteter</h3>
+        </div>
+        <div class="row" style="min-height: 250px;">
             @foreach (var eventGroup in Model.Activities)
             {
 
                 <div class="span4">
                     <small><b>@eventGroup.Key</b></small>
                     <p>
-                    <ul>
-                        @foreach (var e in eventGroup)
-                        {
+                        <ul>
+                            @foreach (var e in eventGroup)
+                            {
 
-                            <li>
-                                <a href="@Url.Action("Details", "Activity", new { @e.Id })" class="link" rel="tooltip" data-original-title="@e.Description">
-                                    <span class="badge @Html.BadgeColorPicker(@e.Type)">@e.Date.DayOfWeek @e.Date.Day</span>
-                                    @e.Name
-
-                                    <!-- TODO: add this when activity page exists Html.ActionLink(e.Name, "Details", "Activity");-->
-                                </a>
-                            </li>
-                        }
-                    </ul>
-                        </p>
+                                <li class="@e.Type">
+                                    <a href="@Url.Action("Details", "Activity", new { @e.Id })" class="link" rel="tooltip" data-original-title="@e.Description">
+                                        <span class="badge @Html.BadgeColorPicker(@e.Type)">@e.Date.DayOfWeek @e.Date.Day</span>
+                                        @e.Name
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </p>
                 </div>
         
             }
@@ -44,8 +42,8 @@
         <div class="row">
             <div class="span8">
                 <ul class="pager">
-                    <li class="previous">@Html.ActionLink("Tidigare", "Details", "Team", new { }, new { @class = "prev" })</li>
-                    <li class="next">@Html.ActionLink("Senare", "Details", new { }, new { @class = "next" })</li>
+                    <li class="previous"><a href="@Url.Action("Previous", "Team", new { currentDate = @Model.StartDate.ToSwedishShortDateString() })">Tidigare</a></li>
+                    <li class="next"><a href="@Url.Action("Next", "Team", new { currentDate = @Model.StartDate.ToSwedishShortDateString() })">Senare</a></li>
                 </ul>
             </div>
         </div>
@@ -54,29 +52,60 @@
         <div class="page-header">
             <h3>Mina aktiviteter</h3>
         </div>
+        <small><b>&nbsp;</b></small>
+        <p>
+            <ul>
+                @foreach (var e in Model.MyActivites)
+                {
 
-        <ul>
-            @foreach (var e in Model.MyActivites)
-            {
-
-                <li>
-                    <a href="@Url.Action("Details", "Activity", new { @e.Id })" class="link" rel="tooltip" data-original-title="@e.Description">
-                        <span class="badge @Html.BadgeColorPicker(@e.Type)">@e.Date.ToSwedishShortDateString()</span>
-                        @e.Name
-                    </a>
-                    <a href="@Url.Action("Details", "Activity", new { @e.Id })" class="link" >
-                        <span class="icon icon-thumbs-down"></span>
-
-                    </a>
-                    @if (e.Coordinator.Email == User.Identity.Name)
-                    {
-                        <a href="@Url.Action("Details", "Activity", new {@e.Id})" class="link">
-                            <span class="icon icon-pencil"></span>
+                    <li class="@e.Type">
+                        <a href="@Url.Action("Details", "Activity", new { @e.Id })" class="link" rel="tooltip" data-original-title="@e.Description">
+                            <span class="badge @Html.BadgeColorPicker(@e.Type)">@e.Date.ToSwedishShortDateString()</span>
+                            @e.Name
                         </a>
-                    }
+                        <a href="@Url.Action("Leave", "Activity", new { @e.Id })" class="link" rel="tooltip" data-original-title="Avanmäl" >
+                            <span class="icon icon-thumbs-down"></span>
+
+                        </a>
+                        @if (e.Coordinator.Email == User.Identity.Name)
+                        {
+                            <a href="@Url.Action("Edit", "Activity", new { @e.Id })" class="link" rel="tooltip" data-original-title="Redigera">
+                                <span class="icon icon-pencil"></span>
+                            </a>
+                        }
+                    </li>
+                }
+            </ul>
+        </p>
+    </div>
+</div>
+<div class="row">
+    <div class="span8">
+        <small><b>Visa följande aktiviteter:</b></small>
+        <p>
+            <ul>
+                <li>
+                    <label class="checkbox">
+                        <input type="checkbox" checked="checked" onclick="$('li.Public').toggle()"><span class="badge badge-warning">Offentligt</span>
+                    </label>
                 </li>
-            }
-        </ul>
+                <li>
+                    <label class="checkbox">
+                        <input type="checkbox" checked="checked" onclick="$('li.Sponsor').toggle()"><span class="badge badge-important">Sponsor</span>
+                    </label>
+                </li>
+                <li>
+                    <label class="checkbox">
+                        <input type="checkbox" checked="checked" onclick="$('li.Training').toggle()"><span class="badge badge-info">Träning</span>
+                    </label>
+                </li>
+                <li>
+                    <label class="checkbox">
+                        <input type="checkbox" checked="checked" onclick="$('li.Preliminary').toggle()"><span class="badge">Preliminärt</span>
+                    </label>
+                </li>
+            </ul>
+        </p>
     </div>
 </div>
 

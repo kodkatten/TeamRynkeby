@@ -11,7 +11,7 @@ namespace EventBooking.Controllers.ViewModels
 {
 	public static class HtmlExtensions
 	{
-        private static readonly Dictionary<ActivityType, string> _colors = new Dictionary<ActivityType, string>
+        public static readonly Dictionary<ActivityType, string> ActivityTypeColors = new Dictionary<ActivityType, string>
             {
                 {ActivityType.Preliminary, ""},
                 {ActivityType.Public, "badge-warning"},
@@ -21,7 +21,7 @@ namespace EventBooking.Controllers.ViewModels
 
         public static string BadgeColorPicker<TModel>(this HtmlHelper<TModel> htmlHelper, ActivityType type)
         {
-            return _colors[type];
+            return ActivityTypeColors[type];
         }
 		public static MvcHtmlString RadioButtonForEnum<TModel, TProperty>(
 			this HtmlHelper<TModel> htmlHelper,

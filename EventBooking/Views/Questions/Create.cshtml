@@ -1,15 +1,16 @@
-﻿@model EventBooking.Controllers.ViewModels.QuestionsModel
+﻿@using System.Globalization
+@model EventBooking.Controllers.ViewModels.QuestionsModel
 
 @{
 }
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create"))
 {
     @Html.ValidationSummary(true)
     @Html.HiddenFor(m => m.TeamId)
-    
+    @Html.AntiForgeryToken()
     <fieldset>
-        <legend>QuestionsModel</legend>
+        <legend>Frågor</legend>
 
         <table>
             <tr>
@@ -20,13 +21,13 @@
             {
                 <tr>
                     <td>
-                        @Html.LabelFor(m => m.InterviewQuestions[i], "Fråga " + (i+1))
+                        @Html.LabelFor(m => m.InterviewQuestions[i], "Fråga " + (i + 1))
                     </td>
                     <td>
                         @Html.TextBoxFor(m => m.InterviewQuestions[i])
                     </td>
                     <td>
-                        @Html.LabelFor(m => m.TrainingQuestions[i], "Fråga " + (i+1))
+                        @Html.LabelFor(m => m.TrainingQuestions[i], "Fråga " + (i + 1))
                     </td>
                     <td>
                         @Html.TextBoxFor(m => m.TrainingQuestions[i])
@@ -40,6 +41,32 @@
         <p>
             <input type="submit" value="Spara" />
             <span>@ViewBag.Feedback</span>
+        </p>
+    </fieldset>
+}
+
+
+@using (Html.BeginForm("DeleteVolunteers", "Questions"))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.TeamId)
+    
+    <fieldset>
+        <legend>Teammedlemmar</legend>
+
+        <table>
+            <tr><th>Teammedlemmar</th></tr>
+            @for (int i = 0; i < Model.Volunteers.Count(); i++)
+            {
+                <tr>
+                    <td>@Html.CheckBoxFor(m=> m.Volunteers[i].IsSelectedForRemoval, Model.Volunteers[i].Id)</td>
+                    <td>@Html.HiddenFor(m=> m.Volunteers[i].Id)</td>
+                    <td>@Html.Label(Model.Volunteers[i].Name)</td>
+                </tr>  
+            }
+        </table>
+        <p>
+            <input type="submit" value="Ta bort valda medlemmar" />
         </p>
     </fieldset>
 }

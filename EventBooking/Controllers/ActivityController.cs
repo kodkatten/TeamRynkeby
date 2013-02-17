@@ -50,7 +50,7 @@ namespace EventBooking.Controllers
             activity.Sessions = new List<Session> { Mapper.Map<Session>(model.Session) };
             activity.Coordinator = _securityService.CurrentUser;
             StoreActivity(activity);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Sessions", new { activityId = activity.Id });
         }
 
         public ActionResult Upcoming(int page = 0, string teamIds = "")
@@ -125,6 +125,17 @@ namespace EventBooking.Controllers
                 Quantity = model.ItemQuantity
             });
             return View("SelectExistingItem", model);
+        }
+
+        //When entering here, should leave the activity
+        public ActionResult Leave(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ActionResult Edit(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

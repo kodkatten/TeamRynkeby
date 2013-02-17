@@ -51,5 +51,7 @@ namespace EventBooking.Controllers.ViewModels
 		[Display( Name = "Deltagare" )]
 		[Required( ErrorMessage = "*" )]
 		public int VolunteersNeeded { get; set; }
+
+		public int Id { get; set; }
 	}
 }

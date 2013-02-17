@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Web.Mvc;
-using Autofac;
 using EventBooking.Controllers;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
@@ -10,18 +9,6 @@ using NUnit.Framework;
 
 namespace EventBooking.Tests
 {
-	[SetUpFixture]
-	internal class ClassSetup
-	{
-		[SetUp]
-		public void Setup()
-		{
-			var builder = new ContainerBuilder();
-			builder.RegisterType<MockupSecurityService>().As<ISecurityService>().InstancePerLifetimeScope();
-			EventBookingMapper.SetupMappers(builder.Build());
-		}
-	}
-
 	[TestFixture]
 	public class CreateActivityTests
 	{
@@ -71,7 +58,7 @@ namespace EventBooking.Tests
 		}
 
 		[Test]
-		public void RedirectsToHomeAfterSuccessfulCreation()
+		public void RedirectsToSessionManagementAfterSuccessfulCreation()
 		{
 			var controller = CreateController();
 
@@ -79,7 +66,8 @@ namespace EventBooking.Tests
 
 			Assert.NotNull(result);
 			Assert.AreEqual("Index", result.RouteValues["Action"]);
-			Assert.AreEqual("Home", result.RouteValues["controller"]);
+			Assert.AreEqual("Sessions", result.RouteValues["controller"]);
+			Assert.IsNotNull(result.RouteValues["activityId"]);
 		}
 
 		[Test, Ignore]

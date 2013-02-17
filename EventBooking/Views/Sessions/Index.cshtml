@@ -1,0 +1,88 @@
+﻿@using EventBooking.Controllers.ViewModels
+@model EventBooking.Controllers.ViewModels.ActivitySessionsModel
+
+@{
+    ViewBag.Title = "Hantera pass";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using ( Html.BeginForm( "Save", "Sessions", FormMethod.Post, new { @class = "form-horizontal" } ) )
+{
+    <div class="control-group">
+        @Html.LabelFor( m => m.Activity.Name, new { @class = "control-label" } )
+        <div class="controls">
+            @Model.Activity.Name
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor( m => m.Activity.DateFormatted, new { @class = "control-label" } )
+        <div class="controls">
+            @Model.Activity.DateFormatted
+        </div>
+    </div>
+    <h3>Lägg till pass</h3>
+    <div class="control-group">
+        @Html.LabelFor( m => m.SelectedSession.FromTime, new { @class = "control-label" } )
+        <div class="controls">
+            <div class="input-append bootstrap-timepicker">
+                @Html.TextBoxFor( m => m.SelectedSession.FromTime, new { placeholder = "Start", @class = "timepicker input-small" } )
+                <span class="add-on"><i class="icon-time"></i></span>
+            </div>
+            @Html.ValidationMessageFor( m => m.SelectedSession.FromTime )
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor( m => m.SelectedSession.ToTime, new { @class = "control-label" } )
+        <div class="controls">
+            <div class="input-append bootstrap-timepicker">
+                @Html.TextBoxFor( m => m.SelectedSession.ToTime, new { placeholder = "Slut", @class = "timepicker input-small" } )
+                <span class="add-on"><i class="icon-time"></i></span>
+            </div>
+            @Html.ValidationMessageFor( m => m.SelectedSession.ToTime )
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor( m => m.SelectedSession.VolunteersNeeded, new { @class = "control-label" } )
+        <div class="controls">
+            @Html.TextBoxFor( m => m.SelectedSession.VolunteersNeeded, new { type = "number", placeholder = "Deltagare", min = "0", max = "200" } )
+            @Html.ValidationMessageFor( m => m.SelectedSession.VolunteersNeeded )
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <button type="submit" class="btn">Spara</button>
+        </div>
+    </div>
+}
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Start</th>
+            <th>Slut</th>
+            <th>Deltagare</th>
+            <th>&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ( var session in Model.Sessions )
+        {
+            <tr>
+                <td>
+                    @session.FromTime
+                </td>
+                <td>
+                    @session.ToTime
+                </td>
+                <td>
+                    @session.VolunteersNeeded
+                </td>
+                <td>
+                    @Html.ActionLink("Ändra", "Edit", new { activityId = Model.Activity.Id, sessionId = session.Id })
+                    @Html.ActionLink("Radera", "Delete", new { activityId = Model.Activity.Id, sessionId = session.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
