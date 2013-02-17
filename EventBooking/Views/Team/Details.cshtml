@@ -60,13 +60,13 @@
                             <span class="badge @Html.BadgeColorPicker(@e.Type)">@e.Date.ToSwedishShortDateString()</span>
                             @e.Name
                         </a>
-                        <a href="@Url.Action("Details", "Activity", new { @e.Id })" class="link" >
+                        <a href="@Url.Action("Leave", "Activity", new { @e.Id })" class="link" >
                             <span class="icon icon-thumbs-down"></span>
 
                         </a>
                         @if (e.Coordinator.Email == User.Identity.Name)
                         {
-                            <a href="@Url.Action("Details", "Activity", new { @e.Id })" class="link">
+                            <a href="@Url.Action("Edit", "Activity", new { @e.Id })" class="link">
                                 <span class="icon icon-pencil"></span>
                             </a>
                                 }
