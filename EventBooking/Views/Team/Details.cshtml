@@ -11,27 +11,29 @@
 
 <div class="row">
     <div class="span8">
-             <div class="page-header">
-                        <h3>Lagets aktiviteter</h3>
-                    </div>
+        <div class="page-header">
+            <h3>Lagets aktiviteter</h3>
+        </div>
         <div class="row" style="min-height: 250px;">
             @foreach (var eventGroup in Model.Activities)
             {
 
                 <div class="span4">
                     <small><b>@eventGroup.Key</b></small>
+                    <p>
                         <ul>
                             @foreach (var e in eventGroup)
                             {
 
-                                <li>
+                                <li class="@e.Type">
                                     <a href="@Url.Action("Details", "Activity", new { @e.Id })" class="link" rel="tooltip" data-original-title="@e.Description">
                                         <span class="badge @Html.BadgeColorPicker(@e.Type)">@e.Date.DayOfWeek @e.Date.Day</span>
                                         @e.Name
                                     </a>
                                 </li>
-                        }
+                            }
                         </ul>
+                    </p>
                 </div>
         
             }
@@ -51,11 +53,12 @@
             <h3>Mina aktiviteter</h3>
         </div>
         <small><b>&nbsp;</b></small>
+        <p>
             <ul>
                 @foreach (var e in Model.MyActivites)
                 {
 
-                    <li>
+                    <li class="@e.Type">
                         <a href="@Url.Action("Details", "Activity", new { @e.Id })" class="link" rel="tooltip" data-original-title="@e.Description">
                             <span class="badge @Html.BadgeColorPicker(@e.Type)">@e.Date.ToSwedishShortDateString()</span>
                             @e.Name
@@ -69,10 +72,40 @@
                             <a href="@Url.Action("Edit", "Activity", new { @e.Id })" class="link">
                                 <span class="icon icon-pencil"></span>
                             </a>
-                                }
-                    </li>
                         }
+                    </li>
+                }
             </ul>
+        </p>
+    </div>
+</div>
+<div class="row">
+    <div class="span8">
+        <small><b>Visa följande aktiviteter:</b></small>
+        <p>
+            <ul>
+                <li>
+                    <label class="checkbox">
+                        <input type="checkbox" checked="checked" onclick="$('li.Public').toggle()"><span class="badge badge-warning">Offentligt</span>
+                    </label>
+                </li>
+                <li>
+                    <label class="checkbox">
+                        <input type="checkbox" checked="checked" onclick="$('li.Sponsor').toggle()"><span class="badge badge-important">Sponsor</span>
+                    </label>
+                </li>
+                <li>
+                    <label class="checkbox">
+                        <input type="checkbox" checked="checked" onclick="$('li.Training').toggle()"><span class="badge badge-info">Träning</span>
+                    </label>
+                </li>
+                <li>
+                    <label class="checkbox">
+                        <input type="checkbox" checked="checked" onclick="$('li.Preliminary').toggle()"><span class="badge">Preliminärt</span>
+                    </label>
+                </li>
+            </ul>
+        </p>
     </div>
 </div>
 
