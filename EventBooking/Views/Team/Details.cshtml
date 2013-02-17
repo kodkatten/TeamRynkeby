@@ -21,21 +21,19 @@
                 <div class="span4">
                     <small><b>@eventGroup.Key</b></small>
                     <p>
-                    <ul>
-                        @foreach (var e in eventGroup)
-                        {
+                        <ul>
+                            @foreach (var e in eventGroup)
+                            {
 
-                            <li>
-                                <a href="@Url.Action("Details", "Activity", new { @e.Id })" class="link" rel="tooltip" data-original-title="@e.Description">
-                                    <span class="badge @Html.BadgeColorPicker(@e.Type)">@e.Date.DayOfWeek @e.Date.Day</span>
-                                    @e.Name
-
-                                    <!-- TODO: add this when activity page exists Html.ActionLink(e.Name, "Details", "Activity");-->
-                                </a>
-                            </li>
+                                <li>
+                                    <a href="@Url.Action("Details", "Activity", new { @e.Id })" class="link" rel="tooltip" data-original-title="@e.Description">
+                                        <span class="badge @Html.BadgeColorPicker(@e.Type)">@e.Date.DayOfWeek @e.Date.Day</span>
+                                        @e.Name
+                                    </a>
+                                </li>
                         }
-                    </ul>
-                        </p>
+                        </ul>
+                    </p>
                 </div>
         
             }
@@ -54,29 +52,31 @@
         <div class="page-header">
             <h3>Mina aktiviteter</h3>
         </div>
+        <small><b>&nbsp;</b></small>
+        <p>
+            <ul>
+                @foreach (var e in Model.MyActivites)
+                {
 
-        <ul>
-            @foreach (var e in Model.MyActivites)
-            {
-
-                <li>
-                    <a href="@Url.Action("Details", "Activity", new { @e.Id })" class="link" rel="tooltip" data-original-title="@e.Description">
-                        <span class="badge @Html.BadgeColorPicker(@e.Type)">@e.Date.ToSwedishShortDateString()</span>
-                        @e.Name
-                    </a>
-                    <a href="@Url.Action("Details", "Activity", new { @e.Id })" class="link" >
-                        <span class="icon icon-thumbs-down"></span>
-
-                    </a>
-                    @if (e.Coordinator.Email == User.Identity.Name)
-                    {
-                        <a href="@Url.Action("Details", "Activity", new {@e.Id})" class="link">
-                            <span class="icon icon-pencil"></span>
+                    <li>
+                        <a href="@Url.Action("Details", "Activity", new { @e.Id })" class="link" rel="tooltip" data-original-title="@e.Description">
+                            <span class="badge @Html.BadgeColorPicker(@e.Type)">@e.Date.ToSwedishShortDateString()</span>
+                            @e.Name
                         </a>
-                    }
-                </li>
-            }
-        </ul>
+                        <a href="@Url.Action("Details", "Activity", new { @e.Id })" class="link" >
+                            <span class="icon icon-thumbs-down"></span>
+
+                        </a>
+                        @if (e.Coordinator.Email == User.Identity.Name)
+                        {
+                            <a href="@Url.Action("Details", "Activity", new { @e.Id })" class="link">
+                                <span class="icon icon-pencil"></span>
+                            </a>
+                                }
+                    </li>
+                        }
+            </ul>
+        </p>
     </div>
 </div>
 
