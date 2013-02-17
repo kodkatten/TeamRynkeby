@@ -65,8 +65,9 @@ namespace EventBooking.Tests
 			var result = CreateValidActivity(controller) as RedirectToRouteResult;
 
 			Assert.NotNull(result);
-			Assert.AreEqual("Sessions", result.RouteValues["Action"]);
-			Assert.AreEqual("Activity", result.RouteValues["controller"]);
+			Assert.AreEqual("Index", result.RouteValues["Action"]);
+			Assert.AreEqual("Sessions", result.RouteValues["controller"]);
+			Assert.IsNotNull(result.RouteValues["activityId"]);
 		}
 
 		[Test, Ignore]
