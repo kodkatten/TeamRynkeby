@@ -15,7 +15,7 @@ namespace EventBooking.Controllers
 		private readonly ISecurityService _securityService;
 		private readonly ActivityRepository _activityRepository;
 		private readonly IPrefedinedItemRepository _prefedinedItems;
-		private static int NumberOfActivitiesPerPage = 6;
+	        private const int NumberOfActivitiesPerPage = 6;
 
 		public ActivityController(ISecurityService securityService, ActivityRepository activityRepository, IPrefedinedItemRepository prefedinedItems)
 		{
@@ -97,7 +97,7 @@ namespace EventBooking.Controllers
 		{
 			var activity = _activityRepository.GetActivityById(id);
 
-			var viewModel = new ActivityModel(activity);
+		        var viewModel = new DetailActivityViewModel(activity, _securityService.IsLoggedIn);
 
 			return View(viewModel);
 		}
