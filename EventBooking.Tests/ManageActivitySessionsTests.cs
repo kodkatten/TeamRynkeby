@@ -6,6 +6,7 @@ using EventBooking.Controllers;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
 using EventBooking.Data.Repositories;
+using EventBooking.Services;
 using Moq;
 using NUnit.Framework;
 
@@ -131,7 +132,7 @@ namespace EventBooking.Tests
 
 		private SessionsController CreateController(SessionRepository repository)
 		{
-			return new SessionsController( repository );
+			return new SessionsController( repository, new Mock<ISecurityService>().Object );
 		}
 	}
 }
