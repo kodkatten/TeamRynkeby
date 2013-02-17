@@ -228,7 +228,6 @@
     <Content Include="Views\User\SignUp.cshtml" />
     <Content Include="Views\Activity\Create.cshtml" />
     <Content Include="Views\Activity\details.cshtml" />
-    <Content Include="Views\Home\UpcommingActivities.cshtml" />
     <Content Include="Views\Admin\ViewTeams.cshtml" />
     <Content Include="Views\Admin\Partials\Teams.cshtml" />
     <Content Include="Views\Activity\Upcoming.cshtml" />
@@ -253,9 +252,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_Layout.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Home\SignUp.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\_ViewStart.cshtml" />
