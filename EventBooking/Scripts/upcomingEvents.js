@@ -17,7 +17,6 @@ teamrynkebyse.upcomingEvents = function() {
                 selectedTeamIds.push(teams[i].id);
             }
         }
-        
         return baseUri + '/?page=' + page +'&teamIds=' + selectedTeamIds.join(",");
     };
 
@@ -42,17 +41,26 @@ teamrynkebyse.upcomingEvents = function() {
     function loadNextPage(nextPageNumber) {
         var uri = activityUrl(nextPageNumber);
         $.get(uri, function (result) {
-            // Brain br0ken have a hack!
-            if ($("li", result).size() !== 0) {
-                container.html(result);
-                currentPage = nextPageNumber;
-                
-            } else {
-                nextLink.toggleClass("disabled", true);
-            }
-            
+            updateLinksAfterLoad(result, nextPageNumber);
         });
     };
+
+    function updateLinksAfterLoad(result, nextPageNumber) {
+        // Brain br0ken have a hack!
+        if ($("li", result).size() !== 0) {
+            container.html(result);
+            currentPage = nextPageNumber;
+
+        } 
+
+        var isThereMorePages = ($("li", result).size() >= 6);
+        if (isThereMorePages) {
+            nextLink.removeClass("disabled");
+        } else {
+            nextLink.addClass("disabled");
+        }
+        updateLinks();
+    }
 
     function findTeam(teamId) {
         var team;
@@ -110,6 +118,7 @@ teamrynkebyse.upcomingEvents = function() {
             
         $.get(uri, function (result) {
             container.html(result);
+            updateLinksAfterLoad(result, 0);
         });
     }
 
