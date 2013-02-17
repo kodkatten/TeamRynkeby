@@ -145,9 +145,11 @@
     <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SessionsController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ViewModels\ActivityModel.cs" />
+    <Compile Include="Controllers\ViewModels\ActivitySessionsModel.cs" />
     <Compile Include="Controllers\ViewModels\ContributedInventoryItemModel.cs" />
     <Compile Include="Controllers\ViewModels\ContributedInventoryModel.cs" />
     <Compile Include="Controllers\ViewModels\UserModel.cs" />
@@ -234,6 +236,7 @@
     <Content Include="Views\Questions\Create.cshtml" />
     <Content Include="Views\Admin\ViewTeam.cshtml" />
     <Content Include="Views\Activity\SelectExistingItem.cshtml" />
+    <Content Include="Views\Sessions\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

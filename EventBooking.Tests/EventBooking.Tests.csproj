@@ -98,6 +98,7 @@
     <Compile Include="ActivityControllerTests.cs" />
     <Compile Include="ClassSetup.cs" />
     <Compile Include="CreateActivityTests.cs" />
+    <Compile Include="ManageActivitySessionsTests.cs" />
     <Compile Include="MockupSecurityService.cs" />
     <Compile Include="SecurityControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
