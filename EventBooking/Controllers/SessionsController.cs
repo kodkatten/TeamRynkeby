@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
@@ -66,7 +67,12 @@ namespace EventBooking.Controllers
 
         public ActionResult SignUpFailed(int id)
         {
-            return View();
+            var session = _repository.GetSessionById(id);
+
+            dynamic viewModel = new ExpandoObject();
+            viewModel.ActivityId = session.Activity.Id;
+
+            return View(viewModel);
         }
 
         public ActionResult NotFound(int activityId)
