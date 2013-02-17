@@ -41,7 +41,7 @@
             <div class="span8">
                 <ul class="pager">
                     <li class="previous"><a href="@Url.Action("Previous", "Team", new { currentDate = @Model.StartDate.ToSwedishShortDateString() })">Tidigare</a></li>
-                    <li><a class="pull-right" href="@Url.Action("Next", "Team", new { currentDate = @Model.StartDate.ToSwedishShortDateString() })">Senare</a></li>
+                    <li class="next"><a href="@Url.Action("Next", "Team", new { currentDate = @Model.StartDate.ToSwedishShortDateString() })">Senare</a></li>
                 </ul>
             </div>
         </div>
