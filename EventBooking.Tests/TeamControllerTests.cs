@@ -116,7 +116,7 @@ namespace EventBooking.Tests
 
             var currentDate = DateTime.UtcNow.AddMonths(2);
             var expectedDate = new DateTime(currentDate.Year, currentDate.Month, 1);
-            var viewResult = teamController.Details(expectedDate) as ViewResult;
+            var viewResult = teamController.DetailsWithDate(expectedDate) as ViewResult;
             
             Assert.IsNotNull(viewResult);
             var teamModel = viewResult.Model as TeamActivitiesModel;
