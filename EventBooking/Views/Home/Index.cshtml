@@ -51,9 +51,10 @@
             <div class="upcoming-activity-list" data-update-uri="http://localhost:49385/Activity/Upcoming">
                 @Html.Action("Upcoming", "Activity")
             </div>
-            <a href="#" class="previous-activities-list-command">Föregående</a>
-            <a href="#" class="next-activities-list-command">Nästa</a>
-
+            <ul class="pager">
+                <li class="previous"><a class="previous-activities-list-command" href="#">Föregående</a></li>
+                <li class="next"><a class="next-activities-list-command" href="#">Nästa</a></li>
+            </ul>
         </div>
         <div class="span6">
             <h2>Team Rynkeby</h2>
