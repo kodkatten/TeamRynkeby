@@ -54,12 +54,12 @@ namespace EventBooking.Controllers.ViewModels
 		[IsDateAfter("FromTime", true, ErrorMessage="Sluttiden måste vara efter starttiden")]
 		public DateTime ToTime { get; set; }
 
-		[Display( Name = "Deltagare" )]
+		[Display( Name = "Antal deltagare" )]
 		[Required( ErrorMessage = "*" )]
 		public int VolunteersNeeded { get; set; }
 
 		public int Id { get; set; }
-
+        
         public int ActivityId { get; set; }
 	}
 }
