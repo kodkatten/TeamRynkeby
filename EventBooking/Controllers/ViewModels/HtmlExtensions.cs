@@ -13,10 +13,11 @@ namespace EventBooking.Controllers.ViewModels
 	{
         public static readonly Dictionary<ActivityType, string> ActivityTypeColors = new Dictionary<ActivityType, string>
             {
-                {ActivityType.Preliminary, ""},
-                {ActivityType.Public, "badge-warning"},
+                {ActivityType.Preliminärt, ""},
+                {ActivityType.Publikt, "badge-warning"},
                 {ActivityType.Sponsor, "badge-important"},
-                {ActivityType.Training, "badge-info"},
+                {ActivityType.Träning, "badge-info"},
+                {ActivityType.Teammöte, "badge-info"},
             };
 
         public static string BadgeColorPicker<TModel>(this HtmlHelper<TModel> htmlHelper, ActivityType type)

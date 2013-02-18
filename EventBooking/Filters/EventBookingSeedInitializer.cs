@@ -93,7 +93,7 @@ namespace EventBooking.Filters
                     Description = "Under sportlovet kommer Team Rynkeby vara i Täby Centrum", 
                     Date = dateTime, 
                     OrganizingTeam = team, 
-                    Type = ActivityType.Preliminary
+                    Type = ActivityType.Preliminärt
                 };
             var session = new Session {
                 FromTime = dateTime.AddHours(8),
@@ -111,7 +111,7 @@ namespace EventBooking.Filters
                 Description = "Under sportlovet kommer Team Rynkeby vara i Täby Centrum",
                 Date = new DateTime(2013, 02, 27),
                 OrganizingTeam = team,
-                Type = ActivityType.Public
+                Type = ActivityType.Publikt
             }); 
             context.Activities.Add(new Activity
             {
@@ -127,7 +127,7 @@ namespace EventBooking.Filters
                 Description = "Cykla av dig fläsket ",
                 Date = new DateTime(2013, 03, 27),
                 OrganizingTeam = team,
-                Type = ActivityType.Training
+                Type = ActivityType.Träning
             });
 
             // Team #2

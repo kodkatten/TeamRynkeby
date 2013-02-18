@@ -36,7 +36,7 @@ namespace EventBooking.Tests
 					Date = Tomorrow,
 					Description = "Description",
 					Summary = "Summary",
-					Type = ActivityType.Preliminary,
+					Type = ActivityType.Preliminärt,
 					Session = new SessionModel { FromTime = Tomorrow.AddHours( 10 ), ToTime = Tomorrow.AddHours( 11 ), VolunteersNeeded = 2 }
 				};
 		}
@@ -53,7 +53,7 @@ namespace EventBooking.Tests
 			Assert.AreEqual(Tomorrow, controller.CreatedActivity.Date);
 			Assert.AreEqual("Description", controller.CreatedActivity.Description);
 			Assert.AreEqual("Summary", controller.CreatedActivity.Summary);
-			Assert.AreEqual(ActivityType.Preliminary, controller.CreatedActivity.Type);
+			Assert.AreEqual(ActivityType.Preliminärt, controller.CreatedActivity.Type);
 			Assert.AreEqual(SecurityService.ReturnUser.Team.Name, controller.CreatedActivity.OrganizingTeam.Name);
 		}
 

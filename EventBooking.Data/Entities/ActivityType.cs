@@ -2,9 +2,10 @@ namespace EventBooking.Data
 {
     public enum ActivityType
     {
-        Training,
+        Träning,
+        Publikt,
         Sponsor,
-        Preliminary,
-        Public,
+        Preliminärt,
+        Teammöte
     }
 }
