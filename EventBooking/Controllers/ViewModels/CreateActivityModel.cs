@@ -24,7 +24,7 @@ namespace EventBooking.Controllers.ViewModels
 		[Required( ErrorMessage = "*" )]
 		public ActivityType Type { get; set; }
 
-		[Display( Name = "Mer information" )]
+		[Display( Name = "Publik information" )]
 		public string Summary { get; set; }
 
 		[Display( Name = "Pass" )]

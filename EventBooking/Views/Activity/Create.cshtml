@@ -17,19 +17,20 @@
         </div>
     </div>
     <div class="control-group">
+        @Html.LabelFor( m => m.Summary, new { @class = "control-label" } )
+        <div class="controls">
+            @Html.TextAreaFor( m => m.Summary, new { placeholder = "Summering" } )
+            @Html.ValidationMessageFor( m => m.Summary )
+        </div>
+    </div>
+    <div class="control-group">
         @Html.LabelFor( m => m.Description, new { @class = "control-label" } )
         <div class="controls">
             @Html.TextAreaFor( m => m.Description, new { placeholder = "Beskrivning" } )
             @Html.ValidationMessageFor( m => m.Description )
         </div>
     </div>
-    <div class="control-group">
-        @Html.LabelFor( m => m.Summary, new { @class = "control-label" } )
-        <div class="controls">
-            @Html.TextAreaFor( m => m.Summary, new { placeholder = "Mer information" } )
-            @Html.ValidationMessageFor( m => m.Summary )
-        </div>
-    </div>
+    
     <div class="control-group">
         @Html.LabelFor( m => m.Type, new { @class = "control-label" } )
         <div class="controls">
