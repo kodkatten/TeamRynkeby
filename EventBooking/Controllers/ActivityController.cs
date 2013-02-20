@@ -128,11 +128,13 @@ namespace EventBooking.Controllers
 		}
 
 		//When entering here, should leave the activity
+        //TODO: This method shall be implemented
 		public ActionResult Leave(int id)
 		{
 			throw new NotImplementedException();
 		}
 
+        // Todo: This method shall be implemented
 		public ActionResult Edit(int id)
 		{
 			throw new NotImplementedException();

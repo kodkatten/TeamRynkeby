@@ -26,7 +26,7 @@
                             {
 
                                 <li class="@e.Type">
-                                    <a href="@Url.Action("Details", "Activity", new { @e.Id })" class="link" rel="tooltip" data-original-title="@e.Description">
+                                    <a href="@Url.Action("Details", "Activity", new { @e.Id })" class="link" rel="tooltip" data-original-title="@e.Summary">
                                         <span class="badge @Html.BadgeColorPicker(@e.Type)">@e.Date.DayOfWeek @e.Date.Day</span>
                                         @e.Name
                                     </a>

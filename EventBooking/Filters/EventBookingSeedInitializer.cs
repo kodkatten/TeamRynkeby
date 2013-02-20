@@ -50,6 +50,7 @@ namespace EventBooking.Filters
 
         private void CreateAwesomeUsers(SimpleMembershipProvider membership, EventBookingContext context)
         {
+            EnsureUserExists(membership,context,"a@a.a",new User{Cellphone = "123455",Name = "henrik",Team = context.Teams.First()});
             EnsureUserExists(membership, context, "a@b.c");
             EnsureUserExists(membership,context, "email@email.com", new User { Cellphone = "3457", Name = "dodo", Team = context.Teams.First() });
             EnsureUserExists(membership,context, "a", new User { Cellphone = "3457", Name = "dodo2", Team = context.Teams.First() });
