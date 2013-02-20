@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Web.Mvc;
@@ -78,6 +79,16 @@ namespace EventBooking.Controllers
         public ActionResult NotFound(int activityId)
         {
             return View(activityId);
+        }
+        
+        public ActionResult Delete(int activityId, int sessionId)
+        {
+            throw new NotImplementedException("Delete session not implemented");
+        }
+
+        public ActionResult Edit(int activityId, int sessionId)
+        {
+            throw new NotImplementedException("Edit session not implemented");
         }
     }
 }
