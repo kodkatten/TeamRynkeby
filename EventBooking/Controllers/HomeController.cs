@@ -23,7 +23,7 @@ namespace EventBooking.Controllers
 		{
 			bool isNobody = true;
 
-			if (_securityService.IsLoggedIn)
+            if (_securityService.IsLoggedIn)
 			{
 				var user = _securityService.CurrentUser;
 				if (user != null && user.IsMemberOfATeam())
