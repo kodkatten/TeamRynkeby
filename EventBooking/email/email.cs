@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net.Mail;
 using System.Net.Mime;
 
@@ -7,52 +8,55 @@ namespace EventBooking.email
 {
     public class Email
     {
+        private readonly MailMessage _mailMessage;
 
-        public void SendMail(string toAddress, string toName, string fromAddress, string fromName, string subject, string text)
+        public Email()
         {
-
-            var mailMsg = new MailMessage();
-
-            mailMsg.To.Add(new MailAddress(toAddress, toName));
-            mailMsg.From = new MailAddress(fromAddress, fromName);
-
-            mailMsg.Subject = subject;
-            mailMsg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(text, null, MediaTypeNames.Text.Plain));
-            
-            Send(mailMsg);
-           
+            _mailMessage = new MailMessage();
         }
-        public void SendMail(Dictionary<string, string> toAddressToName, string fromAddress, string fromName, string subject, string text)
+
+        public  void SendMail(string toAddress, string toName, string fromAddress, string fromName, string subject, string text)
         {
+            _mailMessage.To.Add(new MailAddress(toAddress, toName));
+            _mailMessage.From = new MailAddress(fromAddress, fromName);
 
-            var mailMsg = new MailMessage();
+            Send(fromAddress, fromName, subject, text);
 
+        }
+        public  void SendMail(Dictionary<string, string> toAddressToName, string fromAddress, string fromName, string subject, string text)
+        {
             foreach (var nameAddress in toAddressToName)
             {
-                mailMsg.To.Add(new MailAddress(nameAddress.Value, nameAddress.Key));
+                _mailMessage.To.Add(new MailAddress(nameAddress.Value, nameAddress.Key));
             }
 
-            mailMsg.From = new MailAddress(fromAddress, fromName);
-
-            mailMsg.Subject = subject;
-            mailMsg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(text, null, MediaTypeNames.Text.Plain));
-
-            // Init SmtpClient and send
-            var smtpClient = new SmtpClient("smtp.sendgrid.net", Convert.ToInt32(587));
-            var credentials = new System.Net.NetworkCredential("b49606c3-69d5-4ed8-975f-78ec56fe6a84@apphb.com", "byu9cpgi");
-            smtpClient.Credentials = credentials;
-
-            smtpClient.Send(mailMsg);
+            Send(fromAddress, fromName, subject, text);
         }
-        private void Send(MailMessage mailMsg)
+
+        private  void Send(string fromAddress, string fromName, string subject, string text)
         {
-            
+            _mailMessage.From = new MailAddress(fromAddress, fromName);
+
+            _mailMessage.Subject = subject;
+            _mailMessage.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(text, null, MediaTypeNames.Text.Plain));
+
+
             var smtpClient = new SmtpClient("smtp.sendgrid.net", Convert.ToInt32(587));
-            var credentials = new System.Net.NetworkCredential("b49606c3-69d5-4ed8-975f-78ec56fe6a84@apphb.com", "byu9cpgi");
+            var credentials = new System.Net.NetworkCredential("b49606c3-69d5-4ed8-975f-78ec56fe6a84@apphb.com",
+                                                               "byu9cpgi");
             smtpClient.Credentials = credentials;
 
-            smtpClient.Send(mailMsg); ;
+            try
+            {
+                smtpClient.Send(_mailMessage);
+            }
+            catch (Exception e)
+            {
+                
+                throw new Exception(e.Message.ToString(CultureInfo.InvariantCulture));
+            }
+            
+            
         }
-
     }
 }
