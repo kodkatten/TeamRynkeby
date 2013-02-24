@@ -45,20 +45,22 @@ namespace EventBooking.Controllers
             return RedirectToAction("Index", new { activityId });
         }
 
-        public RedirectToRouteResult SignUp(int id)
+        public RedirectToRouteResult SignUp(int sessionId)
         {
-            var session = _repository.GetSessionById(id);
+            var session = _repository.GetSessionById(sessionId);
             var user = _securityService.CurrentUser;
+            
 
             if (!session.IsAllowedToSignUp(user))
             {
-                return RedirectToAction("SignUpFailed", new { id });
+                return RedirectToAction("SignUpFailed", new { id = sessionId });
             }
+            var userId = _securityService.CurrentUser.Id;
 
             session.SignUp(user);
             _repository.SaveVolunteers(session);
 
-            return RedirectToAction("SignUpSuccessful", new { id });
+            return RedirectToAction("SignUpSuccessful", new { id = sessionId });
         }
 
         public ActionResult SignUpSuccessful(int id)
@@ -87,6 +89,23 @@ namespace EventBooking.Controllers
         }
 
         public ActionResult Edit(int activityId, int sessionId)
+        { 
+            // Edit sessions
+            var sessionToEdit = _repository.GetSessionById(sessionId);
+            
+            var editSessionModel = new EditSessionModel
+                {
+                    ActivityId = activityId,
+                    SessionId = sessionToEdit.Id,
+                    ToTime = sessionToEdit.ToTime,
+                    FromTime = sessionToEdit.FromTime,
+                    VolunteersNeeded = sessionToEdit.VolunteersNeeded
+                };
+
+            return View("EditSession", editSessionModel);
+
+        }
+        public ActionResult Update(EditSessionModel model)
         {
             throw new NotImplementedException("Edit session not implemented");
         }

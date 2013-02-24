@@ -1,0 +1,44 @@
+﻿@model EventBooking.Controllers.ViewModels.EditSessionModel
+@{
+    ViewBag.Title = "Redigera pass";
+}
+<h2>@ViewBag.Title</h2>
+
+
+@using (Html.BeginForm("Update", "Sessions", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <div class="control-group">
+        @Html.LabelFor(m => m.FromTime, new { @class = "control-label" })
+        <div class="controls">
+            <div class="input-append bootstrap-timepicker">
+                @Html.TextBoxFor(m => m.FromTime, new { placeholder = "Start", @class = "timepicker input-small" })
+                <span class="add-on"><i class="icon-time"></i></span>
+            </div>
+            @Html.ValidationMessageFor(m => m.FromTime)
+        </div>
+    </div>
+    @Html.HiddenFor(m => m.ActivityId)
+    @Html.HiddenFor(m=> m.SessionId)
+    <div class="control-group">
+        @Html.LabelFor(m => m.ToTime, new { @class = "control-label" })
+        <div class="controls">
+            <div class="input-append bootstrap-timepicker">
+                @Html.TextBoxFor(m => m.ToTime, new { placeholder = "Slut", @class = "timepicker input-small" })
+                <span class="add-on"><i class="icon-time"></i></span>
+            </div>
+            @Html.ValidationMessageFor(m => m.ToTime)
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.VolunteersNeeded, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextBoxFor(m => m.VolunteersNeeded, new { type = "number", placeholder = "Deltagare", min = "0", max = "200" })
+            @Html.ValidationMessageFor(m => m.VolunteersNeeded)
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <button type="submit" class="btn">Spara</button>
+        </div>
+    </div>
+}

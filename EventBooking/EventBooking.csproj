@@ -153,6 +153,7 @@
     <Compile Include="Controllers\ViewModels\AdministerTeamMembersModel.cs" />
     <Compile Include="Controllers\ViewModels\ContributedInventoryItemModel.cs" />
     <Compile Include="Controllers\ViewModels\ContributedInventoryModel.cs" />
+    <Compile Include="Controllers\ViewModels\EditSessionModel.cs" />
     <Compile Include="Controllers\ViewModels\Volunteer.cs" />
     <Compile Include="Controllers\ViewModels\UserModel.cs" />
     <Compile Include="Controllers\ViewModels\CreateActivityModel.cs" />
@@ -243,6 +244,7 @@
     <Content Include="Views\Sessions\SignUpSuccessful.cshtml" />
     <Content Include="Views\Sessions\SignUpFailed.cshtml" />
     <Content Include="Views\Shared\Footer.cshtml" />
+    <Content Include="Views\Sessions\EditSession.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
