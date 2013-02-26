@@ -107,7 +107,17 @@ namespace EventBooking.Controllers
         }
         public ActionResult Update(EditSessionModel model)
         {
-            throw new NotImplementedException("Edit session not implemented");
+            
+            var session = new Session
+                {
+                    Id = model.SessionId,
+                    FromTime = model.FromTime,
+                    ToTime = model.ToTime,
+                    VolunteersNeeded = model.VolunteersNeeded
+                };
+            //todo: Varför tappar model sitt värde härifrån och till vyn?
+            _repository.UpdateSession(model.ActivityId,session);
+            return RedirectToAction("Index", new{model.ActivityId});
         }
     }
 }

@@ -8,5 +8,6 @@ namespace EventBooking.Data.Repositories
         void Save(int activityId, Session session);
         void SaveVolunteers(Session session);
         Session GetSessionById(int sessionId);
+        void UpdateSession(int activityId, Session session);
     }
 }

@@ -43,5 +43,16 @@ namespace EventBooking.Data.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public void UpdateSession(int activityId,Session session)
+        {
+            Session sessionToUpdate = _context.Sessions.First(s => s.Id == session.Id);
+            
+            sessionToUpdate.ToTime = session.ToTime;
+            sessionToUpdate.FromTime = session.FromTime;
+            sessionToUpdate.VolunteersNeeded = session.VolunteersNeeded;
+            _context.SaveChanges();
+
+        }
     }
 }
