@@ -70,7 +70,7 @@ namespace EventBooking.Tests
 			Assert.IsNotNull(result.RouteValues["activityId"]);
 		}
 
-		[Test, Ignore]
+		[Test]
 		public void StaysOnViewIfTryingToCreateActivity_ForYesterday()
 		{
 			var controller = CreateController();
@@ -80,7 +80,7 @@ namespace EventBooking.Tests
 			ActionResult result = controller.Create(forYesterday);
 
 			Assert.NotNull(result);
-			Assert.IsInstanceOf<ViewResult>(result);
+			Assert.IsInstanceOf<RedirectToRouteResult>(result);
 		}
 
 		private ActivityControllerShunt CreateController()

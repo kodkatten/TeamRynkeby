@@ -108,10 +108,10 @@ namespace EventBooking.Tests
 		    var activitySessionsModel = new ActivitySessionsModel(new ActivityModel(activity), new List<SessionModel>());
 
 
-            var result = controller.Save(activitySessionsModel);
+            RedirectToRouteResult result = (RedirectToRouteResult) controller.Save(activitySessionsModel);
 
 			Assert.IsNotNull( result );
-			Assert.AreEqual( "Index", result.RouteValues["Action"] );
+			Assert.AreEqual( "Index", result .RouteValues["Action"] );
 			Assert.AreEqual( 145, result.RouteValues["activityId"] );
 		}
 

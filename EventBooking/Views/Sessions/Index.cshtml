@@ -8,56 +8,69 @@
 
 <h2>@ViewBag.Title</h2>
 
-@using ( Html.BeginForm( "Save", "Sessions", FormMethod.Post, new { @class = "form-horizontal" } ) )
+@using (Html.BeginForm("Save", "Sessions", FormMethod.Post, new { @class = "form-horizontal" }))
 {
-    
+
     <div class="control-group">
-        @Html.LabelFor( m => m.Activity.Name, new { @class = "control-label" } )
+        @Html.LabelFor(m => m.Activity.Name, new { @class = "control-label" })
         <div class="controls">
             @Model.Activity.Name
         </div>
     </div>
     <div class="control-group">
-        @Html.LabelFor( m => m.Activity.DateFormatted, new { @class = "control-label" } )
+        @Html.LabelFor(m => m.Activity.DateFormatted, new { @class = "control-label" })
         <div class="controls">
             @Model.Activity.DateFormatted
         </div>
     </div>
     <h3>Lägg till pass</h3>
     <div class="control-group">
-        @Html.LabelFor( m => m.SelectedSession.FromTime, new { @class = "control-label" } )
+        @Html.LabelFor(m => m.SelectedSession.FromTime, new { @class = "control-label" })
         <div class="controls">
             <div class="input-append bootstrap-timepicker">
-                @Html.TextBoxFor( m => m.SelectedSession.FromTime, new { placeholder = "Start", @class = "timepicker input-small" } )
+                @Html.TextBoxFor(m => m.SelectedSession.FromTime, new { placeholder = "Start", @class = "timepicker input-small" })
                 <span class="add-on"><i class="icon-time"></i></span>
             </div>
-            @Html.ValidationMessageFor( m => m.SelectedSession.FromTime )
+            @Html.ValidationMessageFor(m => m.SelectedSession.FromTime)
         </div>
     </div>
-     @Html.HiddenFor(m => m.SelectedSession.ActivityId)
-    <div class="control-group">
-        @Html.LabelFor( m => m.SelectedSession.ToTime, new { @class = "control-label" } )
-        <div class="controls">
-            <div class="input-append bootstrap-timepicker">
-                @Html.TextBoxFor( m => m.SelectedSession.ToTime, new { placeholder = "Slut", @class = "timepicker input-small" } )
-                <span class="add-on"><i class="icon-time"></i></span>
-            </div>
-            @Html.ValidationMessageFor( m => m.SelectedSession.ToTime )
+
+<div class="control-group">
+    @Html.LabelFor(m => m.SelectedSession.ToTime, new { @class = "control-label" })
+    <div class="controls">
+        <div class="input-append bootstrap-timepicker">
+            @Html.TextBoxFor(m => m.SelectedSession.ToTime, new { placeholder = "Slut", @class = "timepicker input-small" })
+            <span class="add-on"><i class="icon-time"></i></span>
         </div>
+        @Html.ValidationMessageFor(m => m.SelectedSession.ToTime)
     </div>
-    <div class="control-group">
-        @Html.LabelFor( m => m.SelectedSession.VolunteersNeeded, new { @class = "control-label" } )
-        <div class="controls">
-            @Html.TextBoxFor( m => m.SelectedSession.VolunteersNeeded, new { type = "number", placeholder = "Deltagare", min = "0", max = "200" } )
-            @Html.ValidationMessageFor( m => m.SelectedSession.VolunteersNeeded )
-        </div>
+</div>
+<div class="control-group">
+    @Html.LabelFor(m => m.SelectedSession.VolunteersNeeded, new { @class = "control-label" })
+    <div class="controls">
+        @Html.TextBoxFor(m => m.SelectedSession.VolunteersNeeded, new { type = "number", placeholder = "Deltagare", min = "0", max = "200" })
+        @Html.ValidationMessageFor(m => m.SelectedSession.VolunteersNeeded)
     </div>
-    <div class="control-group">
-        <div class="controls">
-            <button type="submit" class="btn">Spara</button>
-        </div>
+</div>
+<div class="control-group">
+    <div class="controls">
+        <button type="submit" class="btn">Spara</button>
     </div>
+</div>
+
+
+        @Html.HiddenFor(m => m.SelectedSession.ActivityId)
+    @Html.HiddenFor(m => m.Activity.DateFormatted)
+    @Html.HiddenFor(m => m.Activity.Name);
+    
+    for (int i = 0; i < Model.Sessions.Count; i++)
+    {
+        @Html.HiddenFor(m => m.Sessions[i].FromTime)
+        @Html.HiddenFor(m => m.Sessions[i].ToTime)
+            
+    }
 }
+
 
 <table class="table table-bordered table-striped">
     <thead>
@@ -69,7 +82,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ( var session in Model.Sessions )
+        @foreach (var session in Model.Sessions)
         {
             <tr>
                 <td>

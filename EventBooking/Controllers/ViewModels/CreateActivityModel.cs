@@ -42,7 +42,6 @@ namespace EventBooking.Controllers.ViewModels
 
         public SessionModel()
         {
-            // TODO: Complete member initialization
         }
 
 		[Display( Name = "Start" )]

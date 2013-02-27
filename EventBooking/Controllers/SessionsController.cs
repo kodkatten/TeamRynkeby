@@ -37,12 +37,12 @@ namespace EventBooking.Controllers
         }
 
         [HttpPost]
-        public RedirectToRouteResult Save(ActivitySessionsModel sessionModel)
+        public ActionResult Save(ActivitySessionsModel sessionModel)
         {
             int activityId = sessionModel.SelectedSession.ActivityId;
 
             if (!ModelState.IsValid)
-                return RedirectToAction("Index", new { activityId });
+                return View("Index",sessionModel);
 
             var session = Mapper.Map<Session>(sessionModel.SelectedSession);
             _repository.Save(activityId, session);
