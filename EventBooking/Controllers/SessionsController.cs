@@ -119,7 +119,7 @@ namespace EventBooking.Controllers
                     ToTime = model.ToTime,
                     VolunteersNeeded = model.VolunteersNeeded
                 };
-            //todo: Varför tappar model sitt värde härifrån och till vyn?
+            
             _repository.UpdateSession(model.ActivityId,session);
             return RedirectToAction("Index", new{model.ActivityId});
         }
