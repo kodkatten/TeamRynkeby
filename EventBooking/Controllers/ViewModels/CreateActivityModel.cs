@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using EventBooking.Data;
+using EventBooking.Validators;
 
 namespace EventBooking.Controllers.ViewModels
 {
@@ -50,7 +51,7 @@ namespace EventBooking.Controllers.ViewModels
 
 		[Display( Name = "Slut" )]
 		[Required( ErrorMessage = "*" )]
-		[IsDateAfter("FromTime", true, ErrorMessage="Sluttiden måste vara efter starttiden")]
+		[IsTimeAfter("FromTime", true, ErrorMessage="Sluttiden måste vara efter starttiden")]
 		public TimeSpan ToTime { get; set; }
 
 		[Display( Name = "Antal deltagare" )]

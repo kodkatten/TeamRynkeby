@@ -9,10 +9,10 @@ namespace EventBooking.Controllers.ViewModels
         public int ActivityId { get; set; }
 
         [Display(Name = "Till tid")]
-        public DateTime ToTime { get; set; }
+        public TimeSpan ToTime { get; set; }
         
         [Display(Name = "Från tid")]
-        public DateTime FromTime { get; set; }
+        public TimeSpan FromTime { get; set; }
         
         [Display(Name = "Antalet deltagare")]
         public int VolunteersNeeded { get; set; }

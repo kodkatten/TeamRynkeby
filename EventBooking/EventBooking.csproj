@@ -159,7 +159,6 @@
     <Compile Include="Controllers\ViewModels\CreateActivityModel.cs" />
     <Compile Include="Controllers\ViewModels\DateTimeExtensions.cs" />
     <Compile Include="Controllers\ViewModels\EventBookingMapper.cs" />
-    <Compile Include="Controllers\ViewModels\FutureDate.cs" />
     <Compile Include="Controllers\ViewModels\HtmlExtensions.cs" />
     <Compile Include="Controllers\ViewModels\LandingPageModel.cs" />
     <Compile Include="Controllers\ViewModels\MyProfileModel.cs" />
@@ -178,6 +177,9 @@
     <Compile Include="Services\ISecurityService.cs" />
     <Compile Include="Services\SecurityService.cs" />
     <Compile Include="Validators\CustomValidator.cs" />
+    <Compile Include="Validators\ExistingSession.cs" />
+    <Compile Include="Validators\FutureDate.cs" />
+    <Compile Include="Validators\IsTimeAfter.cs" />
     <Compile Include="Views\Admin\AdministratorPageModel.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -2,29 +2,15 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
-using EventBooking.Validators;
 
-namespace EventBooking.Controllers.ViewModels
+namespace EventBooking.Validators
 {
-    public class FutureDate : ValidationAttribute
-    {
-        public override bool IsValid(object value)
-        {
-            if (!(value is DateTime))
-                return false;
-
-            var dt = (DateTime)value;
-
-            return DateTime.Now < dt;
-        }
-    }
-
-    public sealed class IsDateAfter : ValidationAttribute, IClientValidatable
+    public sealed class IsTimeAfter : ValidationAttribute, IClientValidatable
     {
         private readonly string testedPropertyName;
         private readonly bool allowEqualDates;
 
-        public IsDateAfter(string testedPropertyName, bool allowEqualDates = false)
+        public IsTimeAfter(string testedPropertyName, bool allowEqualDates = false)
         {
             this.testedPropertyName = testedPropertyName;
             this.allowEqualDates = allowEqualDates;
@@ -40,24 +26,24 @@ namespace EventBooking.Controllers.ViewModels
 
             var propertyTestedValue = propertyTestedInfo.GetValue(validationContext.ObjectInstance, null);
 
-            if (value == null || !(value is DateTime))
+            if (value == null || !(value is TimeSpan))
             {
                 return ValidationResult.Success;
             }
 
-            if (propertyTestedValue == null || !(propertyTestedValue is DateTime))
+            if (propertyTestedValue == null || !(propertyTestedValue is TimeSpan))
             {
                 return ValidationResult.Success;
             }
 
             // Compare values
-            if ((DateTime)value >= (DateTime)propertyTestedValue)
+            if ((TimeSpan)value >= (TimeSpan)propertyTestedValue)
             {
                 if (this.allowEqualDates)
                 {
                     return ValidationResult.Success;
                 }
-                if ((DateTime)value > (DateTime)propertyTestedValue)
+                if ((TimeSpan)value > (TimeSpan)propertyTestedValue)
                 {
                     return ValidationResult.Success;
                 }
@@ -77,28 +63,6 @@ namespace EventBooking.Controllers.ViewModels
             rule.ValidationParameters["propertytested"] = this.testedPropertyName;
             rule.ValidationParameters["allowequaldates"] = this.allowEqualDates;
             yield return rule;
-        }
-    }
-
-    public class ExistingSession : ValidationAttribute
-    {
-        public ExistingSession()
-        {
-
-        }
-
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-        {
-            var validator = new CustomValidator();
-            var newSession = (SessionModel) value;
-            var currentSessions = (ActivitySessionsModel)validationContext.ObjectInstance;
-              
-            if (validator.IsSessionIntrudingOnOtherSessionsTimeframe(newSession,currentSessions.Sessions))
-            {
-                return new ValidationResult(FormatErrorMessage(validationContext.DisplayName));
-            }
-
-            return ValidationResult.Success;
         }
     }
 }
