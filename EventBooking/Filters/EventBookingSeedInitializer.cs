@@ -97,8 +97,8 @@ namespace EventBooking.Filters
                     Type = ActivityType.Preliminärt
                 };
             var session = new Session {
-                FromTime = dateTime.AddHours(8),
-                ToTime = dateTime.AddHours(10),
+                FromTime = new TimeSpan(8,0,0),
+                ToTime = new TimeSpan(10,0,0),
                 Activity = activity,
                 Volunteers = new Collection<User>(),
                 VolunteersNeeded = 15

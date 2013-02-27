@@ -45,8 +45,6 @@ namespace EventBooking.Controllers
 				return View();
 			var activity = Mapper.Map<Activity>(model);
 			activity.OrganizingTeam = _securityService.CurrentUser.Team;
-			model.Session.FromTime = activity.Date.Date.AddHours(model.Session.FromTime.Hour).AddMinutes(model.Session.FromTime.Minute);
-			model.Session.ToTime = activity.Date.Date.AddHours(model.Session.ToTime.Hour).AddMinutes(model.Session.ToTime.Minute);
 			activity.Sessions = new List<Session> { Mapper.Map<Session>(model.Session) };
 			activity.Coordinator = _securityService.CurrentUser;
 			StoreActivity(activity);

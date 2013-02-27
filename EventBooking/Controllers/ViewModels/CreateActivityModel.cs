@@ -46,12 +46,12 @@ namespace EventBooking.Controllers.ViewModels
 
 		[Display( Name = "Start" )]
 		[Required( ErrorMessage = "*" )]
-		public DateTime FromTime { get; set; }
+		public TimeSpan FromTime { get; set; }
 
 		[Display( Name = "Slut" )]
 		[Required( ErrorMessage = "*" )]
 		[IsDateAfter("FromTime", true, ErrorMessage="Sluttiden måste vara efter starttiden")]
-		public DateTime ToTime { get; set; }
+		public TimeSpan ToTime { get; set; }
 
 		[Display( Name = "Antal deltagare" )]
 		[Required( ErrorMessage = "*" )]

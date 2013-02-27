@@ -37,7 +37,7 @@ namespace EventBooking.Tests
 					Description = "Description",
 					Summary = "Summary",
 					Type = ActivityType.Preliminärt,
-					Session = new SessionModel { FromTime = Tomorrow.AddHours( 10 ), ToTime = Tomorrow.AddHours( 11 ), VolunteersNeeded = 2 }
+                    Session = new SessionModel { FromTime = new TimeSpan(10, 0, 0), ToTime = new TimeSpan(11, 0, 0), VolunteersNeeded = 2 }
 				};
 		}
 

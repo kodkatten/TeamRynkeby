@@ -23,13 +23,13 @@ namespace EventBooking.Tests
                                  
                     new SessionModel()
             { 
-                FromTime = new DateTime(2033, 11, 28, 10, 0,0),
-                ToTime = new DateTime( 2033,11,28,12,0,0)
+                FromTime = new TimeSpan(10, 0,0),
+                ToTime = new TimeSpan(12,0,0)
             },                         
             new SessionModel()
             { 
-                FromTime = new DateTime(2033, 11, 28, 8, 0,0),
-                ToTime = new DateTime( 2033,11,28,10,0,0)
+                FromTime = new TimeSpan( 8, 0,0),
+                ToTime = new TimeSpan( 10,0,0)
             }
                 };
         }
@@ -41,8 +41,8 @@ namespace EventBooking.Tests
             //Arrange
             SessionModel newSession = new SessionModel()
             {
-                FromTime = new DateTime(2033, 11, 28, 10, 0, 0),
-                ToTime = new DateTime(2033, 11, 28, 12, 0, 0)
+                FromTime = new TimeSpan(10, 0, 0),
+                ToTime = new TimeSpan(12, 0, 0)
             };
 
 
@@ -62,8 +62,8 @@ namespace EventBooking.Tests
             //Arrange
             SessionModel newSession = new SessionModel()
             {
-                FromTime = new DateTime(2033, 11, 28, 12, 0, 0),
-                ToTime = new DateTime(2033, 11, 28, 13, 0, 0)
+                FromTime = new TimeSpan(12, 0, 0),
+                ToTime = new TimeSpan(13, 0, 0)
             };
 
 
@@ -84,8 +84,8 @@ namespace EventBooking.Tests
             //Arrange
             SessionModel newSession = new SessionModel()
             {
-                FromTime = new DateTime(2033, 11, 28, 7, 0, 0),
-                ToTime = new DateTime(2033, 11, 28, 8, 0, 0)
+                FromTime = new TimeSpan(7, 0, 0),
+                ToTime = new TimeSpan(8, 0, 0)
             };
 
 
@@ -106,8 +106,8 @@ namespace EventBooking.Tests
             //Arrange
             SessionModel newSession = new SessionModel()
             {
-                FromTime = new DateTime(2033, 11, 28, 11, 0, 0),
-                ToTime = new DateTime(2033, 11, 28, 13, 0, 0)
+                FromTime = new TimeSpan(11, 0, 0),
+                ToTime = new TimeSpan(13, 0, 0)
             };
 
 

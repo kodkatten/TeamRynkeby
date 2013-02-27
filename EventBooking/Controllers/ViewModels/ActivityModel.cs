@@ -71,8 +71,8 @@ namespace EventBooking.Controllers.ViewModels
         public SessionViewModel(Session sessionData, User user)
         {
             this.AvailablePlaces = sessionData.VolunteersNeeded - sessionData.Volunteers.Count();
-            this.ToTimeFormatted = sessionData.ToTime.ToShortTimeString();
-            this.FromTimeFormatted = sessionData.FromTime.ToShortTimeString();
+            this.ToTimeFormatted = sessionData.ToTime.ToString();
+            this.FromTimeFormatted = sessionData.FromTime.ToString();
             this.Id = sessionData.Id;
             this.CanSignUp = sessionData.IsAllowedToSignUp(user);
         }

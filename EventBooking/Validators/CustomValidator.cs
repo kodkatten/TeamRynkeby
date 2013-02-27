@@ -39,12 +39,12 @@ namespace EventBooking.Validators
             return isInConflict;
         }
 
-        private bool IsTimeBetween(DateTime time, DateTime startTime, DateTime endTime)
+        private bool IsTimeBetween(TimeSpan time, TimeSpan startTime, TimeSpan endTime)
         {
-            if (startTime.TimeOfDay < endTime.TimeOfDay)
-                return (time.TimeOfDay > startTime.TimeOfDay && time.TimeOfDay < endTime.TimeOfDay);
+            if (startTime < endTime)
+                return (time > startTime && time < endTime);
             else
-                return !(time.TimeOfDay > endTime.TimeOfDay && time.TimeOfDay < startTime.TimeOfDay);
+                return !(time > endTime && time < startTime);
         }
     }
 }

@@ -28,8 +28,8 @@ namespace EventBooking.Tests
 			{
 				Id = 223,
 				Activity = activity,
-				FromTime = activity.Date.AddHours( 1 ),
-				ToTime = activity.Date.AddHours( 2 ),
+				FromTime = activity.Date.AddHours( 1 ).TimeOfDay,
+				ToTime = activity.Date.AddHours( 2 ).TimeOfDay,
 				VolunteersNeeded = 33
 			};
 			mock.Setup( r => r.GetSessionsForActivity( activityId ) ).Returns( () => new List<Session> { session } );

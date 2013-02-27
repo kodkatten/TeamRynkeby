@@ -8,8 +8,8 @@ namespace EventBooking.Data
     {
         public int Id { get; set; }
 
-        public DateTime FromTime { get; set; }
-        public DateTime ToTime { get; set; }
+        public TimeSpan FromTime { get; set; }
+        public TimeSpan ToTime { get; set; }
         public Activity Activity { get; set; }
         public ICollection<User> Volunteers { get; set; }
 		public int VolunteersNeeded { get; set; }
