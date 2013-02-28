@@ -85,7 +85,7 @@ namespace EventBooking.Tests
 
 		private ActivityControllerShunt CreateController()
 		{
-			return new ActivityControllerShunt(new ActivityRepositoryShunt(), SecurityService, null);
+			return new ActivityControllerShunt(new ActivityRepositoryShunt(), SecurityService, null, null);
 		}
 	}
 
@@ -104,8 +104,8 @@ namespace EventBooking.Tests
 
 	public class ActivityControllerShunt : ActivityController
 	{
-		public ActivityControllerShunt(ActivityRepository activityRepository, ISecurityService securityService, IPrefedinedItemRepository items)
-			: base(securityService, activityRepository, items)
+		public ActivityControllerShunt(ActivityRepository activityRepository, ISecurityService securityService, IPrefedinedItemRepository items, ITeamRepository teams)
+            : base(securityService, activityRepository, items, teams)
 		{
 		}
 

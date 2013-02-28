@@ -27,7 +27,7 @@ namespace EventBooking.email
         {
             foreach (var nameAddress in toAddressToName)
             {
-                _mailMessage.To.Add(new MailAddress(nameAddress.Value, nameAddress.Key));
+                _mailMessage.To.Add(new MailAddress(nameAddress.Key,nameAddress.Value));
             }
 
             Send(fromAddress, fromName, subject, text);

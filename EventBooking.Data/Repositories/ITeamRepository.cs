@@ -11,5 +11,6 @@ namespace EventBooking.Data.Repositories
 	    Team CreateTeam(string name);
 	    Team TryGetTeam(int teamId);
 	    void DeleteTeam(int teamId);
+        IQueryable<User> GetTeamMembers(int teamId);
     }
 }
