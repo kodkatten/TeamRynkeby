@@ -24,6 +24,8 @@
                 @if (session.CanSignUp)
                 {
                     <a href="@Url.Action("SignUp", "Sessions", new {sessionId = session.Id})" class="link">Anmäl mig!</a>
+                    <text>Antal platser kvar:</text>
+                    @session.AvailablePlaces
                 }
             </li>            
         }
