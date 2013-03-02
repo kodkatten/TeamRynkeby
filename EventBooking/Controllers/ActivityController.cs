@@ -20,13 +20,13 @@ namespace EventBooking.Controllers
 	    private const int NumberOfActivitiesPerPage = 6;
 
 		public ActivityController(ISecurityService securityService, ActivityRepository activityRepository
-			, IPrefedinedItemRepository prefedinedItems, ITeamRepository teamRepository, IEmailService emailService)
+			, IPrefedinedItemRepository prefedinedItems, ITeamRepository teamRepository)
 		{
 			_securityService = securityService;
 			_activityRepository = activityRepository;
 			_prefedinedItems = prefedinedItems;
 			_teamRepository = teamRepository;
-		    _emailService = emailService;
+		    
 		}
 
 		public ActionResult Create()
