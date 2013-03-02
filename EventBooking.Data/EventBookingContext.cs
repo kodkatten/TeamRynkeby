@@ -1,5 +1,10 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.Metadata.Edm;
+using System.Data.Objects;
+using System.Linq;
 
 namespace EventBooking.Data
 {
@@ -33,5 +38,25 @@ namespace EventBooking.Data
 			modelBuilder.Entity<TrainingQuestion>().HasRequired(q => q.Team);
 			modelBuilder.Entity<InterviewQuestion>().HasRequired(q => q.Team);
 		}
+
+		public bool IsAttached<T>(T entity)
+		{
+			var context = ((IObjectContextAdapter)this).ObjectContext;
+			var entitySet = this.GetEntitySet(context, typeof(T));
+			EntityKey key = context.CreateEntityKey(entitySet.Name, entity);
+			ObjectStateEntry entry = null;
+			if (context.ObjectStateManager.TryGetObjectStateEntry(key, out entry))
+			{
+				return entry.State != EntityState.Detached;
+			}
+			return false;
+		}
+
+		private EntitySetBase GetEntitySet(ObjectContext context, Type entityType)
+		{
+			var container = context.MetadataWorkspace.GetEntityContainer(context.DefaultContainerName, DataSpace.CSpace);
+			return container.BaseEntitySets.FirstOrDefault(item => item.ElementType.Name.Equals(entityType.Name));
+		}
+
 	}
 }
