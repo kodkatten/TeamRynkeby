@@ -5,6 +5,7 @@ using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
 using EventBooking.Data.Repositories;
 using EventBooking.Services;
+using Moq;
 using NUnit.Framework;
 
 namespace EventBooking.Tests
@@ -37,7 +38,7 @@ namespace EventBooking.Tests
 					Description = "Description",
 					Summary = "Summary",
 					Type = ActivityType.Preliminärt,
-                    Session = new SessionModel { FromTime = new TimeSpan(10, 0, 0), ToTime = new TimeSpan(11, 0, 0), VolunteersNeeded = 2 }
+					Session = new SessionModel { FromTime = new TimeSpan(10, 0, 0), ToTime = new TimeSpan(11, 0, 0), VolunteersNeeded = 2 }
 				};
 		}
 
@@ -73,7 +74,8 @@ namespace EventBooking.Tests
 		[Test]
 		public void StaysOnViewIfTryingToCreateActivity_ForYesterday()
 		{
-			var controller = CreateController();
+			var controller = this.CreateController();
+
 			CreateActivityModel forYesterday = NewModel();
 			forYesterday.Date = Yesterday;
 
@@ -85,7 +87,7 @@ namespace EventBooking.Tests
 
 		private ActivityControllerShunt CreateController()
 		{
-			return new ActivityControllerShunt(new ActivityRepositoryShunt(), SecurityService, null);
+			return new ActivityControllerShunt(new ActivityRepositoryShunt(), SecurityService, null, null);
 		}
 	}
 
@@ -96,16 +98,16 @@ namespace EventBooking.Tests
 		{
 		}
 
-        public override Activity GetActivityById(int id)
-        {
-           return new Activity();
-        }
+		public override Activity GetActivityById(int id)
+		{
+			return new Activity();
+		}
 	}
 
 	public class ActivityControllerShunt : ActivityController
 	{
-		public ActivityControllerShunt(ActivityRepository activityRepository, ISecurityService securityService, IPrefedinedItemRepository items)
-			: base(securityService, activityRepository, items)
+		public ActivityControllerShunt(ActivityRepository activityRepository, ISecurityService securityService, IPrefedinedItemRepository items, ITeamRepository teams)
+			: base(securityService, activityRepository, items, teams)
 		{
 		}
 

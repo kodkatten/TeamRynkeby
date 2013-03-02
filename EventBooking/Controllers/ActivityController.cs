@@ -15,13 +15,16 @@ namespace EventBooking.Controllers
 		private readonly ISecurityService _securityService;
 		private readonly ActivityRepository _activityRepository;
 		private readonly IPrefedinedItemRepository _prefedinedItems;
-	        private const int NumberOfActivitiesPerPage = 6;
+		private readonly ITeamRepository _teamRepository;
+		private const int NumberOfActivitiesPerPage = 6;
 
-		public ActivityController(ISecurityService securityService, ActivityRepository activityRepository, IPrefedinedItemRepository prefedinedItems)
+		public ActivityController(ISecurityService securityService, ActivityRepository activityRepository
+			, IPrefedinedItemRepository prefedinedItems, ITeamRepository teamRepository)
 		{
 			_securityService = securityService;
 			_activityRepository = activityRepository;
 			_prefedinedItems = prefedinedItems;
+			_teamRepository = teamRepository;
 		}
 
 		public ActionResult Create()
@@ -48,7 +51,29 @@ namespace EventBooking.Controllers
 			activity.Sessions = new List<Session> { Mapper.Map<Session>(model.Session) };
 			activity.Coordinator = _securityService.GetCurrentUser();
 			StoreActivity(activity);
+
+			SendEmailToTheTeam(activity);
 			return RedirectToAction("Index", "Sessions", new { activityId = activity.Id });
+		}
+
+		private void SendEmailToTheTeam(Activity activity)
+		{
+			var teamId = activity.OrganizingTeam.Id;
+			var teamMembers = _teamRepository.GetTeamMembers(teamId);
+			var toAddressToName = teamMembers.ToDictionary(teamMember => teamMember.Email, teamMember => teamMember.Name);
+
+			var email = new EventBooking.email.Email();
+			string text = FixTheText(activity);
+			email.SendMail(toAddressToName, "noreply@team-rynkby.se", activity.OrganizingTeam.Name, activity.Name, text);
+
+		}
+
+		private string FixTheText(Activity activity)
+		{
+			string message = "Sammanfattning:" + activity.Summary + "\n\r";
+			message += activity.Description + "\n\r";
+			message += activity.Date;
+			return message;
 		}
 
 		public ActionResult Upcoming(int page = 0, string teamIds = "")
@@ -95,7 +120,7 @@ namespace EventBooking.Controllers
 		{
 			var activity = _activityRepository.GetActivityById(id);
 
-            var viewModel = new DetailActivityViewModel(activity, _securityService.GetCurrentUser());
+			var viewModel = new DetailActivityViewModel(activity, _securityService.GetCurrentUser());
 
 			return View(viewModel);
 		}
@@ -126,13 +151,13 @@ namespace EventBooking.Controllers
 		}
 
 		//When entering here, should leave the activity
-        //TODO: This method shall be implemented
+		//TODO: This method shall be implemented
 		public ActionResult Leave(int id)
 		{
 			throw new NotImplementedException();
 		}
 
-        // Todo: This method shall be implemented
+		// Todo: This method shall be implemented
 		public ActionResult Edit(int id)
 		{
 			throw new NotImplementedException();

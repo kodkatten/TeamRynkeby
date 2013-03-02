@@ -12,7 +12,7 @@ using WebMatrix.WebData;
 
 namespace EventBooking.Filters
 {
-	internal class EventBookingSeedInitializer : DropCreateDatabaseAlways<EventBookingContext>
+	internal class EventBookingSeedInitializer : DropCreateDatabaseAlways<EventBookingContext>  //  DropCreateDatabaseIfModelChanges<EventBookingContext>
 	{
 		protected override void Seed(EventBookingContext context)
 		{
@@ -27,19 +27,26 @@ namespace EventBooking.Filters
 			if (!roles.RoleExists(UserType.PowerUser.ToString()))
 				roles.CreateRole(UserType.PowerUser.ToString());
 
-			SeedActivitieshacketyHackBlaBla(context);
+			SeedActivities(context);
 
-			if (membership.GetUser("admin_test", false) == null)
-				EnsureUserExists(membership, context, "admin_test", new User { Cellphone = "3457", Name = "dodo", Team = context.Teams.First() });
+			if (membership.GetUser("henrik.andersson@tretton37.com", false) == null)
+				EnsureUserExists(membership, context, "Henrik.andersson@tretton37.com",
+					new User
+						{
+							Cellphone = "3457",
+							Name = "dodo",
+							Team = context.Teams.First(),
+							Email = "Henrik.andersson@tretton37.com"
+						});
 
-			if (!roles.GetRolesForUser("admin_test").Contains(UserType.Administrator.ToString()))
-				roles.AddUsersToRoles(new[] { "admin_test" }, new[] { UserType.Administrator.ToString() });
+			if (!roles.GetRolesForUser("henrik.andersson@tretton37.com").Contains(UserType.Administrator.ToString()))
+				roles.AddUsersToRoles(new[] { "henrik.andersson@tretton37.com" }, new[] { UserType.Administrator.ToString() });
 
-			if (membership.GetUser("poweruser", false) == null)
-				EnsureUserExists(membership, context, "poweruser", new User { Cellphone = "3457", Name = "najz", Team = context.Teams.First() });
+			if (membership.GetUser("tidaholm69@hotmail.com", false) == null)
+				EnsureUserExists(membership, context, "tidaholm69@hotmail.com", new User { Cellphone = "3457", Name = "najz", Email = "Henrik.andersson@tretton37.com", Team = context.Teams.First() });
 
-			if (!roles.GetRolesForUser("poweruser").Contains(UserType.PowerUser.ToString()))
-				roles.AddUsersToRoles(new[] { "poweruser" }, new[] { UserType.PowerUser.ToString() });
+			if (!roles.GetRolesForUser("tidaholm69@hotmail.com").Contains(UserType.PowerUser.ToString()))
+				roles.AddUsersToRoles(new[] { "tidaholm69@hotmail.com" }, new[] { UserType.PowerUser.ToString() });
 
 			CreateAwesomeUsers(membership, context);
 			CreatePredefinedActivityItems(context);
@@ -50,10 +57,11 @@ namespace EventBooking.Filters
 
 		private void CreateAwesomeUsers(SimpleMembershipProvider membership, EventBookingContext context)
 		{
-			EnsureUserExists(membership, context, "a@a.a", new User { Cellphone = "123455", Name = "henrik", Team = context.Teams.First() });
-			EnsureUserExists(membership, context, "a@b.c");
-			EnsureUserExists(membership, context, "email@email.com", new User { Cellphone = "3457", Name = "dodo", Team = context.Teams.First() });
-			EnsureUserExists(membership, context, "a", new User { Cellphone = "3457", Name = "dodo2", Team = context.Teams.First() });
+			EnsureUserExists(membership, context, "henrik.andersson@tretton37.com", new User { Cellphone = "123455", Name = "henrik", Team = context.Teams.First(), Email = "henrik.andersson@tretton37.com" });
+			EnsureUserExists(membership, context, "tidaholm69@hotmail.com", new User { Cellphone = "3457", Name = "Henkepolarn", Team = context.Teams.First(), Email = "tidaholm69@hotmail.com" });
+			EnsureUserExists(membership, context, "henkepolarn@gmail.com", new User { Cellphone = "3457", Name = "Henkepolarn", Team = context.Teams.First(), Email = "henkepolarn@gmail.com" });
+			EnsureUserExists(membership, context, "henkeofsweden@live.com", new User { Cellphone = "3457", Name = "Henkeofsweden", Team = context.Teams.First(), Email = "henkeofsweden@live.com" });
+			EnsureUserExists(membership, context, "jhofstam@hotmail.com", new User { Cellphone = "3457", Name = "Johanna", Team = context.Teams.First(), Email = "jhofstam@hotmail.com" });
 		}
 
 		private void CreatePredefinedActivityItems(EventBookingContext context)
@@ -82,7 +90,7 @@ namespace EventBooking.Filters
 			context.SaveChanges();
 		}
 
-		private static void SeedActivitieshacketyHackBlaBla(EventBookingContext context)
+		private static void SeedActivities(EventBookingContext context)
 		{
 			var team = new Team { Name = "Team Täby" };
 			context.Teams.Add(team);
