@@ -60,13 +60,20 @@ namespace EventBooking.Controllers
         {
             var teamId = activity.OrganizingTeam.Id;
             var teamMembers = _teamRepository.GetTeamMembers(teamId);
-            var toAddressToName = teamMembers.ToDictionary(
-                teamMember => teamMember.Email.ToString()
-                , teamMember => teamMember.Name.ToString());
-
-            var email = new EventBooking.email.Email();
-            email.SendMail(toAddressToName,"henrik.andersson@tretton37.com", "henrik andersson",activity.Name,activity.Summary);
+            var toAddressToName = teamMembers.ToDictionary(teamMember => teamMember.Email,teamMember => teamMember.Name);
             
+            var email = new EventBooking.email.Email();
+            string text = FixTheText(activity);
+            email.SendMail(toAddressToName,"noreply@team-rynkby.se",  activity.OrganizingTeam.Name,activity.Name,text);
+            
+        }
+
+        private string FixTheText(Activity activity)
+        {
+            string message = "Sammanfattning:" + activity.Summary +"\n\r";
+            message += activity.Description + "\n\r";
+            message += activity.Date;
+            return message;
         }
 
         public ActionResult Upcoming(int page = 0, string teamIds = "")
