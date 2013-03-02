@@ -30,10 +30,17 @@ namespace EventBooking.Services
             var teamMembers = _teamRepository.GetTeamMembers(teamId);
             var toAddressToName = teamMembers.ToDictionary(teamMember => teamMember.Email, teamMember => teamMember.Name);
 
-            SendMail(toAddressToName,"noreply@team-rynkeby.com",activity.OrganizingTeam.Name,activity.Name,activity.Summary);
+            var text = NewEventText(activity);
+            SendMail(toAddressToName, "noreply@teamrynkeby.apphb.com", activity.OrganizingTeam.Name, activity.Name, text);
 
         }
-       
+
+        private string NewEventText(Activity activity)
+        {
+            var text = activity.Name;
+            return text;
+        }
+
         private void SendMail(Dictionary<string, string> toAddressToName, string fromAddress, string fromName, string subject, string text)
         {
             foreach (var nameAddress in toAddressToName)
