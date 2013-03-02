@@ -8,6 +8,7 @@ namespace EventBooking
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<SecurityService>().As<ISecurityService>();
+            builder.RegisterType<EmailService>().As<IEmailService>();
         }
     }
 }

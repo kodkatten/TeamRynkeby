@@ -35,7 +35,7 @@ namespace EventBooking.Controllers
 			{
 				if (userRepository.Exists(model.Email))
 				{
-					ModelState.AddModelError("Email", "E-postaddressen finns redan registrerad.");
+					ModelState.AddModelError("EmailService", "E-postaddressen finns redan registrerad.");
 					return View();
 				}
 
