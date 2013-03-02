@@ -15,7 +15,7 @@ namespace EventBooking.Controllers
 		}
 
 		public SecurityController()
-			: this(new SecurityService())
+			: this(new SecurityService(null))
 		{
 		}
 

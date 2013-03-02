@@ -54,7 +54,7 @@ namespace EventBooking.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				var user = security.CurrentUser;
+				var user = security.GetCurrentUser();
 				user.Birthdate = model.Birthdate;
 				user.Cellphone = model.Cellphone;
 				user.City = model.City;
@@ -84,7 +84,7 @@ namespace EventBooking.Controllers
 		[Authorize]
 		public ActionResult MyProfile()
 		{
-			var model = new MyProfileModel(security.CurrentUser, teamRepository.GetTeams());
+			var model = new MyProfileModel(security.GetCurrentUser(), teamRepository.GetTeams());
 			return View(model);
 		}
 	}

@@ -8,6 +8,13 @@ namespace EventBooking.Services
 {
 	public class SecurityService : ISecurityService
 	{
+		private readonly IEventBookingContext _context;
+
+		public SecurityService(IEventBookingContext context)
+		{
+			_context = context;
+		}
+
 		public virtual User GetUser(string userName)
 		{
 			if (string.IsNullOrWhiteSpace(userName))
@@ -15,69 +22,59 @@ namespace EventBooking.Services
 				return null;
 			}
 
-			int userId = WebSecurity.GetUserId(userName);
-
 			// We think that we're logged in, but we're really not.
-			if (userId == -1 && this.IsLoggedIn)
+			int userId = WebSecurity.GetUserId(userName);
+			bool isLoggedIn = this.IsLoggedIn();
+			if (userId == -1 && isLoggedIn)
 			{
-				// Logout-
+				// Logout
 				WebSecurity.Logout();
 			}
 
-			using (var context = new EventBookingContext())
-			{
-				return context.Users.Where(u => u.Id == userId).Include(t => t.Team).FirstOrDefault();
-			}
+			// Find the user.
+			return _context.Users.Where(u => u.Id == userId).Include(t => t.Team).FirstOrDefault();
 		}
 
-		public bool IsUserTeamAdmin()
+		public virtual User GetCurrentUser()
+		{
+			return WebSecurity.CurrentUserName != null ? GetUser(WebSecurity.CurrentUserName) : null;
+		}
+
+		public virtual bool IsUserTeamAdmin()
 		{
 			return true;
 		}
 
+		public virtual bool IsLoggedIn()
+		{
+			return WebSecurity.IsAuthenticated && WebSecurity.CurrentUserId != -1;
+		}
+
 		public virtual bool SignIn(string userName, string password)
 		{
-			if (WebSecurity.Login(userName, password))
-			{
-				return true;
-			}
-			return false;
+			return WebSecurity.Login(userName, password);
 		}
 
 		public virtual void CreateUserAndAccount(string email, string password, DateTime created)
 		{
+			// Create the account.
 			DateTime earlier = DateTime.UtcNow;
+			string confirmationToken = WebSecurity.CreateUserAndAccount(email, password, new { Created = earlier });
 
-			WebSecurity.CreateUserAndAccount(email, password, new { Created = earlier });
+			// Create the user.
+			User user = new User();
+			user.Email = email;
+			user.Id = WebSecurity.GetUserId(email);
+			user.Created = earlier;
 
-			using (var context = new EventBookingContext())
-			{
-				context.Users.Add(new User
-					{
-						Email = email,
-						Id = WebSecurity.GetUserId(email),
-						Created = earlier
-					});
-				context.SaveChanges();
-			}
+			// Save the user.
+			_context.Users.Add(user);
+			_context.SaveChanges();
 		}
 
 		public void SignOff()
 		{
 			WebSecurity.Logout();
-		}
-
-		public virtual User CurrentUser
-		{
-			get { return WebSecurity.CurrentUserName != null ? GetUser(WebSecurity.CurrentUserName) : null; }
-		}
-
-		public virtual bool IsLoggedIn
-		{
-			get
-			{
-				return WebSecurity.IsAuthenticated && WebSecurity.CurrentUserId != -1;
-			}
 		}
 	}
 }

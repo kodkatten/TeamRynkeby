@@ -26,7 +26,7 @@ namespace EventBooking.Controllers
 
 		public ActionResult Create()
 		{
-			if (!_securityService.IsLoggedIn)
+			if (!_securityService.IsLoggedIn())
 			{
 				return RedirectToAction("Checkpoint", "Security", new { returnUrl = Url.Action("Create") });
 			}
@@ -44,9 +44,9 @@ namespace EventBooking.Controllers
 			if (!ModelState.IsValid)
 				return View();
 			var activity = Mapper.Map<Activity>(model);
-			activity.OrganizingTeam = _securityService.CurrentUser.Team;
+			activity.OrganizingTeam = _securityService.GetCurrentUser().Team;
 			activity.Sessions = new List<Session> { Mapper.Map<Session>(model.Session) };
-			activity.Coordinator = _securityService.CurrentUser;
+			activity.Coordinator = _securityService.GetCurrentUser();
 			StoreActivity(activity);
 			return RedirectToAction("Index", "Sessions", new { activityId = activity.Id });
 		}
@@ -63,9 +63,9 @@ namespace EventBooking.Controllers
 				teamIdsToFilterActivitiesOn.AddRange(new List<int>(teamIds.Split(',').Select(int.Parse)));
 			}
 
-			if (_securityService.IsLoggedIn)
+			if (_securityService.IsLoggedIn())
 			{
-				var user = _securityService.CurrentUser;
+				var user = _securityService.GetCurrentUser();
 				if (user != null && user.IsMemberOfATeam())
 				{
 					query = _activityRepository.GetUpcomingActivitiesByTeam(user.Team.Id, skip, NumberOfActivitiesPerPage);
@@ -95,7 +95,7 @@ namespace EventBooking.Controllers
 		{
 			var activity = _activityRepository.GetActivityById(id);
 
-            var viewModel = new DetailActivityViewModel(activity, _securityService.CurrentUser);
+            var viewModel = new DetailActivityViewModel(activity, _securityService.GetCurrentUser());
 
 			return View(viewModel);
 		}

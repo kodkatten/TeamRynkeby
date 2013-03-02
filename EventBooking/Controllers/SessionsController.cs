@@ -52,14 +52,14 @@ namespace EventBooking.Controllers
         public RedirectToRouteResult SignUp(int sessionId)
         {
             var session = _repository.GetSessionById(sessionId);
-            var user = _securityService.CurrentUser;
+            var user = _securityService.GetCurrentUser();
             
 
             if (!session.IsAllowedToSignUp(user))
             {
                 return RedirectToAction("SignUpFailed", new { id = sessionId });
             }
-            var userId = _securityService.CurrentUser.Id;
+            var userId = _securityService.GetCurrentUser().Id;
 
             session.SignUp(user);
             _repository.SaveVolunteers(session);

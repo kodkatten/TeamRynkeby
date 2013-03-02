@@ -23,12 +23,12 @@ namespace EventBooking.Controllers
 
        public ActionResult DetailsWithDate(DateTime currentDate)
        {
-           if (!_securityService.IsLoggedIn)
+           if (!_securityService.IsLoggedIn())
            {
                return RedirectToAction("Checkpoint", "Security", new { returnUrl = Url.Action("Details") });
            }
 
-           var currentUser = _securityService.CurrentUser;
+           var currentUser = _securityService.GetCurrentUser();
 
            if (null == currentUser.Team)
            {

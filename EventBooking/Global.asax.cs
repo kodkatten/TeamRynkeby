@@ -13,31 +13,32 @@ using EventBooking.Services;
 
 namespace EventBooking
 {
-    public class MvcApplication : HttpApplication
-    {
-        protected void Application_Start()
-        {
-            var builder = new ContainerBuilder();
-            builder.RegisterControllers(typeof(MvcApplication).Assembly);
-            builder.RegisterModule(new DataDependencyModule());
-            builder.RegisterModule(new ControllerDependencyModule());
-            
-            var container = builder.Build();
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+	public class MvcApplication : HttpApplication
+	{
+		protected void Application_Start()
+		{
+			var builder = new ContainerBuilder();
+			builder.RegisterControllers(typeof(MvcApplication).Assembly);
+			builder.RegisterModule(new DataDependencyModule());
+			builder.RegisterModule(new ControllerDependencyModule());
 
-            AreaRegistration.RegisterAllAreas();
+			var container = builder.Build();
+			DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+
+			AreaRegistration.RegisterAllAreas();
 			HtmlHelper.ClientValidationEnabled = true;
 			HtmlHelper.UnobtrusiveJavaScriptEnabled = true;
-            WebApiConfig.Register(GlobalConfiguration.Configuration);
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
+			WebApiConfig.Register(GlobalConfiguration.Configuration);
+			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+			RouteConfig.RegisterRoutes(RouteTable.Routes);
+			BundleConfig.RegisterBundles(BundleTable.Bundles);
 			EventBookingMapper.SetupMappers(container);
-            Database.SetInitializer(new EventBookingSeedInitializer());
-            using (var context = new EventBookingContext())
-            {
-                context.Database.Initialize(true);
-            }
-        }
-    }
+
+			Database.SetInitializer(new EventBookingSeedInitializer());
+			using (var context = new EventBookingContext())
+			{
+				context.Database.Initialize(true);
+			}
+		}
+	}
 }
