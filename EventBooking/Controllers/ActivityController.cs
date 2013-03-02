@@ -16,15 +16,17 @@ namespace EventBooking.Controllers
 		private readonly ActivityRepository _activityRepository;
 		private readonly IPrefedinedItemRepository _prefedinedItems;
 		private readonly ITeamRepository _teamRepository;
-		private const int NumberOfActivitiesPerPage = 6;
+	    private readonly IEmailService _emailService;
+	    private const int NumberOfActivitiesPerPage = 6;
 
 		public ActivityController(ISecurityService securityService, ActivityRepository activityRepository
-			, IPrefedinedItemRepository prefedinedItems, ITeamRepository teamRepository)
+			, IPrefedinedItemRepository prefedinedItems, ITeamRepository teamRepository, IEmailService emailService)
 		{
 			_securityService = securityService;
 			_activityRepository = activityRepository;
 			_prefedinedItems = prefedinedItems;
 			_teamRepository = teamRepository;
+		    _emailService = emailService;
 		}
 
 		public ActionResult Create()
@@ -46,12 +48,13 @@ namespace EventBooking.Controllers
 		{
 			if (!ModelState.IsValid)
 				return View();
+
 			var activity = Mapper.Map<Activity>(model);
 			activity.OrganizingTeam = _securityService.GetCurrentUser().Team;
 			activity.Sessions = new List<Session> { Mapper.Map<Session>(model.Session) };
 			activity.Coordinator = _securityService.GetCurrentUser();
 			StoreActivity(activity);
-			
+
 			return RedirectToAction("Index", "Sessions", new { activityId = activity.Id });
 		}
 
@@ -93,6 +96,7 @@ namespace EventBooking.Controllers
 		protected virtual void StoreActivity(Activity activity)
 		{
 			_activityRepository.Add(activity);
+
 		}
 
 		public ActionResult Details(int id)

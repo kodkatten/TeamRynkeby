@@ -4,6 +4,8 @@ using System.Globalization;
 using System.Linq;
 using System.Net.Mail;
 using System.Net.Mime;
+using System.Reflection;
+using System.Resources;
 using EventBooking.Data;
 using EventBooking.Data.Repositories;
 
@@ -32,13 +34,24 @@ namespace EventBooking.Services
 
             var text = NewEventText(activity);
             SendMail(toAddressToName, "noreply@teamrynkeby.apphb.com", activity.OrganizingTeam.Name, activity.Name, text);
-
         }
 
         private string NewEventText(Activity activity)
         {
-            var text = activity.Name;
-            return text;
+            var resourceManger = new ResourceManager("EventBooking.Resources", Assembly.GetExecutingAssembly());
+            var template = resourceManger.GetString("Template_NewEvent");
+
+            if (template == null)
+                throw new Exception("NewEventTextNoResource");
+
+            template = template.Replace("[Team]", activity.OrganizingTeam.ToString());
+
+            var date = activity.Date.Year + "-" + activity.Date.Month + "-" + activity.Date.Day;
+            template = template.Replace("[Datum]", date.ToString());
+            template = template.Replace("[Summary]", activity.Summary.ToString());
+            template = template.Replace("Description", activity.Description.ToString());
+
+            return template;
         }
 
         private void SendMail(Dictionary<string, string> toAddressToName, string fromAddress, string fromName, string subject, string text)
@@ -78,6 +91,6 @@ namespace EventBooking.Services
         }
 
 
-        
+
     }
 }
