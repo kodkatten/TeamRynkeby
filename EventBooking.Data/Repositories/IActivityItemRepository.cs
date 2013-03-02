@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace EventBooking.Data.Repositories
 {
-	public interface IPrefedinedItemRepository
+	public interface IActivityItemRepository
 	{
-		IQueryable<PredefinedActivityItem> GetPredefinedActivityItems();
+		IQueryable<ActivityItemTemplate> GetTemplates();
 	}
 }

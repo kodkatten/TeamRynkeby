@@ -66,11 +66,11 @@ namespace EventBooking.Filters
 
 		private void CreatePredefinedActivityItems(EventBookingContext context)
 		{
-			context.PredefinedActivityItems.Add(new PredefinedActivityItem() { Name = "Cykel" });
-			context.PredefinedActivityItems.Add(new PredefinedActivityItem() { Name = "Trainer" });
-			context.PredefinedActivityItems.Add(new PredefinedActivityItem() { Name = "Tält" });
-			context.PredefinedActivityItems.Add(new PredefinedActivityItem() { Name = "Bord" });
-			context.PredefinedActivityItems.Add(new PredefinedActivityItem() { Name = "Priser" });
+			context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Cykel" });
+			context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Trainer" });
+			context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Tält" });
+			context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Bord" });
+			context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Priser" });
 		}
 
 		private static void EnsureUserExists(SimpleMembershipProvider membership, EventBookingContext context,

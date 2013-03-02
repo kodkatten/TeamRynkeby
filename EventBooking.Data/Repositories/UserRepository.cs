@@ -1,44 +1,50 @@
 ﻿using System;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 
 namespace EventBooking.Data.Repositories
 {
 	internal class UserRepository : IUserRepository
 	{
-		private readonly IEventBookingContext context;
+		private readonly IEventBookingContext _context;
 
 		public UserRepository(IEventBookingContext context)
 		{
-			this.context = context;
+			this._context = context;
 		}
 
 		public void Save(User user)
 		{
-		    var databaseUser = context.Users.Find(user.Id);
-		    databaseUser.Name = user.Name;
-		    databaseUser.StreetAddress = user.StreetAddress;
-		    databaseUser.Team = context.Teams.Find(user.Team.Id);
-		    databaseUser.Zipcode = user.Zipcode;
-		    databaseUser.Birthdate = user.Birthdate;
-		    databaseUser.Cellphone = user.Cellphone;
-		    databaseUser.City = user.City;
-			context.SaveChanges();
+			// Get the user from the database.
+			var databaseUser = _context.Users.First(u => u.Id == user.Id);
+			// Get the user's team from the database.
+			var databaseTeam = _context.Teams.First(t => t.Id == user.Team.Id);
+
+			databaseUser.Name = user.Name;
+			databaseUser.StreetAddress = user.StreetAddress;
+			databaseUser.Team = databaseTeam;
+			databaseUser.Zipcode = user.Zipcode;
+			databaseUser.Birthdate = user.Birthdate;
+			databaseUser.Cellphone = user.Cellphone;
+			databaseUser.City = user.City;
+
+			// Save the user.
+			_context.SaveChanges();
 		}
 
 		public void RemoveFromTeam(int userId)
 		{
-			var user = context.Users.FirstOrDefault(x => x.Id == userId);
-
-			if(user == null)
-				return;
-
-			user.Team = null;
-			context.SaveChanges();
+			var user = _context.Users.FirstOrDefault(x => x.Id == userId);
+			if (user != null)
+			{
+				user.Team = null;
+				_context.SaveChanges();
+			}
 		}
 
 		public bool Exists(string email)
 		{
-			return context.Users.Any(x => x.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
+			return _context.Users.Any(x => x.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
 		}
 	}
 }

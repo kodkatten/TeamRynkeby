@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace EventBooking.Data.Repositories
 {
-	public sealed class PrefedinedItemRepository : IPrefedinedItemRepository
+	public sealed class ActivityItemRepository : IActivityItemRepository
 	{
 		private readonly IEventBookingContext _context;
 
-		public PrefedinedItemRepository(IEventBookingContext context)
+		public ActivityItemRepository(IEventBookingContext context)
 		{
 			_context = context;
 		}
 
-		public IQueryable<PredefinedActivityItem> GetPredefinedActivityItems()
+		public IQueryable<ActivityItemTemplate> GetTemplates()
 		{
-			return _context.PredefinedActivityItems;
+			return _context.ActivityItemTemplates;
 		}
 	}
 }

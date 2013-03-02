@@ -21,7 +21,7 @@ namespace EventBooking.Data
 		public IDbSet<Session> Sessions { get; set; }
 		public IDbSet<InterviewQuestion> InterviewQuestions { get; set; }
 		public IDbSet<TrainingQuestion> TrainingQuestions { get; set; }
-		public IDbSet<PredefinedActivityItem> PredefinedActivityItems { get; set; }
+		public IDbSet<ActivityItemTemplate> ActivityItemTemplates { get; set; }
 
 		void IEventBookingContext.SaveChanges()
 		{
@@ -38,25 +38,5 @@ namespace EventBooking.Data
 			modelBuilder.Entity<TrainingQuestion>().HasRequired(q => q.Team);
 			modelBuilder.Entity<InterviewQuestion>().HasRequired(q => q.Team);
 		}
-
-		public bool IsAttached<T>(T entity)
-		{
-			var context = ((IObjectContextAdapter)this).ObjectContext;
-			var entitySet = this.GetEntitySet(context, typeof(T));
-			EntityKey key = context.CreateEntityKey(entitySet.Name, entity);
-			ObjectStateEntry entry = null;
-			if (context.ObjectStateManager.TryGetObjectStateEntry(key, out entry))
-			{
-				return entry.State != EntityState.Detached;
-			}
-			return false;
-		}
-
-		private EntitySetBase GetEntitySet(ObjectContext context, Type entityType)
-		{
-			var container = context.MetadataWorkspace.GetEntityContainer(context.DefaultContainerName, DataSpace.CSpace);
-			return container.BaseEntitySets.FirstOrDefault(item => item.ElementType.Name.Equals(entityType.Name));
-		}
-
 	}
 }

@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace EventBooking.Data
 {
-	public class PredefinedActivityItem
+	public class ActivityItem
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }
+		public int Quantity { get; set; }
 	}
 }

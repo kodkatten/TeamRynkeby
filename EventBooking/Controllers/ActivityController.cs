@@ -14,16 +14,16 @@ namespace EventBooking.Controllers
 	{
 		private readonly ISecurityService _securityService;
 		private readonly ActivityRepository _activityRepository;
-		private readonly IPrefedinedItemRepository _prefedinedItems;
+		private readonly IActivityItemRepository _activityItemRepository;
 		private readonly ITeamRepository _teamRepository;
 		private const int NumberOfActivitiesPerPage = 6;
 
-		public ActivityController(ISecurityService securityService, ActivityRepository activityRepository
-			, IPrefedinedItemRepository prefedinedItems, ITeamRepository teamRepository)
+		public ActivityController(ISecurityService securityService, ActivityRepository activityRepository,
+			IActivityItemRepository activityItemRepository, ITeamRepository teamRepository)
 		{
 			_securityService = securityService;
 			_activityRepository = activityRepository;
-			_prefedinedItems = prefedinedItems;
+			_activityItemRepository = activityItemRepository;
 			_teamRepository = teamRepository;
 		}
 
@@ -51,7 +51,7 @@ namespace EventBooking.Controllers
 			activity.Sessions = new List<Session> { Mapper.Map<Session>(model.Session) };
 			activity.Coordinator = _securityService.GetCurrentUser();
 			StoreActivity(activity);
-			
+
 			return RedirectToAction("Index", "Sessions", new { activityId = activity.Id });
 		}
 
@@ -98,10 +98,18 @@ namespace EventBooking.Controllers
 		public ActionResult Details(int id)
 		{
 			var activity = _activityRepository.GetActivityById(id);
-
 			var viewModel = new DetailActivityViewModel(activity, _securityService.GetCurrentUser());
-
 			return View(viewModel);
+		}
+
+		public ActionResult Leave(int id)
+		{
+			throw new NotImplementedException();
+		}
+
+		public ActionResult Edit(int id)
+		{
+			throw new NotImplementedException();
 		}
 
 		public ActionResult SelectExistingItem()
@@ -110,36 +118,71 @@ namespace EventBooking.Controllers
 			var inventoryModel = new ContributedInventoryModel();
 			inventoryModel.SuggestedItems = new List<string>();
 			inventoryModel.ContributedItems = new List<ContributedInventoryItemModel>();
+			inventoryModel.Intent = "Add"; // Default intent.
 
-			// Populate the suggested prefedinedItems.
-			inventoryModel.SuggestedItems.AddRange(_prefedinedItems.GetPredefinedActivityItems().Select(i => i.Name));
+			// Populate the suggested prefedined items.
+			inventoryModel.SuggestedItems.AddRange(_activityItemRepository.GetTemplates().Select(i => i.Name));
 
 			// Return the view.
 			return View(inventoryModel);
 		}
 
 		[HttpPost]
-		public ActionResult AddContributedItem(ContributedInventoryModel model)
+		public ActionResult UpdateContributedItem(ContributedInventoryModel model)
 		{
-			model.ContributedItems.Add(new ContributedInventoryItemModel
+			bool isAdding = model.Intent.Equals("Add", StringComparison.OrdinalIgnoreCase);
+			bool isRemoving = model.Intent.Equals("Remove", StringComparison.OrdinalIgnoreCase);
+
+			// No currently selected item?
+			if (string.IsNullOrWhiteSpace(model.CurrentlySelectedItem))
 			{
-				Name = model.CurrentlySelectedItem,
-				Quantity = model.ItemQuantity
-			});
+				// Return the view.
+				return View("SelectExistingItem", model);
+			}
+
+			// Adding?
+			if (isAdding)
+			{
+				// Try to find this item in the collection.
+				var existing = model.ContributedItems.FirstOrDefault(
+					item => item.Name.Equals(model.CurrentlySelectedItem, StringComparison.OrdinalIgnoreCase));
+
+				if (existing != null)
+				{
+					// Add the quantity to the existing item.
+					existing.Quantity += model.ItemQuantity;
+				}
+				else
+				{
+					// Add new item.
+					model.ContributedItems.Add(new ContributedInventoryItemModel
+					{
+						Name = model.CurrentlySelectedItem,
+						Quantity = model.ItemQuantity
+					});
+				}
+			}
+			// Removing?
+			else if (isRemoving)
+			{
+				// Remove the currently selected item.
+				string itemToRemove = model.CurrentlySelectedItem;
+				model.ContributedItems.RemoveAll(x => x.Name.Equals(itemToRemove, StringComparison.OrdinalIgnoreCase));
+				model.CurrentlySelectedItem = string.Empty;
+			}
+
+			// Reset the intent.
+			model.Intent = "Add";
+
+			// Clear the model state and return the model back to the view.
+			this.ModelState.Clear();
 			return View("SelectExistingItem", model);
 		}
 
-		//When entering here, should leave the activity
-		//TODO: This method shall be implemented
-		public ActionResult Leave(int id)
+		public ActionResult GetSuggestedItems()
 		{
-			throw new NotImplementedException();
+			return Json(_activityItemRepository.GetTemplates().Select(i => i.Name), JsonRequestBehavior.AllowGet);
 		}
 
-		// Todo: This method shall be implemented
-		public ActionResult Edit(int id)
-		{
-			throw new NotImplementedException();
-		}
 	}
 }
