@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Diagnostics;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -10,6 +11,7 @@ using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
 using EventBooking.Filters;
 using EventBooking.Services;
+using WebMatrix.WebData;
 
 namespace EventBooking
 {
@@ -34,11 +36,20 @@ namespace EventBooking
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
 			EventBookingMapper.SetupMappers(container);
 
+#if DEBUG
+			// Drop the database and recreate it.
 			Database.SetInitializer(new EventBookingSeedInitializer());
 			using (var context = new EventBookingContext())
 			{
 				context.Database.Initialize(true);
 			}
+#else
+
+			Trace.WriteLine("[WebSecurity] Initializing database connection...5");
+			WebSecurity.InitializeDatabaseConnection("DefaultConnection", "Users", "Id", "Email", autoCreateTables: false);
+			Trace.WriteLine("[EF] Running migrations...");
+			DataMigrator.EnableMigrations();
+#endif
 		}
 	}
 }
