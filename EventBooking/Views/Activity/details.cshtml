@@ -23,7 +23,7 @@
             <li><span>@session.FromTimeFormatted - @session.ToTimeFormatted</span>
                 @if (session.CanSignUp)
                 {
-                    <a href="@Url.Action("SignUp", "Sessions", new {session.Id})" class="link">Anmäl mig!</a>
+                    <a href="@Url.Action("SignUp", "Sessions", new {sessionId = session.Id})" class="link">Anmäl mig!</a>
                 }
             </li>            
         }
