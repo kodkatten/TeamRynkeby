@@ -55,7 +55,7 @@ namespace EventBooking.Controllers
 			if (ModelState.IsValid)
 			{
 				var user = security.GetCurrentUser();
-				user.Birthdate = model.Birthdate;
+				//user.Birthdate = model.Birthdate;
 				user.Cellphone = model.Cellphone;
 				user.City = model.City;
 				user.Name = model.Name;
