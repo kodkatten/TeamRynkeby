@@ -16,7 +16,7 @@ namespace EventBooking.Data.Migrations
 		{
 			//  This method will be called after migrating to the latest version.
 
-			if (context.Teams.Any())
+			if (!context.Teams.Any())
 			{
 				// TODO: Seed data here.
 			    context.Teams.Add(new Team {Name = "Team Stockholm"});
