@@ -11,7 +11,7 @@ namespace EventBooking.Data
 	public class EventBookingContext : DbContext, IEventBookingContext
 	{
 		public EventBookingContext()
-			: base("DefaultConnection")
+            : base("EventBookingContext")
 		{
 		}
 

@@ -5,11 +5,11 @@ namespace EventBooking.Data.Migrations
 	using System.Data.Entity.Migrations;
 	using System.Linq;
 
-	internal sealed class Configuration : DbMigrationsConfiguration<EventBooking.Data.EventBookingContext>
+	internal sealed class Configuration : DbMigrationsConfiguration<EventBookingContext>
 	{
 		public Configuration()
 		{
-			AutomaticMigrationsEnabled = true;
+			AutomaticMigrationsEnabled = false;
 		}
 
 		protected override void Seed(EventBooking.Data.EventBookingContext context)
@@ -26,8 +26,38 @@ namespace EventBooking.Data.Migrations
 			    context.Teams.Add(new Team {Name = "Team Helsingborg"});
 			    context.Teams.Add(new Team {Name = "Team Malmö"});
 			    context.SaveChanges();
-				int nop = 0;
+				
 			}
+            if (!context.Users.Any())
+            {
+                var user = new User
+                    {
+                        Name = "Henrik Andersson",
+                        Cellphone = "123456"
+                    };
+                context.Users.Add(user);
+
+            }
+            if (!context.Activities.Any())
+            {
+                var activty = new Activity
+                    {
+                        Date = DateTime.Now,
+                        Name = "testactivity",
+                        Description = "test",
+                        Summary = "Test"
+                    };
+                var ts = context.Teams.Where(t => t.Name == "Team Stockholm");
+
+                foreach (var team in ts)
+                {
+                    activty.OrganizingTeam = team;
+                }
+                var session = new Session {ToTime = TimeSpan.MaxValue, FromTime = TimeSpan.MinValue};
+                activty.Sessions.Add(session);
+                
+            }
+            
 		}
 	}
 }
