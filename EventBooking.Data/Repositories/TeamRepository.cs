@@ -66,8 +66,48 @@ namespace EventBooking.Data.Repositories
 			}
 
 			return this.context.Users.Where(u => u.Team.Id == teamId);
+		}
 
+		public void RemoveAsTeamAdmin(int userId, int teamId)
+		{
+			var team = GetTeamOrThrow(teamId);
+			var user = GetUserOrThrow(userId);
 
+			team.TeamAdmins.Remove(user);
+			context.SaveChanges();
+		}
+
+		public void AddAsTeamAdmin(int userId, int teamId)
+		{
+			var team = GetTeamOrThrow(teamId);
+			var user = GetUserOrThrow(userId);
+
+			team.TeamAdmins.Add(user);
+			user.AdminInTeams.Add(team);
+			context.SaveChanges();
+		}
+
+		private User GetUserOrThrow(int userId)
+		{
+			var user = context.Users.FirstOrDefault(x => x.Id == userId);
+
+			if (user == null)
+			{
+				throw new ArgumentException("Unknown user");
+			}
+
+			return user;
+		}
+
+		private Team GetTeamOrThrow(int teamId)
+		{
+			var team = context.Teams.FirstOrDefault(x => x.Id == teamId);
+			if (team == null)
+			{
+				throw new ArgumentException("Unknown team");
+			}
+
+			return team;
 		}
 	}
 }

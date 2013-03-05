@@ -20,10 +20,12 @@ $(function() {
 
     $('.toggle-admin').on('click', function () {
         var that = $(this);
-        var id = that.parents('.volonteer').data('volonteer-id');
+        var userId = that.parents('.volonteer').data('volonteer-id');
+        var teamId = that.parents('.team').data('teamid');
+        var targetUrl = "/admin/toogleadmin?userId=" + userId + "&teamId=" + teamId;
         that.addClass('disabled');
-
-        $.ajax({ url: "/admin/toogleadmin/" + id })
+        
+        $.ajax({ url: targetUrl })
             .done(function(data) {
                 if (data.isTeamAdmin) {
                     that.addClass('btn-success');

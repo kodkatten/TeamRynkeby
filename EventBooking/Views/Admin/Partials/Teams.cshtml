@@ -7,7 +7,7 @@
     @foreach (var team in Model)
     {
         <div class="card span4 team">
-            <div>
+            <div class="clearfix">
                 <h3>
                     <a 
                         href="@Url.Content("~/admin/team/" + team.Id)"
@@ -21,7 +21,6 @@
                 </p>
 
                 <a href="@Url.Action("DeleteTeam", new { id = team.Id })" class="btn btn-danger"><i class="icon-trash icon-white"></i></a>
-                <p class="clearfix"></p>
             </div>
         </div>
     }

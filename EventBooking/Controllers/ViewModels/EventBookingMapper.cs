@@ -14,13 +14,8 @@ namespace EventBooking.Controllers.ViewModels
 			Mapper.CreateMap<Session, SessionModel>();
 		    Mapper.CreateMap<MyProfileModel, User>();
 		    Mapper.CreateMap<User, MyProfileModel>();
-
-			var securityService = container.Resolve<ISecurityService>();
-
-			Mapper.CreateMap<User, UserModel>()
-				.ForMember(x => x.IsTeamAdmin, x => securityService.IsUserTeamAdmin());
-		    
 			Mapper.CreateMap<Team, TeamModel>();
+			Mapper.CreateMap<User, UserModel>();
 		}
 	}
 }

@@ -37,6 +37,17 @@ namespace EventBooking.Data
 		{
 			modelBuilder.Entity<TrainingQuestion>().HasRequired(q => q.Team);
 			modelBuilder.Entity<InterviewQuestion>().HasRequired(q => q.Team);
+
+			modelBuilder
+				.Entity<User>()
+				.HasMany<Team>(x => x.AdminInTeams)
+				.WithMany(x => x.TeamAdmins)
+				.Map(x =>
+				{
+					x.MapLeftKey("UserId");
+					x.MapRightKey("TeamId");
+					x.ToTable("TeamAdmins");
+				});
 		}
 	}
 }

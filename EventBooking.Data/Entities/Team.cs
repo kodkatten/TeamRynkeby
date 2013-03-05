@@ -7,8 +7,9 @@ namespace EventBooking.Data
         public int Id { get; set; }
 		public string Name { get; set; }
 		public bool IsDeleted { get; set; }
-		public virtual ICollection<User> Volunteers { get; set; }
-        
-        public virtual ICollection<Activity> Activities { get; set; } 
+
+		public virtual ICollection<User> TeamAdmins { get; set; }
+	    public virtual ICollection<User> Volunteers { get; set; }
+		public virtual ICollection<Activity> Activities { get; set; }
     }
 }

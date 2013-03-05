@@ -15,7 +15,7 @@ namespace EventBooking.Controllers.ViewModels
             destination.StreetAddress = source.StreetAddress;
             destination.Zipcode = source.Zipcode;
             destination.Team = source.Team;
-
+	        destination.AdminInTeams = source.AdminInTeams;
             return destination;
         }
     }

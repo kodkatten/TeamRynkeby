@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Linq;
+using System.Web.Security;
 using EventBooking.Data;
 using WebMatrix.WebData;
 
@@ -40,9 +41,30 @@ namespace EventBooking.Services
 			return WebSecurity.CurrentUserName != null ? GetUser(WebSecurity.CurrentUserName) : null;
 		}
 
-		public virtual bool IsUserTeamAdmin()
+		public virtual bool IsCurrentUserTeamAdminFor(int teamId)
 		{
-			return true;
+			var loggedOnUser = GetCurrentUser();
+			var team = _context.Teams.FirstOrDefault(t => t.Id == teamId);
+			
+			return loggedOnUser != null
+			       && team != null
+			       && team.TeamAdmins.Contains(loggedOnUser);
+		}
+
+		public bool IsCurrentUserAdminOfAnyTeam()
+		{
+			var loggedOnUser = GetCurrentUser();
+
+			if (loggedOnUser == null)
+				return false;
+
+			return _context.Teams.FirstOrDefault(t => t.TeamAdmins.FirstOrDefault(u => u.Id == loggedOnUser.Id) != null) != null;
+		}
+
+		public bool IsCurrentUserPowerUser()
+		{
+			var roles = (SimpleRoleProvider)Roles.Provider;
+			return roles.GetRolesForUser(GetCurrentUser().Email).Contains(UserType.PowerUser.ToString());
 		}
 
 		public virtual bool IsLoggedIn()

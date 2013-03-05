@@ -30,20 +30,32 @@ namespace EventBooking.Filters
 			SeedActivities(context);
 
 			if (membership.GetUser("henrik.andersson@tretton37.com", false) == null)
-				EnsureUserExists(membership, context, "Henrik.andersson@tretton37.com",
+				EnsureUserExists(membership, context, "henrik.andersson@tretton37.com",
 					new User
 						{
 							Cellphone = "3457",
 							Name = "dodo",
 							Team = context.Teams.First(),
-							Email = "Henrik.andersson@tretton37.com"
+							Email = "henrik.andersson@tretton37.com"
 						});
 
 			if (!roles.GetRolesForUser("henrik.andersson@tretton37.com").Contains(UserType.Administrator.ToString()))
 				roles.AddUsersToRoles(new[] { "henrik.andersson@tretton37.com" }, new[] { UserType.Administrator.ToString() });
 
 			if (membership.GetUser("tidaholm69@hotmail.com", false) == null)
-				EnsureUserExists(membership, context, "tidaholm69@hotmail.com", new User { Cellphone = "3457", Name = "najz", Email = "Henrik.andersson@tretton37.com", Team = context.Teams.First() });
+			{
+				var user = new User
+				{
+					Cellphone = "3457",
+					Name = "najz",
+					Email = "henrik.andersson@tretton37.com",
+					Team = context.Teams.First(),  
+				};
+
+				user.AdminInTeams.Add(context.Teams.First());
+											
+				EnsureUserExists(membership, context, "tidaholm69@hotmail.com", user);
+			}
 
 			if (!roles.GetRolesForUser("tidaholm69@hotmail.com").Contains(UserType.PowerUser.ToString()))
 				roles.AddUsersToRoles(new[] { "tidaholm69@hotmail.com" }, new[] { UserType.PowerUser.ToString() });

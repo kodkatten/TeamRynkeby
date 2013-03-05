@@ -11,6 +11,6 @@ namespace EventBooking.Controllers.ViewModels
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public string Email { get; set; }
-		public bool IsTeamAdmin { get; set; }
+		public IEnumerable<int> TeamAdminOf { get; set; }
 	}
 }

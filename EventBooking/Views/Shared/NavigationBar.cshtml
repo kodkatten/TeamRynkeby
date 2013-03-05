@@ -1,4 +1,5 @@
-﻿<div class="navbar navbar-inverse navbar-fixed-top">
+﻿@using EventBooking.Data
+<div class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
             <a class="brand" href="/">Team Rynkeby</a>
@@ -20,20 +21,11 @@
                         <li>@Html.ActionLink(User.Identity.Name, "MyProfile", "User")</li>
                         <li>@Html.ActionLink("Mitt lag", "Details", "Team")</li>
                         <li>@Html.ActionLink("Skapa event", "Create", "Activity")</li>
-                        
-                        <!-- Todo: checked if user is admin -->@*
-                        <li class="dropdown">
-                            @Html.ActionLink(
-                                    "Team",
-                                    "Index",
-                                    "Admin",
-                                    new { @class = "dropdown-toggle", data_toggle = "dropdown" })
-                            <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("Team medlemmar", "TeamMembers", "Admin")</li>
-                                <li>@Html.ActionLink("Hantera teams", "EditTeams", "Admin")</li>
-                            </ul>
-                        </li>*@
-                        
+
+                        if (Roles.IsUserInRole(UserType.PowerUser.ToString()) || Roles.IsUserInRole(UserType.Administrator.ToString()))
+                        {
+                              <li>@Html.ActionLink("Hantera lag", "ViewTeams", "Admin")</li>
+                        }
 
                         <li>@Html.ActionLink("Logga ut", "SignOff", "Security")</li>
                     }
