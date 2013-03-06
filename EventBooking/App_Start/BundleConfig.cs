@@ -18,7 +18,8 @@ namespace EventBooking
 				.Include( "~/Content/bootstrap-timepicker.css" )
 				.Include( "~/Content/landingpage-phone.css" )
 				.Include( "~/Content/landingpage-tablet.css" )
-				.Include( "~/Content/admin.css" ) );
+				.Include( "~/Content/admin.css" )
+				.Include( "~/Content/pickadate.01.default.css") );
 
 			bundles.Add( new ScriptBundle( "~/bundles/general" )
 				.Include( "~/Scripts/general.js" )

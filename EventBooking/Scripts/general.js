@@ -19,7 +19,11 @@
     });
 
     $(function () {
-        $('.datepicker').pickadate();
+        $('.datepicker').pickadate({
+            format: 'Den dd mmmm, yyyy',
+            formatSubmit: 'yyyy-mm-dd'
+        });
+        
         $('.timepicker').timepicker({
             minuteStep: 15,
             showSeconds: false,

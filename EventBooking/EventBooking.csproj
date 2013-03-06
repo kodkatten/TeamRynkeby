@@ -204,6 +204,7 @@
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Content\landingpage.css" />
+    <Content Include="Content\pickadate.01.default.css" />
     <Content Include="Content\site.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap-timepicker.js" />

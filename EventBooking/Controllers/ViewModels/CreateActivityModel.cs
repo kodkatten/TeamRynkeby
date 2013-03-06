@@ -13,6 +13,7 @@ namespace EventBooking.Controllers.ViewModels
 		public string Description { get; set; }
 
 		[Display(Name = "Datum")]
+		[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
 		[Required(ErrorMessage = "*")]
 		[FutureDate(ErrorMessage = "Du måste ange ett datum i framtiden")]
 		public DateTime Date { get; set; }
