@@ -61,3 +61,12 @@ ul {
     background: #222;
     padding-top: 25px;    
 }
+
+a.l337 {
+    color: #668f2d;
+    text-decoration: none;
+}
+
+a.l337:hover {
+    color: #8dc63f;
+}
