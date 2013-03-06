@@ -1,9 +1,17 @@
-﻿@using EventBooking.Data    
+﻿@using System.Web.Optimization
 @model EventBooking.Controllers.ViewModels.LandingPageModel
 
 @{
     Layout = "~/Views/Shared/_LayoutWithBanner.cshtml";
     ViewBag.Title = "Team Rynkeby | Kommande aktiviter";
+}
+
+@section Styles {
+    @Styles.Render("~/Styles/LandingPage")
+}
+
+@section Scripts {
+    @Scripts.Render("~/scripts/landingpage.js")
 }
 
 <div id="banner">
@@ -73,16 +81,3 @@
         </div>
     </div>
 </div>
-@section scripts {
-    (function(intiUpcomingEventsUpdate, $, undefined) {
-    
-        var previousButton = $('.previous-activities-list-command');
-        var nextButton = $('.next-activities-list-command');
-        var activityContainer = $('.upcoming-activity-list');
-        var upcomingEventsModule =  teamrynkebyse.upcomingEvents;
-    
-        upcomingEventsModule.init(previousButton,nextButton, activityContainer);
-        upcomingEventsModule.setTeamButtons($(".btn-select-team"),  (".btn-select-all-teams"));
-    
-    }(teamrynkebyse.intiUpcomingEventsUpdate, jQuery));
-}

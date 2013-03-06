@@ -1,8 +1,14 @@
-﻿@using EventBooking.Controllers.ViewModels
+﻿@using System.Web.Optimization
+@using EventBooking.Controllers.ViewModels
 @model EventBooking.Controllers.ViewModels.TeamActivitiesModel
 
 @{
     ViewBag.Title = "Team " + Model.Name;
+}
+
+@section Scripts
+{
+    @Scripts.Render("~/Scripts/team.js")
 }
 
 <div class="page-header">

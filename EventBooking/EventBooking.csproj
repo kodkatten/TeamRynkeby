@@ -193,39 +193,44 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Content Include="Content\bootstrap-responsive.css" />
-    <Content Include="Content\bootstrap-timepicker.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\admin.css" />
-    <Content Include="Content\font-awesome.css" />
-    <Content Include="Content\fontawesome-webfont.svg" />
-    <Content Include="Content\landingpage-tablet.css" />
-    <Content Include="Content\landingpage-phone.css" />
+    <Content Include="Content\fonts\museo_slab_500-webfont.svg" />
+    <Content Include="Content\images\expo.png" />
+    <Content Include="Content\styles\bootstrap-responsive.css" />
+    <Content Include="Content\styles\bootstrap-timepicker.css" />
+    <Content Include="Content\styles\bootstrap.css" />
+    <Content Include="Content\styles\admin.css" />
+    <Content Include="Content\styles\createevent.css" />
+    <Content Include="Content\styles\font-awesome.css" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\styles\landingpage-tablet.css" />
+    <Content Include="Content\styles\landingpage-phone.css" />
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
-    <Content Include="Content\landingpage.css" />
-    <Content Include="Content\pickadate.01.default.css" />
-    <Content Include="Content\site.css" />
+    <Content Include="Content\styles\landingpage.css" />
+    <Content Include="Content\styles\pickadate.css" />
+    <Content Include="Content\styles\site.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap-timepicker.js" />
-    <Content Include="Scripts\bootstrap-timepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="myBalsamiqProject.pdf" />
-    <Content Include="Content\fontawesome-webfont.eot" />
-    <Content Include="Content\fontawesome-webfont.ttf" />
-    <Content Include="Content\fontawesome-webfont.woff" />
-    <Content Include="Content\FontAwesome.otf" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
+    <Content Include="Content\fonts\museo_slab_500-webfont.eot" />
+    <Content Include="Content\fonts\museo_slab_500-webfont.ttf" />
+    <Content Include="Content\fonts\museo_slab_500-webfont.woff" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\admin.js" />
-    <Content Include="Scripts\general.js" />
+    <Content Include="Scripts\createevent.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
-    <Content Include="Scripts\jquery-1.9.1.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\landingpage.js" />
+    <Content Include="Scripts\pickadate.sv_SE.js" />
+    <Content Include="Scripts\team.js" />
     <Content Include="Scripts\upcomingEvents.js" />
     <Content Include="Scripts\pickadate.js" />
     <Content Include="Scripts\pickadate.legacy.js" />
-    <Content Include="Scripts\pickadate.legacy.min.js" />
-    <Content Include="Scripts\pickadate.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -236,7 +241,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Scripts\jquery-1.9.1.min.map" />
     <Content Include="Views\Security\Checkpoint.cshtml" />
     <Content Include="Views\Team\Details.cshtml" />
     <Content Include="Views\User\MyProfile.cshtml" />
@@ -258,6 +262,7 @@
     <Content Include="Views\Sessions\SignUpFailed.cshtml" />
     <Content Include="Views\Shared\Footer.cshtml" />
     <Content Include="Views\Sessions\EditSession.cshtml" />
+    <Content Include="Views\Shared\_MembersLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

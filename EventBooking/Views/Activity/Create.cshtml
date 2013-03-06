@@ -1,9 +1,21 @@
-﻿@using EventBooking.Controllers.ViewModels
+﻿@using System.Web.Optimization
+@using EventBooking.Controllers.ViewModels
 @model EventBooking.Controllers.ViewModels.CreateActivityModel
 
 @{
     ViewBag.Title = "Skapa event";
 }
+
+@section Styles
+{
+    @Styles.Render("~/Styles/CreateEvent")
+}
+
+@section Scripts
+{
+    @Scripts.Render("~/Scripts/CreateEvent")
+}
+
 
 <h2>@ViewBag.Title</h2>
 
@@ -41,7 +53,7 @@
     <div class="control-group">
         @Html.LabelFor( m => m.Date, new { @class = "control-label" } )
         <div class="controls">
-            @Html.TextBoxFor( m => m.Date, new { placeholder = "Datum", @class = "datepicker" } )
+            @Html.TextBoxFor( m => m.Date, new { placeholder = "Välj datum", @class = "datepicker" } )
             @Html.ValidationMessageFor( m => m.Date )
         </div>
     </div>

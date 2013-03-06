@@ -1,4 +1,5 @@
-﻿@using EventBooking.Data
+﻿@using System.Web.Optimization
+@using EventBooking.Data
 @model EventBooking.Controllers.ViewModels.TeamModel
 @{
     ViewBag.Title = "ViewTeam";
@@ -7,6 +8,13 @@
     var isCurrentUserPowerUser = Roles.IsUserInRole(Model.PowerUserRole);
 }
 
+@section Styles {
+    @Styles.Render("~/Styles/Admin")
+}
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/admin.js")
+}
 
 <h2>@Model.Name</h2>
 

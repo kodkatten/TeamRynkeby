@@ -22,6 +22,10 @@
         background-position: center right;
     }
 
+    .container-offset {
+        padding-top: 0;
+    }
+
     #banner-info {
         padding-top: 10px;
         padding-left: 20px;
