@@ -59,7 +59,7 @@ namespace EventBooking.Services
 		{
 			// Create the account.
 			DateTime earlier = DateTime.UtcNow;
-			string confirmationToken = WebSecurity.CreateUserAndAccount(email, password);
+            string confirmationToken = WebSecurity.CreateUserAndAccount(email, password, new { Created = earlier });
 
 			// Create the user.
 			User user = new User();

@@ -13,6 +13,10 @@ namespace EventBooking.Data
 		public static void EnableMigrations(bool isInDebugMode = false)
 		{
 			Database.SetInitializer(new MigrateDatabaseToLatestVersion<EventBookingContext, Configuration>());
+            using (var context = new EventBookingContext())
+            {
+                context.Database.Initialize(true);
+            }
 		}
 	}
 }

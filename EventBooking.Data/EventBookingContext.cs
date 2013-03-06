@@ -1,10 +1,5 @@
-﻿using System;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using System.Data.Metadata.Edm;
-using System.Data.Objects;
-using System.Linq;
 
 namespace EventBooking.Data
 {

@@ -12,11 +12,11 @@ using WebMatrix.WebData;
 
 namespace EventBooking.Filters
 {
-	internal class EventBookingSeedInitializer : DropCreateDatabaseAlways<EventBookingContext>  //  DropCreateDatabaseIfModelChanges<EventBookingContext>
+    internal class EventBookingSeedInitializer : DropCreateDatabaseAlways<EventBookingContext> // DropCreateDatabaseIfModelChanges<EventBookingContext> //
 	{
 		protected override void Seed(EventBookingContext context)
 		{
-			WebSecurity.InitializeDatabaseConnection("DefaultConnection", "Users", "Id", "Email", autoCreateTables: true);
+            WebSecurity.InitializeDatabaseConnection("EventBookingContext", "Users", "Id", "Email", autoCreateTables: true);
 
 			var membership = (SimpleMembershipProvider)Membership.Provider;
 			var roles = (SimpleRoleProvider)Roles.Provider;
@@ -52,7 +52,7 @@ namespace EventBooking.Filters
 			CreatePredefinedActivityItems(context);
 			var session = context.Activities.First();
 			session.Coordinator = context.Users.First();
-			context.SaveChanges();
+			context.SaveChanges();            
 		}
 
 		private void CreateAwesomeUsers(SimpleMembershipProvider membership, EventBookingContext context)

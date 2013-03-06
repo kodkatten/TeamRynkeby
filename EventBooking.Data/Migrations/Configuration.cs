@@ -33,28 +33,31 @@ namespace EventBooking.Data.Migrations
                 var user = new User
                     {
                         Name = "Henrik Andersson",
-                        Cellphone = "123456"
+                        Cellphone = "123456",
+                        Created = DateTime.UtcNow                        
                     };
                 context.Users.Add(user);
 
             }
             if (!context.Activities.Any())
             {
-                var activty = new Activity
-                    {
-                        Date = DateTime.Now,
-                        Name = "testactivity",
-                        Description = "test",
-                        Summary = "Test"
-                    };
-                var ts = context.Teams.Where(t => t.Name == "Team Stockholm");
+                //var activty = new Activity
+                //    {
+                //        Date = DateTime.Now,
+                //        Name = "testactivity",
+                //        Description = "test",
+                //        Summary = "Test"
+                //    };
+                //var ts = context.Teams.Where(t => t.Name == "Team Stockholm");
 
-                foreach (var team in ts)
-                {
-                    activty.OrganizingTeam = team;
-                }
-                var session = new Session {ToTime = TimeSpan.MaxValue, FromTime = TimeSpan.MinValue};
-                activty.Sessions.Add(session);
+                //foreach (var team in ts)
+                //{
+                //    activty.OrganizingTeam = team;
+                //}
+                //var session = new Session {ToTime = TimeSpan.MaxValue, FromTime = TimeSpan.MinValue};
+                //session.Activity = activty;
+
+                //activty.Sessions.Add(session);
                 
             }
             

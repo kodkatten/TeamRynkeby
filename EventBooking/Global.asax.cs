@@ -44,12 +44,11 @@ namespace EventBooking
 				context.Database.Initialize(true);
 			}
 #else
-
-			Trace.WriteLine("[WebSecurity] Initializing database connection...5");
-            WebSecurity.InitializeDatabaseConnection("EventBookingContext", "Users", "Id", "Email", autoCreateTables: true);
 			Trace.WriteLine("[EF] Running migrations...");
 			DataMigrator.EnableMigrations();
+            Trace.WriteLine("[WebSecurity] Initializing database connection...5");
+            WebSecurity.InitializeDatabaseConnection("EventBookingContext", "Users", "Id", "Email", autoCreateTables: true);
 #endif
-		}
+        }
 	}
 }
