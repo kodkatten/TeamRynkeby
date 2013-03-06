@@ -6,7 +6,7 @@
     <div class="row">
     @foreach (var team in Model)
     {
-        <div class="card span4 team">
+        <div class="card span4 team" data-team-id="@team.Id">
             <div class="clearfix">
                 <h3>
                     <a 
@@ -20,10 +20,31 @@
                     <i class="icon icon-user"> </i> @team.Volunteers.Count()
                 </p>
 
-                <a href="@Url.Action("DeleteTeam", new { id = team.Id })" class="btn btn-danger"><i class="icon-trash icon-white"></i></a>
+                <a href="#" 
+                   class="btn btn-danger teamdelete"
+                   rel="tooltip"
+                   title="Delete a team">
+                    <i class="icon-trash icon-white"></i>
+                </a>
             </div>
         </div>
     }
     </div>
     
+    <div id="teamDeleteWarning" class="modal hide fade" data-backdrop="static">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Säkert?</h3>
+        </div>
+        
+        <div class="modal-body">
+            <div class="alert alert-error hidden">Sorry, kunde inte ta bort laget.</div>
+            <p>Är du <i>verkligen verkligen</i> säker på att du vill ta bort det här laget? Ta bort lag är inget man bör göra utan omtanke.</p>
+        </div>
+        <div class="modal-footer">
+            <button data-dismiss="modal" class="btn">Cancel</button>
+            <button id="deleteTeam" class="btn btn-danger">Delete</button>
+        </div>
+    </div>
+
 </div>

@@ -18,9 +18,19 @@
     float: right;
 }
 
-.card div {
+.card > div {
     padding: 3px 10px 10px 10px;
     position: relative;
+}
+
+.align-left {
+    display: inline-block;
+    float: left;   
+}
+
+.align-right {
+    display: inline-block;
+    float: right;   
 }
 
 .card {

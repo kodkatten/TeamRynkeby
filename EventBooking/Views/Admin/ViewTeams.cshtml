@@ -1,4 +1,5 @@
 ﻿@using System.Web.Optimization
+@using EventBooking.Data
 @model EventBooking.Controllers.ViewModels.AdministratorPageModel
 
 @section styles {
@@ -13,13 +14,16 @@
     ViewBag.Title = "Administration";
 }
 
-<form action="@Url.Action("CreateTeam")" method="POST">
-    <fieldset>
-        <label>Skapa nytt team</label>
-        <input type="text" name="name" placeholder="Team namn">
-        <button type="submit" class="btn">Skapa</button>
-    </fieldset>
-</form>
+@if(Roles.IsUserInRole(UserType.Administrator.ToString())) {
+    <form action="@Url.Action("CreateTeam")" method="POST">
+        <fieldset>
+            <label>Skapa nytt team</label>
+            <input type="text" name="name" placeholder="Lag namn">
+            <button type="submit" class="btn">Skapa</button>
+        </fieldset>
+    </form>
+}
+
 @Html.Partial("Partials/Teams", Model.Teams)
 
 

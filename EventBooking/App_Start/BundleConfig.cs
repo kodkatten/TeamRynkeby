@@ -14,6 +14,7 @@ namespace EventBooking
 				.Include( "~/Content/site.css" )
 				.Include( "~/Content/landingpage.css" )
 				.Include( "~/Content/bootstrap-responsive.css" )
+				.Include("~/Content/font-awesome.css")
 				.Include( "~/Content/bootstrap-timepicker.css" )
 				.Include( "~/Content/landingpage-phone.css" )
 				.Include( "~/Content/landingpage-tablet.css" )

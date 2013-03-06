@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Security;
@@ -41,30 +42,73 @@ namespace EventBooking.Services
 			return WebSecurity.CurrentUserName != null ? GetUser(WebSecurity.CurrentUserName) : null;
 		}
 
-		public virtual bool IsCurrentUserTeamAdminFor(int teamId)
+		
+		public bool CanCurrentUserManageTeams()
 		{
-			var loggedOnUser = GetCurrentUser();
-			var team = _context.Teams.FirstOrDefault(t => t.Id == teamId);
-			
-			return loggedOnUser != null
-			       && team != null
-			       && team.TeamAdmins.Contains(loggedOnUser);
-		}
+			return IsCurrentUserPowerUser() || IsCurrentUserAdministrator();
 
-		public bool IsCurrentUserAdminOfAnyTeam()
-		{
-			var loggedOnUser = GetCurrentUser();
-
-			if (loggedOnUser == null)
-				return false;
-
-			return _context.Teams.FirstOrDefault(t => t.TeamAdmins.FirstOrDefault(u => u.Id == loggedOnUser.Id) != null) != null;
 		}
 
 		public bool IsCurrentUserPowerUser()
 		{
 			var roles = (SimpleRoleProvider)Roles.Provider;
 			return roles.GetRolesForUser(GetCurrentUser().Email).Contains(UserType.PowerUser.ToString());
+		}
+
+		public bool ToogleTeamPowerUser(int userId, int teamId)
+		{
+			var targetUser = GetUserOrThrow(userId);
+			var team = GetTeamOrThrow(teamId);
+
+
+			var teamPowerUserRole = GetPowerUserRoleForTeam(team);
+			var isInRole = Roles.IsUserInRole(targetUser.Email, teamPowerUserRole);
+			if (isInRole)
+			{
+				Roles.RemoveUserFromRole(targetUser.Email, teamPowerUserRole);
+				return false;
+			}
+
+			Roles.AddUserToRole(targetUser.Email, teamPowerUserRole);
+			return true;
+		}
+
+		bool ISecurityService.IsCurrentUserAdministrator()
+		{
+			return IsCurrentUserAdministrator();
+		}
+
+		public bool IsCurrentUserAdministratorOrPowerUser()
+		{
+			return Roles.GetAllRoles()
+				.Any(x => x.Contains(UserType.PowerUser.ToString()) || x == UserType.Administrator.ToString());
+		}
+
+		public bool IsCurrentUserAdministratorOrPowerUser(int teamId)
+		{
+			var team = GetTeamOrThrow(teamId);
+			var teamPowerUserRoleName = GetPowerUserRoleForTeam(team);
+			return Roles.GetAllRoles()
+				.Any(x => x == teamPowerUserRoleName || x == UserType.Administrator.ToString());
+		}
+
+		public string GetPowerUserRoleForTeam(Team team)
+		{
+			return team.Name + " PowerUser";
+		}
+
+		public bool ToogleAdministrator(int userId)
+		{
+			var targetUser = GetUserOrThrow(userId);
+			var isInRole = Roles.IsUserInRole(targetUser.Email, UserType.Administrator.ToString());
+			if (isInRole)
+			{
+				Roles.RemoveUserFromRole(targetUser.Email, UserType.Administrator.ToString());
+				return false;
+			}
+
+			Roles.AddUserToRole(targetUser.Email, UserType.Administrator.ToString());
+			return true;
 		}
 
 		public virtual bool IsLoggedIn()
@@ -97,6 +141,39 @@ namespace EventBooking.Services
 		public void SignOff()
 		{
 			WebSecurity.Logout();
+		}
+
+		private bool IsCurrentUserAdministrator()
+		{
+			var roles = (SimpleRoleProvider)Roles.Provider;
+			var user = GetCurrentUser();
+
+			if(user == null)
+				throw new ArgumentException("Unknown user");
+			
+			return roles.GetRolesForUser(user.Email).Contains(UserType.Administrator.ToString());
+		}
+
+		private Team GetTeamOrThrow(int teamId)
+		{
+			var team = _context.Teams.FirstOrDefault(x => x.Id == teamId);
+
+			if (team == null)
+			{
+				throw new ArgumentException("Unknown team");
+			}
+			return team;
+		}
+
+		private User GetUserOrThrow(int userId)
+		{
+			var targetUser = _context.Users.FirstOrDefault(x => x.Id == userId);
+
+			if (targetUser == null)
+			{
+				throw new ArgumentException("Unknown user");
+			}
+			return targetUser;
 		}
 	}
 }

@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Security;
-using AutoMapper;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
 
@@ -21,21 +20,19 @@ namespace EventBooking.Filters
 			var membership = (SimpleMembershipProvider)Membership.Provider;
 			var roles = (SimpleRoleProvider)Roles.Provider;
 
-			if (!roles.RoleExists(UserType.Administrator.ToString()))
-				roles.CreateRole(UserType.Administrator.ToString());
-
-			if (!roles.RoleExists(UserType.PowerUser.ToString()))
-				roles.CreateRole(UserType.PowerUser.ToString());
+			EnsureRole(roles, UserType.Administrator.ToString());
+			EnsureRole(roles, UserType.PowerUser.ToString());
 
 			SeedActivities(context);
 
+			var firstTeam = context.Teams.First();
 			if (membership.GetUser("henrik.andersson@tretton37.com", false) == null)
 				EnsureUserExists(membership, context, "henrik.andersson@tretton37.com",
 					new User
 						{
 							Cellphone = "3457",
 							Name = "dodo",
-							Team = context.Teams.First(),
+							Team = firstTeam,
 							Email = "henrik.andersson@tretton37.com"
 						});
 
@@ -49,22 +46,29 @@ namespace EventBooking.Filters
 					Cellphone = "3457",
 					Name = "najz",
 					Email = "henrik.andersson@tretton37.com",
-					Team = context.Teams.First(),  
-				};
-
-				user.AdminInTeams.Add(context.Teams.First());
+					Team = firstTeam,  
+				};			
 											
 				EnsureUserExists(membership, context, "tidaholm69@hotmail.com", user);
 			}
 
-			if (!roles.GetRolesForUser("tidaholm69@hotmail.com").Contains(UserType.PowerUser.ToString()))
-				roles.AddUsersToRoles(new[] { "tidaholm69@hotmail.com" }, new[] { UserType.PowerUser.ToString() });
+
+			var teamPowerUser = firstTeam.Name + " PowerUser";
+			EnsureRole(roles, teamPowerUser);
+			if (!roles.GetRolesForUser("tidaholm69@hotmail.com").Contains(teamPowerUser))
+				roles.AddUsersToRoles(new[] { "tidaholm69@hotmail.com" }, new[] { teamPowerUser });
 
 			CreateAwesomeUsers(membership, context);
 			CreatePredefinedActivityItems(context);
 			var session = context.Activities.First();
 			session.Coordinator = context.Users.First();
 			context.SaveChanges();
+		}
+
+		private static void EnsureRole(SimpleRoleProvider roles, string role)
+		{
+			if (!roles.RoleExists(role))
+				roles.CreateRole(role);
 		}
 
 		private void CreateAwesomeUsers(SimpleMembershipProvider membership, EventBookingContext context)

@@ -1,4 +1,9 @@
 ﻿@using EventBooking.Data
+
+@{
+    bool showAdmin = Roles.GetRolesForUser().Any(x => x == UserType.Administrator.ToString() || x.EndsWith("PowerUser"));
+}
+
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
@@ -22,7 +27,7 @@
                         <li>@Html.ActionLink("Mitt lag", "Details", "Team")</li>
                         <li>@Html.ActionLink("Skapa event", "Create", "Activity")</li>
 
-                        if (Roles.IsUserInRole(UserType.PowerUser.ToString()) || Roles.IsUserInRole(UserType.Administrator.ToString()))
+                        if (showAdmin)
                         {
                               <li>@Html.ActionLink("Hantera lag", "ViewTeams", "Admin")</li>
                         }
