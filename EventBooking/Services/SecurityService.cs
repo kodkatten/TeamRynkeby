@@ -100,14 +100,21 @@ namespace EventBooking.Services
 		public bool ToogleAdministrator(int userId)
 		{
 			var targetUser = GetUserOrThrow(userId);
-			var isInRole = Roles.IsUserInRole(targetUser.Email, UserType.Administrator.ToString());
+			var adminRole = UserType.Administrator.ToString();
+			var isInRole = Roles.IsUserInRole(targetUser.Email, adminRole);
+			
 			if (isInRole)
 			{
-				Roles.RemoveUserFromRole(targetUser.Email, UserType.Administrator.ToString());
+				if(Roles.GetUsersInRole(adminRole).Count() <= 1)
+				{
+					throw new ArgumentException("There must be atleast one administrator.");
+				}
+
+				Roles.RemoveUserFromRole(targetUser.Email, adminRole);
 				return false;
 			}
 
-			Roles.AddUserToRole(targetUser.Email, UserType.Administrator.ToString());
+			Roles.AddUserToRole(targetUser.Email, adminRole);
 			return true;
 		}
 

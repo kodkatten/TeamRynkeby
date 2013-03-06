@@ -34,12 +34,10 @@ namespace EventBooking.Controllers
 			return Redirect("ViewTeams");
 		}	
 		
-		public ActionResult DeleteTeam(int id)
+		public void DeleteTeam(int id)
 		{
 			EnsureCurrentUserIsAdmin();
 			_teamRepository.DeleteTeam(id);
-
-			return RedirectToAction("ViewTeams");
 		}
 		 
 		public JsonResult ToogleTeamPowerUser(int userId, int teamId)
@@ -48,9 +46,9 @@ namespace EventBooking.Controllers
 			
 			bool isTeamAdminNow = _security.ToogleTeamPowerUser(userId, teamId);
 			return Json(new { newState = isTeamAdminNow }, JsonRequestBehavior.AllowGet);
-		}	
-		
-			public JsonResult ToogleAdministrator(int userId)
+		}
+
+		public JsonResult ToogleAdministrator(int userId)
 		{
 			EnsureCurrentUserIsAdmin();
 			

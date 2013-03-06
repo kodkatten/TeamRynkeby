@@ -48,7 +48,7 @@ $(function() {
     });
 
     $('.toggle-admin').on('click', function () {
-        togglePrivilege($(this), '/admin/toggleAdministrator');
+        togglePrivilege($(this), '/admin/ToogleAdministrator');
     });
 
     $('.teamdelete').on('click', function () {
