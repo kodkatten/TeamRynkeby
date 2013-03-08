@@ -70,3 +70,9 @@ a.l337 {
 a.l337:hover {
     color: #8dc63f;
 }
+
+.modelstate-error {
+	color: red;
+	margin-left: 80px;
+	padding-top: 5px;
+}

@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using EventBooking.Extensions;
 using EventBooking.Services;
 
 namespace EventBooking

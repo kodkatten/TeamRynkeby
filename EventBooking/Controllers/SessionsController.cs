@@ -7,26 +7,31 @@ using AutoMapper;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
 using EventBooking.Data.Repositories;
+using EventBooking.Extensions;
+using EventBooking.Filters;
 using EventBooking.Services;
 
 namespace EventBooking.Controllers
 {
 	public class SessionsController : Controller
 	{
+		private readonly IActivityRepository _activityRepository;
 		private readonly ISessionRepository _repository;
 
 		private readonly ISecurityService _securityService;
 
-		public SessionsController(ISessionRepository repository, ISecurityService securityService)
+		public SessionsController(IActivityRepository activityRepository, ISessionRepository repository, ISecurityService securityService)
 		{
+			_activityRepository = activityRepository;
 			_repository = repository;
 			_securityService = securityService;
 		}
 
+		[ImportModelStateFromTempData]
 		public ActionResult Index(int activityId = 0)
 		{
 			IEnumerable<Session> sessions = _repository.GetSessionsForActivity(activityId);
-			Activity activity = sessions.Select(s => s.Activity).FirstOrDefault();
+			Activity activity = _activityRepository.GetActivityById(activityId);
 
 			if (null == activity)
 				return RedirectToAction("NotFound", new { activityId });
@@ -36,16 +41,17 @@ namespace EventBooking.Controllers
 							sessions.Select(Mapper.Map<SessionModel>)));
 		}
 
-		[HttpPost]
+		[HttpPost, ExportModelStateToTempData]
 		public ActionResult Save(ActivitySessionsModel sessionModel)
 		{
 			int activityId = sessionModel.SelectedSession.ActivityId;
 
-			if (!ModelState.IsValid)
-				return View("Index", sessionModel);
+			if (ModelState.IsValid)
+			{
+				var session = Mapper.Map<Session>(sessionModel.SelectedSession);
+				_repository.Save(activityId, session);
+			}
 
-			var session = Mapper.Map<Session>(sessionModel.SelectedSession);
-			_repository.Save(activityId, session);
 			return RedirectToAction("Index", new { activityId });
 		}
 
@@ -94,7 +100,9 @@ namespace EventBooking.Controllers
 
 		public ActionResult Delete(int activityId, int sessionId)
 		{
-			throw new NotImplementedException("Delete session not implemented");
+			_repository.DeleteSession(sessionId);
+
+			return RedirectToAction("Index", new { activityId });
 		}
 
 		public ActionResult Edit(int activityId, int sessionId)

@@ -154,7 +154,10 @@
     <Compile Include="Controllers\ViewModels\AdministerTeamMembersModel.cs" />
     <Compile Include="Controllers\ViewModels\ContributedInventoryItemModel.cs" />
     <Compile Include="Controllers\ViewModels\ContributedInventoryModel.cs" />
+    <Compile Include="Controllers\ViewModels\DetailActivityViewModel.cs" />
     <Compile Include="Controllers\ViewModels\EditSessionModel.cs" />
+    <Compile Include="Controllers\ViewModels\SessionModel.cs" />
+    <Compile Include="Controllers\ViewModels\SessionViewModel.cs" />
     <Compile Include="Controllers\ViewModels\Volunteer.cs" />
     <Compile Include="Controllers\ViewModels\UserModel.cs" />
     <Compile Include="Controllers\ViewModels\CreateActivityModel.cs" />
@@ -168,6 +171,10 @@
     <Compile Include="Controllers\ViewModels\TeamActivitiesModel.cs" />
     <Compile Include="Controllers\ViewModels\TeamModel.cs" />
     <Compile Include="Controllers\ViewModels\UserMapper.cs" />
+    <Compile Include="Extensions\ModelStateExtensions.cs" />
+    <Compile Include="Filters\ExportModelStateToTempData.cs" />
+    <Compile Include="Filters\ImportModelStateFromTempData.cs" />
+    <Compile Include="Filters\ModelStateTempDataTransfer.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

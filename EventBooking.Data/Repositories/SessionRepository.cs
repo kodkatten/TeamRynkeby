@@ -55,6 +55,14 @@ namespace EventBooking.Data.Repositories
 			return true;
 		}
 
+		public void DeleteSession(int sessionId)
+		{
+			Session sessionToDelete = _context.Sessions.First(s => s.Id == sessionId);
+
+			_context.Sessions.Remove(sessionToDelete);
+			_context.SaveChanges();
+		}
+
 		public void SaveVolunteers(Session session)
 		{
 			_context.SaveChanges();
