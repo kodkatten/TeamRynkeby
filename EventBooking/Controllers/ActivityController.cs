@@ -6,6 +6,7 @@ using AutoMapper;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
 using EventBooking.Data.Repositories;
+using EventBooking.Filters;
 using EventBooking.Services;
 
 namespace EventBooking.Controllers
@@ -16,8 +17,8 @@ namespace EventBooking.Controllers
 		private readonly ActivityRepository _activityRepository;
 		private readonly IActivityItemRepository _activityItemRepository;
 		private readonly ITeamRepository _teamRepository;
-	    private readonly IEmailService _emailService;
-	    private const int NumberOfActivitiesPerPage = 6;
+		private readonly IEmailService _emailService;
+		private const int NumberOfActivitiesPerPage = 6;
 
 		public ActivityController(ISecurityService securityService, ActivityRepository activityRepository,
 			IActivityItemRepository activityItemRepository, ITeamRepository teamRepository)
@@ -26,7 +27,7 @@ namespace EventBooking.Controllers
 			_activityRepository = activityRepository;
 			_activityItemRepository = activityItemRepository;
 			_teamRepository = teamRepository;
-		    
+
 		}
 
 		public ActionResult Create()
@@ -116,71 +117,52 @@ namespace EventBooking.Controllers
 			throw new NotImplementedException();
 		}
 
-		public ActionResult SelectExistingItem()
+		[ImportModelStateFromTempData]
+		public ActionResult SelectExistingItem(int activityId)
 		{
-			// Create the model.
-			var inventoryModel = new ContributedInventoryModel();
-			inventoryModel.SuggestedItems = new List<string>();
-			inventoryModel.ContributedItems = new List<ContributedInventoryItemModel>();
-			inventoryModel.Intent = "Add"; // Default intent.
+			Activity activity = _activityRepository.GetActivityById(activityId);
+			IEnumerable<ActivityItem> items = _activityItemRepository.GetItemsForActivity(activityId);
 
-			// Populate the suggested prefedined items.
-			inventoryModel.SuggestedItems.AddRange(_activityItemRepository.GetTemplates().Select(i => i.Name));
+			var inventoryModel = new ContributedInventoryModel
+				(new List<string>(_activityItemRepository.GetTemplates().Select(i => i.Name)),
+				items.Select(Mapper.Map<ContributedInventoryItemModel>),
+				"Add");
 
-			// Return the view.
-			return View(inventoryModel);
+			var viewModel = new ActivityItemsModel(new ActivityModel(activity), inventoryModel);
+			return View(viewModel);
 		}
 
-		[HttpPost]
-		public ActionResult UpdateContributedItem(ContributedInventoryModel model)
+		[HttpPost, ExportModelStateToTempData]
+		public ActionResult UpdateContributedItem(ActivityItemsModel model)
 		{
-			bool isAdding = model.Intent.Equals("Add", StringComparison.OrdinalIgnoreCase);
-			bool isRemoving = model.Intent.Equals("Remove", StringComparison.OrdinalIgnoreCase);
+			bool isAdding = model.ContributedInventory.Intent.Equals("Add", StringComparison.OrdinalIgnoreCase);
+			bool isRemoving = model.ContributedInventory.Intent.Equals("Remove", StringComparison.OrdinalIgnoreCase);
 
 			// No currently selected item?
-			if (string.IsNullOrWhiteSpace(model.CurrentlySelectedItem))
+			if (string.IsNullOrWhiteSpace(model.ContributedInventory.CurrentlySelectedItem))
 			{
-				// Return the view.
-				return View("SelectExistingItem", model);
+				ModelState.AddModelError("ContributedInventory.CurrentlySelectedItem", "Måste ange materiel-namn!");
+				return RedirectToAction("SelectExistingItem", new { activityId = model.ActivityId });
 			}
 
 			// Adding?
 			if (isAdding)
 			{
-				// Try to find this item in the collection.
-				var existing = model.ContributedItems.FirstOrDefault(
-					item => item.Name.Equals(model.CurrentlySelectedItem, StringComparison.OrdinalIgnoreCase));
-
-				if (existing != null)
-				{
-					// Add the quantity to the existing item.
-					existing.Quantity += model.ItemQuantity;
-				}
-				else
-				{
-					// Add new item.
-					model.ContributedItems.Add(new ContributedInventoryItemModel
-					{
-						Name = model.CurrentlySelectedItem,
-						Quantity = model.ItemQuantity
-					});
-				}
+				_activityItemRepository.AddOrUpdateItem(model.ActivityId,
+				                                                       model.ContributedInventory.CurrentlySelectedItem,
+				                                                       model.ContributedInventory.ItemQuantity);
 			}
 			// Removing?
 			else if (isRemoving)
 			{
 				// Remove the currently selected item.
-				string itemToRemove = model.CurrentlySelectedItem;
-				model.ContributedItems.RemoveAll(x => x.Name.Equals(itemToRemove, StringComparison.OrdinalIgnoreCase));
-				model.CurrentlySelectedItem = string.Empty;
+				string itemToRemove = model.ContributedInventory.CurrentlySelectedItem;
+				_activityItemRepository.DeleteItemByActivityIdAndItemName(model.ActivityId, itemToRemove);
 			}
-
-			// Reset the intent.
-			model.Intent = "Add";
 
 			// Clear the model state and return the model back to the view.
 			this.ModelState.Clear();
-			return View("SelectExistingItem", model);
+			return RedirectToAction("SelectExistingItem", new { activityId = model.ActivityId });
 		}
 
 		public ActionResult GetSuggestedItems()

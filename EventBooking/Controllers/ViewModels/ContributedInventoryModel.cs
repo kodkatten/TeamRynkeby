@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace EventBooking.Controllers.ViewModels
 {
@@ -17,6 +14,13 @@ namespace EventBooking.Controllers.ViewModels
 		{
 			this.SuggestedItems = new List<string>();
 			this.ContributedItems = new List<ContributedInventoryItemModel>();
+		}
+
+		public ContributedInventoryModel(IEnumerable<string> suggestedItems, IEnumerable<ContributedInventoryItemModel> contributedItems, string intent)
+		{
+			SuggestedItems = new List<string>(suggestedItems);
+			ContributedItems = new List<ContributedInventoryItemModel>(contributedItems);
+			Intent = intent;
 		}
 
 	}

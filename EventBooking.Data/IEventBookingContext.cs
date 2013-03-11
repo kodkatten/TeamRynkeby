@@ -12,6 +12,7 @@ namespace EventBooking.Data
 		IDbSet<TrainingQuestion> TrainingQuestions { get; set; }
 		IDbSet<Session> Sessions { get; set; }
 		IDbSet<ActivityItemTemplate> ActivityItemTemplates { get; set; }
+		IDbSet<ActivityItem> ActivityItems { get; set; } 
 
 		void SaveChanges();
 		DbEntityEntry Entry<TEntity>(TEntity entity) where TEntity : class;
