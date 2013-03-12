@@ -1,62 +1,77 @@
-﻿@model EventBooking.Controllers.ViewModels.ContributedInventoryModel
+﻿@using EventBooking.Extensions
+@model EventBooking.Controllers.ViewModels.ActivityItemsModel
 
+@{
+	ViewBag.Title = "Hantera materiel";
+}
 
-@using (Html.BeginForm("UpdateContributedItem", "Activity", FormMethod.Post, new { id = "ContributionItemForm" }))
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("UpdateContributedItem", "Activity", FormMethod.Post, new { id = "ContributionItemForm", @class = "form-horizontal" }))
 {   
-    // Render the form.
-    <div class="input-prepend input-append">
-        <span class="add-on">Det behövs</span>
-        @Html.DropDownListFor(x => x.ItemQuantity, Enumerable.Range(1, 100).Select(x => new SelectListItem() { Text = x.ToString(), Value = x.ToString() }))
-        <span class="add-on">Stycken</span>
-        @Html.TextBoxFor(x => x.CurrentlySelectedItem, new { id = "ItemToBringTextBox", autocomplete = "off" })
-        <button class="btn" type="button" id="AddItemToBring">Lägg till</button>
-    </div>
+	<div class="control-group">
+		@Html.LabelFor(m => m.Activity.Name, new { @class = "control-label" })
+		<div class="controls">
+			@Model.Activity.Name
+		</div>
+	</div>
+	<div class="control-group">
+		@Html.LabelFor(m => m.Activity.DateFormatted, new { @class = "control-label" })
+		<div class="controls">
+			@Model.Activity.DateFormatted
+		</div>
+	</div>
+	<h3>Lägg till materiel</h3>
+		
+	// Render the form.
+	<div class="input-prepend input-append">
+		<span class="add-on">Det behövs</span>
+		@Html.DropDownListFor(x => x.ContributedInventory.ItemQuantity, Enumerable.Range(1, 100).Select(x => new SelectListItem() { Text = x.ToString(), Value = x.ToString() }))
+		<span class="add-on">Stycken</span>
+		@Html.TextBoxFor(x => x.ContributedInventory.CurrentlySelectedItem, new { id = "ItemToBringTextBox", autocomplete = "off" })
+		<button class="btn" type="button" id="AddItemToBring">Lägg till</button>		
+	</div>
    
-    // Output all added items.
-    <div id="AddedItems">
-        @foreach (var item in Model.ContributedItems.OrderBy(x => x.Name))
-        {
-            <a href="#" id="RemoveItemToBring" class="btn btn-link" data-item="@item.Name">
-                <span class="icon-remove-circle"></span>@item.Name (@item.Quantity)
-            </a>
-        }
-    </div>
+	@Html.ValidationMessageFor(x => x.ContributedInventory.CurrentlySelectedItem)
 
-    // View state
-    for (int i = 0; i < Model.ContributedItems.Count; i++)
-    {
-        @Html.HiddenFor(m => m.ContributedItems[i].Name)
-        @Html.HiddenFor(m => m.ContributedItems[i].Quantity)
-    }
-    for (int i = 0; i < Model.SuggestedItems.Count; i++)
-    {
-        @Html.HiddenFor(m => m.SuggestedItems[i])
-    }       
-    @Html.HiddenFor(m => m.Intent, new { id = "TheIntent" })      
+	// Output all added items.
+	<div id="AddedItems">
+		@foreach (var item in Model.ContributedInventory.ContributedItems.OrderBy(x => x.Name))
+  {
+			<a href="#" id="RemoveItemToBring" class="btn btn-link" data-item="@item.Name">
+				<span class="icon-remove-circle"></span>@item.Name (@item.Quantity)
+			</a>
+  }
+	</div>
+
+  // View state
+	@Html.HiddenFor(m => m.ContributedInventory.Intent, new { id = "TheIntent" })      
+	@Html.HiddenFor(m => m.ActivityId)
 }
 
 @section scripts
 {
-    $('input#ItemToBringTextBox').typeahead({
-        source: function (term, process) {
-            var url = '@(Url.Action("GetSuggestedItems", "Activity"))';
-            return $.getJSON(url, { term: term }, function (data) {
-            return process(data);
-            });
+	<script type="text/javascript">
+		$('input#ItemToBringTextBox').typeahead({
+			source: function (term, process) {
+				var url = '@(Url.Action("GetSuggestedItems", "Activity"))';
+        	return $.getJSON(url, { term: term }, function (data) {
+        		return process(data);
+        	});
         }, minLength: 0
     });
 
-    $('#AddedItems a#RemoveItemToBring').click(function (event) {        
-        $('#TheIntent').val('Remove'); // Set Intent
-        $('#ItemToBringTextBox').val($(this).data('item')); // Set Value        
-        $('#ContributionItemForm').submit(); // Submit the dataZ        
-        event.preventDefault(); // No clickety-click
-    });
-    
-    $('button#AddItemToBring').click(function (event) {        
-        $('#TheIntent').val('Add'); // Set Intent  
-        $('#ContributionItemForm').submit(); // Submit the dataZ        
-        event.preventDefault(); // No clickety-click
-    });
+        $('#AddedItems a#RemoveItemToBring').click(function (event) {
+        	$('#TheIntent').val('Remove'); // Set Intent
+        	$('#ItemToBringTextBox').val($(this).data('item')); // Set Value        
+        	$('#ContributionItemForm').submit(); // Submit the dataZ        
+        	event.preventDefault(); // No clickety-click
+        });
 
+        $('button#AddItemToBring').click(function (event) {
+        	$('#TheIntent').val('Add'); // Set Intent  
+        	$('#ContributionItemForm').submit(); // Submit the dataZ        
+        	event.preventDefault(); // No clickety-click
+        });
+	</script>
 }

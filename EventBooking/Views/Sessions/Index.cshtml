@@ -61,6 +61,7 @@
 	{
 		<div class="modelstate-error">@ViewContext.ViewData.ModelState.Errors()</div>
 	}
+		@Html.ActionLink("Hantera materiel", "SelectExistingItem", "Activity", new { activityId = Model.Activity.Id }, new {})
 	</div>
 </div>
 
