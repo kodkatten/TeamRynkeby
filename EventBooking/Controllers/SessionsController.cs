@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
@@ -16,21 +17,21 @@ namespace EventBooking.Controllers
 	public class SessionsController : Controller
 	{
 		private readonly IActivityRepository _activityRepository;
-		private readonly ISessionRepository _repository;
+		private readonly ISessionRepository _sessionRepository;
 
 		private readonly ISecurityService _securityService;
 
 		public SessionsController(IActivityRepository activityRepository, ISessionRepository repository, ISecurityService securityService)
 		{
 			_activityRepository = activityRepository;
-			_repository = repository;
+            _sessionRepository = repository;
 			_securityService = securityService;
 		}
 
 		[ImportModelStateFromTempData]
 		public ActionResult Index(int activityId = 0)
 		{
-			IEnumerable<Session> sessions = _repository.GetSessionsForActivity(activityId);
+            IEnumerable<Session> sessions = _sessionRepository.GetSessionsForActivity(activityId);
 			Activity activity = _activityRepository.GetActivityById(activityId);
 
 			if (null == activity)
@@ -49,7 +50,7 @@ namespace EventBooking.Controllers
 			if (ModelState.IsValid)
 			{
 				var session = Mapper.Map<Session>(sessionModel.SelectedSession);
-				_repository.Save(activityId, session);
+                _sessionRepository.Save(activityId, session);
 			}
 
 			return RedirectToAction("Index", new { activityId });
@@ -57,7 +58,7 @@ namespace EventBooking.Controllers
 
 		public RedirectToRouteResult SignUp(int sessionId)
 		{
-			var session = _repository.GetSessionById(sessionId);
+            var session = _sessionRepository.GetSessionById(sessionId);
 			var user = _securityService.GetCurrentUser();
 
 			if (session != null && user != null)
@@ -66,7 +67,7 @@ namespace EventBooking.Controllers
 				if (session.IsAllowedToSignUp(user))
 				{
 					// Sign the user up for the session.,
-					if (_repository.SignUp(session, user))
+                    if (_sessionRepository.SignUp(session, user))
 					{
 						// Success
 						return RedirectToAction("SignUpSuccessful", new { id = sessionId });
@@ -85,7 +86,7 @@ namespace EventBooking.Controllers
 
 		public ActionResult SignUpFailed(int id)
 		{
-			var session = _repository.GetSessionById(id);
+            var session = _sessionRepository.GetSessionById(id);
 
 			dynamic viewModel = new ExpandoObject();
 			viewModel.ActivityId = session.Activity.Id;
@@ -100,7 +101,7 @@ namespace EventBooking.Controllers
 
 		public ActionResult Delete(int activityId, int sessionId)
 		{
-			_repository.DeleteSession(sessionId);
+            _sessionRepository.DeleteSession(sessionId);
 
 			return RedirectToAction("Index", new { activityId });
 		}
@@ -108,7 +109,7 @@ namespace EventBooking.Controllers
 		public ActionResult Edit(int activityId, int sessionId)
 		{
 			// Edit sessions
-			var sessionToEdit = _repository.GetSessionById(sessionId);
+            var sessionToEdit = _sessionRepository.GetSessionById(sessionId);
 
 			var editSessionModel = new EditSessionModel
 				{
@@ -133,8 +134,21 @@ namespace EventBooking.Controllers
 					VolunteersNeeded = model.VolunteersNeeded
 				};
 
-			_repository.UpdateSession(model.ActivityId, session);
+            _sessionRepository.UpdateSession(model.ActivityId, session);
 			return RedirectToAction("Index", new { model.ActivityId });
 		}
+
+        public RedirectToRouteResult Leave(int activityId)
+        {
+            var user = _securityService.GetCurrentUser();
+            var sessions = _sessionRepository.GetSessionsForActivity(activityId);
+
+            foreach (var session in sessions.Where(session => session.Activity.Id == activityId))
+            {
+                _sessionRepository.LeaveSession(session, user);
+            }
+
+            return RedirectToActionPermanent("Details", "Team");
+        }
 	}
 }

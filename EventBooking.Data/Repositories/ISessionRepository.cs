@@ -11,5 +11,6 @@ namespace EventBooking.Data.Repositories
 		void UpdateSession(int activityId, Session session);
 		bool SignUp(Session session, User user);
 		void DeleteSession(int sessionId);
+	    void LeaveSession(Session session, User user);
 	}
 }

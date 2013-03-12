@@ -63,7 +63,13 @@ namespace EventBooking.Data.Repositories
 			_context.SaveChanges();
 		}
 
-		public void SaveVolunteers(Session session)
+        public void LeaveSession(Session session, User user)
+        {
+            session.Volunteers.Remove(user);
+            _context.SaveChanges();
+        }
+
+	    public void SaveVolunteers(Session session)
 		{
 			_context.SaveChanges();
 		}
