@@ -138,7 +138,7 @@ namespace EventBooking.Controllers
 			return RedirectToAction("Index", new { model.ActivityId });
 		}
 
-        public RedirectToRouteResult Leave(int activityId)
+		public ActionResult Leave(int activityId)
         {
             var user = _securityService.GetCurrentUser();
             var sessions = _sessionRepository.GetSessionsForActivity(activityId);
@@ -148,7 +148,7 @@ namespace EventBooking.Controllers
                 _sessionRepository.LeaveSession(session, user);
             }
 
-            return RedirectToActionPermanent("Details", "Team");
+            return RedirectToAction("Details", "Team");
         }
 	}
 }

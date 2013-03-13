@@ -65,14 +65,16 @@
                 {
 
                     <li class="@e.Type">
-                        <a href="@Url.Action("Details", "Activity", new { @e.Id })" class="link" rel="tooltip" data-original-title="@e.Description">
-                            <span class="badge @Html.BadgeColorPicker(@e.Type)">@e.Date.ToSwedishShortDateString()</span>
-                            @e.Name
-                        </a>
-                        <a href="@Url.Action("Leave", "Sessions", new {activityId = @e.Id })" class="link" rel="tooltip" data-original-title="Avanmäl" >
-                            <span class="icon icon-thumbs-down"></span>
-
-                        </a>
+	                    <a href="@Url.Action("Details", "Activity", new { @e.Id })" class="link" rel="tooltip" data-original-title="@e.Description">
+		                    <span class="badge @Html.BadgeColorPicker(@e.Type)">@e.Date.ToSwedishShortDateString()</span>
+		                    @e.Name
+	                    </a>
+						@if (Model.CanLeaveActivity(e.Id))
+						{
+							<a href="@Url.Action("Leave", "Sessions", new {activityId = @e.Id})" class="link" rel="tooltip" data-original-title="Avanmäl" >
+								<span class="icon icon-thumbs-down"></span>
+							</a>						
+						}
                         @if (e.Coordinator.Email == User.Identity.Name)
                         {
                             <a href="@Url.Action("Edit", "Activity", new { @e.Id })" class="link" rel="tooltip" data-original-title="Redigera">

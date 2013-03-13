@@ -20,7 +20,7 @@ namespace EventBooking.Data.Repositories
 
 		public virtual IEnumerable<Session> GetSessionsForActivity(int activityId)
 		{
-			return _context.Sessions.Where(s => s.Activity.Id == activityId).Include(s => s.Activity).Include(s => s.Activity.OrganizingTeam).ToArray();
+			return _context.Sessions.Where(s => s.Activity.Id == activityId).Include(s => s.Activity).Include(s => s.Activity.OrganizingTeam).Include(s => s.Volunteers).ToArray();
 		}
 
 		public virtual void Save(int activityId, Session session)

@@ -21,6 +21,11 @@ namespace EventBooking.Data
 				   this.Volunteers.All(volunteer => volunteer.Id != user.Id);
 		}
 
+		public bool CanLeave(User user)
+		{
+			return Volunteers.Any(v => v.Id == user.Id);
+		}
+
 		//public void SignUp(User user)
 		//{
 		//	if (!this.IsAllowedToSignUp(user))
