@@ -17,8 +17,7 @@ namespace EventBooking.Controllers
 		private readonly ActivityRepository _activityRepository;
 		private readonly IActivityItemRepository _activityItemRepository;
 		private readonly ITeamRepository _teamRepository;
-		private readonly IEmailService _emailService;
-		private const int NumberOfActivitiesPerPage = 6;
+	    private const int NumberOfActivitiesPerPage = 6;
 
 		public ActivityController(ISecurityService securityService, ActivityRepository activityRepository,
 			IActivityItemRepository activityItemRepository, ITeamRepository teamRepository)
@@ -27,7 +26,8 @@ namespace EventBooking.Controllers
 			_activityRepository = activityRepository;
 			_activityItemRepository = activityItemRepository;
 			_teamRepository = teamRepository;
-
+		    
+		    
 		}
 
 		public ActionResult Create()
@@ -108,7 +108,17 @@ namespace EventBooking.Controllers
 		}
 
 	
+        public ActionResult WhoHasSignup(int activityId)
+        {
+            var activity = _activityRepository.GetActivityById(activityId);
+            var viewModel = new SignedForActivity(activity, _securityService.GetCurrentUser())
+                {
+                    Session = activity.Sessions
+                };
+            
+            return View("WhoHasSignup", viewModel);
 
+        }
 		public ActionResult Edit(int id)
 		{
 			throw new NotImplementedException();

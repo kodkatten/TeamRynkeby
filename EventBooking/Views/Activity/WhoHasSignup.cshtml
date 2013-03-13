@@ -1,0 +1,12 @@
+﻿@model EventBooking.Controllers.ViewModels.SignedForActivity
+@{
+    ViewBag.Title = "WhoHasSignup";
+}
+
+<ul>
+    @foreach (var vol in Model.Session.SelectMany(s => s.Volunteers))
+    {
+        <li>@vol.Name</li>
+    }
+
+</ul>

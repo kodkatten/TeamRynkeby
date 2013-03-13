@@ -17,7 +17,9 @@ namespace EventBooking.Controllers.ViewModels
 				                Enumerable.Empty<SessionViewModel>();
 		}
 
-		public string Description { get; private set; }
+	   
+
+	    public string Description { get; private set; }
 
 		public IEnumerable<SessionViewModel> Sessions { get; private set; }
 
