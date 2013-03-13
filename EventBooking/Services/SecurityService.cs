@@ -42,6 +42,17 @@ namespace EventBooking.Services
 			return WebSecurity.CurrentUserName != null ? GetUser(WebSecurity.CurrentUserName) : null;
 		}
 
+		public IEnumerable<string> GetRolesForCurrentUser()
+		{
+			var user = GetCurrentUser();
+			if (user == null)
+			{
+				return Enumerable.Empty<string>();
+			}
+
+			var roles = (SimpleRoleProvider)Roles.Provider;
+			return roles.GetRolesForUser(user.Email);
+		}
 		
 		public bool CanCurrentUserManageTeams()
 		{
@@ -50,9 +61,8 @@ namespace EventBooking.Services
 		}
 
 		public bool IsCurrentUserPowerUser()
-		{
-			var roles = (SimpleRoleProvider)Roles.Provider;
-			return roles.GetRolesForUser(GetCurrentUser().Email).Contains(UserType.PowerUser.ToString());
+		{			
+			return GetRolesForCurrentUser().Contains(UserType.PowerUser.ToString());
 		}
 
 		public bool ToogleTeamPowerUser(int userId, int teamId)
@@ -73,14 +83,14 @@ namespace EventBooking.Services
 			return true;
 		}
 
-		bool ISecurityService.IsCurrentUserAdministrator()
-		{
-			return IsCurrentUserAdministrator();
+		public bool IsCurrentUserAdministrator()
+		{			
+			return GetRolesForCurrentUser().Contains(UserType.Administrator.ToString());
 		}
 
 		public bool IsCurrentUserAdministratorOrPowerUser()
 		{
-			return Roles.GetAllRoles()
+			return GetRolesForCurrentUser()
 				.Any(x => x.Contains(UserType.PowerUser.ToString()) || x == UserType.Administrator.ToString());
 		}
 
@@ -88,7 +98,7 @@ namespace EventBooking.Services
 		{
 			var team = GetTeamOrThrow(teamId);
 			var teamPowerUserRoleName = GetPowerUserRoleForTeam(team);
-			return Roles.GetAllRoles()
+			return GetRolesForCurrentUser()
 				.Any(x => x == teamPowerUserRoleName || x == UserType.Administrator.ToString());
 		}
 
@@ -148,17 +158,6 @@ namespace EventBooking.Services
 		public void SignOff()
 		{
 			WebSecurity.Logout();
-		}
-
-		private bool IsCurrentUserAdministrator()
-		{
-			var roles = (SimpleRoleProvider)Roles.Provider;
-			var user = GetCurrentUser();
-
-			if(user == null)
-				throw new ArgumentException("Unknown user");
-			
-			return roles.GetRolesForUser(user.Email).Contains(UserType.Administrator.ToString());
 		}
 
 		private Team GetTeamOrThrow(int teamId)

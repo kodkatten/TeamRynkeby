@@ -9,6 +9,7 @@ using Autofac.Integration.Mvc;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
 using EventBooking.Filters;
+using EventBooking.Security;
 using EventBooking.Services;
 
 namespace EventBooking
@@ -33,6 +34,8 @@ namespace EventBooking
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
 			EventBookingMapper.SetupMappers(container);
+
+			SecurityConfiguration.Configure();
 
 			Database.SetInitializer(new EventBookingSeedInitializer());
 			using (var context = new EventBookingContext())

@@ -5,11 +5,15 @@ $(function() {
         var container = that.parents('.volonteer');
         var userId = container.data('volonteer-id');
         var teamId = that.parents('.team').data('team-id');
-        var targetUrl = "/admin/excludefromteam/?userId=" + userId + "&teamId=" + teamId;
+	    var targetUrl = "/admin/excludefromteam";
 
         that.addClass('disabled');
 
-        $.ajax({ url: targetUrl })
+        $.ajax({
+        	url: targetUrl,
+        	type: 'POST',
+        	data: { userId: userId, teamId: teamId }
+        })
             .done(function () {
                 container.addClass('hide-animation');
                 container.fadeOut('slow', function() { that.remove(); });
@@ -23,11 +27,14 @@ $(function() {
     function togglePrivilege(that, url) {
         var userId = that.parents('.volonteer').data('volonteer-id');
         var teamId = that.parents('.team').data('team-id');
-        var targetUrl = url + "?userId=" + userId + "&teamId=" + teamId;
 
         that.addClass('disabled');
 
-        $.ajax({ url: targetUrl })
+        $.ajax({
+        	url: url,
+        	type: 'POST',
+        	data: { userId: userId, teamId: teamId }
+        })
             .done(function (data) {
                 if (data.newState) {
                     that.addClass('btn-success');
@@ -69,7 +76,11 @@ $(function() {
         buttons.attr('disabled', 'disabled');
         failMessage.addClass('hidden');
 
-        $.ajax({ url: '/admin/deleteTeam/' + teamId })
+    	$.ajax({
+    		url: '/admin/deleteTeam',
+    		type: 'POST',
+    		data: { id: teamId }
+    	})
             .done(function () {
                 modal.modal('hide');
                 var container = $('[data-team-id=' + teamId + ']');

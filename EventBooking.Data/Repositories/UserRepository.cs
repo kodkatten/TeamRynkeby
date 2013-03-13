@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 
@@ -34,7 +35,7 @@ namespace EventBooking.Data.Repositories
 
 		public void RemoveFromTeam(int userId)
 		{
-			var user = _context.Users.FirstOrDefault(x => x.Id == userId);
+			var user = _context.Users.Include(u => u.Team).FirstOrDefault(x => x.Id == userId);
 			if (user != null)
 			{
 				user.Team = null;

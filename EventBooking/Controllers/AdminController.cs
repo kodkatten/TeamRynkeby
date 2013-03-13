@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Web;
+﻿using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using EventBooking.Controllers.ViewModels;
@@ -28,44 +24,40 @@ namespace EventBooking.Controllers
 		[HttpPost]
 		public ActionResult CreateTeam(string name)
 		{
-			EnsureCurrentUserIsAdmin();
-
 			_teamRepository.CreateTeam(name);
 			return Redirect("ViewTeams");
 		}	
 		
-		public void DeleteTeam(int id)
+		[HttpPost]
+		public JsonResult DeleteTeam(int id)
 		{
-			EnsureCurrentUserIsAdmin();
 			_teamRepository.DeleteTeam(id);
+			return Json(new {result = string.Format("Team {0} deleted", id)});
 		}
 		 
+		[HttpPost]
 		public JsonResult ToogleTeamPowerUser(int userId, int teamId)
 		{
-			EnsureCurrentUserIsAdmin();
-			
 			bool isTeamAdminNow = _security.ToogleTeamPowerUser(userId, teamId);
 			return Json(new { newState = isTeamAdminNow }, JsonRequestBehavior.AllowGet);
 		}
 
+		[HttpPost]
 		public JsonResult ToogleAdministrator(int userId)
 		{
-			EnsureCurrentUserIsAdmin();
-			
 			bool isTeamAdminNow = _security.ToogleAdministrator(userId);
 			return Json(new { newState = isTeamAdminNow }, JsonRequestBehavior.AllowGet);
 		}
 
-		public void ExcludeFromTeam(int userId, int teamId)
+		[HttpPost]
+		public JsonResult ExcludeFromTeam(int userId, int teamId)
 		{
-			EnsureCurrentUserIsAdminOrPowerUserInTeam(teamId);
 			_userRepository.RemoveFromTeam(userId);
+			return Json(new {result = string.Format("User {0} excluded from team {1}", userId, teamId)});
 		}
 
 		public ActionResult Team(int id)
 		{
-			EnsurePowerUserOrAdmin();
-
 			var team = _teamRepository.TryGetTeam(id);
 			
 			if (team == null)
@@ -77,56 +69,10 @@ namespace EventBooking.Controllers
 
 		public ActionResult ViewTeams()
 		{
-			EnsurePowerUserOrAdmin();
-
 			var teams = _teamRepository.GetTeams();
-			AdministratorPageModel model = new AdministratorPageModel(teams);
+			var model = new AdministratorPageModel(teams);
 			return View(model);
 		}
 
-		private void EnsureCurrentUserIsNotTargetUser(int userId)
-		{
-			if(_security.GetCurrentUser().Id == userId) 
-				throw new HttpException(403, "Not allowed");
-		}
-
-		private void EnsureCurrentUserIsAdminOrPowerUserInTeam(int teamId)
-		{
-			if (_security.IsLoggedIn() == false)
-			{
-				throw new HttpException(401, "Unauthorized");
-			}
-
-			if (_security.IsCurrentUserAdministratorOrPowerUser(teamId) == false)
-			{
-				throw new HttpException(403, "Forbidden - Administrator or PowerUser privileges are required.");
-			}	
-		}
-
-		private void EnsurePowerUserOrAdmin()
-		{
-			if (_security.IsLoggedIn() == false)
-			{
-				throw new HttpException(401, "Unauthorized");
-			}
-
-			if (_security.IsCurrentUserAdministratorOrPowerUser() == false)
-			{
-				throw new HttpException(403, "Forbidden - Administrator or PowerUser privileges are required.");
-			}	
-		}
-
-		private void EnsureCurrentUserIsAdmin()
-		{
-			if (_security.IsLoggedIn() == false)
-			{
-				throw new HttpException(401, "Unauthorized");
-			}
-
-			if (_security.IsCurrentUserAdministrator() == false)
-			{
-				throw new HttpException(403, "Forbidden - Administrator privileges are required.");
-			}	
-		}
 	}
 }

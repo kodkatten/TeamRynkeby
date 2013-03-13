@@ -57,6 +57,10 @@
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="FluentSecurity, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\FluentSecurity.1.4.0\lib\FluentSecurity.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -171,6 +175,8 @@
     <Compile Include="Controllers\ViewModels\TeamActivitiesModel.cs" />
     <Compile Include="Controllers\ViewModels\TeamModel.cs" />
     <Compile Include="Controllers\ViewModels\UserMapper.cs" />
+    <Compile Include="Security\DenyAnonymousAccessPolicyViolationHandler.cs" />
+    <Compile Include="Security\DenyAuthenticatedAccessPolicyViolationHandler.cs" />
     <Compile Include="Extensions\ModelStateExtensions.cs" />
     <Compile Include="Filters\ExportModelStateToTempData.cs" />
     <Compile Include="Filters\ImportModelStateFromTempData.cs" />
@@ -180,6 +186,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Security\RequireAdminOrPowerUser.cs" />
+    <Compile Include="Security\RequireAdminOrTeamPowerUser.cs" />
+    <Compile Include="Security\SecurityConfiguration.cs" />
     <Compile Include="Services\EmailService.cs" />
     <Compile Include="Services\IEmailService.cs" />
     <Compile Include="Filters\EventBookingSeedInitializer.cs" />

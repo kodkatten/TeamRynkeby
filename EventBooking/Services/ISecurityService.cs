@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using EventBooking.Data;
 
 namespace EventBooking.Services
@@ -7,6 +8,7 @@ namespace EventBooking.Services
 	{
 		bool IsLoggedIn();
 		User GetCurrentUser();
+		IEnumerable<string> GetRolesForCurrentUser();
 		void SignOff();
 		bool SignIn(string username, string password);
 		void CreateUserAndAccount(string email, string password, DateTime created);
