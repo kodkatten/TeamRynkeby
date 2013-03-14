@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace EventBooking.Data
+namespace EventBooking.Data.Entities
 {
     public class Activity
     {

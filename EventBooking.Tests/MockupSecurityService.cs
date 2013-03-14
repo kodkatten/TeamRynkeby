@@ -1,5 +1,6 @@
 ﻿using System;
 using EventBooking.Data;
+using EventBooking.Data.Entities;
 using EventBooking.Services;
 
 namespace EventBooking.Tests

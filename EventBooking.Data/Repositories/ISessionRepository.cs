@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using EventBooking.Data.Entities;
 
 namespace EventBooking.Data.Repositories
 {

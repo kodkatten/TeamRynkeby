@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace EventBooking.Data
+namespace EventBooking.Data.Entities
 {
     public class Team
     {

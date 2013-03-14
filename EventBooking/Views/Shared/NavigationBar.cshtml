@@ -1,4 +1,5 @@
 ﻿@using EventBooking.Data
+@using EventBooking.Data.Entities
 
 @{
     bool showAdmin = Roles.GetRolesForUser().Any(x => x == UserType.Administrator.ToString() || x.EndsWith("PowerUser"));

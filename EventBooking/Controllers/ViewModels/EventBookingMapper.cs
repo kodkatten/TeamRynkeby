@@ -3,6 +3,7 @@ using System.Web.Security;
 using AutoMapper;
 using Autofac;
 using EventBooking.Data;
+using EventBooking.Data.Entities;
 using EventBooking.Services;
 
 namespace EventBooking.Controllers.ViewModels

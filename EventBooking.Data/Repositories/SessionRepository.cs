@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using EventBooking.Data;
+using EventBooking.Data.Entities;
 using EventBooking.Data.Repositories;
 
 namespace EventBooking.Data.Repositories

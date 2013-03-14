@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 
-namespace EventBooking.Data
+namespace EventBooking.Data.Entities
 {
 	public class User
 	{

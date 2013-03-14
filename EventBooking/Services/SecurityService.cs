@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web.Security;
 using EventBooking.Data;
+using EventBooking.Data.Entities;
 using WebMatrix.WebData;
 
 namespace EventBooking.Services

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
+using EventBooking.Data.Entities;
 
 namespace EventBooking.Data.Repositories
 {

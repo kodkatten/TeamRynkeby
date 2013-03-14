@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using EventBooking.Data.Entities;
 
 namespace EventBooking.Data
 {
@@ -12,7 +13,8 @@ namespace EventBooking.Data
 		IDbSet<TrainingQuestion> TrainingQuestions { get; set; }
 		IDbSet<Session> Sessions { get; set; }
 		IDbSet<ActivityItemTemplate> ActivityItemTemplates { get; set; }
-		IDbSet<ActivityItem> ActivityItems { get; set; } 
+		IDbSet<ActivityItem> ActivityItems { get; set; }
+		IDbSet<MailTemplate> MailTemplates { get; set; } 
 
 		void SaveChanges();
 		DbEntityEntry Entry<TEntity>(TEntity entity) where TEntity : class;

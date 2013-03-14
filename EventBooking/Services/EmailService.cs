@@ -7,6 +7,7 @@ using System.Net.Mime;
 using System.Reflection;
 using System.Resources;
 using EventBooking.Data;
+using EventBooking.Data.Entities;
 using EventBooking.Data.Repositories;
 
 namespace EventBooking.Services

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using EventBooking.Data;
+using EventBooking.Data.Entities;
 
 namespace EventBooking.Controllers.ViewModels
 {

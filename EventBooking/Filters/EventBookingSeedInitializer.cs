@@ -6,12 +6,12 @@ using System.Linq;
 using System.Web.Security;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
-
+using EventBooking.Data.Entities;
 using WebMatrix.WebData;
 
 namespace EventBooking.Filters
 {
-    internal class EventBookingSeedInitializer : DropCreateDatabaseAlways<EventBookingContext>   // DropCreateDatabaseIfModelChanges<EventBookingContext> //
+	internal class EventBookingSeedInitializer : DropCreateDatabaseAlways<EventBookingContext>   // DropCreateDatabaseIfModelChanges<EventBookingContext> //
 	{
 		protected override void Seed(EventBookingContext context)
 		{
@@ -22,6 +22,8 @@ namespace EventBooking.Filters
 
 			EnsureRole(roles, UserType.Administrator.ToString());
 			EnsureRole(roles, UserType.PowerUser.ToString());
+
+			CreateDefaultMailTemplates(context);
 
 			SeedActivities(context);
 
@@ -46,9 +48,9 @@ namespace EventBooking.Filters
 					Cellphone = "13457",
 					Name = "najz",
 					Email = "henrik.andersson@tretton37.com",
-					Team = firstTeam,  
-				};			
-											
+					Team = firstTeam,
+				};
+
 				EnsureUserExists(membership, context, "tidaholm69@hotmail.com", user);
 			}
 
@@ -63,6 +65,31 @@ namespace EventBooking.Filters
 			var session = context.Activities.First();
 			session.Coordinator = context.Users.First();
 			context.SaveChanges();
+		}
+
+		private static void CreateDefaultMailTemplates(EventBookingContext context)
+		{
+			var newActivityTemplate = new MailTemplate
+				{
+					Name = "newactivity",
+					Content = @"Hej bäste $Team medlem
+Nu är det en ny aktivitet på gång.
+$Datum mellan $FirstTime och $LastTime
+
+$Summary
+
+$Pass
+
+$Description"
+				};
+			context.MailTemplates.Add(newActivityTemplate);
+
+			var activityInfoTemplate = new MailTemplate
+				{
+					Name = "infoactivity",
+					Content = @""
+				};
+			context.MailTemplates.Add(activityInfoTemplate);
 		}
 
 		private static void EnsureRole(SimpleRoleProvider roles, string role)

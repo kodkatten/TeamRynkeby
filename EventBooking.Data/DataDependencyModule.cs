@@ -18,6 +18,7 @@ namespace EventBooking.Data
             builder.RegisterType<TrainingQuestionRepository>().As<ITrainingQuestionRepository>().InstancePerLifetimeScope();
             builder.RegisterType<ActivityItemRepository>().As<IActivityItemRepository>().InstancePerLifetimeScope();
             builder.RegisterType<SessionRepository>().As<ISessionRepository>().InstancePerLifetimeScope();
+			builder.RegisterType<MailTemplateRepository>().As<IMailTemplateRepository>().InstancePerLifetimeScope();
         }
     }
 

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using System.Data.Metadata.Edm;
-using System.Data.Objects;
-using System.Linq;
+using EventBooking.Data.Entities;
 
 namespace EventBooking.Data
 {
@@ -22,7 +18,8 @@ namespace EventBooking.Data
 		public IDbSet<InterviewQuestion> InterviewQuestions { get; set; }
 		public IDbSet<TrainingQuestion> TrainingQuestions { get; set; }
 		public IDbSet<ActivityItemTemplate> ActivityItemTemplates { get; set; }
-		public IDbSet<ActivityItem> ActivityItems { get; set; } 
+		public IDbSet<ActivityItem> ActivityItems { get; set; }
+		public IDbSet<MailTemplate> MailTemplates { get; set; } 
 
 		void IEventBookingContext.SaveChanges()
 		{

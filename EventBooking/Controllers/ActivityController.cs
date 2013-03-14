@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using AutoMapper;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
+using EventBooking.Data.Entities;
 using EventBooking.Data.Repositories;
 using EventBooking.Filters;
 using EventBooking.Services;
@@ -171,7 +172,7 @@ namespace EventBooking.Controllers
 			return RedirectToAction("SelectExistingItem", new { activityId = model.ActivityId });
 		}
 
-		public ActionResult GetSuggestedItems()
+		public JsonResult GetSuggestedItems()
 		{
 			return Json(_activityItemRepository.GetTemplates().Select(i => i.Name), JsonRequestBehavior.AllowGet);
 		}

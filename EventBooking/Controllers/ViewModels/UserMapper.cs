@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using EventBooking.Data;
+using EventBooking.Data.Entities;
 
 namespace EventBooking.Controllers.ViewModels
 {

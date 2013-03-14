@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EventBooking.Data
+namespace EventBooking.Data.Entities
 {
 	public class Session
 	{

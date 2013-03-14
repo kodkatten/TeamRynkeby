@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using EventBooking.Data;
+using EventBooking.Data.Entities;
 
 namespace EventBooking.Controllers.ViewModels
 {

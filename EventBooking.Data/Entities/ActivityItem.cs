@@ -1,4 +1,4 @@
-﻿namespace EventBooking.Data
+﻿namespace EventBooking.Data.Entities
 {
 	public class ActivityItem
 	{

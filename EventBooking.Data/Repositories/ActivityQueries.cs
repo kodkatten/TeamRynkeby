@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using EventBooking.Data.Entities;
 
 namespace EventBooking.Data.Repositories
 {

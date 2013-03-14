@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
+using EventBooking.Data.Entities;
 using EventBooking.Services;
 
 namespace EventBooking.Controllers
