@@ -18,15 +18,17 @@ namespace EventBooking.Controllers
 		private readonly ActivityRepository _activityRepository;
 		private readonly IActivityItemRepository _activityItemRepository;
 		private readonly ITeamRepository _teamRepository;
-	    private const int NumberOfActivitiesPerPage = 6;
+		private readonly IEmailService _emailService;
+		private const int NumberOfActivitiesPerPage = 6;
 
 		public ActivityController(ISecurityService securityService, ActivityRepository activityRepository,
-			IActivityItemRepository activityItemRepository, ITeamRepository teamRepository)
+			IActivityItemRepository activityItemRepository, ITeamRepository teamRepository, IEmailService emailService)
 		{
 			_securityService = securityService;
 			_activityRepository = activityRepository;
 			_activityItemRepository = activityItemRepository;
 			_teamRepository = teamRepository;
+			_emailService = emailService;
 		}
 
 		public ActionResult Create()
@@ -175,6 +177,12 @@ namespace EventBooking.Controllers
 		public JsonResult GetSuggestedItems()
 		{
 			return Json(_activityItemRepository.GetTemplates().Select(i => i.Name), JsonRequestBehavior.AllowGet);
+		}
+
+		public ActionResult SendEmail(int id)
+		{
+			_emailService.SendMail(id, EmailService.EmailType.InfoActivity, "Detta är fritext som man ska kunna mata in.\nDetta är fritext som man ska kunna mata in.\nDetta är fritext som man ska kunna mata in.\n");
+			return new EmptyResult();
 		}
 
 	}

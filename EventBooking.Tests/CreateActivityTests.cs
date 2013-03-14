@@ -108,7 +108,7 @@ namespace EventBooking.Tests
 	public class ActivityControllerShunt : ActivityController
 	{
 		public ActivityControllerShunt(ActivityRepository activityRepository, ISecurityService securityService, IActivityItemRepository itemRepository, ITeamRepository teams)
-			: base(securityService, activityRepository, itemRepository, teams)
+			: base(securityService, activityRepository, itemRepository, teams, null)
 		{
 		}
 

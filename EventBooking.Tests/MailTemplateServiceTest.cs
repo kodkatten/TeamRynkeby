@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using EventBooking.Data.Entities;
 using EventBooking.Data.Repositories;
 using EventBooking.Services;
 using Moq;
@@ -16,9 +17,14 @@ namespace EventBooking.Tests
 		public void When_Requesting_Template_With_Provided_Data_The_Template_Should_Be_Rendered()
 		{
 			var expected = string.Format("Team Rynkeby den {0} 1337 st", DateTime.MinValue.ToString(CultureInfo.InvariantCulture));
-
+			var template = new MailTemplate
+				{
+					Name = "template",
+					Subject = "$Namn den $Datum $Antal st",
+					Content = "$Namn den $Datum $Antal st"
+				};
 			var mailTemplateRepository = new Mock<IMailTemplateRepository>();
-			mailTemplateRepository.Setup(m => m.GetByName("template")).Returns("$Namn den $Datum $Antal st");
+			mailTemplateRepository.Setup(m => m.GetByName("template")).Returns(template);
 			var mailTemplateService = new MailTemplateService(mailTemplateRepository.Object);
 
 			var data = new Dictionary<string, object>
@@ -29,7 +35,9 @@ namespace EventBooking.Tests
 				};
 
 			var result = mailTemplateService.RenderTemplate("template", data);
-			Assert.AreEqual(expected, result);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(expected, result.Subject);
+			Assert.AreEqual(expected, result.Body);
 		}
 	}
 }

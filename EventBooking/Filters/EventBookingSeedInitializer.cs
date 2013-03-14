@@ -32,8 +32,8 @@ namespace EventBooking.Filters
 				EnsureUserExists(membership, context, "henrik.andersson@tretton37.com",
 					new User
 						{
-							Cellphone = "13457",
-							Name = "dodo",
+							Cellphone = "0107-333555",
+							Name = "Henrik Andersson",
 							Team = firstTeam,
 							Email = "henrik.andersson@tretton37.com"
 						});
@@ -45,8 +45,8 @@ namespace EventBooking.Filters
 			{
 				var user = new User
 				{
-					Cellphone = "13457",
-					Name = "najz",
+					Cellphone = "0206-131337",
+					Name = "Andersson Henrik",
 					Email = "henrik.andersson@tretton37.com",
 					Team = firstTeam,
 				};
@@ -72,13 +72,14 @@ namespace EventBooking.Filters
 			var newActivityTemplate = new MailTemplate
 				{
 					Name = "newactivity",
+					Subject = "Team Rynkeby - Ny aktivitet $ActivityName",
 					Content = @"Hej bäste $Team medlem
 Nu är det en ny aktivitet på gång.
-$Datum mellan $FirstTime och $LastTime
+$Date mellan $FirstTime och $LastTime
 
 $Summary
 
-$Pass
+$Sessions
 
 $Description"
 				};
@@ -87,7 +88,27 @@ $Description"
 			var activityInfoTemplate = new MailTemplate
 				{
 					Name = "infoactivity",
-					Content = @""
+					Subject = "Team Rynkeby - Angående $ActivityName",
+					Content = @"<h2>Hej bäste ${Team}-medlem!</h2>
+
+<h3>$ActivityName - $Date mellan $FirstTime och $LastTime</h3>
+<p>$Summary</p>
+
+<p>$FreeText</p>
+
+<table>
+#foreach ( $User in $Users )
+	<tr><td style='border-bottom: solid 1px #000;'><b>$User.Name</b></td><td style='border-bottom: solid 1px #000;'>$User.CellPhone</td></tr>
+#foreach ( $Session in $User.Sessions )
+	<tr><td colspan='2' style='padding-left: 25px;'>$Session.FromTime - $Session.ToTime</td></tr>
+#end
+#end
+</table>
+
+<p>$Description</p>
+
+Vänligen<br/>
+$ActivityManager"
 				};
 			context.MailTemplates.Add(activityInfoTemplate);
 		}
@@ -142,6 +163,7 @@ $Description"
             var activity = new Activity
                 {
                     Name = "Insamling i Täby Centrum",
+					Summary = "Sportlov i Täby Centrum",
                     Description = "Under sportlovet kommer Team Rynkeby vara i Täby Centrum",
                     Date = dateTime,
                     OrganizingTeam = team,
@@ -155,6 +177,14 @@ $Description"
                 Volunteers = new Collection<User>(),
                 VolunteersNeeded = 15
             };
+			var session2 = new Session
+			{
+				FromTime = new TimeSpan(13, 0, 0),
+				ToTime = new TimeSpan(15, 0, 0),
+				Activity = activity,
+				Volunteers = new Collection<User>(),
+				VolunteersNeeded = 10
+			};
             context.Activities.Add(activity);
             context.Sessions.Add(session);
 

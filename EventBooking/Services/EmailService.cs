@@ -1,97 +1,132 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Objects;
 using System.Globalization;
 using System.Linq;
 using System.Net.Mail;
-using System.Net.Mime;
-using System.Reflection;
-using System.Resources;
-using EventBooking.Data;
+using EventBooking.Controllers.ViewModels;
 using EventBooking.Data.Entities;
 using EventBooking.Data.Repositories;
 
 namespace EventBooking.Services
 {
-    public class EmailService : IEmailService
-    {
-        private readonly ActivityRepository _activityRepository;
-        private readonly ITeamRepository _teamRepository;
-        private readonly MailMessage _mailMessage;
+	public class EmailService : IEmailService
+	{
+		public enum EmailType
+		{
+			None = 0,
+			NewActivity,
+			InfoActivity
+		}
 
-        public EmailService(ActivityRepository activityRepository, ITeamRepository teamRepository)
-        {
-            _activityRepository = activityRepository;
-            _teamRepository = teamRepository;
+		private readonly IMailTemplateService _templateService;
+		private readonly IActivityRepository _activityRepository;
+		private readonly ITeamRepository _teamRepository;
+		private readonly MailMessage _mailMessage;
 
-            _mailMessage = new MailMessage();
-        }
+		public EmailService(IMailTemplateService templateService, IActivityRepository activityRepository, ITeamRepository teamRepository)
+		{
+			_templateService = templateService;
+			_activityRepository = activityRepository;
+			_teamRepository = teamRepository;
 
-        public void SendMail(int activityId)
-        {
-            var activity = _activityRepository.GetActivityById(activityId);
-            var teamId = activity.OrganizingTeam.Id;
-            var teamMembers = _teamRepository.GetTeamMembers(teamId);
-            var toAddressToName = teamMembers.ToDictionary(teamMember => teamMember.Email, teamMember => teamMember.Name);
+			_mailMessage = new MailMessage();
+		}
 
-            var text = NewEventText(activity);
-            SendMail(toAddressToName, "noreply@teamrynkeby.apphb.com", activity.OrganizingTeam.Name, activity.Name, text);
-        }
+		public void SendMail(int activityId, EmailType emailType, string freeText = "")
+		{
+			var activity = _activityRepository.GetActivityById(activityId);
+			var teamId = activity.OrganizingTeam.Id;
+			var teamMembers = _teamRepository.GetTeamMembers(teamId);
+			var toAddressToName = teamMembers.ToDictionary(teamMember => teamMember.Email, teamMember => teamMember.Name);
 
-        private string NewEventText(Activity activity)
-        {
-            var resourceManger = new ResourceManager("EventBooking.Resources", Assembly.GetExecutingAssembly());
-            var template = resourceManger.GetString("Template_NewEvent");
+			var text = NewEventText(activity, emailType, freeText);
+			SendMail(toAddressToName, "noreply@teamrynkeby.apphb.com", activity.OrganizingTeam.Name, text.Subject, text.Body);
+		}
 
-            if (template == null)
-                throw new Exception("NewEventTextNoResource");
+		private MailData NewEventText(Activity activity, EmailType emailType, string freeText)
+		{
+			var templateName = "";
+			switch (emailType)
+			{
+				case EmailType.None:
+					return null;
+				case EmailType.NewActivity:
+					templateName = "newactivity";
+					break;
+				case EmailType.InfoActivity:
+					templateName = "infoactivity";
+					break;
+			}
 
-            template = template.Replace("[Team]", activity.OrganizingTeam.ToString());
+			var data = new Dictionary<string, object>
+		        {
+					{"ActivityName", activity.Name},
+			        {"Team", activity.OrganizingTeam.Name},
+					{"Date", activity.Date.ToString("yyyy-MM-dd")},
+					{"Summary", activity.Summary},
+					{"Description", activity.Description},
+					{"ActivityManager", activity.Coordinator.Name}
+		        };
 
-            var date = activity.Date.Year + "-" + activity.Date.Month + "-" + activity.Date.Day;
-            template = template.Replace("[Datum]", date.ToString());
-            template = template.Replace("[Summary]", activity.Summary.ToString());
-            template = template.Replace("Description", activity.Description.ToString());
+			if (activity.Sessions != null)
+			{
+				data.Add("FirstTime", activity.Sessions.OrderBy(s => s.FromTime).First().FromTime.ToString("hh':'mm"));
+				data.Add("LastTime", activity.Sessions.OrderByDescending(s => s.ToTime).First().ToTime.ToString("hh':'mm"));
 
-            return template;
-        }
+				var usersAndPasses = activity.Sessions.SelectMany(s => s.Volunteers).Distinct().OrderBy(u => u.Name).Select(u => new
+					{
+						u.Name,
+						u.Cellphone,
+						Sessions = u.Sessions.Where(s => s.Activity.Id == activity.Id).OrderBy(s => s.FromTime).Select(s => new
+							{
+								FromTime = s.FromTime.ToString("hh':'mm"),
+								ToTime = s.ToTime.ToString("hh':'mm")								
+							})
+					});
+				data.Add("Users", usersAndPasses);
+			}
 
-        private void SendMail(Dictionary<string, string> toAddressToName, string fromAddress, string fromName, string subject, string text)
-        {
-            foreach (var nameAddress in toAddressToName)
-            {
-                _mailMessage.To.Add(new MailAddress(nameAddress.Key, nameAddress.Value));
-            }
+			if (!string.IsNullOrWhiteSpace(freeText))
+			{
+				data.Add("FreeText", freeText);
+			}
 
-            Send(fromAddress, fromName, subject, text);
-        }
+			return _templateService.RenderTemplate(templateName, data);
+		}
 
-        private void Send(string fromAddress, string fromName, string subject, string text)
-        {
-            _mailMessage.From = new MailAddress(fromAddress, fromName);
+		private void SendMail(Dictionary<string, string> toAddressToName, string fromAddress, string fromName, string subject, string text)
+		{
+			foreach (var nameAddress in toAddressToName)
+			{
+				_mailMessage.To.Add(new MailAddress(nameAddress.Key, nameAddress.Value));
+			}
 
-            _mailMessage.Subject = subject;
-            _mailMessage.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(text, null, MediaTypeNames.Text.Plain));
+			Send(fromAddress, fromName, subject, text);
+		}
 
+		private void Send(string fromAddress, string fromName, string subject, string text)
+		{
+			_mailMessage.From = new MailAddress(fromAddress, fromName);
 
-            var smtpClient = new SmtpClient("smtp.sendgrid.net", Convert.ToInt32(587));
-            var credentials = new System.Net.NetworkCredential("b49606c3-69d5-4ed8-975f-78ec56fe6a84@apphb.com",
-                                                               "byu9cpgi");
-            smtpClient.Credentials = credentials;
+			_mailMessage.Subject = subject;
+			_mailMessage.Body = text;
+			_mailMessage.IsBodyHtml = true;
+			//_mailMessage.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(text, null, MediaTypeNames.Text.Plain));
 
-            try
-            {
-                smtpClient.Send(_mailMessage);
-            }
-            catch (Exception e)
-            {
+			var smtpClient = new SmtpClient("smtp.sendgrid.net", Convert.ToInt32(587));
+			var credentials = new System.Net.NetworkCredential("b49606c3-69d5-4ed8-975f-78ec56fe6a84@apphb.com",
+															   "byu9cpgi");
+			smtpClient.Credentials = credentials;
 
-                throw new Exception(e.Message.ToString(CultureInfo.InvariantCulture));
-            }
-
-
-        }
-
-
-
-    }
+			try
+			{
+				smtpClient.Send(_mailMessage);
+			}
+			catch (Exception e)
+			{
+				throw new Exception(e.Message.ToString(CultureInfo.InvariantCulture));
+			}
+		}
+	}
 }

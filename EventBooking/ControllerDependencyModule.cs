@@ -10,6 +10,7 @@ namespace EventBooking
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<SecurityService>().As<ISecurityService>();
+	        builder.RegisterType<MailTemplateService>().As<IMailTemplateService>();
             builder.RegisterType<EmailService>().As<IEmailService>();
 			builder.RegisterAssemblyTypes(typeof(ControllerDependencyModule).Assembly).Where(t => typeof(IPolicyViolationHandler).IsAssignableFrom(t)).InstancePerLifetimeScope().AsImplementedInterfaces();
 	        builder.RegisterAssemblyTypes(typeof (ControllerDependencyModule).Assembly).Where(t => typeof (ISecurityPolicy).IsAssignableFrom(t)).InstancePerLifetimeScope().AsSelf();

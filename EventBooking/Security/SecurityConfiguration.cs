@@ -1,6 +1,5 @@
 ﻿using System.Web.Mvc;
 using EventBooking.Controllers;
-using EventBooking.Data;
 using EventBooking.Data.Entities;
 using EventBooking.Services;
 using FluentSecurity;

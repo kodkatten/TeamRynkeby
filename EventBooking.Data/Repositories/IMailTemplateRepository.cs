@@ -1,7 +1,9 @@
+using EventBooking.Data.Entities;
+
 namespace EventBooking.Data.Repositories
 {
 	public interface IMailTemplateRepository
 	{
-		string GetByName(string templateName);
+		MailTemplate GetByName(string templateName);
 	}
 }

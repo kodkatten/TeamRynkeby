@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using EventBooking.Data.Entities;
 
 namespace EventBooking.Data.Repositories
 {
@@ -12,10 +13,9 @@ namespace EventBooking.Data.Repositories
 			_context = context;
 		}
 
-		public string GetByName(string templateName)
+		public MailTemplate GetByName(string templateName)
 		{
-			var template = _context.MailTemplates.FirstOrDefault(mt => mt.Name.Equals(templateName, StringComparison.OrdinalIgnoreCase));
-			return template == null ? string.Empty : template.Content;
+			return _context.MailTemplates.FirstOrDefault(mt => mt.Name.Equals(templateName, StringComparison.OrdinalIgnoreCase));			
 		}
 	}
 }
