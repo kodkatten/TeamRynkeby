@@ -4,9 +4,13 @@
 }
 
 <ul>
-    @foreach (var vol in Model.Session.SelectMany(s => s.Volunteers))
+    @foreach (var user in Model.Session.SelectMany(s => s.Volunteers).OrderBy(t => t.Sessions.OrderBy(se => se.FromTime)))
     {
-        <li>@vol.Name</li>
+        //foreach (var session in Model.Session)
+        //{
+            
+        <li>@user.Name</li>
+        <li>@user.</li>
+        //     }
     }
-
 </ul>
