@@ -4,13 +4,31 @@
 }
 
 <ul>
-    @foreach (var user in Model.Session.SelectMany(s => s.Volunteers).OrderBy(t => t.Sessions.OrderBy(se => se.FromTime)))
-    {
-        //foreach (var session in Model.Session)
-        //{
+    <table>
+        <tr>
+            <th>Namn</th>
+            <th>Från</th>
+            <th>Till</th>
+            <th>saker</th>
+        </tr>
+
+        @foreach (var user in Model.Session.SelectMany(s => s.Volunteers).OrderBy(t => t.Sessions.OrderBy(se => se.FromTime)))
+        {
+            <tr>@user.Name</tr>
             
-        <li>@user.Name</li>
-        <li>@user.</li>
-        //     }
-    }
+            foreach (var session in user.Sessions)
+            {
+                if (session.Activity.Id == Model.Id)
+                {
+                    <tr>
+                        @session.FromTime
+                    </tr>
+                    <tr>
+                        @session.ToTime
+                    </tr>
+                }
+            }
+        }
+
+    </table>
 </ul>
