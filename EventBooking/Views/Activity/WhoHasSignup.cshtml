@@ -3,7 +3,7 @@
     ViewBag.Title = "WhoHasSignup";
 }
 
-<ul>
+
     <table>
         <tr>
             <th>Namn</th>
@@ -14,7 +14,7 @@
 
         @foreach (var user in Model.Session.SelectMany(s => s.Volunteers).OrderBy(t => t.Sessions.OrderBy(se => se.FromTime)))
         {
-            <tr>@user.Name</tr>
+            <tr>@user.Name</tr>@*
             
             foreach (var session in user.Sessions)
             {
@@ -27,8 +27,7 @@
                         @session.ToTime
                     </tr>
                 }
-            }
+            }*@
         }
 
     </table>
-</ul>

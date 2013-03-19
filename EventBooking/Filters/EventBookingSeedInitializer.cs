@@ -30,7 +30,7 @@ namespace EventBooking.Filters
 				EnsureUserExists(membership, context, "henrik.andersson@tretton37.com",
 					new User
 						{
-							Cellphone = "3457",
+							Cellphone = "13457",
 							Name = "dodo",
 							Team = firstTeam,
 							Email = "henrik.andersson@tretton37.com"
@@ -43,7 +43,7 @@ namespace EventBooking.Filters
 			{
 				var user = new User
 				{
-					Cellphone = "3457",
+					Cellphone = "13457",
 					Name = "najz",
 					Email = "henrik.andersson@tretton37.com",
 					Team = firstTeam,  
@@ -102,7 +102,7 @@ namespace EventBooking.Filters
 			specification = specification ?? new User { Name = "One of the three very beared wise men" };
 			UserMapper.MapUserTemp(user, specification);
 			user.Created = DateTime.UtcNow;
-			context.Sessions.First().Volunteers.Add(user);
+			//context.Sessions.First().Volunteers.Add(user);
 			context.SaveChanges();
 		}
 
@@ -110,90 +110,91 @@ namespace EventBooking.Filters
 		{
 			var team = new Team { Name = "Team Täby" };
 			context.Teams.Add(team);
-			var dateTime = new DateTime(2013, 02, 17);
+		    var dateTime = DateTime.Now.AddDays(2);
 
-			var activity = new Activity
-				{
-					Name = "Insamling i Täby Centrum",
-					Description = "Under sportlovet kommer Team Rynkeby vara i Täby Centrum",
-					Date = dateTime,
-					OrganizingTeam = team,
-					Type = ActivityType.Preliminärt
-				};
-			var session = new Session
-			{
-				FromTime = new TimeSpan(8, 0, 0),
-				ToTime = new TimeSpan(10, 0, 0),
-				Activity = activity,
-				Volunteers = new Collection<User>(),
-				VolunteersNeeded = 15
-			};
-			context.Activities.Add(activity);
-			context.Sessions.Add(session);
-			context.Activities.Add(new Activity
-			{
-				Name = "Insamling i Täby Centrum",
-				Summary = "Stor insamling",
-				Description = "Under sportlovet kommer Team Rynkeby vara i Täby Centrum",
-				Date = new DateTime(2013, 02, 27),
-				OrganizingTeam = team,
-				Type = ActivityType.Publikt
-			});
-			context.Activities.Add(new Activity
-			{
-				Name = "Insamling vid Pendeltågsstationen",
-				Description = "Skit i 3 koppar latte. Skänk dem till ",
-				Date = new DateTime(2013, 03, 17),
-				OrganizingTeam = team,
-				Type = ActivityType.Sponsor
-			});
-			context.Activities.Add(new Activity
-			{
-				Name = "Spin of Hope",
-				Description = "Cykla av dig fläsket ",
-				Date = new DateTime(2013, 03, 27),
-				OrganizingTeam = team,
-				Type = ActivityType.Träning
-			});
+            //var activity = new Activity
+            //    {
+            //        Name = "Insamling i Täby Centrum",
+            //        Description = "Under sportlovet kommer Team Rynkeby vara i Täby Centrum",
+            //        Date = dateTime,
+            //        OrganizingTeam = team,
+            //        Type = ActivityType.Preliminärt
+            //    };
+            //var session = new Session
+            //{
+            //    FromTime = new TimeSpan(8, 0, 0),
+            //    ToTime = new TimeSpan(10, 0, 0),
+            //    Activity = activity,
+            //    Volunteers = new Collection<User>(),
+            //    VolunteersNeeded = 15
+            //};
+            //context.Activities.Add(activity);
+            //context.Sessions.Add(session);
 
-			// Team #2
-			var team2 = new Team() { Name = "Team Stockholm" };
-			team2.Activities = new List<Activity>();
-			team2.Activities.Add(new Activity()
-			{
-				Name = "Tanter på stan",
-				Description = "Dessa skall alltså rånas.",
-				Summary = "En gång var jag två gånger.",
-				Date = new DateTime(2013, 02, 22),
-				OrganizingTeam = team2
-			});
 
-			team2.Activities.Add(new Activity()
-			{
-				Name = "Samla in pengar på stan",
-				Summary = "Stora högtidsdagen då alla vill skänka pengar",
-				Description = "Det är inte alla som har pengar, men de kan alltid skänka en lite slant, och många bäckar små, eller många slantar små, leder till en rikedom för mig",
-				Date = new DateTime(2013, 03, 03),
-				OrganizingTeam = team2
-			});
-			team2.Activities.Add(new Activity()
-			{
-				Name = "En annan aktivitet",
-				Summary = "Stora tiggardagen",
-				Description = "Vi skänker våra själar till satan.",
-				Date = new DateTime(2013, 03, 03),
-				OrganizingTeam = team2
-			});
+		    var activity1 = new Activity
+		        {
+                    Name = "Stor insamling",
+		            Summary = "Stor insamling",
+                    Description = "Stor insamling",
+		            Date = dateTime.AddDays(1),
+		            OrganizingTeam = team,
+		            Type = ActivityType.Publikt
+		        };
 
-			team2.Activities.Add(new Activity()
-			{
-				Name = "adfa",
-				Summary = "adfasdfa",
-				Description = "adfafafdsdfasdfasdf.",
-				Date = new DateTime(2013, 02, 28),
-				OrganizingTeam = team2
-			});
-			context.Teams.Add(team2);
+            var session1 = new Session
+            {
+                FromTime = new TimeSpan(8, 0, 0),
+                ToTime = new TimeSpan(10, 0, 0),
+                Activity = activity1,
+                Volunteers = new Collection<User>(),
+                VolunteersNeeded = 15
+            };
+            context.Activities.Add(activity1);
+		    context.Sessions.Add(session1);
+
+
+
+
+
+            //// Team #2
+            //var team2 = new Team() { Name = "Team Stockholm" };
+            //team2.Activities = new List<Activity>();
+            //team2.Activities.Add(new Activity()
+            //{
+            //    Name = "Tanter på stan",
+            //    Description = "Dessa skall alltså rånas.",
+            //    Summary = "En gång var jag två gånger.",
+            //    Date = new DateTime(2013, 02, 22),
+            //    OrganizingTeam = team2
+            //});
+
+            //team2.Activities.Add(new Activity()
+            //{
+            //    Name = "Samla in pengar på stan",
+            //    Summary = "Stora högtidsdagen då alla vill skänka pengar",
+            //    Description = "Det är inte alla som har pengar, men de kan alltid skänka en lite slant, och många bäckar små, eller många slantar små, leder till en rikedom för mig",
+            //    Date = new DateTime(2013, 03, 03),
+            //    OrganizingTeam = team2
+            //});
+            //team2.Activities.Add(new Activity()
+            //{
+            //    Name = "En annan aktivitet",
+            //    Summary = "Stora tiggardagen",
+            //    Description = "Vi skänker våra själar till satan.",
+            //    Date = new DateTime(2013, 03, 03),
+            //    OrganizingTeam = team2
+            //});
+
+            //team2.Activities.Add(new Activity()
+            //{
+            //    Name = "adfa",
+            //    Summary = "adfasdfa",
+            //    Description = "adfafafdsdfasdfasdf.",
+            //    Date = new DateTime(2013, 02, 28),
+            //    OrganizingTeam = team2
+            //});
+            //context.Teams.Add(team2);
 
 			context.SaveChanges();
 		}
