@@ -121,7 +121,7 @@ namespace EventBooking.Filters
             //        Type = ActivityType.Preliminärt
             //    };
             //var session = new Session
-            //{
+            //{WhoHasSignup.cshtml 
             //    FromTime = new TimeSpan(8, 0, 0),
             //    ToTime = new TimeSpan(10, 0, 0),
             //    Activity = activity,
