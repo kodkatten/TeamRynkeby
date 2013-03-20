@@ -4,50 +4,39 @@
 }
 
 
-<table>
-    <tr>
-        <th>Namn</th>
-        <th>Från</th>
-        <th>Till</th>
-        <th>saker</th>
-    </tr>
+    <table class="table table-hover">
 
-    @* @foreach (var user in Model.Session.SelectMany(s => s.Volunteers).OrderBy(t => t.Sessions.OrderBy(se => se.FromTime)))
-        {
-            *@
-
-
-    @foreach (var user in Model.Session.SelectMany(s => s.Volunteers))
-    {
         <tr>
-            <td>@user.Name</td>
-
-            @foreach (var session in user.Sessions)
-            {
-                if (session.Activity.Id == Model.Id)
-                {
-            
-                <td>
-                    @session.FromTime
-                </td>
-                <td>
-                    @session.ToTime
-                </td>
-                <td>Saker</td>
-                }
-            }
+            <th>Namn</th>
+            <th>Från</th>
+            <th>Till</th>
+            <th>saker</th>
         </tr>
-    }
-
-</table>
 
 
+        @foreach (var user in Model.Session.SelectMany(s => s.Volunteers))
+        {
+            <tr>
+                <td>@user.Name</td>
+
+                @foreach (var session in user.Sessions)
+                {
+                    if (session.Activity.Id == Model.Id)
+                    {
+            
+                    <td>
+                        @session.FromTime
+                    </td>
+                    <td>
+                        @session.ToTime
+                    </td>
+                    <td>Saker</td>
+                    }
+                }
+            </tr>
+        }
+
+    </table>
 
 
 
-
-
-
-
-
-</tr>
