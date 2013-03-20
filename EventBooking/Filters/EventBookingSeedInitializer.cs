@@ -150,8 +150,19 @@ namespace EventBooking.Filters
                 Volunteers = new Collection<User>(),
                 VolunteersNeeded = 15
             };
+
+            var session2 = new Session
+            {
+                FromTime = new TimeSpan(10, 0, 0),
+                ToTime = new TimeSpan(12, 0, 0),
+                Activity = activity1,
+                Volunteers = new Collection<User>(),
+                VolunteersNeeded = 15
+            };
             context.Activities.Add(activity1);
 		    context.Sessions.Add(session1);
+		    context.Sessions.Add(session2);
+      
 
 
 
