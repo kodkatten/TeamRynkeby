@@ -26,8 +26,6 @@ namespace EventBooking.Controllers
 			_activityRepository = activityRepository;
 			_activityItemRepository = activityItemRepository;
 			_teamRepository = teamRepository;
-		    
-		    
 		}
 
 		public ActionResult Create()
@@ -36,7 +34,8 @@ namespace EventBooking.Controllers
 			{
 				return RedirectToAction("Checkpoint", "Security", new { returnUrl = Url.Action("Create") });
 			}
-			return View();
+
+            return View(_activityItemRepository.GetTemplates());
 		}
 
 		public ActionResult Index()

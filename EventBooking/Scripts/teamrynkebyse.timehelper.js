@@ -45,10 +45,10 @@ teamrynkebyse.timehelper = (function () {
         
         makeRange: function(startTimeInput, endTimeInput) {
             return {
-                startTime: startTimeInput,
-                endTime: endTimeInput,
+                fromTime: startTimeInput,
+                toTime: endTimeInput,
                 isBetween: function (time) {
-                    return time.isGreaterThan(this.startTime) && time.isLessThan(this.endTime);
+                    return time.isGreaterThan(this.fromTime) && time.isLessThan(this.toTime);
                 }
             };
         }

@@ -36,6 +36,7 @@ namespace EventBooking
 				.Include("~/scripts/teamrynkebyse.wizard.js")
                 .Include("~/scripts/teamrynkebyse.timehelper.js")
                 .Include("~/scripts/teamrynkebyse.sessionbuilder.js")
+                .Include("~/scripts/teamrynkebyse.itemsbuilder.js")
 				.Include("~/scripts/createevent.js"));
 		}
 		

@@ -1,5 +1,9 @@
 ﻿
 
+textarea.invalid, input.invalid {
+    border-color: red;
+}
+
 input:read-only {
     background: white;
     cursor: pointer;
@@ -10,21 +14,21 @@ input:read-only {
 }
 
 
-#sessionContainer {
+#sessionContainer, #itemsContainer {
     display: table;
 }
 
-#sessionContainer > * {
+#sessionContainer > *, #itemsContainer > * {
     display: table-row;
 }
 
-#sessionContainer > * > * {
+#sessionContainer > * > *, #itemsContainer > * > * {
     display: table-cell;
     border-right: 15px solid transparent;
     border-top: 5px solid transparent;
 }
 
-#addMoreSessions {
+#addMoreSessions, #addMoreItems {
     margin-bottom: 10px;
     margin-top: 10px;
     display: block;

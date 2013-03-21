@@ -9,6 +9,7 @@ teamrynkebyse.sessionbuilder = (function () {
     var timePickerClass = '.timepicker';
     var sessionTemplateId = 'sessionTemplate';
     var undoClass = '.undo';
+    var count = 0;
     
     function hockTimePicker($selection) {
         $selection.timepicker({
@@ -18,25 +19,25 @@ teamrynkebyse.sessionbuilder = (function () {
         }).on('changeTime.timepicker', function (e) { validate(); });
     }
 
-    function getEndTime($ctx) {
-        return parseTime(getEndTimeElement($ctx));
+    function getToTime($ctx) {
+        return parseTime(getToTimeElement($ctx));
     }
 
-    function getStartTime($ctx) {
-        return parseTime(getStartTimeElement($ctx));
+    function getFromTime($ctx) {
+        return parseTime(getFromTimeElement($ctx));
     }
 
-    function getEndTimeElement($ctx) {
-        return $ctx.find('[name="endTime"]');
+    function getToTimeElement($ctx) {
+        return $ctx.find('[name*="toTime"]');
     }
 
-    function getStartTimeElement($ctx) {
-        return $ctx.find('[name="startTime"]');
+    function getFromTimeElement($ctx) {
+        return $ctx.find('[name*="fromTime"]');
     }
 
-    function getLastEndTime() {
+    function getLastToTime() {
         var result = getLastSessionRow();
-        return getEndTime(result);
+        return getToTime(result);
     }
 
     function getLastSessionRow() {
@@ -49,19 +50,19 @@ teamrynkebyse.sessionbuilder = (function () {
     }
 
     function getRange(sessionRow) {
-        var endTime = getEndTime(sessionRow);
-        var startTime = getStartTime(sessionRow);
-        return teamrynkebyse.timehelper.makeRange(startTime, endTime);
+        var toTime = getToTime(sessionRow);
+        var fromTime = getFromTime(sessionRow);
+        return teamrynkebyse.timehelper.makeRange(fromTime, toTime);
     }
 
     function validate() {
         var isInvalid = false;
         var allSessions = [];
 
-        $(sessionRowClass.each(function () {
+        $(sessionRowClass).each(function () {
             var range = getRange($(this));
 
-            if (range.endTime.isGreaterThan(range.startTime) == false) {
+            if (range.toTime.isGreaterThan(range.fromTime) == false) {
                 isInvalid = true;
                 return false;
             }
@@ -73,7 +74,7 @@ teamrynkebyse.sessionbuilder = (function () {
 
             allSessions.push(range);
             return true;
-        }));
+        });
         
         var $warning = $(warningId);
         if (isInvalid) $warning.show();
@@ -83,12 +84,12 @@ teamrynkebyse.sessionbuilder = (function () {
     function isOverlap(range, allSessions) {
 
         for (var i = 0; i < allSessions.length; i++) {
-            if (allSessions[i].isBetween(range.startTime)
-                || allSessions[i].isBetween(range.endTime)) {
+            if (allSessions[i].isBetween(range.fromTime)
+                || allSessions[i].isBetween(range.toTime)) {
                 return true;
             }
-            else if (range.startTime.isEqualOrLessThan(allSessions[i].startTime)
-                && range.endTime.isEqualOrGreaterThan(allSessions[i].endTime)) {
+            else if (range.fromTime.isEqualOrLessThan(allSessions[i].fromTime)
+                && range.toTime.isEqualOrGreaterThan(allSessions[i].toTime)) {
                 return true;
             }
         }
@@ -97,11 +98,15 @@ teamrynkebyse.sessionbuilder = (function () {
     }
 
     function addSession() {
-        var lastEndTime = getLastEndTime();
+        var lasttoTime = getLastToTime();
 
+        count++;
+        
         var viewData = {};
-        viewData.startTime = lastEndTime.toString();
-        viewData.endTime = lastEndTime.addHours(2).toString();
+        viewData.fromTime = lasttoTime.toString();
+        viewData.toTime = lasttoTime.addHours(2).toString();
+        viewData.index = count;
+        
         var result = $(sessioncontainerId)
                         .mustache(sessionTemplateId, viewData)
                         .children()
@@ -110,6 +115,7 @@ teamrynkebyse.sessionbuilder = (function () {
         result.find(undoClass).on('click', function () {
             result.remove();
             validate();
+            count--;
         });
         
         hockTimePicker(result.find(timePickerClass));
@@ -121,12 +127,19 @@ teamrynkebyse.sessionbuilder = (function () {
             
             $(addMoreSessionsId).on('click', addSession);
             hockTimePicker($(timePickerClass));
-            
-            $(datePickerClass).pickadate({
+            var picker = $(datePickerClass);
+            var calendar = picker.pickadate({
                 format: 'd mmmm, yyyy',
-                formatSubmit: 'yyyy-mm-dd'
-            });
+                formatSubmit: 'yyyy-mm-dd',
+                dateMin: 1    
+            }).data('pickadate');
+
+            picker.val(calendar.getDateLimit(false, "d mmmm, yyyy"));
             $.Mustache.addFromDom();
+        },
+        
+        isValid: function() {
+            return $(warningId).is(':visible') == false; 
         }
     };
 })();
