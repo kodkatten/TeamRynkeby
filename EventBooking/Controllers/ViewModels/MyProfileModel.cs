@@ -10,7 +10,7 @@ namespace EventBooking.Controllers.ViewModels
 	public class MyProfileModel
 	{
 		[Display(Name = "Namn")]
-		[Required(ErrorMessage = "*")]
+		[Required(ErrorMessage = "Namn måste anges")]
 		[MinLength(2, ErrorMessage = "Ditt namn är för kort")]
 		public string Name { get; set; }
 
@@ -27,14 +27,14 @@ namespace EventBooking.Controllers.ViewModels
 		public string City { get; set; }
 
 		[Display(Name = "Mobiltelefon")]
-		[Required(ErrorMessage = "*")]
+		[Required(ErrorMessage = "Mobiltelefon måste anges")]
 		public string Cellphone { get; set; }
 
 		[Display(Name = "Födelsedatum")]
 		public DateTime? Birthdate { get; set; }
 
-		[Display(Name = "Team")]
-		[Required(ErrorMessage = "*")]
+		[Display(Name = "Lag")]
+		[Required(ErrorMessage = "Du måste välja ett lag")]
 		public Team Team { get; set; }
 
 		public IEnumerable<TeamModel> Teams { get; private set; }

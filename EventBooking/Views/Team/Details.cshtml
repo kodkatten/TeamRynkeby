@@ -1,9 +1,10 @@
 ﻿@using System.Web.Optimization
 @using EventBooking.Controllers.ViewModels
+@using EventBooking.Data
 @model EventBooking.Controllers.ViewModels.TeamActivitiesModel
 
 @{
-    ViewBag.Title = "Team " + Model.Name;
+    ViewBag.Title = "Lag: " + Model.Name;
 }
 
 @section Scripts
@@ -97,27 +98,27 @@
             <ul>
                 <li>
                     <label class="checkbox">
-                        <input type="checkbox" checked="checked" onclick="$('li.Publikt').toggle()"><span class="badge badge-warning">Offentligt</span>
+                        <input type="checkbox" checked="checked" onclick="$('li.Publikt').toggle()"><span class="badge @Html.BadgeColorPicker(ActivityType.Publikt)">Offentligt</span>
                     </label>
                 </li>
                 <li>
                     <label class="checkbox">
-                        <input type="checkbox" checked="checked" onclick="$('li.Sponsor').toggle()"><span class="badge badge-important">Sponsor</span>
+                        <input type="checkbox" checked="checked" onclick="$('li.Sponsor').toggle()"><span class="badge @Html.BadgeColorPicker(ActivityType.Sponsor)">Sponsor</span>
                     </label>
                 </li>
                 <li>
                     <label class="checkbox">
-                        <input type="checkbox" checked="checked" onclick="$('li.Träning').toggle()"><span class="badge badge-info">Träning</span>
+                        <input type="checkbox" checked="checked" onclick="$('li.Träning').toggle()"><span class="badge @Html.BadgeColorPicker(ActivityType.Träning)">Träning</span>
                     </label>
                 </li>
                 <li>
                     <label class="checkbox">
-                        <input type="checkbox" checked="checked" onclick="$('li.Preliminärt').toggle()"><span class="badge">Preliminärt</span>
+                        <input type="checkbox" checked="checked" onclick="$('li.Preliminärt').toggle()"><span class="badge @Html.BadgeColorPicker(ActivityType.Preliminärt)">Preliminärt</span>
                     </label>
                 </li>
                 <li>
                     <label class="checkbox">
-                        <input type="checkbox" checked="checked" onclick="$('li.Teammöte').toggle()"><span class="badge">Teammöte</span>
+                        <input type="checkbox" checked="checked" onclick="$('li.Teammöte').toggle()"><span class="badge @Html.BadgeColorPicker(ActivityType.Teammöte)">Teammöte</span>
                     </label>
                 </li>
             </ul>

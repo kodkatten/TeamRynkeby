@@ -18,14 +18,14 @@
                 <ul class="nav">
                     @if (!Request.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Sign up", "SignUp", "User")</li>
-                        <li>@Html.ActionLink("Sign in", "Checkpoint", "Security")</li>
+                        <li>@Html.ActionLink("Registrera", "SignUp", "User")</li>
+                        <li>@Html.ActionLink("Logga in", "Checkpoint", "Security")</li>
                     }
                     else
                     {
                         <li>@Html.ActionLink(User.Identity.Name, "MyProfile", "User")</li>
                         <li>@Html.ActionLink("Mitt lag", "Details", "Team")</li>
-                        <li>@Html.ActionLink("Skapa event", "Create", "Activity")</li>
+                        <li>@Html.ActionLink("Skapa aktivitet", "Create", "Activity")</li>
 
                         if (showAdmin)
                         {

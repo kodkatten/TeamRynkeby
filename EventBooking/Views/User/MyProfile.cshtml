@@ -9,7 +9,7 @@
 
 @using (Html.BeginForm("MyProfile", "User", FormMethod.Post, new { @class = "form-horizontal" }))
 {
-    @Html.ValidationSummary()
+    @*Html.ValidationSummary()*@
     
     <div class="control-group">
         @Html.LabelFor(m => m.Name, new { @class = "control-label" })
