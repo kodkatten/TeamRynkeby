@@ -33,6 +33,9 @@ namespace EventBooking
 				.Include("~/scripts/bootstrap-timepicker.js")
 				.Include("~/scripts/mustache.js")
 				.Include("~/scripts/jquery.mustache.js")
+				.Include("~/scripts/teamrynkebyse.wizard.js")
+                .Include("~/scripts/teamrynkebyse.timehelper.js")
+                .Include("~/scripts/teamrynkebyse.sessionbuilder.js")
 				.Include("~/scripts/createevent.js"));
 		}
 		
