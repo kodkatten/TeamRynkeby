@@ -4,3 +4,32 @@ input:read-only {
     background: white;
     cursor: pointer;
 }
+
+.bootstrap-timepicker {
+    margin-right: 10px;
+}
+
+
+#sessionContainer {
+    display: table;
+}
+
+#sessionContainer > * {
+    display: table-row;
+}
+
+#sessionContainer > * > * {
+    display: table-cell;
+    border-right: 15px solid transparent;
+    border-top: 5px solid transparent;
+}
+
+#addMoreSessions {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    display: block;
+}
+
+.input-mini {
+    width: 40px !important;
+}

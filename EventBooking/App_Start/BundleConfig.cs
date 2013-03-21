@@ -31,6 +31,8 @@ namespace EventBooking
 				.Include("~/scripts/pickadate.js")
 				.Include("~/scripts/pickadate.sv_SE.js")
 				.Include("~/scripts/bootstrap-timepicker.js")
+				.Include("~/scripts/mustache.js")
+				.Include("~/scripts/jquery.mustache.js")
 				.Include("~/scripts/createevent.js"));
 		}
 		
