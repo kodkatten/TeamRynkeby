@@ -162,6 +162,7 @@ namespace EventBooking.Filters
             context.Activities.Add(activity1);
 		    context.Sessions.Add(session1);
 		    context.Sessions.Add(session2);
+            
       
 
 
