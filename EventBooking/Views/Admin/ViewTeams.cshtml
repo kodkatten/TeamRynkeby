@@ -17,7 +17,7 @@
 @if(Roles.IsUserInRole(UserType.Administrator.ToString())) {
     <form action="@Url.Action("CreateTeam")" method="POST">
         <fieldset>
-            <label>Skapa nytt team</label>
+            <label>Skapa nytt lag</label>
             <input type="text" name="name" placeholder="Lag namn">
             <button type="submit" class="btn">Skapa</button>
         </fieldset>

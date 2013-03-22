@@ -1,6 +1,39 @@
 ﻿
 
+textarea.invalid, input.invalid {
+    border-color: red;
+}
+
 input:read-only {
     background: white;
     cursor: pointer;
+}
+
+.bootstrap-timepicker {
+    margin-right: 10px;
+}
+
+
+#sessionContainer, #itemsContainer {
+    display: table;
+}
+
+#sessionContainer > *, #itemsContainer > * {
+    display: table-row;
+}
+
+#sessionContainer > * > *, #itemsContainer > * > * {
+    display: table-cell;
+    border-right: 15px solid transparent;
+    border-top: 5px solid transparent;
+}
+
+#addMoreSessions, #addMoreItems {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    display: block;
+}
+
+.input-mini {
+    width: 40px !important;
 }

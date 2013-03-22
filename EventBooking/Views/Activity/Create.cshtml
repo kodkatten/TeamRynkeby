@@ -1,6 +1,6 @@
 ﻿@using System.Web.Optimization
 @using EventBooking.Controllers.ViewModels
-@model EventBooking.Controllers.ViewModels.CreateActivityModel
+@model IQueryable<EventBooking.Data.ActivityItemTemplate>
 
 @{
     ViewBag.Title = "Skapa event";
@@ -14,82 +14,212 @@
 @section Scripts
 {
     @Scripts.Render("~/Scripts/CreateEvent")
-}
 
+    <script id="sessionTemplate" type="text/html">
+        <div class="sessionRow">
+            <div class="bootstrap-timepicker input-append">
+                <input type="text" name="sessions[{{index}}].fromTime" value="{{fromTime}}" class="timepicker input-mini" />
+                <span class="add-on"><i class="icon-time"></i></span>
+            </div>
+
+
+            <div class="bootstrap-timepicker input-append">
+                <input type="text" name="sessions[{{index}}].toTime" value="{{toTime}}" class="timepicker input-mini" />
+                <span class="add-on"><i class="icon-time"></i></span>
+            </div>
+
+            <div>
+                <input type="number" name="sessions[{{index}}].volonteersNeeded" class="input-mini" min="0" />
+            </div>
+            <a href="#" class="undo"><i class="icon-remove"></i>Släng</a>
+        </div>
+    </script>
+
+    <script id="itemsTemplate" type="text/html">
+        <div>
+            <div>
+                <select name="items[{{index}}].name">
+                    <option value="-1">Välj materiel</option>
+
+                    @foreach (var item in Model)
+                    {
+                        <option value="@item.Name">@item.Name</option>
+                    }
+
+                </select>
+            </div>
+
+            <div>
+                <input name="items[{{index}}].itemQuantity" type="number" class="input-mini" value="1" min="1" />
+            </div>
+            <a href="#" class="undo"><i class="icon-remove"></i>Släng</a>
+        </div>
+    </script>
+}
 
 <h2>@ViewBag.Title</h2>
 
-@using ( Html.BeginForm( "Create", "Activity", FormMethod.Post, new { @class = "form-horizontal" } ) )
-{
-    <div class="control-group">
-        @Html.LabelFor( m => m.Name, new { @class = "control-label" } )
-        <div class="controls">
-            @Html.TextBoxFor( m => m.Name, new { placeholder = "Rubrik" } )
-            @Html.ValidationMessageFor( m => m.Name )
-        </div>
-    </div>
-    <div class="control-group">
-        @Html.LabelFor( m => m.Summary, new { @class = "control-label" } )
-        <div class="controls">
-            @Html.TextAreaFor( m => m.Summary, new { placeholder = "Summering" } )
-            @Html.ValidationMessageFor( m => m.Summary )
-        </div>
-    </div>
-    <div class="control-group">
-        @Html.LabelFor( m => m.Description, new { @class = "control-label" } )
-        <div class="controls">
-            @Html.TextAreaFor( m => m.Description, new { placeholder = "Beskrivning" } )
-            @Html.ValidationMessageFor( m => m.Description )
-        </div>
-    </div>
-    
-    <div class="control-group">
-        @Html.LabelFor( m => m.Type, new { @class = "control-label" } )
-        <div class="controls">
-            @Html.RadioButtonForEnum( m => m.Type )
-            @Html.ValidationMessageFor( m => m.Type )
-        </div>
-    </div>
-    <div class="control-group">
-        @Html.LabelFor( m => m.Date, new { @class = "control-label" } )
-        <div class="controls">
-            @Html.TextBoxFor( m => m.Date, new { placeholder = "Välj datum", @class = "datepicker" } )
-            @Html.ValidationMessageFor( m => m.Date )
-        </div>
-    </div>
-    <div class="control-group">
-        <label class="control-label">Första passet börjar</label>
-    </div>
-    <div class="control-group">
-        @Html.LabelFor( m => m.Session.FromTime, new { @class = "control-label" } )
-        <div class="controls">
-            <div class="input-append bootstrap-timepicker">
-                @Html.TextBoxFor( m => m.Session.FromTime, new { placeholder = "Start", @class = "timepicker input-small" } )
-                <span class="add-on"><i class="icon-time"></i></span>
+<div class="span8">
+    @using (Html.BeginForm("Create", "Activity", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        <ul class="nav nav-pills">
+            <li data-wizard-header="pageOne" class="active">
+                <a href="#">1. Beskrivning</a>
+            </li>
+
+            <li data-wizard-header="pageTwo">
+                <a href="#">2. Datum/Tid </a>
+            </li>
+
+            <li data-wizard-header="pageThree">
+                <a href="#">3. Materiel</a>
+            </li>
+        </ul>
+
+        /***** PAGE ONE ******************** */
+        <div data-wizard-page="pageOne">
+            <div class="control-group">
+                <label class="control-label">Titel</label>
+                <div class="controls">
+                    <input name="name" type="text" maxlength="50" placeholder="T.ex Insamling på T-station" />
+                </div>
             </div>
-            @Html.ValidationMessageFor( m => m.Session.FromTime )
-        </div>
-    </div>
-    <div class="control-group">
-        @Html.LabelFor( m => m.Session.ToTime, new { @class = "control-label" } )
-        <div class="controls">
-            <div class="input-append bootstrap-timepicker">
-                @Html.TextBoxFor( m => m.Session.ToTime, new { placeholder = "Slut", @class = "timepicker input-small" } )
-                <span class="add-on"><i class="icon-time"></i></span>
+
+            <div class="control-group">
+                <label class="control-label">Publik beskrivning</label>
+                <div class="controls">
+                    <textarea name="description" placeholder="Beskrivning som ses av alla"></textarea>
+                </div>
             </div>
-            @Html.ValidationMessageFor( m => m.Session.ToTime )
+            <div class="control-group">
+                <label class="control-label">Intern beskrivning</label>
+                <div class="controls">
+                    <textarea name="summary" placeholder="Beskrivning för medlemmar"></textarea>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Typ</label>
+                <div class="controls">
+                    <label class="radio">
+                        <input name="type" type="radio" value="Träning" checked="checked" />
+                        Träning</label>
+                    <label class="radio">
+                        <input name="type" type="radio" value="Publikt" />
+                        Publikt</label>
+                    <label class="radio">
+                        <input name="type" type="radio" value="Teammöte" />
+                        Teammöte</label>
+                    <label class="radio">
+                        <input name="type" type="radio" value="Sponsor" />
+                        Sponsor</label>
+                    <label class="radio">
+                        <input name="type" type="radio" value="Preliminärt" />
+                        Preliminärt</label>
+                </div>
+            </div>
+
+            <a href="#" class="btn pull-right btn-primary" data-wizard-link="pageTwo">Nästa</a>
         </div>
-    </div>
-    <div class="control-group">
-        @Html.LabelFor( m => m.Session.VolunteersNeeded, new { @class = "control-label" } )
-        <div class="controls">
-            @Html.TextBoxFor( m => m.Session.VolunteersNeeded, new { type="number", placeholder = "Deltagare", min="0", max="200" } )
-            @Html.ValidationMessageFor( m => m.Session.VolunteersNeeded )
+
+
+        /***** PAGE TWO ******************** */
+        <div data-wizard-page="pageTwo">
+
+            <div class="control-group">
+                <label class="control-label">Datum</label>
+                <div class="controls">
+                    <input id="activityDate" type="text" name="date" placeholder="Välj datum" class="datepicker" />
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Tid/Pass</label>
+
+                <div class="controls">
+                    <div id="sessionContainer">
+
+                        <div>
+                            <p>Börjar</p>
+                            <p>Slutar</p>
+                            <p>Min deltagare</p>
+                        </div>
+
+                        <div class="sessionRow">
+                            <div class="bootstrap-timepicker input-append">
+                                <input name="sessions[0].fromTime" value="12:00" type="text" class="timepicker input-mini" />
+                                <span class="add-on"><i class="icon-time"></i></span>
+                            </div>
+
+                            <div class="bootstrap-timepicker input-append">
+                                <input name="sessions[0].toTime" value="14:00" type="text" class="timepicker input-mini" />
+                                <span class="add-on"><i class="icon-time"></i></span>
+                            </div>
+
+                            <div>
+                                <input type="number" name="sessions[0].volonteersNeeded" class="input-mini" min="0" />
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <a id="addMoreSessions" href="#">Fler pass</a>
+                    </div>
+
+                    <div id="overlappingWarning" class="alert alert-block" style="display: none">
+                        <h4>Överlappande pass</h4>
+                        <p>
+                            Det är ett eller flera pass ovan som överlappar i tid eller som börjar för det slutar. 
+                                Tyvärr lyckas vi inte hålla reda på passen när det är så. Hjälper du oss att fixa det 
+                                så tar vi bortden här rutan och du kan gå vidare och välja materiel.
+                        </p>
+                        <p>
+                            <strong>Gracias!</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <a href="#" class="btn" data-wizard-link="pageOne">Föregående</a>
+            <a href="#" class="btn pull-right btn-primary" data-wizard-link="pageThree">Nästa</a>
         </div>
-    </div>
-    <div class="control-group">
-        <div class="controls">
-            <button type="submit" class="btn">Skapa event</button>
+
+        /***** PAGE THREE ******************** */
+        <div data-wizard-page="pageThree">
+            <div class="control-group">
+                <label class="control-label">Saker att ha med</label>
+                <div class="controls">
+                    <div id="itemsContainer">
+
+                        <div>
+                            <p>Pryl</p>
+                            <p>Antal</p>
+                        </div>
+
+                        <div>
+                            <div>
+                                <select name="items[0].name">
+                                    <option value="-1">Välj materiel</option>
+
+                                    @foreach (var item in Model)
+                                    {
+                                        <option value="@item.Name">@item.Name</option>
+                                    }
+
+                                </select>
+                            </div>
+
+                            <div>
+                                <input name="items[0].itemQuantity" type="number" class="input-mini" value="1" min="1" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <a id="addMoreItems" href="#">Flera prylar</a>
+                </div>
+            </div>
+
+            <a href="#" class="btn" data-wizard-link="pageTwo">Föregående</a>
+            <button class="btn pull-right btn-warning" type="submit">Skapa</button>
         </div>
-    </div>
-}
+    }
+</div>
