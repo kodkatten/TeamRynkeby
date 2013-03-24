@@ -112,24 +112,24 @@ namespace EventBooking.Filters
 			context.Teams.Add(team);
 		    var dateTime = DateTime.Now.AddDays(2);
 
-            //var activity = new Activity
-            //    {
-            //        Name = "Insamling i Täby Centrum",
-            //        Description = "Under sportlovet kommer Team Rynkeby vara i Täby Centrum",
-            //        Date = dateTime,
-            //        OrganizingTeam = team,
-            //        Type = ActivityType.Preliminärt
-            //    };
-            //var session = new Session
-            //{WhoHasSignup.cshtml 
-            //    FromTime = new TimeSpan(8, 0, 0),
-            //    ToTime = new TimeSpan(10, 0, 0),
-            //    Activity = activity,
-            //    Volunteers = new Collection<User>(),
-            //    VolunteersNeeded = 15
-            //};
-            //context.Activities.Add(activity);
-            //context.Sessions.Add(session);
+            var activity = new Activity
+                {
+                    Name = "Insamling i Täby Centrum",
+                    Description = "Under sportlovet kommer Team Rynkeby vara i Täby Centrum",
+                    Date = dateTime,
+                    OrganizingTeam = team,
+                    Type = ActivityType.Preliminärt
+                };
+            var session = new Session
+            { 
+                FromTime = new TimeSpan(8, 0, 0),
+                ToTime = new TimeSpan(10, 0, 0),
+                Activity = activity,
+                Volunteers = new Collection<User>(),
+                VolunteersNeeded = 15
+            };
+            context.Activities.Add(activity);
+            context.Sessions.Add(session);
 
 
 		    var activity1 = new Activity
@@ -170,14 +170,14 @@ namespace EventBooking.Filters
 
 
             //// Team #2
-            //var team2 = new Team() { Name = "Team Stockholm" };
+            var team2 = new Team() { Name = "Team Stockholm" };
             //team2.Activities = new List<Activity>();
             //team2.Activities.Add(new Activity()
             //{
             //    Name = "Tanter på stan",
             //    Description = "Dessa skall alltså rånas.",
             //    Summary = "En gång var jag två gånger.",
-            //    Date = new DateTime(2013, 02, 22),
+            //    Date = dateTime,
             //    OrganizingTeam = team2
             //});
 
@@ -186,27 +186,42 @@ namespace EventBooking.Filters
             //    Name = "Samla in pengar på stan",
             //    Summary = "Stora högtidsdagen då alla vill skänka pengar",
             //    Description = "Det är inte alla som har pengar, men de kan alltid skänka en lite slant, och många bäckar små, eller många slantar små, leder till en rikedom för mig",
-            //    Date = new DateTime(2013, 03, 03),
-            //    OrganizingTeam = team2
-            //});
-            //team2.Activities.Add(new Activity()
-            //{
-            //    Name = "En annan aktivitet",
-            //    Summary = "Stora tiggardagen",
-            //    Description = "Vi skänker våra själar till satan.",
-            //    Date = new DateTime(2013, 03, 03),
+            //    Date = dateTime,
             //    OrganizingTeam = team2
             //});
 
             //team2.Activities.Add(new Activity()
             //{
-            //    Name = "adfa",
-            //    Summary = "adfasdfa",
-            //    Description = "adfafafdsdfasdfasdf.",
-            //    Date = new DateTime(2013, 02, 28),
+            //    Name = "En annan aktivitet",
+            //    Summary = "Stora tiggardagen",
+            //    Description = "Vi skänker våra själar till satan.",
+            //    Date = dateTime,
             //    OrganizingTeam = team2
             //});
-            //context.Teams.Add(team2);
+
+
+
+
+
+            // var session1 = new Session
+            //{
+            //    FromTime = new TimeSpan(8, 0, 0),
+            //    ToTime = new TimeSpan(10, 0, 0),
+            //    Activity = activity1,
+            //    Volunteers = new Collection<User>(),
+            //    VolunteersNeeded = 15
+            //};
+
+            //var session2 = new Session
+            //{
+            //    FromTime = new TimeSpan(10, 0, 0),
+            //    ToTime = new TimeSpan(12, 0, 0),
+            //    Activity = activity1,
+            //    Volunteers = new Collection<User>(),
+            //    VolunteersNeeded = 15
+            //};
+
+            context.Teams.Add(team2);
 
 			context.SaveChanges();
 		}
