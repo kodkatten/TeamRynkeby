@@ -1,7 +1,7 @@
 ﻿@using System.Web.Optimization
 @using EventBooking.Controllers.ViewModels
-@using EventBooking.Data
-@model EventBooking.Controllers.ViewModels.TeamActivitiesModel
+@using EventBooking.Data.Entities
+@model TeamActivitiesModel
 
 @{
     ViewBag.Title = "Lag: " + Model.Name;
@@ -82,7 +82,7 @@
                                 <span class="icon icon-pencil"></span>
                             </a>
                             <a href="@Url.Action("WhoHasSignup", "Activity", new {activityId = @e.Id})" class="link" rel="tooltip" data-original-title="Vilka kommer?">
-                                <span class="icon icon-eye-open"></span>
+                                <span class="icon icon-eye-open"></span></a>
 	                        <a href="@Url.Action("SendEmail", "Activity", new { @e.Id })" class="link" rel="tooltip" data-original-title="Skicka e-post">
                                 <span class="icon icon-envelope"></span>
                             </a>

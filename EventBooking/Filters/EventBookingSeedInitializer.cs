@@ -187,6 +187,7 @@ $ActivityManager"
 			};
             context.Activities.Add(activity);
             context.Sessions.Add(session);
+            context.Sessions.Add(session2);
 
 
 		    var activity1 = new Activity
@@ -208,7 +209,7 @@ $ActivityManager"
                 VolunteersNeeded = 15
             };
 
-            var session2 = new Session
+            session2 = new Session
             {
                 FromTime = new TimeSpan(10, 0, 0),
                 ToTime = new TimeSpan(12, 0, 0),

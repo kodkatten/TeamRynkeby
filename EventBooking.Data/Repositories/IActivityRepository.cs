@@ -16,5 +16,6 @@ namespace EventBooking.Data.Repositories
 
         Activity GetActivityById(int id);
 
+	    void Add(Activity activity);
     }
 }

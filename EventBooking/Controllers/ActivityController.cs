@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
 using EventBooking.Controllers.ViewModels;
-using EventBooking.Data;
 using EventBooking.Data.Entities;
 using EventBooking.Data.Repositories;
 using EventBooking.Filters;
@@ -15,13 +14,13 @@ namespace EventBooking.Controllers
 	public class ActivityController : Controller
 	{
 		private readonly ISecurityService _securityService;
-		private readonly ActivityRepository _activityRepository;
+		private readonly IActivityRepository _activityRepository;
 		private readonly IActivityItemRepository _activityItemRepository;
 		private readonly ITeamRepository _teamRepository;
 		private readonly IEmailService _emailService;
 		private const int NumberOfActivitiesPerPage = 6;
 
-		public ActivityController(ISecurityService securityService, ActivityRepository activityRepository,
+		public ActivityController(ISecurityService securityService, IActivityRepository activityRepository,
 			IActivityItemRepository activityItemRepository, ITeamRepository teamRepository, IEmailService emailService)
 		{
 			_securityService = securityService;
@@ -33,11 +32,6 @@ namespace EventBooking.Controllers
 
 		public ActionResult Create()
 		{
-			if (!_securityService.IsLoggedIn())
-			{
-				return RedirectToAction("Checkpoint", "Security", new { returnUrl = Url.Action("Create") });
-			}
-
             return View(_activityItemRepository.GetTemplates());
 		}
 
@@ -50,7 +44,7 @@ namespace EventBooking.Controllers
 		public ActionResult Create(CreateActivityModel model)
 		{
 			if (!ModelState.IsValid)
-				return View();
+				return View(_activityItemRepository.GetTemplates());
 
 			var activity = Mapper.Map<Activity>(model);
 			activity.OrganizingTeam = _securityService.GetCurrentUser().Team;
