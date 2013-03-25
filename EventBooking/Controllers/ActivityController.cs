@@ -44,7 +44,12 @@ namespace EventBooking.Controllers
 		public ActionResult Create(CreateActivityModel model)
 		{
 			if (!ModelState.IsValid)
-				return View(_activityItemRepository.GetTemplates());
+			{
+			    return View(_activityItemRepository.GetTemplates());
+			}
+
+		    Mapper.CreateMap<ContributedInventoryModel, Item>()
+		          .ForMember(dest => dest.Name, options => options.MapFrom(source => source.ItemQuantity));
 
 			var activity = Mapper.Map<Activity>(model);
 			activity.OrganizingTeam = _securityService.GetCurrentUser().Team;

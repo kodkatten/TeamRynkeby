@@ -16,21 +16,40 @@ namespace EventBooking.Controllers.ViewModels
 			this.Sessions = activityData.Sessions != null ? 
 				                activityData.Sessions.Select(session => AsSessionViewModel(session, user)) : 
 				                Enumerable.Empty<SessionViewModel>();
+
+            this.Items = activityData.Items != null ?
+                    activityData.Items.Select(session => AsItemViewModel(session, user)) :
+                    Enumerable.Empty<ContributedInventoryItemModel>();
+
 		}
 
 	   
 
 	    public string Description { get; private set; }
 
-		public IEnumerable<SessionViewModel> Sessions { get; private set; }
+        public IEnumerable<SessionViewModel> Sessions { get; private set; }
+
+        public IEnumerable<ContributedInventoryItemModel> Items { get; private set; }
 
 		public bool ShouldShowDescription { get { return isLoggedIn;  } }
 
-		public bool ShouldShowSessions { get { return isLoggedIn; } }
+        public bool ShouldShowSessions { get { return isLoggedIn; } }
+        
+        public bool ShouldShowItems { get { return isLoggedIn; } }
 
 		private static SessionViewModel AsSessionViewModel(Session data, User user)
 		{
 			return new SessionViewModel(data, user);
 		}
+
+        private static ContributedInventoryItemModel AsItemViewModel(Item data, User user)
+        {
+            var i = new ContributedInventoryItemModel();
+            i.Quantity = data.Id;
+            i.Name = data.Name;
+
+
+            return i;
+        }
 	}
 }

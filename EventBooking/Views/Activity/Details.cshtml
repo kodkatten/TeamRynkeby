@@ -32,5 +32,19 @@
         }
     </ul>
     }
+    
+    @if (@Model.ShouldShowItems)
+    {
+    <h3>Matriel</h3>
+    <ul>
+        @foreach (var item in Model.Items)
+        {
+            <li><span>@item.Name</span>
+                
+            </li>            
+        }
+    </ul>
+    }
+
     <a href="javascript:history.back()">Tillbaka</a>
 </div>

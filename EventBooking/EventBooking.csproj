@@ -277,7 +277,7 @@
     <Content Include="Views\User\MyProfile.cshtml" />
     <Content Include="Views\User\SignUp.cshtml" />
     <Content Include="Views\Activity\Create.cshtml" />
-    <Content Include="Views\Activity\details.cshtml" />
+    <Content Include="Views\Activity\Details.cshtml" />
     <Content Include="Views\Admin\ViewTeams.cshtml" />
     <Content Include="Views\Admin\Partials\Teams.cshtml" />
     <Content Include="Views\Activity\Upcoming.cshtml" />
