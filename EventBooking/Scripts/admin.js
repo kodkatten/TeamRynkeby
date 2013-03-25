@@ -2,8 +2,8 @@
 $(function() {
     $('.exclude').on('click', function() {
         var that = $(this);
-        var container = that.parents('.volonteer');
-        var userId = container.data('volonteer-id');
+        var container = that.parents('.volunteer');
+        var userId = container.data('volunteer-id');
         var teamId = that.parents('.team').data('team-id');
 	    var targetUrl = "/admin/excludefromteam";
 
@@ -25,7 +25,7 @@ $(function() {
     });
     
     function togglePrivilege(that, url) {
-        var userId = that.parents('.volonteer').data('volonteer-id');
+        var userId = that.parents('.volunteer').data('volunteer-id');
         var teamId = that.parents('.team').data('team-id');
 
         that.addClass('disabled');

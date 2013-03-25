@@ -22,21 +22,21 @@
 <h3>Medlemmar</h3>
 
 <div class="row team" data-team-id="@Model.Id" data-current-user-id="@WebSecurity.CurrentUserId">
-@foreach (var volonteer in Model.Volunteers.OrderBy(x => x.Name))
+@foreach (var volunteer in Model.Volunteers.OrderBy(x => x.Name))
 {   
-    var isVolonteerPowerUser = volonteer.Roles.Contains(Model.PowerUserRole);    
-    string IsPowerUserLinkClass = isVolonteerPowerUser ? "btn-success" : "";
-    string isPowerUserIconClass = isVolonteerPowerUser ? "icon-white" : "";    
+    var isVolunteerPowerUser = volunteer.Roles.Contains(Model.PowerUserRole);    
+    string IsPowerUserLinkClass = isVolunteerPowerUser ? "btn-success" : "";
+    string isPowerUserIconClass = isVolunteerPowerUser ? "icon-white" : "";    
 
-    var isVolonteerAdministator = volonteer.Roles.Contains(UserType.Administrator.ToString());
-    string IsAdministratorLinkClass = isVolonteerAdministator ? "btn-success" : "";
-    string isAdministratorIconClass = isVolonteerAdministator ? "icon-white" : "";
+    var isVolunteerAdministator = volunteer.Roles.Contains(UserType.Administrator.ToString());
+    string IsAdministratorLinkClass = isVolunteerAdministator ? "btn-success" : "";
+    string isAdministratorIconClass = isVolunteerAdministator ? "icon-white" : "";
     
-    <div class="span4 volonteer" data-volonteer-id="@volonteer.Id">
+    <div class="span4 volunteer" data-volunteer-id="@volunteer.Id">
         <div class="card">
             <div>
-                <h3>@volonteer.Name</h3>
-                <p>@volonteer.Email</p>
+                <h3>@volunteer.Name</h3>
+                <p>@volunteer.Email</p>
                 
                 <div class="align-left">
                     

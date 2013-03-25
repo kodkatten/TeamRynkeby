@@ -58,9 +58,9 @@ namespace EventBooking.Data.Repositories
 			var team = context.Teams.FirstOrDefault(x => x.Id == teamId);
 			if (team != null)
 			{
-				foreach (var volonteer in team.Volunteers)
+				foreach (var volunteer in team.Volunteers)
 				{
-					volonteer.Team = null;
+					volunteer.Team = null;
 				}
 				team.IsDeleted = true;
 				context.SaveChanges();

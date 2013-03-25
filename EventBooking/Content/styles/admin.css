@@ -5,16 +5,16 @@
     display: block;
 }
 
-.volonteer p {
+.volunteer p {
     color: gray;
     margin-bottom: 50px;
 }
 
-.volonteer h3 {
+.volunteer h3 {
     margin-bottom: 0;
 }
 
-.volonteer a:last-child {
+.volunteer a:last-child {
     float: right;
 }
 
@@ -82,7 +82,7 @@
     display: none;
 }
 
-.volonteer-container div:last-child{
+.volunteer-container div:last-child{
     background: white;
     width: 100%;
     height: 100%;
