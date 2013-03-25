@@ -32,6 +32,7 @@ namespace EventBooking.Controllers.ViewModels
 		public string Cellphone { get; set; }
 
 		[Display(Name = "Födelsedatum")]
+        [Range(typeof(DateTime), "1801-1-1", "2113-12-31", ErrorMessage = "{0} måste vara mellan {1:d} och {2:d}")]
 		public DateTime? Birthdate { get; set; }
 
 		[Display(Name = "Lag")]
