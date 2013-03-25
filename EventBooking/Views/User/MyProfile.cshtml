@@ -54,7 +54,7 @@
     <div class="control-group">
         @Html.LabelFor(m => m.Birthdate, new { @class = "control-label" })
         <div class="controls">
-            @Html.EditorFor(m => m.Birthdate, new { placeholder = "YYYY-MM-DD" })
+            @Html.TextBoxFor(m => m.Birthdate, "{0:yyyy-MM-dd}", new { placeholder = "YYYY-MM-DD" })
             @Html.ValidationMessageFor(m => m.Birthdate)
         </div>
     </div>
