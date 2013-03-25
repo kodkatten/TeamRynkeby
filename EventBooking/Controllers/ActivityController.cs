@@ -48,11 +48,11 @@ namespace EventBooking.Controllers
 
 			var activity = Mapper.Map<Activity>(model);
 			activity.OrganizingTeam = _securityService.GetCurrentUser().Team;
-			activity.Sessions = new List<Session> { Mapper.Map<Session>(model.Session) };
+			//activity.Sessions = new List<Session> { Mapper.Map<Session>(model.Session) };
 			activity.Coordinator = _securityService.GetCurrentUser();
 			StoreActivity(activity);
 
-			return RedirectToAction("Index", "Sessions", new { activityId = activity.Id });
+			return RedirectToAction("Details", "Activity", new { Id = activity.Id });
 		}
 
 		public ActionResult Upcoming(int page = 0, string teamIds = "")

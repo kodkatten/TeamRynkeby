@@ -38,8 +38,8 @@ namespace EventBooking.Tests
 					Date = Tomorrow,
 					Description = "Description",
 					Summary = "Summary",
-					Type = ActivityType.Preliminärt,
-					Session = new SessionModel { FromTime = new TimeSpan(10, 0, 0), ToTime = new TimeSpan(11, 0, 0), VolunteersNeeded = 2 }
+					Type = ActivityType.Preliminärt
+					//Sessions = new SessionModel { FromTime = new TimeSpan(10, 0, 0), ToTime = new TimeSpan(11, 0, 0), VolunteersNeeded = 2 }
 				};
 		}
 
@@ -60,16 +60,16 @@ namespace EventBooking.Tests
 		}
 
 		[Test]
-		public void RedirectsToSessionManagementAfterSuccessfulCreation()
+		public void RedirectsToActivityDetailsAfterSuccessfulCreation()
 		{
 			var controller = CreateController();
 
 			var result = CreateValidActivity(controller) as RedirectToRouteResult;
 
 			Assert.NotNull(result);
-			Assert.AreEqual("Index", result.RouteValues["Action"]);
-			Assert.AreEqual("Sessions", result.RouteValues["controller"]);
-			Assert.IsNotNull(result.RouteValues["activityId"]);
+			Assert.AreEqual("Details", result.RouteValues["Action"]);
+			Assert.AreEqual("Activity", result.RouteValues["controller"]);
+			Assert.IsNotNull(result.RouteValues["Id"]);
 		}
 
 		[Test]
