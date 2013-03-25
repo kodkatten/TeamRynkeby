@@ -32,6 +32,7 @@ namespace EventBooking.Controllers.ViewModels
 		public string Cellphone { get; set; }
 
 		[Display(Name = "Födelsedatum")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
 		public DateTime? Birthdate { get; set; }
 
 		[Display(Name = "Lag")]

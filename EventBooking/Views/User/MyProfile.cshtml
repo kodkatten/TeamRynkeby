@@ -30,7 +30,7 @@
     <div class="control-group">
         @Html.LabelFor(m => m.ZipCode, new { @class = "control-label" })
         <div class="controls">
-            @Html.TextBoxFor(m => m.ZipCode, new { placeholder = "12345" })
+            @Html.TextBoxFor(m => m.ZipCode, new { placeholder = "222 33" })
             @Html.ValidationMessageFor(m => m.ZipCode)
         </div>
     </div>
@@ -54,7 +54,7 @@
     <div class="control-group">
         @Html.LabelFor(m => m.Birthdate, new { @class = "control-label" })
         <div class="controls">
-            @Html.TextBoxFor(m => m.Birthdate, new { placeholder = "YYYY-MM-DD" })
+            @Html.EditorFor(m => m.Birthdate, new { placeholder = "YYYY-MM-DD" })
             @Html.ValidationMessageFor(m => m.Birthdate)
         </div>
     </div>
