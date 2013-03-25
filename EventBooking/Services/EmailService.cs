@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Objects;
 using System.Globalization;
 using System.Linq;
 using System.Net.Mail;
@@ -42,6 +41,12 @@ namespace EventBooking.Services
 
 			var text = NewEventText(activity, emailType, freeText);
 			SendMail(toAddressToName, "noreply@teamrynkeby.apphb.com", activity.OrganizingTeam.Name, text.Subject, text.Body);
+		}
+
+		public MailData GetPreview(int activityId, EmailType emailType, string freeText)
+		{
+			var activity = _activityRepository.GetActivityById(activityId);
+			return NewEventText(activity, emailType, freeText);
 		}
 
 		private MailData NewEventText(Activity activity, EmailType emailType, string freeText)
@@ -89,7 +94,7 @@ namespace EventBooking.Services
 
 			if (!string.IsNullOrWhiteSpace(freeText))
 			{
-				data.Add("FreeText", freeText);
+				data.Add("FreeText", freeText.Replace("\n", "<br/>"));
 			}
 
 			return _templateService.RenderTemplate(templateName, data);

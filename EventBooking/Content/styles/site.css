@@ -76,3 +76,27 @@ a.l337:hover {
 	margin-left: 80px;
 	padding-top: 5px;
 }
+
+#sendEmailPopup textarea {
+	width: 97%;
+}
+
+#sendEmailPopup #previewSubject {
+	float: left;
+}
+
+#sendEmailPopup #previewArea {
+	height: 250px;
+	overflow-y: auto;
+	float: left;
+	margin-top: 5px;
+	width: 100%;
+}
+
+#sendEmailPopup .modal-body {
+	overflow-y: hidden !important;
+}
+
+#sendEmailPopup #refreshPreview {
+	float: right;
+}

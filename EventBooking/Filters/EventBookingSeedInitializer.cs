@@ -89,9 +89,9 @@ $Description"
 				{
 					Name = "infoactivity",
 					Subject = "Team Rynkeby - Angående $ActivityName",
-					Content = @"<h2>Hej bäste ${Team}-medlem!</h2>
+					Content = @"<h4>Hej bäste ${Team}-medlem!</h4>
 
-<h3>$ActivityName - $Date mellan $FirstTime och $LastTime</h3>
+<h5>$ActivityName - $Date mellan $FirstTime och $LastTime</h5>
 <p>$Summary</p>
 
 <p>$FreeText</p>

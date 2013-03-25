@@ -173,10 +173,17 @@ namespace EventBooking.Controllers
 			return Json(_activityItemRepository.GetTemplates().Select(i => i.Name), JsonRequestBehavior.AllowGet);
 		}
 
-		public ActionResult SendEmail(int id)
+		[HttpPost]
+		public ActionResult SendEmail(int id, string text)
 		{
-			_emailService.SendMail(id, EmailService.EmailType.InfoActivity, "Detta är fritext som man ska kunna mata in.\nDetta är fritext som man ska kunna mata in.\nDetta är fritext som man ska kunna mata in.\n");
+			_emailService.SendMail(id, EmailService.EmailType.InfoActivity, text);
 			return new EmptyResult();
+		}
+
+		public JsonResult GetEmailPreview(int id, string text)
+		{
+			var preview = _emailService.GetPreview(id, EmailService.EmailType.InfoActivity, text);
+			return Json(new {content = preview}, JsonRequestBehavior.AllowGet);
 		}
 
 	}
