@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Configuration;
+using System.Data.Entity;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -6,11 +7,11 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using Autofac;
 using Autofac.Integration.Mvc;
+using CoderMike.Autofac.EasySettings;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
 using EventBooking.Filters;
 using EventBooking.Security;
-using EventBooking.Services;
 
 namespace EventBooking
 {
@@ -19,6 +20,7 @@ namespace EventBooking
 		protected void Application_Start()
 		{
 			var builder = new ContainerBuilder();			
+			builder.RegisterModule(new EasySettingsModule(ConfigurationManager.AppSettings));
 			builder.RegisterModule(new DataDependencyModule());
 			builder.RegisterModule(new ControllerDependencyModule());
 			builder.RegisterControllers(typeof(MvcApplication).Assembly);

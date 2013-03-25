@@ -6,6 +6,7 @@ using System.Net.Mail;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data.Entities;
 using EventBooking.Data.Repositories;
+using EventBooking.Settings;
 
 namespace EventBooking.Services
 {
@@ -18,13 +19,15 @@ namespace EventBooking.Services
 			InfoActivity
 		}
 
+		private readonly EmailSettings _emailSettings;
 		private readonly IMailTemplateService _templateService;
 		private readonly IActivityRepository _activityRepository;
 		private readonly ITeamRepository _teamRepository;
 		private readonly MailMessage _mailMessage;
 
-		public EmailService(IMailTemplateService templateService, IActivityRepository activityRepository, ITeamRepository teamRepository)
+		public EmailService(EmailSettings emailSettings, IMailTemplateService templateService, IActivityRepository activityRepository, ITeamRepository teamRepository)
 		{
+			_emailSettings = emailSettings;
 			_templateService = templateService;
 			_activityRepository = activityRepository;
 			_teamRepository = teamRepository;
@@ -40,7 +43,7 @@ namespace EventBooking.Services
 			var toAddressToName = teamMembers.ToDictionary(teamMember => teamMember.Email, teamMember => teamMember.Name);
 
 			var text = NewEventText(activity, emailType, freeText);
-			SendMail(toAddressToName, "noreply@teamrynkeby.apphb.com", activity.OrganizingTeam.Name, text.Subject, text.Body);
+			SendMail(toAddressToName, _emailSettings.From, activity.OrganizingTeam.Name, text.Subject, text.Body);
 		}
 
 		public MailData GetPreview(int activityId, EmailType emailType, string freeText)
@@ -117,11 +120,9 @@ namespace EventBooking.Services
 			_mailMessage.Subject = subject;
 			_mailMessage.Body = text;
 			_mailMessage.IsBodyHtml = true;
-			//_mailMessage.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(text, null, MediaTypeNames.Text.Plain));
 
-			var smtpClient = new SmtpClient("smtp.sendgrid.net", Convert.ToInt32(587));
-			var credentials = new System.Net.NetworkCredential("b49606c3-69d5-4ed8-975f-78ec56fe6a84@apphb.com",
-															   "byu9cpgi");
+			var smtpClient = new SmtpClient(_emailSettings.Server, Convert.ToInt32(_emailSettings.Port));
+			var credentials = new System.Net.NetworkCredential(_emailSettings.User,_emailSettings.Password);
 			smtpClient.Credentials = credentials;
 
 			try
