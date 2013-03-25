@@ -62,8 +62,9 @@ namespace EventBooking.Filters
 
 			CreateAwesomeUsers(membership, context);
 			CreatePredefinedActivityItems(context);
-			var session = context.Activities.First();
-			session.Coordinator = context.Users.First();
+		    var activities = context.Activities.ToList();
+            activities.ForEach(x => x.Coordinator = context.Users.First());
+
 			context.SaveChanges();
 		}
 
