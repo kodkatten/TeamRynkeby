@@ -4,7 +4,7 @@ namespace EventBooking
 {
 	public class BundleConfig
 	{
-		public static void RegisterBundles( BundleCollection bundles )
+		public static void RegisterBundles(BundleCollection bundles)
 		{
 			// Keep this separe since we donwload from CDN
 			jQuery(bundles);
@@ -28,24 +28,24 @@ namespace EventBooking
 		private static void CreateEventAreaJS(BundleCollection bundles)
 		{
 			bundles.Add(new ScriptBundle("~/Scripts/CreateEvent")
-				.Include("~/scripts/pickadate.js")
-				.Include("~/scripts/pickadate.sv_SE.js")
-				.Include("~/scripts/bootstrap-timepicker.js")
-				.Include("~/scripts/mustache.js")
-				.Include("~/scripts/jquery.mustache.js")
-				.Include("~/scripts/teamrynkebyse.wizard.js")
-                .Include("~/scripts/teamrynkebyse.timehelper.js")
-                .Include("~/scripts/teamrynkebyse.sessionbuilder.js")
-                .Include("~/scripts/teamrynkebyse.itemsbuilder.js")
-				.Include("~/scripts/createevent.js"));
+				.Include("~/Scripts/pickadate.js")
+				.Include("~/Scripts/pickadate.sv_SE.js")
+				.Include("~/Scripts/bootstrap-timepicker.js")
+				.Include("~/Scripts/mustache.js")
+				.Include("~/Scripts/jquery.mustache.js")
+				.Include("~/Scripts/teamrynkebyse.wizard.js")
+                .Include("~/Scripts/teamrynkebyse.timehelper.js")
+                .Include("~/Scripts/teamrynkebyse.sessionbuilder.js")
+                .Include("~/Scripts/teamrynkebyse.itemsbuilder.js")
+				.Include("~/Scripts/createevent.js"));
 		}
 		
 		private static void CreateEventAreaCSS(BundleCollection bundles)
 		{
 			bundles.Add(new StyleBundle("~/Styles/CreateEvent")
-				            .Include("~/content/styles/bootstrap-timepicker.css")
-				            .Include("~/content/styles/pickadate.css")
-				            .Include("~/content/styles/createevent.css"));
+				            .Include("~/Content/styles/bootstrap-timepicker.css")
+				            .Include("~/Content/styles/pickadate.css")
+				            .Include("~/Content/styles/createevent.css"));
 		}
 
 		private static void SiteBaseJS(BundleCollection bundles)
@@ -64,36 +64,36 @@ namespace EventBooking
 
 		private static void jQuery(BundleCollection bundles)
 		{
-			bundles.Add(new ScriptBundle("~/scripts/jQuery", "http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js")
+			bundles.Add(new ScriptBundle("~/Scripts/jQuery", "http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js")
 				            .Include("~/Scripts/jquery-{version}.js"));
 		}
 
 		private static void AdminAreaCss(BundleCollection bundles)
 		{
 			bundles.Add(new StyleBundle("~/Styles/Admin")
-				.Include("~/content/styles/admin.css"));
+				.Include("~/Content/styles/admin.css"));
 		}
 
 		private static void SiteBaseCss(BundleCollection bundles)
 		{
 			bundles.Add(new StyleBundle("~/Styles/SiteBase")
-							.Include("~/content/styles/bootstrap.css")
-							.Include("~/content/styles/bootstrap-responsive.css")
-							.Include("~/content/styles/site.css"));
+							.Include("~/Content/styles/bootstrap.css")
+							.Include("~/Content/styles/bootstrap-responsive.css")
+							.Include("~/Content/styles/site.css"));
 		}
 		
 		private static void MemberBaseCss(BundleCollection bundles)
 		{
 			bundles.Add(new StyleBundle("~/Styles/MemberBase")
-				.Include("~/content/styles/font-awesome.css"));
+				.Include("~/Content/Styles/font-awesome.css"));
 		}
 
 		private static void LandingPageCss(BundleCollection bundles)
 		{
 			bundles.Add(new StyleBundle("~/Styles/LandingPage")
-				.Include("~/content/styles/landingpage.css")
-				.Include("~/content/styles/landingpage-phone.css")
-				.Include("~/content/styles/landingpage-tablet.css"));
+				.Include("~/Content/styles/landingpage.css")
+				.Include("~/Content/styles/landingpage-phone.css")
+				.Include("~/Content/styles/landingpage-tablet.css"));
 		}
 	}
 }
