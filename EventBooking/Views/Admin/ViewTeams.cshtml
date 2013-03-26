@@ -15,14 +15,21 @@
     @Scripts.Render("~/Scripts/admin.js")
 }
 
-@if(Roles.IsUserInRole(UserType.Administrator.ToString())) {
-    <form action="@Url.Action("CreateTeam")" method="POST">
-        <fieldset>
-            <label>Skapa nytt lag</label>
-            <input type="text" name="name" placeholder="Lag namn">
-            <button type="submit" class="btn">Skapa</button>
-        </fieldset>
-    </form>
+@if (Roles.IsUserInRole(UserType.Administrator.ToString()))
+{
+
+    using (Html.BeginForm("CreateTeam", "Admin", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+
+    <div class="control-group">
+        <h2>Skapa nytt lag</h2>
+        <input type="text" name="name" placeholder="Lagnamn" required="required">
+        <button type="submit" class="btn">Skapa</button>
+    </div>
+    }
+
+    
+    <div class="page-header"/>
 }
 
 @Html.Partial("Partials/Teams", Model.Teams)

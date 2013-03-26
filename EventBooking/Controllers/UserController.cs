@@ -76,11 +76,6 @@ namespace EventBooking.Controllers
 			return View(viewModel);
 		}
 
-		public ActionResult AlreadyRegistrered(string message)
-		{
-			return View();
-		}
-
 		[Authorize]
 		public ActionResult MyProfile()
 		{

@@ -2,7 +2,10 @@
 @model EventBooking.Controllers.ViewModels.DetailActivityViewModel
 
 <div class="row-fluid">
-    <h2>@Model.Name</h2>
+    <div class="page-header">
+        <h2>@Model.Name</h2>
+    </div>
+        
     <h3>@Model.DateFormatted, @Model.OrganizingTeam</h3>
     <p>
         <strong>

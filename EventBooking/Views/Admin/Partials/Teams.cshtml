@@ -1,7 +1,9 @@
 ﻿@model IEnumerable<EventBooking.Data.Entities.Team>
 
 <div id="teams-container">
-    <h2>Lag</h2>
+    <div class="page-header">
+        <h2>Lag</h2>
+    </div>
     
     <div class="row">
     @foreach (var team in Model)
@@ -23,7 +25,7 @@
                 <a href="#" 
                    class="btn btn-danger teamdelete"
                    rel="tooltip"
-                   title="Delete a team">
+                   title="Ta bort detta lag">
                     <i class="icon-trash icon-white"></i>
                 </a>
             </div>
@@ -42,8 +44,8 @@
             <p>Är du <i>verkligen verkligen</i> säker på att du vill ta bort det här laget? Ta bort lag är inget man bör göra utan omtanke.</p>
         </div>
         <div class="modal-footer">
-            <button data-dismiss="modal" class="btn">Cancel</button>
-            <button id="deleteTeam" class="btn btn-danger">Delete</button>
+            <button data-dismiss="modal" class="btn">Avbryt</button>
+            <button id="deleteTeam" class="btn btn-danger">Ta bort</button>
         </div>
     </div>
 

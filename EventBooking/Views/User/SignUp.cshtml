@@ -4,9 +4,11 @@
     ViewBag.Title = "Registrera konto";
 }
 
-<h2>@ViewBag.Title</h2>
+<div class="page-header">
+    <h2>@ViewBag.Title</h2>
+</div>
 
-@using (Html.BeginForm("SignUp", "User", FormMethod.Post, new{@class="form-horizontal"}))
+@using (Html.BeginForm("SignUp", "User", FormMethod.Post, new { @class="form-horizontal" }))
 {
     <div class="control-group">
         @Html.LabelFor(m => m.Email, new { @class = "control-label" })
@@ -32,7 +34,7 @@
     <div class="control-group">
         @Html.LabelFor(m => m.RememberMe, new { @class = "control-label" })
         <div class="controls">
-            @Html.CheckBoxFor(m => m.RememberMe, new { @checked = "checked" })
+            @Html.CheckBoxFor(m => m.RememberMe, new { @checked = "checked", @disabled= "disabled" })
         </div>
     </div>
     <div class="control-group">

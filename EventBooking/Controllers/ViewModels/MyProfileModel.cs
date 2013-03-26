@@ -11,7 +11,7 @@ namespace EventBooking.Controllers.ViewModels
 	public class MyProfileModel
 	{
 		[Display(Name = "Namn")]
-		[Required(ErrorMessage = "Namn måste anges")]
+		[Required(ErrorMessage = " * Namn måste anges")]
 		[MinLength(2, ErrorMessage = "Ditt namn är för kort")]
 		public string Name { get; set; }
 
@@ -28,7 +28,7 @@ namespace EventBooking.Controllers.ViewModels
 		public string City { get; set; }
 
 		[Display(Name = "Mobiltelefon")]
-		[Required(ErrorMessage = "Mobiltelefon måste anges")]
+		[Required(ErrorMessage = " * Mobiltelefon måste anges")]
 		public string Cellphone { get; set; }
 
 		[Display(Name = "Födelsedatum")]

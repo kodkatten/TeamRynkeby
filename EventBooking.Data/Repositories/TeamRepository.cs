@@ -34,7 +34,6 @@ namespace EventBooking.Data.Repositories
 		}
 		public Team CreateTeam(string name)
 		{
-
 			var existingTeam = context.Teams.FirstOrDefault(x => x.Name == name);
 
 			if (existingTeam != null)

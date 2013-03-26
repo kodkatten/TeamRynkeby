@@ -5,7 +5,9 @@
     ViewBag.Title = "Berätta mer om dig själv";
 }
 
-<h2>@ViewBag.Title</h2>
+<div class="page-header">
+   <h2>@ViewBag.Title</h2>
+</div>
 
 @using (Html.BeginForm("MyProfile", "User", FormMethod.Post, new { @class = "form-horizontal" }))
 {

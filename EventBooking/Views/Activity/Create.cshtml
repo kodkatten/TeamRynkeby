@@ -56,7 +56,9 @@
     </script>
 }
 
-<h2>@ViewBag.Title</h2>
+<div class="page-header">
+    <h2>@ViewBag.Title</h2>
+</div>
 
 <div class="span8">
     @using (Html.BeginForm("Create", "Activity", FormMethod.Post, new { @class = "form-horizontal" }))
@@ -80,7 +82,7 @@
             <div class="control-group">
                 <label class="control-label">Titel</label>
                 <div class="controls">
-                    <input name="name" type="text" maxlength="50" placeholder="T.ex Insamling på T-station" />
+                    <input name="name" type="text" maxlength="50" placeholder="T.ex. Insamling på T-station" />
                 </div>
             </div>
 
