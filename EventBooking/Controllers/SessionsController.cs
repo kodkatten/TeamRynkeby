@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
 using EventBooking.Controllers.ViewModels;
-using EventBooking.Data;
 using EventBooking.Data.Entities;
 using EventBooking.Data.Repositories;
-using EventBooking.Extensions;
 using EventBooking.Filters;
 using EventBooking.Services;
 
@@ -17,10 +13,10 @@ namespace EventBooking.Controllers
 {
 	public class SessionsController : Controller
 	{
+		private readonly ISecurityService _securityService;
 		private readonly IActivityRepository _activityRepository;
 		private readonly ISessionRepository _sessionRepository;
 
-		private readonly ISecurityService _securityService;
 
 		public SessionsController(IActivityRepository activityRepository, ISessionRepository repository, ISecurityService securityService)
 		{

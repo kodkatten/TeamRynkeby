@@ -45,7 +45,7 @@ namespace EventBooking.Controllers
 			bool signedin = _securityService.SignIn(model.ElectronicMailAddress, model.Password);
 			if (!signedin)
 			{
-				model.ErrorMessage = "E-postadress eller lösenord är felaktigt";
+				model.ErrorMessage = "Epostadress eller lösenord är felaktigt";
 				return View("Checkpoint", model);
 			}
 			if (!string.IsNullOrWhiteSpace(model.ReturnUrl))

@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data.Repositories;
 using EventBooking.Services;

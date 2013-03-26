@@ -32,7 +32,7 @@ namespace EventBooking.Tests
 
 		public override User GetUser(string userName)
 		{
-			return this.ReturnUser;
+			return ReturnUser;
 		}
 
 		public override bool SignIn(string userName, string password)
@@ -42,6 +42,7 @@ namespace EventBooking.Tests
 				ReturnUser = ReturnUser ?? new User { Email = userName };
 				return true;
 			}
+
 			return false;
 		}
 	}

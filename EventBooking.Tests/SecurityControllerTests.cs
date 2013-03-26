@@ -121,7 +121,7 @@ namespace EventBooking.Tests
             Assert.AreEqual("Checkpoint", result.ViewName);
             var resultingModel = result.Model as LoginModel;
             Assert.IsNotNull(resultingModel);
-            Assert.AreEqual("E-postadress eller lösenord är felaktigt", resultingModel.ErrorMessage);
+            Assert.AreEqual("Epostadress eller lösenord är felaktigt", resultingModel.ErrorMessage);
         }
     }
 }
