@@ -16,10 +16,12 @@ $(function() {
         })
             .done(function () {
                 container.addClass('hide-animation');
-                container.fadeOut('slow', function() { that.remove(); });
+                container.fadeOut('slow', function () { that.remove(); });
             })
             .fail(function () {
-                $('#errorModal').modal('show');
+                var deleteModal = $('#errorModal');
+                deleteModal.data('team-id', teamId);
+                deleteModal.modal('show', { backdrop: 'static' });
             })
             .always(function () { that.removeClass('disabled'); });
     });

@@ -56,7 +56,7 @@
             </div>
             
 
-            <div class="upcoming-activity-list" data-update-uri="http://localhost:49385/Activity/Upcoming">
+            <div class="upcoming-activity-list" data-update-uri=@Url.Action("Upcoming", "Activity", null, Request.Url.Scheme)>
                 @Html.Action("Upcoming", "Activity")
             </div>
             <ul class="pager">

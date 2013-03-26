@@ -17,19 +17,19 @@
 
 @if (Roles.IsUserInRole(UserType.Administrator.ToString()))
 {
+    <div class="page-header">
+        @using (Html.BeginForm("CreateTeam", "Admin", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
 
-    using (Html.BeginForm("CreateTeam", "Admin", FormMethod.Post, new { @class = "form-horizontal" }))
-    {
+            <div class="control-group">
+                <h2>Skapa nytt lag</h2>
+                <input type="text" name="name" placeholder="Lagnamn" required="required">
+                <button type="submit" class="btn">Skapa</button>
+            </div>
+        }
 
-    <div class="control-group">
-        <h2>Skapa nytt lag</h2>
-        <input type="text" name="name" placeholder="Lagnamn" required="required">
-        <button type="submit" class="btn">Skapa</button>
+
     </div>
-    }
-
-    
-    <div class="page-header"/>
 }
 
 @Html.Partial("Partials/Teams", Model.Teams)
