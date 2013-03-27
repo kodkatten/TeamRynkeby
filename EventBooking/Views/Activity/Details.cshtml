@@ -53,10 +53,8 @@
     <ul>
         @foreach (var item in Model.Items)
         {
-            for (var i = 0; i < @item.Quantity; i++)
-            {
-                <li><span>1. @item.Name </span> <a href="@Url.Action("UpdateContributedItem", "Activity", new {activityId = Model.Id})" class="link">En sådan tar jag med mig!</a></li> 
-            }
+            <li><span>@item.Name (@item.RequiredQuantity) @item.TotalContributedQuantity</span></li> 
+            
                        
         }
     </ul>

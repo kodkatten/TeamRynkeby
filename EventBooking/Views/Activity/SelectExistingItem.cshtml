@@ -39,7 +39,7 @@
 		@foreach (var item in Model.ContributedInventory.ContributedItems.OrderBy(x => x.Name))
   {
 			<a href="#" id="RemoveItemToBring" class="btn btn-link" data-item="@item.Name">
-				<span class="icon-remove-circle"></span>@item.Name (@item.Quantity)
+				<span class="icon-remove-circle"></span>@item.Name (@item.RequiredQuantity)
 			</a>
   }
 	</div>

@@ -67,7 +67,7 @@ namespace EventBooking.Controllers
                     if (_sessionRepository.SignUp(session, user))
 					{
 						// Success
-                        return RedirectToAction("SignUpSuccessful", new { activityId = session.Activity.Id });
+                        return RedirectToAction("Details", "Activity", new { id = session.Activity.Id });
 					}
 				}
 			}
@@ -145,7 +145,7 @@ namespace EventBooking.Controllers
                 _sessionRepository.LeaveSession(session, user);
             }
 
-            return RedirectToAction("Details", "Team");
+            return RedirectToAction("Details", "Activity", new { id = activityId });
         }
 	}
 }

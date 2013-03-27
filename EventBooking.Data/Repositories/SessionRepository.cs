@@ -67,6 +67,11 @@ namespace EventBooking.Data.Repositories
         public void LeaveSession(Session session, User user)
         {
             session.Volunteers.Remove(user);
+
+            //var itemsToRemove = user.Items.Where(i => i.Item.Activity.Id == session.Activity.Id).ToList();
+
+            //itemsToRemove.ForEach(i => user.Items.Remove(i));
+
             _context.SaveChanges();
         }
 
