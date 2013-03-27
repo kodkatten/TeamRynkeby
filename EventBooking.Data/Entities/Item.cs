@@ -1,5 +1,8 @@
+using System;
+
 namespace EventBooking.Data.Entities
 {
+    [Obsolete]
     public class Item
     {
         public int Id { get; set; }

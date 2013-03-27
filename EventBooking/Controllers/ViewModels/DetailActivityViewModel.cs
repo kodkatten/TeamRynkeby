@@ -18,7 +18,7 @@ namespace EventBooking.Controllers.ViewModels
 				                Enumerable.Empty<SessionViewModel>();
 
             this.Items = activityData.Items != null ?
-                    activityData.Items.Select(session => AsItemViewModel(session, user)) :
+                    activityData.Items.Select(item => AsItemViewModel(item, user)) :
                     Enumerable.Empty<ContributedInventoryItemModel>();
 
 		}
@@ -42,7 +42,7 @@ namespace EventBooking.Controllers.ViewModels
 			return new SessionViewModel(data, user);
 		}
 
-        private static ContributedInventoryItemModel AsItemViewModel(Item data, User user)
+        private static ContributedInventoryItemModel AsItemViewModel(ActivityItem data, User user)
         {
             var i = new ContributedInventoryItemModel();
             i.Quantity = data.Id;
