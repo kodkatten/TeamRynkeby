@@ -20,32 +20,24 @@
         <tr>
             <td>@user.Name</td>
 
-            @foreach (var session in user.Sessions)
+            @foreach (var session in user.Sessions.Where(session => session.Activity.Id == Model.Id))
             {
-                if (session.Activity.Id == Model.Id)
-                {
-            
                 <td>
                     @session.FromTime
                 </td>
                 <td>
                     @session.ToTime
                 </td>
-                    
-                }
             }
-            
+
             <td>
-            @foreach (var item in user.Items)
-            {
-                if (item.Item.Activity.Id == Model.Id)
+                @foreach (var item in user.Items.Where(item => item.Item.Activity.Id == Model.Id))
                 {
                     <span>
-                    @item.Item.Name
+                        @item.Item.Name
                         (@item.Quantity),
                     </span>
                 }
-            }
             </td>
         </tr>
     }
