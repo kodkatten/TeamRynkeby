@@ -1,42 +1,56 @@
-﻿@model EventBooking.Controllers.ViewModels.SignedForActivity
+﻿@model EventBooking.Controllers.ViewModels.SignedForActivityViewModel
 @{
     ViewBag.Title = "WhoHasSignup";
 }
 
+<h3>@Model.Name</h3>
 
-    <table class="table table-hover">
+<table class="table table-hover">
 
+    <tr>
+        <th>Namn</th>
+        <th>Från</th>
+        <th>Till</th>
+        <th>Matriel</th>
+    </tr>
+
+
+    @foreach (var user in Model.Session.SelectMany(s => s.Volunteers))
+    {
         <tr>
-            <th>Namn</th>
-            <th>Från</th>
-            <th>Till</th>
-            <th>Matriel</th>
-        </tr>
+            <td>@user.Name</td>
 
-
-        @foreach (var user in Model.Session.SelectMany(s => s.Volunteers))
-        {
-            <tr>
-                <td>@user.Name</td>
-
-                @foreach (var session in user.Sessions)
+            @foreach (var session in user.Sessions)
+            {
+                if (session.Activity.Id == Model.Id)
                 {
-                    if (session.Activity.Id == Model.Id)
-                    {
             
-                    <td>
-                        @session.FromTime
-                    </td>
-                    <td>
-                        @session.ToTime
-                    </td>
-                    <td>Saker</td>
-                    }
+                <td>
+                    @session.FromTime
+                </td>
+                <td>
+                    @session.ToTime
+                </td>
+                    
                 }
-            </tr>
-        }
+            }
+            
+            <td>
+            @foreach (var item in user.Items)
+            {
+                if (item.Item.Activity.Id == Model.Id)
+                {
+                    <span>
+                    @item.Item.Name
+                        (@item.Quantity),
+                    </span>
+                }
+            }
+            </td>
+        </tr>
+    }
 
-    </table>
+</table>
 
 
 
