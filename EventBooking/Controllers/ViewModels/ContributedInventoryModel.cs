@@ -8,7 +8,8 @@ namespace EventBooking.Controllers.ViewModels
 		public List<ContributedInventoryItemModel> ContributedItems { get; set; }
 		public string CurrentlySelectedItem { get; set; }
 		public int ItemQuantity { get; set; }
-		public string Intent { get; set; }
+        public string Intent { get; set; }
+        public string Name { get; set; }
 
 		public ContributedInventoryModel()
 		{

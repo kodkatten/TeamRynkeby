@@ -49,9 +49,11 @@ namespace EventBooking.Controllers
 			}
 
 		    Mapper.CreateMap<ContributedInventoryModel, ActivityItem>()
-		          .ForMember(dest => dest.Name, options => options.MapFrom(source => source.ItemQuantity))
+		          .ForMember(dest => dest.Name, options => options.MapFrom(source => source.Name))
 		          .ForMember(dest => dest.Quantity, options => options.MapFrom(source => source.ItemQuantity));
 
+            
+            
 			var activity = Mapper.Map<Activity>(model);
 			activity.OrganizingTeam = _securityService.GetCurrentUser().Team;
 			//activity.Sessions = new List<Session> { Mapper.Map<Session>(model.Session) };
