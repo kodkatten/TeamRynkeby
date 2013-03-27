@@ -31,6 +31,17 @@
                     <text>Antal platser kvar:</text>
                     @session.AvailablePlaces
                 }
+                else if (session.CanLeave)
+                {
+                    <a href="@Url.Action("Leave", "Sessions", new {activityId = Model.Id})" class="link">Ta bort mig!</a>
+                    <text>Antal platser kvar:</text>
+                    @session.AvailablePlaces
+                }
+                else
+                {
+                    <text>Antal platser kvar:</text>
+                    @session.AvailablePlaces
+                }
             </li>            
         }
     </ul>

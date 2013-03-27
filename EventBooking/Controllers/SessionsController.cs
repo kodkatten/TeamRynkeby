@@ -67,23 +67,23 @@ namespace EventBooking.Controllers
                     if (_sessionRepository.SignUp(session, user))
 					{
 						// Success
-						return RedirectToAction("SignUpSuccessful", new { id = sessionId });
+                        return RedirectToAction("SignUpSuccessful", new { activityId = session.Activity.Id });
 					}
 				}
 			}
 
 			// Sign up failed.			
-			return RedirectToAction("SignUpFailed", new { id = sessionId });
+            return RedirectToAction("SignUpFailed", new { sessionId = sessionId });
 		}
 
-		public ActionResult SignUpSuccessful(int id)
+		public ActionResult SignUpSuccessful(int activityId)
 		{
-			return View();
+            return View(activityId);
 		}
 
-		public ActionResult SignUpFailed(int id)
+        public ActionResult SignUpFailed(int sessionId)
 		{
-            var session = _sessionRepository.GetSessionById(id);
+            var session = _sessionRepository.GetSessionById(sessionId);
 
 			dynamic viewModel = new ExpandoObject();
 			viewModel.ActivityId = session.Activity.Id;

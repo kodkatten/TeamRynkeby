@@ -1,5 +1,4 @@
 using System.Linq;
-using EventBooking.Data;
 using EventBooking.Data.Entities;
 
 namespace EventBooking.Controllers.ViewModels
@@ -8,11 +7,12 @@ namespace EventBooking.Controllers.ViewModels
 	{
 		public SessionViewModel(Session sessionData, User user)
 		{
-			this.AvailablePlaces = sessionData.VolunteersNeeded - sessionData.Volunteers.Count();
-			this.ToTimeFormatted = sessionData.ToTime.ToString();
-			this.FromTimeFormatted = sessionData.FromTime.ToString();
-			this.Id = sessionData.Id;
-			this.CanSignUp = sessionData.IsAllowedToSignUp(user);
+			AvailablePlaces = sessionData.VolunteersNeeded - sessionData.Volunteers.Count();
+			ToTimeFormatted = sessionData.ToTime.ToString();
+			FromTimeFormatted = sessionData.FromTime.ToString();
+			Id = sessionData.Id;
+            CanSignUp = sessionData.IsAllowedToSignUp(user);
+            CanLeave = sessionData.CanLeave(user);
 		}
 
 		public string FromTimeFormatted { get; private set; }
@@ -21,7 +21,9 @@ namespace EventBooking.Controllers.ViewModels
 
 		public int AvailablePlaces { get; private set; }
 
-		public bool CanSignUp { get; private set; }
+        public bool CanSignUp { get; private set; }
+
+        public bool CanLeave { get; private set; }
 
 		public int Id { get; private set; }
 	}

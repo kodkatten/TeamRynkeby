@@ -16,6 +16,7 @@ namespace EventBooking.Data.Entities
 		public bool IsAllowedToSignUp(User user)
 		{
 			return user != null &&
+                   !this.Activity.Sessions.Any(x => x.Volunteers.Any(volunteer => volunteer.Id == user.Id)) &&
 				   this.Volunteers.Count < this.VolunteersNeeded &&
 				   this.Activity.OrganizingTeam.Id == user.Team.Id &&
 				   this.Volunteers.All(volunteer => volunteer.Id != user.Id);
