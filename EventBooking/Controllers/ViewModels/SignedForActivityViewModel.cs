@@ -3,13 +3,15 @@ using EventBooking.Data.Entities;
 
 namespace EventBooking.Controllers.ViewModels
 {
-    public class SignedForActivity : DetailActivityViewModel
+    public class SignedForActivityViewModel : DetailActivityViewModel
     {
-        public SignedForActivity(Activity activityData, User user)
+        public SignedForActivityViewModel(Activity activityData, User user)
             : base(activityData, user)
         {}
 
         public IEnumerable<Session> Session { get; set; }
+
+        public IEnumerable<ActivityItem> ActivityItems { get; set; }
        
     }
 }

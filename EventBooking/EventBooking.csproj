@@ -169,7 +169,7 @@
     <Compile Include="Controllers\ViewModels\MailData.cs" />
     <Compile Include="Controllers\ViewModels\SessionModel.cs" />
     <Compile Include="Controllers\ViewModels\SessionViewModel.cs" />
-    <Compile Include="Controllers\ViewModels\SignedForActivity.cs" />
+    <Compile Include="Controllers\ViewModels\SignedForActivityViewModel.cs" />
     <Compile Include="Controllers\ViewModels\Volunteer.cs" />
     <Compile Include="Controllers\ViewModels\UserModel.cs" />
     <Compile Include="Controllers\ViewModels\CreateActivityModel.cs" />

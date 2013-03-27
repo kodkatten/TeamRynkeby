@@ -113,9 +113,10 @@ namespace EventBooking.Controllers
         public ActionResult WhoHasSignup(int activityId)
         {
             var activity = _activityRepository.GetActivityById(activityId);
-            var viewModel = new SignedForActivity(activity, _securityService.GetCurrentUser())
+            var viewModel = new SignedForActivityViewModel(activity, _securityService.GetCurrentUser())
                 {
-                    Session = activity.Sessions
+                    Session = activity.Sessions,
+                    ActivityItems = activity.Items
                 };
             
             return View("WhoHasSignup", viewModel);

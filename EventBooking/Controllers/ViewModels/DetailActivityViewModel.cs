@@ -45,7 +45,7 @@ namespace EventBooking.Controllers.ViewModels
         private static ContributedInventoryItemModel AsItemViewModel(ActivityItem data, User user)
         {
             var i = new ContributedInventoryItemModel();
-            i.Quantity = data.Id;
+            i.Quantity = data.Quantity;
             i.Name = data.Name;
 
 
