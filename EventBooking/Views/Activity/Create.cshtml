@@ -28,7 +28,7 @@
             </div>
 
             <div>
-                <input type="number" name="sessions[{{index}}].volunteersNeeded" class="input-mini" min="0" />
+                <input type="number" name="sessions[{{index}}].volunteersNeeded" class="input-mini" min="1" value="1" />
             </div>
             <a href="#" class="undo"><i class="icon-remove"></i>Släng</a>
         </div>
@@ -143,7 +143,7 @@
                         <div>
                             <p>Börjar</p>
                             <p>Slutar</p>
-                            <p>Min deltagare</p>
+                            <p>Min. deltagare</p>
                         </div>
 
                         <div class="sessionRow">
@@ -158,7 +158,7 @@
                             </div>
 
                             <div>
-                                <input type="number" name="sessions[0].volunteersNeeded" class="input-mini" min="0" value="0" />
+                                <input id="volunteer0" type="number" name="sessions[0].volunteersNeeded" class="input-mini" min="1" value="1" />
                             </div>
                         </div>
                     </div>
@@ -167,14 +167,21 @@
                     </div>
 
                     <div id="overlappingWarning" class="alert alert-block" style="display: none">
-                        <h4>Överlappande pass</h4>
+                        <h3>Regler för pass</h3>
                         <p>
-                            Det är ett eller flera pass ovan som överlappar i tid eller som börjar före det slutar. 
-                                Tyvärr lyckas vi inte hålla reda på passen när det är så. Hjälper du oss att fixa det 
-                                så tar vi bort den här rutan och du kan gå vidare och välja materiel.
+                            Aktiviteten får börja tidigast imorgon.
+                        </p>  
+                        <p>
+                            Pass får inte överlappa varandra.
                         </p>
                         <p>
-                            <strong>Tack!</strong>
+                            Pass får inte sluta före de börjar.
+                        </p>
+                         <p>
+                            Pass får inte sträcka sig till eller över midnatt.
+                        </p>
+                         <p>
+                            Antal deltagare måste vara över noll.
                         </p>
                     </div>
                 </div>
@@ -192,7 +199,7 @@
                     <div id="itemsContainer">
 
                         <div>
-                            <p>Pryl</p>
+                            <p>Sak</p>
                             <p>Antal</p>
                         </div>
 
@@ -215,7 +222,7 @@
                         </div>
                     </div>
 
-                    <a id="addMoreItems" href="#">Flera prylar</a>
+                    <a id="addMoreItems" href="#">Flera saker</a>
                 </div>
             </div>
 

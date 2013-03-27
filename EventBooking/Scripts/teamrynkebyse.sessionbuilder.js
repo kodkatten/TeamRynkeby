@@ -2,11 +2,13 @@
 var teamrynkebyse = teamrynkebyse === undefined ? {} : teamrynkebyse;
 teamrynkebyse.sessionbuilder = (function () {
     var sessioncontainerId = '#sessionContainer';
+    var volunteer0Id = '#volunteer0';
     var addMoreSessionsId = '#addMoreSessions';
     var datePickerClass = '.datepicker';
     var sessionRowClass = '.sessionRow';
     var warningId = '#overlappingWarning';
     var timePickerClass = '.timepicker';
+    var textboxClass = '.input-mini';
     var sessionTemplateId = 'sessionTemplate';
     var undoClass = '.undo';
     var count = 0;
@@ -16,9 +18,9 @@ teamrynkebyse.sessionbuilder = (function () {
             minuteStep: 15,
             showSeconds: false,
             showMeridian: false
-        }).on('changeTime.timepicker', function (e) { validate(); });
+        }).on('changeTime.timepicker', validate);
     }
-
+    
     function getToTime($ctx) {
         return parseTime(getToTimeElement($ctx));
     }
@@ -55,13 +57,24 @@ teamrynkebyse.sessionbuilder = (function () {
         return teamrynkebyse.timehelper.makeRange(fromTime, toTime);
     }
 
+    function getNbr($row) {
+        var v = $row.find('[name*="volunteersNeeded"]');
+        return v.val();
+    }
+
     function validate() {
         var isInvalid = false;
         var allSessions = [];
 
         $(sessionRowClass).each(function () {
             var range = getRange($(this));
-
+            var nbr = getNbr($(this));
+            
+            if (nbr < 1 || nbr > 100000) {
+                isInvalid = true;
+                return false;
+            }
+            
             if (range.toTime.isGreaterThan(range.fromTime) == false) {
                 isInvalid = true;
                 return false;
@@ -112,6 +125,8 @@ teamrynkebyse.sessionbuilder = (function () {
                         .children()
                         .last();
         
+        result.find(textboxClass).on('change', validate);
+        
         result.find(undoClass).on('click', function () {
             result.remove();
             validate();
@@ -126,6 +141,8 @@ teamrynkebyse.sessionbuilder = (function () {
         init: function () {
             
             $(addMoreSessionsId).on('click', addSession);
+            $(volunteer0Id).on('change', validate);
+            
             hockTimePicker($(timePickerClass));
             var picker = $(datePickerClass);
             var calendar = picker.pickadate({
