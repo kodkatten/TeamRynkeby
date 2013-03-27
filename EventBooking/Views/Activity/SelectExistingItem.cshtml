@@ -26,7 +26,7 @@
 	// Render the form.
 	<div class="input-prepend input-append">
 		<span class="add-on">Det behövs</span>
-		@Html.DropDownListFor(x => x.ContributedInventory.ItemQuantity, Enumerable.Range(1, 100).Select(x => new SelectListItem() { Text = x.ToString(), Value = x.ToString() }))
+		@Html.DropDownListFor(x => x.ContributedInventory.Quantity, Enumerable.Range(1, 100).Select(x => new SelectListItem() { Text = x.ToString(), Value = x.ToString() }))
 		<span class="add-on">Stycken</span>
 		@Html.TextBoxFor(x => x.ContributedInventory.CurrentlySelectedItem, new { id = "ItemToBringTextBox", autocomplete = "off" })
 		<button class="btn" type="button" id="AddItemToBring">Lägg till</button>		

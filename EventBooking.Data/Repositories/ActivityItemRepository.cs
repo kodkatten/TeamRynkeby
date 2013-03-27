@@ -69,7 +69,7 @@ namespace EventBooking.Data.Repositories
 			return _context.ActivityItems.FirstOrDefault(i => i.Activity.Id == activityId && i.Name.Equals(itemName, StringComparison.OrdinalIgnoreCase));
 		}
 
-		public void AddOrUpdateItem(int activityId, string itemName, int itemQuantity)
+		public void AddOrUpdateItem(int activityId, string itemName, int quantity)
 		{
 			var existing = GetItemByActivityIdAndItemName(activityId, itemName);
 			
@@ -79,13 +79,13 @@ namespace EventBooking.Data.Repositories
 					{
 						Activity = _context.Activities.FirstOrDefault(x => x.Id == activityId),
 						Name = itemName,
-						Quantity = itemQuantity
+						Quantity = quantity
 					};
 				_context.ActivityItems.Add(existing);
 			}
 			else
 			{
-				existing.Quantity += itemQuantity;
+				existing.Quantity += quantity;
 			}
 
 			_context.SaveChanges();

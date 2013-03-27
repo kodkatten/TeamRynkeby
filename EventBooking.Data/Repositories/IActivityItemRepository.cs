@@ -14,6 +14,6 @@ namespace EventBooking.Data.Repositories
 		void UpdateItem(int activityId, ActivityItem item);
 		void DeleteItemByActivityIdAndItemName(int activityId, string itemName);
 		ActivityItem GetItemByActivityIdAndItemName(int activityId, string itemName);
-		void AddOrUpdateItem(int activityId, string itemName, int itemQuantity);
+		void AddOrUpdateItem(int activityId, string itemName, int quantity);
 	}
 }

@@ -49,14 +49,13 @@ namespace EventBooking.Controllers
 			}
 
 		    Mapper.CreateMap<ContributedInventoryModel, ActivityItem>()
-		          .ForMember(dest => dest.Name, options => options.MapFrom(source => source.Name))
-		          .ForMember(dest => dest.Quantity, options => options.MapFrom(source => source.ItemQuantity));
+                  .ForMember(dest => dest.Id, options => options.MapFrom(source => source.Id))
+                  .ForMember(dest => dest.Name, options => options.MapFrom(source => source.Name))
+		          .ForMember(dest => dest.Quantity, options => options.MapFrom(source => source.Quantity));
 
-            
             
 			var activity = Mapper.Map<Activity>(model);
 			activity.OrganizingTeam = _securityService.GetCurrentUser().Team;
-			//activity.Sessions = new List<Session> { Mapper.Map<Session>(model.Session) };
 			activity.Coordinator = _securityService.GetCurrentUser();
 			StoreActivity(activity);
 
@@ -162,7 +161,7 @@ namespace EventBooking.Controllers
 			{
 				_activityItemRepository.AddOrUpdateItem(model.ActivityId,
 				                                                       model.ContributedInventory.CurrentlySelectedItem,
-				                                                       model.ContributedInventory.ItemQuantity);
+				                                                       model.ContributedInventory.Quantity);
 			}
 			// Removing?
 			else if (isRemoving)
