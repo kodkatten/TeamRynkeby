@@ -88,9 +88,14 @@ namespace EventBooking.Controllers
 			if (query == null)
 			{
 				if (teamIdsToFilterActivitiesOn.Any())
-					query = _activityRepository.GetUpcomingActivitiesByTeams(teamIdsToFilterActivitiesOn, skip, NumberOfActivitiesPerPage);
+				{
+				    query = _activityRepository.GetUpcomingActivitiesByTeams(teamIdsToFilterActivitiesOn, skip,
+				                                                             NumberOfActivitiesPerPage);
+				}
 				else
-					query = _activityRepository.GetUpcomingActivities(skip, NumberOfActivitiesPerPage);
+				{
+				    query = _activityRepository.GetUpcomingActivities(skip, NumberOfActivitiesPerPage);
+				}
 			}
 
 			var viewModel = query.ToArray().Select(data => new ActivityModel(data));
@@ -98,11 +103,9 @@ namespace EventBooking.Controllers
 			return this.PartialView(viewModel);
 		}
 
-
 		protected virtual void StoreActivity(Activity activity)
 		{
 			_activityRepository.Add(activity);
-
 		}
 
 		public ActionResult Details(int id)
