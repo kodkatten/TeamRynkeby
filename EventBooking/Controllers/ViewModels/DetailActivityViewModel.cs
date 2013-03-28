@@ -7,19 +7,20 @@ namespace EventBooking.Controllers.ViewModels
 {
 	public class DetailActivityViewModel : ActivityModel
 	{
-		private readonly bool isLoggedIn;
-	    private readonly bool isSignedUpForActivity;
+		private readonly bool _isLoggedIn;
+	    private readonly bool _isSignedUpForActivity;
 
 		public DetailActivityViewModel(Activity activityData, User user) : base(activityData)
 		{
-			this.isLoggedIn = user != null;
-		    this.isSignedUpForActivity = IsSignedUp(activityData, user);
-			this.Description = activityData.Description;
-			this.Sessions = activityData.Sessions != null ? 
+			_isLoggedIn = user != null;
+		    _isSignedUpForActivity = IsSignedUp(activityData, user);
+			
+            Description = activityData.Description;
+			Sessions = activityData.Sessions != null ? 
 				                activityData.Sessions.Select(session => AsSessionViewModel(session, user)) : 
 				                Enumerable.Empty<SessionViewModel>();
 
-            this.Items = activityData.Items != null ?
+            Items = activityData.Items != null ?
                     activityData.Items.Select(item => AsItemViewModel(item, activityData, user)) :
                     Enumerable.Empty<ContributedInventoryItemModel>();
 
@@ -27,7 +28,16 @@ namespace EventBooking.Controllers.ViewModels
 
 	    private bool IsSignedUp(Activity activityData, User user)
 	    {
-	        return activityData.Sessions.Aggregate(false, (current, session) => current || session.Volunteers.Any(v => v.Id == user.Id));
+            if (_isLoggedIn)
+	        {
+	            return activityData.Sessions.Aggregate(false,
+	                                                   (current, session) =>
+	                                                   current || session.Volunteers.Any(v => v.Id == user.Id));
+	        }
+	        else
+	        {
+	            return false;
+	        }
 	    }
 
 
@@ -37,13 +47,13 @@ namespace EventBooking.Controllers.ViewModels
 
         public IEnumerable<ContributedInventoryItemModel> Items { get; private set; }
 
-		public bool ShouldShowDescription { get { return isLoggedIn;  } }
+		public bool ShouldShowDescription { get { return _isLoggedIn; } }
 
-        public bool ShouldShowSessions { get { return isLoggedIn; } }
+        public bool ShouldShowSessions { get { return _isLoggedIn; } }
         
-        public bool ShouldShowItems { get { return isLoggedIn; } }
+        public bool ShouldShowItems { get { return _isLoggedIn; } }
 
-        public bool CanBringItems { get { return isSignedUpForActivity; } }
+        public bool CanBringItems { get { return _isSignedUpForActivity; } }
 
 		private static SessionViewModel AsSessionViewModel(Session data, User user)
 		{

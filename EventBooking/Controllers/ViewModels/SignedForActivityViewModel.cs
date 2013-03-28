@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using EventBooking.Data.Entities;
 
 namespace EventBooking.Controllers.ViewModels
@@ -7,11 +8,10 @@ namespace EventBooking.Controllers.ViewModels
     {
         public SignedForActivityViewModel(Activity activityData, User user)
             : base(activityData, user)
-        {}
+        {
+            Session = activityData.Sessions;
+        }
 
         public IEnumerable<Session> Session { get; set; }
-
-        public IEnumerable<ActivityItem> ActivityItems { get; set; }
-       
     }
 }

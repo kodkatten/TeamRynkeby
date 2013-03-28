@@ -86,7 +86,7 @@ namespace EventBooking.Services
 					{
 						u.Name,
 						u.Cellphone,
-						Sessions = u.Sessions.Where(s => s.Activity.Id == activity.Id).OrderBy(s => s.FromTime).Select(s => new
+                        Sessions = u.Sessions.Where(s => s.Activity != null && s.Activity.Id == activity.Id).OrderBy(s => s.FromTime).Select(s => new
 							{
 								FromTime = s.FromTime.ToString("hh':'mm"),
 								ToTime = s.ToTime.ToString("hh':'mm")								

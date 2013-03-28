@@ -1,4 +1,5 @@
-﻿@model EventBooking.Controllers.ViewModels.SignedForActivityViewModel
+﻿@using System.Text
+@model EventBooking.Controllers.ViewModels.SignedForActivityViewModel
 @{
     ViewBag.Title = "WhoHasSignup";
 }
@@ -11,7 +12,7 @@
         <th>Namn</th>
         <th>Från</th>
         <th>Till</th>
-        <th>Materiel</th>
+        <th>Materiel till aktivitet</th>
     </tr>
 
     @foreach (var user in Model.Session.SelectMany(s => s.Volunteers))
@@ -19,7 +20,7 @@
         <tr>
             <td>@user.Name</td>
 
-            @foreach (var session in user.Sessions.Where(session => session.Activity.Id == Model.Id))
+            @foreach (var session in user.Sessions.Where(session => session.Activity != null && session.Activity.Id == Model.Id))
             {
                 <td>
                     @session.FromTime
@@ -30,12 +31,18 @@
             }
 
             <td>
-                @foreach (var item in user.Items.Where(item => item.Item.Activity.Id == Model.Id))
-                {
-                    <span>
-                        @item.Item.Name
-                        (@item.Quantity),
-                    </span>
+                @{
+                    var nameBuilder = new StringBuilder();
+                    foreach (var item in user.Items.Where(item => item.Item.Activity.Id == Model.Id))
+                    {
+                        nameBuilder.Append(item.Item.Name);
+                        nameBuilder.Append("(");
+                        nameBuilder.Append(item.Quantity);
+                        nameBuilder.Append("), ");
+                    }
+                    
+                    var name = nameBuilder.ToString().TrimEnd(new[] { ',', ' ' });
+                    <span>@name</span>
                 }
             </td>
         </tr>
