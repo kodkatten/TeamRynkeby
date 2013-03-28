@@ -80,7 +80,6 @@ $Date mellan $FirstTime och $LastTime
 
 $Summary
 
-$Sessions
 
 $Description"
 				};
