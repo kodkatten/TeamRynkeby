@@ -19,9 +19,10 @@ namespace EventBooking.Data
 		public IDbSet<TrainingQuestion> TrainingQuestions { get; set; }
 		public IDbSet<ActivityItemTemplate> ActivityItemTemplates { get; set; }
 		public IDbSet<ActivityItem> ActivityItems { get; set; }
-		public IDbSet<MailTemplate> MailTemplates { get; set; } 
+		public IDbSet<MailTemplate> MailTemplates { get; set; }
+	    public IDbSet<UserActivityItem> UserActivityItems { get; set; }
 
-		void IEventBookingContext.SaveChanges()
+	    void IEventBookingContext.SaveChanges()
 		{
 			this.SaveChanges();
 		}

@@ -14,15 +14,19 @@ namespace EventBooking.Controllers
 	public class SessionsController : Controller
 	{
 		private readonly ISecurityService _securityService;
-		private readonly IActivityRepository _activityRepository;
+	    private readonly IActivityItemRepository _activityItemRepository;
+	    private readonly IUserActivityItemRepository _userActivityItemRepository;
+	    private readonly IActivityRepository _activityRepository;
 		private readonly ISessionRepository _sessionRepository;
 
 
-		public SessionsController(IActivityRepository activityRepository, ISessionRepository repository, ISecurityService securityService)
+		public SessionsController(IActivityRepository activityRepository, ISessionRepository repository, ISecurityService securityService, IActivityItemRepository activityItemRepository, IUserActivityItemRepository userActivityItemRepository)
 		{
 			_activityRepository = activityRepository;
             _sessionRepository = repository;
 			_securityService = securityService;
+		    _activityItemRepository = activityItemRepository;
+		    _userActivityItemRepository = userActivityItemRepository;
 		}
 
 		[ImportModelStateFromTempData]
@@ -146,6 +150,23 @@ namespace EventBooking.Controllers
             }
 
             return RedirectToAction("Details", "Activity", new { id = activityId });
+        }
+
+        public ActionResult ContributeItems(int activityItemId, int quantity)
+        {
+            var user = _securityService.GetCurrentUser();
+            var item = _activityItemRepository.GetItem(activityItemId);
+
+            var userItem = new UserActivityItem
+                {
+                    Item = item,
+                    User = user,
+                    Quantity = quantity
+                };
+
+            _userActivityItemRepository.CreateOrUpdate(userItem);
+
+            return RedirectToAction("Details", "Activity", new { id = item.Activity.Id }); 
         }
 	}
 }
