@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EventBooking.Data.Entities
 {
+    [Table("User")]
 	public class User
 	{
 		public int Id { get; set; }

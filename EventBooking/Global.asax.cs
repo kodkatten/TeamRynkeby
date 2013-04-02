@@ -40,6 +40,7 @@ namespace EventBooking
 			SecurityConfiguration.Configure();
 
 			Database.SetInitializer(new EventBookingSeedInitializer());
+
 			using (var context = new EventBookingContext())
 			{
 				context.Database.Initialize(true);
