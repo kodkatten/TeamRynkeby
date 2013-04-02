@@ -216,23 +216,7 @@
                             <p>Antal</p>
                         </div>
 
-                        <div>
-                            <div>
-                                <select name="items[0].name">
-                                    <option value="Ospecificerat">Välj materiel</option>
-
-                                    @foreach (var item in Model)
-                                    {
-                                        <option value="@item.Name">@item.Name</option>
-                                    }
-
-                                </select>
-                            </div>
-
-                            <div>
-                                <input name="items[0].quantity" type="number" class="input-mini" value="1" min="1" />
-                            </div>
-                        </div>
+                       
                     </div>
 
                     <a id="addMoreItems" href="#">Lägg till sak</a>

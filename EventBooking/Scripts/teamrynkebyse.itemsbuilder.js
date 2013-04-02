@@ -11,13 +11,13 @@ teamrynkebyse.itemsbuilder = (function () {
     var count = 0;
     
     function addItem() {
-        count++;
         var viewData = { index: count };
         var result = $(itemsContainerId)
                         .mustache(itemsTemplateId, viewData)
                         .children()
                         .last();
 
+        count++;
         result.find(undoClass).on('click', function () {
             result.remove();
             count--;
@@ -25,13 +25,13 @@ teamrynkebyse.itemsbuilder = (function () {
     }
 
     function addSpecificItem() {
-        count++;
         var viewData = { index: count };
         var result = $(itemsContainerId)
                         .mustache(specificItemsTemplateId, viewData)
                         .children()
                         .last();
 
+        count++;
         result.find(undoClass).on('click', function () {
             result.remove();
             count--;
