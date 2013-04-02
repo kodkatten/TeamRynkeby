@@ -17,10 +17,18 @@ teamrynkebyse.itemsbuilder = (function () {
                         .children()
                         .last();
 
+        if (count > 0) {
+            $('#remove_' + (count - 1)).hide();
+        }
+
         count++;
         result.find(undoClass).on('click', function () {
             result.remove();
             count--;
+            if (count > 0) {
+                $('#remove_' + (count - 1)).show();
+            }
+
         });
     }
 
@@ -31,10 +39,18 @@ teamrynkebyse.itemsbuilder = (function () {
                         .children()
                         .last();
 
+        
+        if (count > 0) {
+            $('#remove_' + (count - 1)).hide();
+        }
+
         count++;
         result.find(undoClass).on('click', function () {
             result.remove();
             count--;
+            if (count > 0) {
+                $('#remove_' + (count - 1)).show();
+            }
         });
     }
 
