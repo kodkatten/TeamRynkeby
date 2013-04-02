@@ -12,6 +12,12 @@ namespace EventBooking.Validators
         public bool IsSessionIntrudingOnOtherSessionsTimeframe(SessionModel newSession, IEnumerable<SessionModel> currentSessions)
         {
             bool isInConflict = true;
+
+			if (!currentSessions.Any())
+			{
+				return false;
+			}
+
             foreach (var session in currentSessions)
             {
                 //Checks for exact match

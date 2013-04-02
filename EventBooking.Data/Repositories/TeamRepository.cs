@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
+using EventBooking.Data.Entities;
 
 namespace EventBooking.Data.Repositories
 {
@@ -33,6 +34,13 @@ namespace EventBooking.Data.Repositories
 		}
 		public Team CreateTeam(string name)
 		{
+			var existingTeam = context.Teams.FirstOrDefault(x => x.Name == name);
+
+			if (existingTeam != null)
+			{
+				throw new ArgumentException("Team with that name already exist");
+			}
+
 			var entity = new Team { Name = name };
 			context.Teams.Add(entity);
 			context.SaveChanges();
@@ -49,9 +57,9 @@ namespace EventBooking.Data.Repositories
 			var team = context.Teams.FirstOrDefault(x => x.Id == teamId);
 			if (team != null)
 			{
-				foreach (var volonteer in team.Volunteers)
+				foreach (var volunteer in team.Volunteers)
 				{
-					volonteer.Team = null;
+					volunteer.Team = null;
 				}
 				team.IsDeleted = true;
 				context.SaveChanges();
@@ -65,9 +73,7 @@ namespace EventBooking.Data.Repositories
 				throw new ArgumentNullException("teamId");
 			}
 
-			return this.context.Users.Where(u => u.Team.Id == teamId);
-
-
+			return context.Users.Where(u => u.Team.Id == teamId);
 		}
 	}
 }

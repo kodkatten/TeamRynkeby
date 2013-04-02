@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Configuration;
+using System.Data.Entity;
 using System.Diagnostics;
 using System.Web;
 using System.Web.Http;
@@ -7,10 +8,11 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using Autofac;
 using Autofac.Integration.Mvc;
+using CoderMike.Autofac.EasySettings;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
 using EventBooking.Filters;
-using EventBooking.Services;
+using EventBooking.Security;
 using WebMatrix.WebData;
 
 namespace EventBooking
@@ -19,10 +21,11 @@ namespace EventBooking
 	{
 		protected void Application_Start()
 		{
-			var builder = new ContainerBuilder();
-			builder.RegisterControllers(typeof(MvcApplication).Assembly);
+			var builder = new ContainerBuilder();			
+			builder.RegisterModule(new EasySettingsModule(ConfigurationManager.AppSettings));
 			builder.RegisterModule(new DataDependencyModule());
 			builder.RegisterModule(new ControllerDependencyModule());
+			builder.RegisterControllers(typeof(MvcApplication).Assembly);
 
 			var container = builder.Build();
 			DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
@@ -39,6 +42,7 @@ namespace EventBooking
 #if DEBUG
 			// Drop the database and recreate it.
 			Database.SetInitializer(new EventBookingSeedInitializer());
+
 			using (var context = new EventBookingContext())
 			{
 				context.Database.Initialize(true);

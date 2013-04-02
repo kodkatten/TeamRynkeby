@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
 using System.Web.Mvc;
 using EventBooking.Controllers.ViewModels;
-using EventBooking.Data;
 using EventBooking.Data.Repositories;
 using EventBooking.Services;
 

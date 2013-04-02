@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using EventBooking.Data.Entities;
 
 namespace EventBooking.Data.Repositories
 {
@@ -15,5 +16,6 @@ namespace EventBooking.Data.Repositories
 
         Activity GetActivityById(int id);
 
+	    void Add(Activity activity);
     }
 }

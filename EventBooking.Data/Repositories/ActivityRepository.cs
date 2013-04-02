@@ -1,8 +1,8 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using EventBooking.Data.Entities;
 
 namespace EventBooking.Data.Repositories
 {
@@ -38,28 +38,34 @@ namespace EventBooking.Data.Repositories
 
         public IEnumerable<Activity> GetUpcomingActivities(int skip, int take)
         {
-            return this._context.Activities.UpcomingActivities().Page(skip, take).Include(activity => activity.OrganizingTeam);
+            return _context.Activities
+                                .UpcomingActivities()
+                                .Where(activity => !activity.OrganizingTeam.IsDeleted)
+                                .Page(skip, take);
+ //                               .Include(activity => activity.OrganizingTeam);
         }
 
         public IEnumerable<Activity> GetUpcomingActivitiesByTeam(int teamId, int skip, int take)
         {
-            return this._context.Activities
+            return _context.Activities
                                 .UpcomingActivities()
-                                .Where(activity => activity.OrganizingTeam.Id == teamId)
+                                .Where(activity => activity.OrganizingTeam.Id == teamId && !activity.OrganizingTeam.IsDeleted)
                                 .Page(skip, take);
         }
 
         public IEnumerable<Activity> GetUpcomingActivitiesByTeams(IEnumerable<int> teamIds, int skip, int take)
         {
-            return this._context.Activities
-                                .UpcomingActivities().Where(act => teamIds.Contains(act.OrganizingTeam.Id))
+            return _context.Activities
+                                .UpcomingActivities()
+                                .Where(activity => teamIds.Contains(activity.OrganizingTeam.Id) && !activity.OrganizingTeam.IsDeleted)
                                 .Page(skip, take);
         }
 
 	    public virtual Activity GetActivityById(int id)
 	    {
-	        return this._context.Activities
+	        return _context.Activities
                                 .Include(x => x.OrganizingTeam)
+                                .Include(x => x.Items)
                                 .Include(x => x.Sessions.Select(session => session.Volunteers))
                                 .SingleOrDefault(x => x.Id == id);
 	    }

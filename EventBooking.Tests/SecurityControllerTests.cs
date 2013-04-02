@@ -5,6 +5,7 @@ using System.Web.Routing;
 using EventBooking.Controllers;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
+using EventBooking.Data.Entities;
 using EventBooking.Services;
 using Moq;
 using NUnit.Framework;
@@ -120,7 +121,7 @@ namespace EventBooking.Tests
             Assert.AreEqual("Checkpoint", result.ViewName);
             var resultingModel = result.Model as LoginModel;
             Assert.IsNotNull(resultingModel);
-            Assert.AreEqual("E-postadress eller lösenord är felaktigt", resultingModel.ErrorMessage);
+            Assert.AreEqual("Epostadress eller lösenord är felaktigt", resultingModel.ErrorMessage);
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using EventBooking.Data;
+using EventBooking.Data.Entities;
 
 namespace EventBooking.Controllers.ViewModels
 {

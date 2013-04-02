@@ -5,11 +5,13 @@
     ViewBag.Title = "Berätta mer om dig själv";
 }
 
-<h2>@ViewBag.Title</h2>
+<div class="page-header">
+   <h2>@ViewBag.Title</h2>
+</div>
 
 @using (Html.BeginForm("MyProfile", "User", FormMethod.Post, new { @class = "form-horizontal" }))
 {
-    @Html.ValidationSummary()
+@*Html.ValidationSummary()*@
     
     <div class="control-group">
         @Html.LabelFor(m => m.Name, new { @class = "control-label" })
@@ -30,7 +32,7 @@
     <div class="control-group">
         @Html.LabelFor(m => m.ZipCode, new { @class = "control-label" })
         <div class="controls">
-            @Html.TextBoxFor(m => m.ZipCode, new { placeholder = "Postnummer" })
+            @Html.TextBoxFor(m => m.ZipCode, new { placeholder = "222 33" })
             @Html.ValidationMessageFor(m => m.ZipCode)
         </div>
     </div>
@@ -54,7 +56,7 @@
     <div class="control-group">
         @Html.LabelFor(m => m.Birthdate, new { @class = "control-label" })
         <div class="controls">
-            @Html.TextBoxFor(m => m.Birthdate, new { placeholder = "Födelsedatum" })
+            @Html.TextBoxFor(m => m.Birthdate, "{0:yyyy-MM-dd}", new { placeholder = "YYYY-MM-DD" })
             @Html.ValidationMessageFor(m => m.Birthdate)
         </div>
     </div>
@@ -62,7 +64,14 @@
     <div class="control-group">
         @Html.LabelFor(m => m.Team, new { @class = "control-label" })
         <div class="controls">
-            @Html.DropDownListFor(m => m.Team.Id, new SelectList(Model.Teams, "Id", "Name"), Model.Team != null ? new { @disabled = "disabled" } : null)
+            @if (Model.Team != null && Model.Team.Name != null)
+            {
+                @Html.DropDownListFor(m => m.Team.Id, new SelectList(new[] { Model.Team }, "Id", "Name"), new { @readonly = "true" })
+            }
+            else
+            {
+                @Html.DropDownListFor(m => m.Team.Id, new SelectList(Model.Teams, "Id", "Name"))
+            }
             @Html.ValidationMessageFor(m => m.Team)
         </div>
     </div>

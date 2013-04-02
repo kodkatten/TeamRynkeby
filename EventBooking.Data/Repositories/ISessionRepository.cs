@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using EventBooking.Data.Entities;
 
 namespace EventBooking.Data.Repositories
 {
@@ -10,5 +11,7 @@ namespace EventBooking.Data.Repositories
 		Session GetSessionById(int sessionId);
 		void UpdateSession(int activityId, Session session);
 		bool SignUp(Session session, User user);
+		void DeleteSession(int sessionId);
+	    void LeaveSession(Session session, User user);
 	}
 }

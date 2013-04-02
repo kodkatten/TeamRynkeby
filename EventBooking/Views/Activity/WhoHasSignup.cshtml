@@ -1,0 +1,54 @@
+﻿@using System.Text
+@model EventBooking.Controllers.ViewModels.SignedForActivityViewModel
+@{
+    ViewBag.Title = "WhoHasSignup";
+}
+
+<h3>@Model.Name</h3>
+
+<table class="table table-hover">
+
+    <tr>
+        <th>Namn</th>
+        <th>Från</th>
+        <th>Till</th>
+        <th>Materiel till aktivitet</th>
+    </tr>
+
+    @foreach (var user in Model.Session.SelectMany(s => s.Volunteers))
+    {
+        <tr>
+            <td>@user.Name</td>
+
+            @foreach (var session in user.Sessions.Where(session => session.Activity != null && session.Activity.Id == Model.Id))
+            {
+                <td>
+                    @session.FromTime
+                </td>
+                <td>
+                    @session.ToTime
+                </td>
+            }
+
+            <td>
+                @{
+                    var nameBuilder = new StringBuilder();
+                    foreach (var item in user.Items.Where(item => item.Item.Activity.Id == Model.Id))
+                    {
+                        nameBuilder.Append(item.Item.Name);
+                        nameBuilder.Append("(");
+                        nameBuilder.Append(item.Quantity);
+                        nameBuilder.Append("), ");
+                    }
+                    
+                    var name = nameBuilder.ToString().TrimEnd(new[] { ',', ' ' });
+                    <span>@name</span>
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+

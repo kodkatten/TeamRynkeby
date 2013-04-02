@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using EventBooking.Data;
+using EventBooking.Data.Entities;
 
 namespace EventBooking.Controllers.ViewModels
 {

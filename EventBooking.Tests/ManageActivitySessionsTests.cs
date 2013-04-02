@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using EventBooking.Controllers;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
+using EventBooking.Data.Entities;
 using EventBooking.Data.Repositories;
 using EventBooking.Services;
 using Moq;
@@ -21,7 +22,7 @@ namespace EventBooking.Tests
 			SecurityService = new MockupSecurityService { ReturnUser = new User { Team = new Team { Name = "The team" } } };
 		}
 
-		Session SetupRepoWithSession( Mock<ISessionRepository> mock, int activityId)
+		Session SetupRepoWithSession(Mock<IActivityRepository> aMock, Mock<ISessionRepository> mock, int activityId)
 		{
 			var activity = new Activity { Id = activityId, Name = "foo", Date = new DateTime( 2023, 11, 12 ) };
 			var session = new Session
@@ -33,14 +34,16 @@ namespace EventBooking.Tests
 				VolunteersNeeded = 33
 			};
 			mock.Setup( r => r.GetSessionsForActivity( activityId ) ).Returns( () => new List<Session> { session } );
+			aMock.Setup(r => r.GetActivityById(activityId)).Returns(activity);
 			return session;
 		}
 
 		[Test]
 		public void WhenNavigatingToActivitySessions_RepositoryIsAskedToLoadSessionsForActivity()
 		{
+			var actMock = new Mock<IActivityRepository>();
 			var repoMock = new Mock<ISessionRepository>();
-			var controller = CreateController(repoMock.Object);
+			var controller = CreateController(actMock.Object, repoMock.Object);
 
 			controller.Index(1);
 
@@ -51,9 +54,10 @@ namespace EventBooking.Tests
 		[Test]
 		public void WhenNavigatingToActivitySessions_ViewShowsInfoAboutRequestedActivity()
 		{
+			var actMock = new Mock<IActivityRepository>();
 			var repoMock = new Mock<ISessionRepository>();
-			var controller = CreateController(repoMock.Object);
-			var session = SetupRepoWithSession(repoMock, 22);
+			var controller = CreateController(actMock.Object, repoMock.Object);
+			var session = SetupRepoWithSession(actMock, repoMock, 22);
 
 			var result = controller.Index( 22 ) as ViewResult;
 
@@ -68,9 +72,10 @@ namespace EventBooking.Tests
 		[Test]
 		public void WhenNavigatingToActivitySessions_ViewModelContainsRequestedActivity()
 		{
+			var actMock = new Mock<IActivityRepository>();
 			var repoMock = new Mock<ISessionRepository>();
-			var controller = CreateController(repoMock.Object);
-			SetupRepoWithSession( repoMock, 1 );
+			var controller = CreateController(actMock.Object, repoMock.Object);
+			SetupRepoWithSession(actMock, repoMock, 1 );
 
 			var result = controller.Index(1) as ViewResult;
 
@@ -84,9 +89,10 @@ namespace EventBooking.Tests
 		[Test]
 		public void WhenNavigatingToActivitySessions_ViewModelContainsSessions()
 		{
+			var actMock = new Mock<IActivityRepository>();
 			var repoMock = new Mock<ISessionRepository>();
-			var controller = CreateController(repoMock.Object);
-			SetupRepoWithSession( repoMock, 19 );
+			var controller = CreateController(actMock.Object, repoMock.Object);
+			SetupRepoWithSession(actMock, repoMock, 19 );
 
 			var result = controller.Index(19) as ViewResult;
 
@@ -100,10 +106,11 @@ namespace EventBooking.Tests
 		[Test]
 		public void CanAddSessionToActivity()
 		{
+			var actMock = new Mock<IActivityRepository>();
 			var repoMock = new Mock<ISessionRepository>();
             Activity activity = new Activity(){Id = 145};
 
-			var controller = CreateController(repoMock.Object);
+			var controller = CreateController(actMock.Object, repoMock.Object);
 			repoMock.Setup(r => r.Save(145, null));
 		    var activitySessionsModel = new ActivitySessionsModel(new ActivityModel(activity), new List<SessionModel>());
 
@@ -118,8 +125,9 @@ namespace EventBooking.Tests
 		[Test]
 		public void WhenNavigatingToNonExistentActivity_UserIsRedirectedToNotFound()
 		{
+			var actMock = new Mock<IActivityRepository>();
 			var repoMock = new Mock<ISessionRepository>();
-			var controller = CreateController(repoMock.Object);
+			var controller = CreateController(actMock.Object, repoMock.Object);
 
 			var result = controller.Index( 133 ) as RedirectToRouteResult;
 
@@ -130,9 +138,9 @@ namespace EventBooking.Tests
 
 		protected MockupSecurityService SecurityService { get; set; }
 
-		private SessionsController CreateController(ISessionRepository repository)
+		private SessionsController CreateController(IActivityRepository activityRepository, ISessionRepository repository)
 		{
-			return new SessionsController( repository, new Mock<ISecurityService>().Object );
+			return new SessionsController(activityRepository, repository, new Mock<ISecurityService>().Object, new Mock<IActivityItemRepository>().Object, new Mock<IUserActivityItemRepository>().Object );
 		}
 	}
 }

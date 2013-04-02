@@ -1,36 +1,97 @@
-﻿@model EventBooking.Controllers.ViewModels.TeamModel
+﻿@using System.Web.Optimization
+@using EventBooking.Data
+@using EventBooking.Data.Entities
+@model EventBooking.Controllers.ViewModels.TeamModel
 @{
     ViewBag.Title = "ViewTeam";
+
+    var isCurrentUserAdmin = Roles.IsUserInRole(UserType.Administrator.ToString());
+    var isCurrentUserPowerUser = Roles.IsUserInRole(Model.PowerUserRole);
 }
 
+@section Styles {
+    @Styles.Render("~/Styles/Admin")
+}
 
-<h2>@Model.Name</h2>
+@section Scripts {
+    @Scripts.Render("~/Scripts/admin.js")
+}
 
-<h3>Members</h3>
+<div class="page-header">
+    <h2>@Model.Name</h2>
+</div>
 
-<div class="row">
-@foreach (var volonteer in Model.Volunteers.OrderBy(x => x.Name))
-{    
-    <div class="span4 volonteer" data-volonteer-id="@volonteer.Id">
+<h3>Medlemmar</h3>
+
+<div class="row team" data-team-id="@Model.Id" data-current-user-id="@WebSecurity.CurrentUserId">
+@foreach (var volunteer in Model.Volunteers.OrderBy(x => x.Name))
+{
+    var isVolunteerPowerUser = volunteer.Roles.Contains(Model.PowerUserRole);
+    string isPowerUserLinkClass = isVolunteerPowerUser ? "btn-success" : "";
+    string isPowerUserIconClass = isVolunteerPowerUser ? "icon-white" : "";
+
+    var isVolunteerAdministator = volunteer.Roles.Contains(UserType.Administrator.ToString());
+    string isAdministratorLinkClass = isVolunteerAdministator ? "btn-success" : "";
+    string isAdministratorIconClass = isVolunteerAdministator ? "icon-white" : "";
+    
+    <div class="span4 volunteer" data-volunteer-id="@volunteer.Id">
         <div class="card">
-            <h3>@volonteer.Name</h3>
-            <p>@volonteer.Email</p>
-            <a href="#" title="Team admin" class="btn toggle-admin"><i class="icon icon-user"></i></a>
-            <a href="#" title="Ta bort från lag" class="btn btn-danger exclude"><i class="icon icon-white icon-thumbs-down"></i></a>
+            <div>
+                <h3>@volunteer.Name</h3>
+                <p>@volunteer.Email</p>
+                
+                <div class="align-left">
+                    
+                    @if (isCurrentUserAdmin)
+                    {
+                        <div class="btn-group">
+                            <a 
+                                href="#" 
+                                title="Team admin (PowerUser)" 
+                                class="btn toggle-poweruser @isPowerUserLinkClass"
+                                rel="tooltip">
+                                <i class="icon icon-user @isPowerUserIconClass"></i>
+                            </a>
+                            <a 
+                                href="#" 
+                                title="Administrator" 
+                                class="btn toggle-admin @isAdministratorLinkClass"
+                                rel="tooltip">
+                                <i class="icon icon-group @isAdministratorIconClass"></i>
+                            </a>
+                        </div>
+                    }   
+                </div>
+                
+                <div class="align-right">
+                    @if (isCurrentUserAdmin || isCurrentUserPowerUser)
+                    {
+                        <a 
+                            href="#" 
+                            title="Ta bort från lag" 
+                            rel="tooltip"
+                            class="btn btn-danger exclude">
+                            <i class="icon icon-white icon-thumbs-down"></i>
+                        </a>
+                    }
+                </div>
+                
+                <span class="clearfix" />
+            </div>
         </div>
     </div>  
 }
 </div>
 
-<div id="errorModal" class="modal hide fade">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h3>Ooops</h3>
-  </div>
-  <div class="modal-body">
-    <p>Tyvärr kunde vi inte göra den där grejen du ville göra. Testa igen om en stund eller gå och se På spåret eller nåt.</p>
-  </div>
-  <div class="modal-footer">
-    <a href="#" data-dismiss="modal" class="btn">Close</a>
-  </div>
+<div id="errorModal" class="modal hide fade" data-backdrop="static">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Ett fel har inträffat</h3>
+    </div>
+    <div class="modal-body">
+        <p>Det gick inte att ta bort medlemmen från laget.</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#" data-dismiss="modal" class="btn">Stäng</a>
+    </div>
 </div>

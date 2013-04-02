@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using EventBooking.Data;
+using EventBooking.Data.Entities;
 using EventBooking.Data.Repositories;
 
 namespace EventBooking.Data.Repositories
@@ -20,7 +21,7 @@ namespace EventBooking.Data.Repositories
 
 		public virtual IEnumerable<Session> GetSessionsForActivity(int activityId)
 		{
-			return _context.Sessions.Where(s => s.Activity.Id == activityId).Include(s => s.Activity).Include(s => s.Activity.OrganizingTeam).ToArray();
+			return _context.Sessions.Where(s => s.Activity.Id == activityId).Include(s => s.Activity).Include(s => s.Activity.OrganizingTeam).Include(s => s.Volunteers).ToArray();
 		}
 
 		public virtual void Save(int activityId, Session session)
@@ -55,7 +56,26 @@ namespace EventBooking.Data.Repositories
 			return true;
 		}
 
-		public void SaveVolunteers(Session session)
+		public void DeleteSession(int sessionId)
+		{
+			Session sessionToDelete = _context.Sessions.First(s => s.Id == sessionId);
+
+			_context.Sessions.Remove(sessionToDelete);
+			_context.SaveChanges();
+		}
+
+        public void LeaveSession(Session session, User user)
+        {
+            session.Volunteers.Remove(user);
+
+            var itemsToRemove = user.Items.Where(i => i.Item.Activity.Id == session.Activity.Id).ToList();
+
+            itemsToRemove.ForEach(i => _context.UserActivityItems.Remove(i));
+
+            _context.SaveChanges();
+        }
+
+	    public void SaveVolunteers(Session session)
 		{
 			_context.SaveChanges();
 		}

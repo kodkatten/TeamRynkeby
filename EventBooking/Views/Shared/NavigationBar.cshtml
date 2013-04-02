@@ -1,4 +1,11 @@
-﻿<div class="navbar navbar-inverse navbar-fixed-top">
+﻿@using EventBooking.Data
+@using EventBooking.Data.Entities
+
+@{
+    bool showAdmin = Roles.GetRolesForUser().Any(x => x == UserType.Administrator.ToString() || x.EndsWith("PowerUser"));
+}
+
+<div class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
             <a class="brand" href="/">Team Rynkeby</a>
@@ -12,28 +19,19 @@
                 <ul class="nav">
                     @if (!Request.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Sign up", "SignUp", "User")</li>
-                        <li>@Html.ActionLink("Sign in", "Checkpoint", "Security")</li>
+                        <li>@Html.ActionLink("Registrera", "SignUp", "User")</li>
+                        <li>@Html.ActionLink("Logga in", "Checkpoint", "Security")</li>
                     }
                     else
                     {
                         <li>@Html.ActionLink(User.Identity.Name, "MyProfile", "User")</li>
                         <li>@Html.ActionLink("Mitt lag", "Details", "Team")</li>
-                        <li>@Html.ActionLink("Skapa event", "Create", "Activity")</li>
-                        
-                        <!-- Todo: checked if user is admin -->@*
-                        <li class="dropdown">
-                            @Html.ActionLink(
-                                    "Team",
-                                    "Index",
-                                    "Admin",
-                                    new { @class = "dropdown-toggle", data_toggle = "dropdown" })
-                            <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("Team medlemmar", "TeamMembers", "Admin")</li>
-                                <li>@Html.ActionLink("Hantera teams", "EditTeams", "Admin")</li>
-                            </ul>
-                        </li>*@
-                        
+                        <li>@Html.ActionLink("Skapa aktivitet", "Create", "Activity")</li>
+
+                        if (showAdmin)
+                        {
+                              <li>@Html.ActionLink("Hantera lag", "ViewTeams", "Admin")</li>
+                        }
 
                         <li>@Html.ActionLink("Logga ut", "SignOff", "Security")</li>
                     }

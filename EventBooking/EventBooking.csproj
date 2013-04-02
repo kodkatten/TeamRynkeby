@@ -54,10 +54,20 @@
     <Reference Include="AutoMapper">
       <HintPath>..\packages\AutoMapper.2.2.0\lib\net40\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="CoderMike.Autofac.EasySettings">
+      <HintPath>..\packages\CoderMike.Autofac.EasySettings.1.0\lib\CoderMike.Autofac.EasySettings.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="FluentSecurity, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\FluentSecurity.1.4.0\lib\FluentSecurity.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NVelocity">
+      <HintPath>..\packages\NVelocity.1.0.3\lib\NVelocity.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -141,7 +151,6 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="ControllerDependencyModule.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
-    <Compile Include="Controllers\ActivityItemController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
@@ -149,12 +158,18 @@
     <Compile Include="Controllers\SessionsController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\ViewModels\ActivityItemsModel.cs" />
     <Compile Include="Controllers\ViewModels\ActivityModel.cs" />
     <Compile Include="Controllers\ViewModels\ActivitySessionsModel.cs" />
     <Compile Include="Controllers\ViewModels\AdministerTeamMembersModel.cs" />
     <Compile Include="Controllers\ViewModels\ContributedInventoryItemModel.cs" />
     <Compile Include="Controllers\ViewModels\ContributedInventoryModel.cs" />
+    <Compile Include="Controllers\ViewModels\DetailActivityViewModel.cs" />
     <Compile Include="Controllers\ViewModels\EditSessionModel.cs" />
+    <Compile Include="Controllers\ViewModels\MailData.cs" />
+    <Compile Include="Controllers\ViewModels\SessionModel.cs" />
+    <Compile Include="Controllers\ViewModels\SessionViewModel.cs" />
+    <Compile Include="Controllers\ViewModels\SignedForActivityViewModel.cs" />
     <Compile Include="Controllers\ViewModels\Volunteer.cs" />
     <Compile Include="Controllers\ViewModels\UserModel.cs" />
     <Compile Include="Controllers\ViewModels\CreateActivityModel.cs" />
@@ -168,11 +183,21 @@
     <Compile Include="Controllers\ViewModels\TeamActivitiesModel.cs" />
     <Compile Include="Controllers\ViewModels\TeamModel.cs" />
     <Compile Include="Controllers\ViewModels\UserMapper.cs" />
+    <Compile Include="Filters\Copy of EventBookingSeedInitializer.cs" />
+    <Compile Include="Security\DenyAnonymousAccessPolicyViolationHandler.cs" />
+    <Compile Include="Security\DenyAuthenticatedAccessPolicyViolationHandler.cs" />
+    <Compile Include="Extensions\ModelStateExtensions.cs" />
+    <Compile Include="Filters\ExportModelStateToTempData.cs" />
+    <Compile Include="Filters\ImportModelStateFromTempData.cs" />
+    <Compile Include="Filters\ModelStateTempDataTransfer.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Security\RequireAdminOrPowerUser.cs" />
+    <Compile Include="Security\RequireAdminOrTeamPowerUser.cs" />
+    <Compile Include="Security\SecurityConfiguration.cs" />
     <Compile Include="Services\EmailService.cs" />
     <Compile Include="Services\IEmailService.cs" />
     <Compile Include="Filters\EventBookingSeedInitializer.cs" />
@@ -181,8 +206,11 @@
     </Compile>
     <Compile Include="Controllers\ViewModels\LoginModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IMailTemplateService.cs" />
     <Compile Include="Services\ISecurityService.cs" />
+    <Compile Include="Services\MailTemplateService.cs" />
     <Compile Include="Services\SecurityService.cs" />
+    <Compile Include="Settings\EmailSettings.cs" />
     <Compile Include="Validators\CustomValidator.cs" />
     <Compile Include="Validators\ExistingSession.cs" />
     <Compile Include="Validators\FutureDate.cs" />
@@ -193,36 +221,48 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Content Include="Content\bootstrap-responsive.css" />
-    <Content Include="Content\bootstrap-responsive.min.css" />
-    <Content Include="Content\bootstrap-timepicker.css" />
-    <Content Include="Content\bootstrap-timepicker.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\admin.css" />
-    <Content Include="Content\landingpage-tablet.css" />
-    <Content Include="Content\landingpage-phone.css" />
+    <Content Include="Content\fonts\museo_slab_500-webfont.svg" />
+    <Content Include="Content\images\expo.png" />
+    <Content Include="Content\styles\bootstrap-responsive.css" />
+    <Content Include="Content\styles\bootstrap-timepicker.css" />
+    <Content Include="Content\styles\bootstrap.css" />
+    <Content Include="Content\styles\admin.css" />
+    <Content Include="Content\styles\createevent.css" />
+    <Content Include="Content\styles\font-awesome.css" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\styles\landingpage-tablet.css" />
+    <Content Include="Content\styles\landingpage-phone.css" />
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
-    <Content Include="Content\landingpage.css" />
-    <Content Include="Content\site.css" />
+    <Content Include="Content\styles\landingpage.css" />
+    <Content Include="Content\styles\pickadate.css" />
+    <Content Include="Content\styles\site.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap-timepicker.js" />
-    <Content Include="Scripts\bootstrap-timepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="myBalsamiqProject.pdf" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
+    <Content Include="Content\fonts\museo_slab_500-webfont.eot" />
+    <Content Include="Content\fonts\museo_slab_500-webfont.ttf" />
+    <Content Include="Content\fonts\museo_slab_500-webfont.woff" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\admin.js" />
-    <Content Include="Scripts\general.js" />
+    <Content Include="Scripts\teamrynkebyse.itemsbuilder.js" />
+    <Content Include="Scripts\createevent.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
-    <Content Include="Scripts\jquery-1.9.1.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.mustache.js" />
+    <Content Include="Scripts\landingpage.js" />
+    <Content Include="Scripts\mustache.js" />
+    <Content Include="Scripts\pickadate.sv_SE.js" />
+    <Content Include="Scripts\team.js" />
+    <Content Include="Scripts\teamrynkebyse.wizard.js" />
     <Content Include="Scripts\upcomingEvents.js" />
     <Content Include="Scripts\pickadate.js" />
     <Content Include="Scripts\pickadate.legacy.js" />
-    <Content Include="Scripts\pickadate.legacy.min.js" />
-    <Content Include="Scripts\pickadate.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -233,13 +273,12 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Scripts\jquery-1.9.1.min.map" />
     <Content Include="Views\Security\Checkpoint.cshtml" />
     <Content Include="Views\Team\Details.cshtml" />
     <Content Include="Views\User\MyProfile.cshtml" />
     <Content Include="Views\User\SignUp.cshtml" />
     <Content Include="Views\Activity\Create.cshtml" />
-    <Content Include="Views\Activity\details.cshtml" />
+    <Content Include="Views\Activity\Details.cshtml" />
     <Content Include="Views\Admin\ViewTeams.cshtml" />
     <Content Include="Views\Admin\Partials\Teams.cshtml" />
     <Content Include="Views\Activity\Upcoming.cshtml" />
@@ -255,6 +294,10 @@
     <Content Include="Views\Sessions\SignUpFailed.cshtml" />
     <Content Include="Views\Shared\Footer.cshtml" />
     <Content Include="Views\Sessions\EditSession.cshtml" />
+    <Content Include="Views\Shared\_MembersLayout.cshtml" />
+    <Content Include="Views\Activity\WhoHasSignup.cshtml" />
+    <Content Include="Scripts\teamrynkebyse.sessionbuilder.js" />
+    <Content Include="Scripts\teamrynkebyse.timehelper.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

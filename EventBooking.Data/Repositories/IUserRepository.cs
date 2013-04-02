@@ -1,4 +1,6 @@
-﻿namespace EventBooking.Data.Repositories
+﻿using EventBooking.Data.Entities;
+
+namespace EventBooking.Data.Repositories
 {
 	public interface IUserRepository
 	{

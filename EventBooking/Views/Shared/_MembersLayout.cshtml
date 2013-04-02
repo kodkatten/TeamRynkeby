@@ -1,0 +1,27 @@
+﻿@using System.Web.Optimization
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @Styles.Render("~/Styles/SiteBase")
+    @Styles.Render("~/Styles/MemberBase")
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+    <div id="wrapper">
+        @Html.Partial("NavigationBar")
+
+        <div class="container container-offset">
+            @RenderBody()
+        </div>
+
+        <div id="push"></div>
+    </div>
+    @Html.Partial("Footer")
+    @Scripts.Render("~/Scripts/jQuery")
+    @Scripts.Render("~/Scripts/SiteBase")
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

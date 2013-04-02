@@ -2,6 +2,7 @@
 using EventBooking.Controllers;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
+using EventBooking.Data.Entities;
 using EventBooking.Data.Repositories;
 using EventBooking.Services;
 using Moq;
@@ -32,19 +33,21 @@ namespace EventBooking.Tests
 		}
 
 		[Test]
-		public void Get_myprofile_returns_view()
+		public void Get_myprofile_returns_view_when_loggedin()
 		{
+		    security.SignIn(security.AcceptedEmail, security.AcceptedPassword);
 			var view = userController.MyProfile() as ViewResult;
 			Assert.IsNotNull(view);
 			Assert.IsAssignableFrom<MyProfileModel>(view.Model);
 		}
 
 		[Test]
-		public void Post_invalid_profile_returns_user_to_same_page()
+        public void Post_invalid_profile_returns_user_to_same_page_when_loggedin()
 		{
 			InvalidateModel();
 
-			var view = userController.MyProfile(new MyProfileModel()) as ViewResult;
+            security.SignIn(security.AcceptedEmail, security.AcceptedPassword);
+            var view = userController.MyProfile(new MyProfileModel()) as ViewResult;
 			Assert.IsNotNull(view);
 			Assert.AreEqual(string.Empty, view.ViewName); // viewname is empty when returning the default view
 		}

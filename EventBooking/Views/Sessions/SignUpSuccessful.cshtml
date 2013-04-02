@@ -1,8 +1,14 @@
-﻿@{
+﻿@model int
+@{
     ViewBag.Title = "Anmälan lyckades";
 }
 
-<h2>Du är nu anmäld till passet!</h2>
+<div class="page-header">
+    <h2>Du är nu anmäld till passet!</h2>
+</div>
 <p>
-    <a href="@Url.Action("Details", "Team")" class="link">Återgå till mitt lags sida</a>
+    <ul>
+        <li><a href="@Url.Action("Details", "Team")" class="link">Tillbaka till laget</a></li>
+        <li><a href="@Url.Action("Details", "Activity", new { id = Model })" class="link">Tillbaka till aktiviteten</a></li>
+    </ul>
 </p>

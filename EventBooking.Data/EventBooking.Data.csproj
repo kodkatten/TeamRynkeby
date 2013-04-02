@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="DataMigrator.cs" />
     <Compile Include="Entities\ActivityItemTemplate.cs" />
+    <Compile Include="Entities\MailTemplate.cs" />
     <Compile Include="Entities\UserActivityItem.cs" />
     <Compile Include="Entities\TrainingQuestion.cs" />
     <Compile Include="DataDependencyModule.cs" />
@@ -77,16 +78,20 @@
     <Compile Include="Repositories\ActivityRepository.cs" />
     <Compile Include="Repositories\IActivityRepository.cs" />
     <Compile Include="Repositories\IInterviewQuestionRepository.cs" />
+    <Compile Include="Repositories\IMailTemplateRepository.cs" />
     <Compile Include="Repositories\InterviewQuestionRepository.cs" />
     <Compile Include="Repositories\IActivityItemRepository.cs" />
     <Compile Include="Repositories\ISessionRepository.cs" />
     <Compile Include="Repositories\ITeamRepository.cs" />
     <Compile Include="Repositories\ActivityItemRepository.cs" />
+    <Compile Include="Repositories\IUserActivityItemRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
     <Compile Include="Entities\InterviewQuestion.cs" />
+    <Compile Include="Repositories\MailTemplateRepository.cs" />
     <Compile Include="Repositories\SessionRepository.cs" />
     <Compile Include="Repositories\TeamRepository.cs" />
     <Compile Include="Repositories\TrainingQuestionRepository.cs" />
+    <Compile Include="Repositories\UserActivityItemRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="SystemTime.cs" />
   </ItemGroup>

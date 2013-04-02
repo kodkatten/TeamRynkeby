@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using EventBooking.Data;
+using EventBooking.Data.Entities;
 
 namespace EventBooking.Controllers.ViewModels
 {
@@ -15,7 +16,6 @@ namespace EventBooking.Controllers.ViewModels
             destination.StreetAddress = source.StreetAddress;
             destination.Zipcode = source.Zipcode;
             destination.Team = source.Team;
-
             return destination;
         }
     }

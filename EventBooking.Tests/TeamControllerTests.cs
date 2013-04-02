@@ -5,6 +5,7 @@ using System.Web.Routing;
 using EventBooking.Controllers;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
+using EventBooking.Data.Entities;
 using EventBooking.Data.Repositories;
 using Moq;
 using NUnit.Framework;

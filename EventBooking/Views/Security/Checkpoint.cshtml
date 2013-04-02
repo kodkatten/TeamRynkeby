@@ -2,10 +2,11 @@
 
 @{
     ViewBag.Title = "Checkpoint";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="page-header">
-    <h1>Inloggning</h1>
+    <h2>Inloggning</h2>
 </div>
 
 @if (!String.IsNullOrEmpty(Model.ErrorMessage))
@@ -13,38 +14,31 @@
     <div class="alert alert-error">@Model.ErrorMessage</div>
 }
 
-@using (Html.BeginForm("LogIn", "Security", FormMethod.Post))
+@using (Html.BeginForm("LogIn", "Security", FormMethod.Post, new { @class = "form-horizontal" }))
 {
     @Html.ValidationSummary(true)
 
-
-    <div class="span5">
-    <fieldset class="form-horizontal">
-        <div class="control-group pull-right">
-            @Html.LabelFor(model => model.ElectronicMailAddress, new Dictionary<string, object>{
-                {"class", "control-label"}
-            })
-            <div class="controls">
-                @Html.TextBoxFor(model => model.ElectronicMailAddress, new { autofocus = "autofocus"})
-                @Html.ValidationMessageFor(model => model.ElectronicMailAddress)
-            </div>
-
+    <div class="control-group">
+        @Html.LabelFor(model => model.ElectronicMailAddress, new Dictionary<string, object>{
+            {"class", "control-label"}
+        })
+        <div class="controls">
+            @Html.TextBoxFor(model => model.ElectronicMailAddress, new { autofocus = "autofocus"})
+            @Html.ValidationMessageFor(model => model.ElectronicMailAddress)
         </div>
+    </div>
 
-        <div class="control-group pull-right">
-            @Html.LabelFor(model => model.Password, new Dictionary<string, object>{
-                {"class", "control-label"}
-                })
-            <div class="controls">
-                @Html.PasswordFor(model => model.Password)
-                @Html.ValidationMessageFor(model => model.Password)
-            </div>
-                @Html.HiddenFor(m => m.ReturnUrl)
+    <div class="control-group">
+        @Html.LabelFor(model => model.Password, new Dictionary<string, object>{ {"class", "control-label"} })
+        <div class="controls">
+            @Html.PasswordFor(model => model.Password)
+            @Html.ValidationMessageFor(model => model.Password)
         </div>
-
-        <p>
-            <input type="submit" value="Logga in" class="btn pull-right" />
-        </p>
-    </fieldset>
+            @Html.HiddenFor(m => m.ReturnUrl)
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <button type="submit" class="btn">Logga in</button>
         </div>
+    </div>
 }

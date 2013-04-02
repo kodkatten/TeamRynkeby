@@ -1,6 +1,9 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using System.Web.Security;
+using AutoMapper;
 using Autofac;
 using EventBooking.Data;
+using EventBooking.Data.Entities;
 using EventBooking.Services;
 
 namespace EventBooking.Controllers.ViewModels
@@ -14,13 +17,20 @@ namespace EventBooking.Controllers.ViewModels
 			Mapper.CreateMap<Session, SessionModel>();
 		    Mapper.CreateMap<MyProfileModel, User>();
 		    Mapper.CreateMap<User, MyProfileModel>();
+			Mapper.CreateMap<ActivityItem, ContributedInventoryItemModel>();
+			Mapper.CreateMap<ContributedInventoryItemModel, ActivityItem>();
 
 			var securityService = container.Resolve<ISecurityService>();
 
+			Mapper.CreateMap<Team, TeamModel>()
+				.ForMember(
+					x => x.PowerUserRole,
+					opt => opt.MapFrom(x => securityService.GetPowerUserRoleForTeam(x)));
+
 			Mapper.CreateMap<User, UserModel>()
-				.ForMember(x => x.IsTeamAdmin, x => securityService.IsUserTeamAdmin());
-		    
-			Mapper.CreateMap<Team, TeamModel>();
+				.ForMember(
+					x => x.Roles, 
+					opt => opt.MapFrom(x => Roles.GetRolesForUser(x.Email)));
 		}
 	}
 }

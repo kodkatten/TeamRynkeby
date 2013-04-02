@@ -1,25 +1,37 @@
 ﻿@using System.Web.Optimization
+@using EventBooking.Data
+@using EventBooking.Data.Entities
 @model EventBooking.Controllers.ViewModels.AdministratorPageModel
-
-@section styles {
-    <link href="/Content/admin.css" rel="stylesheet"/>
-}
-
-@section scriptfiles {
-    <script type="text/javascript" src="/Scripts/admin.js"></script>
-}
 
 @{
     ViewBag.Title = "Administration";
 }
 
-<form action="@Url.Action("CreateTeam")" method="POST">
-    <fieldset>
-        <label>Skapa nytt team</label>
-        <input type="text" name="name" placeholder="Team namn">
-        <button type="submit" class="btn">Skapa</button>
-    </fieldset>
-</form>
+@section Styles {
+    @Styles.Render("~/Styles/Admin")
+}
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/admin.js")
+}
+
+@if (Roles.IsUserInRole(UserType.Administrator.ToString()))
+{
+    <div class="page-header">
+        @using (Html.BeginForm("CreateTeam", "Admin", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+
+            <div class="control-group">
+                <h2>Skapa nytt lag</h2>
+                <input type="text" name="name" placeholder="Lagnamn" required="required">
+                <button type="submit" class="btn">Skapa</button>
+            </div>
+        }
+
+
+    </div>
+}
+
 @Html.Partial("Partials/Teams", Model.Teams)
 
 

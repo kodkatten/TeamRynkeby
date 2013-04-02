@@ -1,9 +1,17 @@
-﻿@using EventBooking.Data    
+﻿@using System.Web.Optimization
 @model EventBooking.Controllers.ViewModels.LandingPageModel
 
 @{
     Layout = "~/Views/Shared/_LayoutWithBanner.cshtml";
     ViewBag.Title = "Team Rynkeby | Kommande aktiviter";
+}
+
+@section Styles {
+    @Styles.Render("~/Styles/LandingPage")
+}
+
+@section Scripts {
+    @Scripts.Render("~/scripts/landingpage.js")
 }
 
 <div id="banner">
@@ -48,7 +56,7 @@
             </div>
             
 
-            <div class="upcoming-activity-list" data-update-uri="http://localhost:49385/Activity/Upcoming">
+            <div class="upcoming-activity-list" data-update-uri=@Url.Action("Upcoming", "Activity", null, Request.Url.Scheme)>
                 @Html.Action("Upcoming", "Activity")
             </div>
             <ul class="pager">
@@ -65,7 +73,7 @@
                 Varje sommar i juli cyklar 1.000 personer från Sverige, Finland och Danmark till Paris för att stödja barn med cancer och deras familjer. Under året deltar cyklister i olika team för att samla in sponsorpengar och arrangera olika events. Under året tränar även de olika teamen tillsammans som förberedelse inför cykelloppet till Paris.
             </p>
             <p>
-                Deltagarna i Team Rynkeby är motionscyklister, kvinnor och män, i alla åldrar med vitt skilda yrken, utbildningar och bakgrund. Deltagarnas olikheter och deras geografiska spridning i Sverige, Finland og Danmark gör det lättare för Team Rynkeby att sprida budskapet om insamlingen för barn med cancer och deras familjer.
+                Deltagarna i Team Rynkeby är motionscyklister, kvinnor och män, i alla åldrar med vitt skilda yrken, utbildningar och bakgrund. Deltagarnas olikheter och deras geografiska spridning i Sverige, Finland och Danmark gör det lättare för Team Rynkeby att sprida budskapet om insamlingen för barn med cancer och deras familjer.
             </p>
             <p>
                 2012 samlade Team Rynkeby in 18 Mkr i kampen mot barncancer.
@@ -73,16 +81,3 @@
         </div>
     </div>
 </div>
-@section scripts {
-    (function(intiUpcomingEventsUpdate, $, undefined) {
-    
-        var previousButton = $('.previous-activities-list-command');
-        var nextButton = $('.next-activities-list-command');
-        var activityContainer = $('.upcoming-activity-list');
-        var upcomingEventsModule =  teamrynkebyse.upcomingEvents;
-    
-        upcomingEventsModule.init(previousButton,nextButton, activityContainer);
-        upcomingEventsModule.setTeamButtons($(".btn-select-team"),  (".btn-select-all-teams"));
-    
-    }(teamrynkebyse.intiUpcomingEventsUpdate, jQuery));
-}

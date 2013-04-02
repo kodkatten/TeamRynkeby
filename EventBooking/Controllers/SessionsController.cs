@@ -1,32 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
 using EventBooking.Controllers.ViewModels;
-using EventBooking.Data;
+using EventBooking.Data.Entities;
 using EventBooking.Data.Repositories;
+using EventBooking.Filters;
 using EventBooking.Services;
 
 namespace EventBooking.Controllers
 {
 	public class SessionsController : Controller
 	{
-		private readonly ISessionRepository _repository;
-
 		private readonly ISecurityService _securityService;
+	    private readonly IActivityItemRepository _activityItemRepository;
+	    private readonly IUserActivityItemRepository _userActivityItemRepository;
+	    private readonly IActivityRepository _activityRepository;
+		private readonly ISessionRepository _sessionRepository;
 
-		public SessionsController(ISessionRepository repository, ISecurityService securityService)
+
+		public SessionsController(IActivityRepository activityRepository, ISessionRepository repository, ISecurityService securityService, IActivityItemRepository activityItemRepository, IUserActivityItemRepository userActivityItemRepository)
 		{
-			_repository = repository;
+			_activityRepository = activityRepository;
+            _sessionRepository = repository;
 			_securityService = securityService;
+		    _activityItemRepository = activityItemRepository;
+		    _userActivityItemRepository = userActivityItemRepository;
 		}
 
+		[ImportModelStateFromTempData]
 		public ActionResult Index(int activityId = 0)
 		{
-			IEnumerable<Session> sessions = _repository.GetSessionsForActivity(activityId);
-			Activity activity = sessions.Select(s => s.Activity).FirstOrDefault();
+            IEnumerable<Session> sessions = _sessionRepository.GetSessionsForActivity(activityId);
+			Activity activity = _activityRepository.GetActivityById(activityId);
 
 			if (null == activity)
 				return RedirectToAction("NotFound", new { activityId });
@@ -36,22 +43,23 @@ namespace EventBooking.Controllers
 							sessions.Select(Mapper.Map<SessionModel>)));
 		}
 
-		[HttpPost]
+		[HttpPost, ExportModelStateToTempData]
 		public ActionResult Save(ActivitySessionsModel sessionModel)
 		{
 			int activityId = sessionModel.SelectedSession.ActivityId;
 
-			if (!ModelState.IsValid)
-				return View("Index", sessionModel);
+			if (ModelState.IsValid)
+			{
+				var session = Mapper.Map<Session>(sessionModel.SelectedSession);
+                _sessionRepository.Save(activityId, session);
+			}
 
-			var session = Mapper.Map<Session>(sessionModel.SelectedSession);
-			_repository.Save(activityId, session);
 			return RedirectToAction("Index", new { activityId });
 		}
 
 		public RedirectToRouteResult SignUp(int sessionId)
 		{
-			var session = _repository.GetSessionById(sessionId);
+            var session = _sessionRepository.GetSessionById(sessionId);
 			var user = _securityService.GetCurrentUser();
 
 			if (session != null && user != null)
@@ -60,26 +68,26 @@ namespace EventBooking.Controllers
 				if (session.IsAllowedToSignUp(user))
 				{
 					// Sign the user up for the session.,
-					if (_repository.SignUp(session, user))
+                    if (_sessionRepository.SignUp(session, user))
 					{
 						// Success
-						return RedirectToAction("SignUpSuccessful", new { id = sessionId });
+                        return RedirectToAction("Details", "Activity", new { id = session.Activity.Id });
 					}
 				}
 			}
 
 			// Sign up failed.			
-			return RedirectToAction("SignUpFailed", new { id = sessionId });
+            return RedirectToAction("SignUpFailed", new { sessionId = sessionId });
 		}
 
-		public ActionResult SignUpSuccessful(int id)
+		public ActionResult SignUpSuccessful(int activityId)
 		{
-			return View();
+            return View(activityId);
 		}
 
-		public ActionResult SignUpFailed(int id)
+        public ActionResult SignUpFailed(int sessionId)
 		{
-			var session = _repository.GetSessionById(id);
+            var session = _sessionRepository.GetSessionById(sessionId);
 
 			dynamic viewModel = new ExpandoObject();
 			viewModel.ActivityId = session.Activity.Id;
@@ -94,13 +102,15 @@ namespace EventBooking.Controllers
 
 		public ActionResult Delete(int activityId, int sessionId)
 		{
-			throw new NotImplementedException("Delete session not implemented");
+            _sessionRepository.DeleteSession(sessionId);
+
+			return RedirectToAction("Index", new { activityId });
 		}
 
 		public ActionResult Edit(int activityId, int sessionId)
 		{
 			// Edit sessions
-			var sessionToEdit = _repository.GetSessionById(sessionId);
+            var sessionToEdit = _sessionRepository.GetSessionById(sessionId);
 
 			var editSessionModel = new EditSessionModel
 				{
@@ -125,8 +135,38 @@ namespace EventBooking.Controllers
 					VolunteersNeeded = model.VolunteersNeeded
 				};
 
-			_repository.UpdateSession(model.ActivityId, session);
+            _sessionRepository.UpdateSession(model.ActivityId, session);
 			return RedirectToAction("Index", new { model.ActivityId });
 		}
+
+		public ActionResult Leave(int activityId)
+        {
+            var user = _securityService.GetCurrentUser();
+            var sessions = _sessionRepository.GetSessionsForActivity(activityId);
+
+            foreach (var session in sessions.Where(session => session.Activity.Id == activityId))
+            {
+                _sessionRepository.LeaveSession(session, user);
+            }
+
+            return RedirectToAction("Details", "Activity", new { id = activityId });
+        }
+
+        public ActionResult ContributeItems(int activityItemId, int quantity)
+        {
+            var user = _securityService.GetCurrentUser();
+            var item = _activityItemRepository.GetItem(activityItemId);
+
+            var userItem = new UserActivityItem
+                {
+                    Item = item,
+                    User = user,
+                    Quantity = quantity
+                };
+
+            _userActivityItemRepository.CreateOrUpdate(userItem);
+
+            return RedirectToAction("Details", "Activity", new { id = item.Activity.Id }); 
+        }
 	}
 }

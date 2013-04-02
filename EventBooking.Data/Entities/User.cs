@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace EventBooking.Data
+namespace EventBooking.Data.Entities
 {
+    [Table("User")]
 	public class User
 	{
 		public int Id { get; set; }
@@ -17,6 +20,12 @@ namespace EventBooking.Data
 		public virtual Team Team { get; set; }
 		public virtual ICollection<Session> Sessions { get; set; }
 		public virtual ICollection<UserActivityItem> Items { get; set; }
+
+		public User()
+		{
+			Items = new Collection<UserActivityItem>();
+			Sessions = new Collection<Session>();
+		}
 
 		public bool IsMemberOfATeam()
 		{

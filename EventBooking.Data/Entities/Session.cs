@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EventBooking.Data
+namespace EventBooking.Data.Entities
 {
 	public class Session
 	{
@@ -16,9 +16,15 @@ namespace EventBooking.Data
 		public bool IsAllowedToSignUp(User user)
 		{
 			return user != null &&
+                   !this.Activity.Sessions.Any(x => x.Volunteers.Any(volunteer => volunteer.Id == user.Id)) &&
 				   this.Volunteers.Count < this.VolunteersNeeded &&
 				   this.Activity.OrganizingTeam.Id == user.Team.Id &&
 				   this.Volunteers.All(volunteer => volunteer.Id != user.Id);
+		}
+
+		public bool CanLeave(User user)
+		{
+			return Volunteers.Any(v => v.Id == user.Id);
 		}
 
 		//public void SignUp(User user)

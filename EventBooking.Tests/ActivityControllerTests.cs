@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using EventBooking.Controllers;
+using EventBooking.Data.Entities;
+using EventBooking.Data.Repositories;
 using EventBooking.Services;
 using Moq;
 using NUnit.Framework;
@@ -19,6 +22,7 @@ namespace EventBooking.Tests
 
 
 		[Test]
+		[Ignore("Using FluentSecurity now instead")]
 		public void When_Nobody_tries_to_create_an_activity_then_Nobody_should_be_asked_to_go_through_the_security_checkpoint()
 		{
 			var activityOverview = GetActivityView<RedirectToRouteResult>(c => c.Create());
@@ -53,8 +57,10 @@ namespace EventBooking.Tests
 			request.Setup(r => r.HttpMethod).Returns("GET");
 			var mockHttpContext = new Mock<HttpContextBase>();
 			mockHttpContext.Setup(c => c.Request).Returns(request.Object);
+			var itemRepository = new Mock<IActivityItemRepository>();
+			itemRepository.Setup(r => r.GetTemplates()).Returns(Enumerable.Empty<ActivityItemTemplate>().AsQueryable);
 			var controllerContext = new ControllerContext(mockHttpContext.Object, new RouteData(), new Mock<ControllerBase>().Object);
-			var activityController = new ActivityController(securityService, new ActivityRepositoryShunt(), null,null)
+			var activityController = new ActivityController(securityService, new ActivityRepositoryShunt(), itemRepository.Object,null, null)
 				{
 					ControllerContext = controllerContext,
 					Url = new UrlHelper(controllerContext.RequestContext)

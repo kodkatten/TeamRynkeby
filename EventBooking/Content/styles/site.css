@@ -1,0 +1,102 @@
+﻿html, body {
+    height: 100%;
+}
+
+ul {
+    list-style: none;
+    margin-left: 0;
+}
+
+.container-offset {
+    padding-top: 40px;
+}
+
+.activity-list-short li {
+    padding: 6px 0 6px 0;
+}
+
+.month h3 {
+    text-transform: capitalize;
+}
+
+.page-header > h3 {
+    line-height: 20px;
+}
+
+@font-face {
+    font-family: 'MuseoSlab500Regular';
+    src: url('../fonts/Museo_Slab_500-webfont.eot');
+    src: url('../fonts/Museo_Slab_500-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/Museo_Slab_500-webfont.woff') format('woff'), url('../fonts/Museo_Slab_500-webfont.ttf') format('truetype'), url('../fonts/Museo_Slab_500-webfont.svg#MuseoSlab500Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.row-fluid {
+    margin: 20px 0 0 0;
+}
+
+.disabled {
+    color: gray;
+}
+
+.landing-page-select-team {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+#wrapper {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -65px; /* Footer height + padding */
+}
+
+#push {
+    height: 65px;
+}
+
+#footer {
+    height:40px;
+    color: #666;
+    background: #222;
+    padding-top: 25px;    
+}
+
+a.l337 {
+    color: #668f2d;
+    text-decoration: none;
+}
+
+a.l337:hover {
+    color: #8dc63f;
+}
+
+.modelstate-error {
+	color: red;
+	margin-left: 80px;
+	padding-top: 5px;
+}
+
+#sendEmailPopup textarea {
+	width: 97%;
+}
+
+#sendEmailPopup #previewSubject {
+	float: left;
+}
+
+#sendEmailPopup #previewArea {
+	height: 250px;
+	overflow-y: auto;
+	float: left;
+	margin-top: 5px;
+	width: 100%;
+}
+
+#sendEmailPopup .modal-body {
+	overflow-y: hidden !important;
+}
+
+#sendEmailPopup #refreshPreview {
+	float: right;
+}

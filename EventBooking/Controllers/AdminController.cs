@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Web;
+﻿using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using EventBooking.Controllers.ViewModels;
-using EventBooking.Data;
+using EventBooking.Data.Entities;
 using EventBooking.Data.Repositories;
+using EventBooking.Services;
 
 namespace EventBooking.Controllers
 {
@@ -15,11 +12,13 @@ namespace EventBooking.Controllers
 	{
 		private readonly ITeamRepository _teamRepository;
 		private readonly IUserRepository _userRepository;
+		private readonly ISecurityService _security;
 
-		public AdminController(ITeamRepository teamRepository, IUserRepository userRepository)
+		public AdminController(ITeamRepository teamRepository, IUserRepository userRepository, ISecurityService security)
 		{
 			_teamRepository = teamRepository;
 			_userRepository = userRepository;
+			_security = security;
 		}
 
 		[HttpPost]
@@ -29,43 +28,51 @@ namespace EventBooking.Controllers
 			return Redirect("ViewTeams");
 		}	
 		
-		public ActionResult DeleteTeam(int id)
+		[HttpPost]
+		public JsonResult DeleteTeam(int id)
 		{
 			_teamRepository.DeleteTeam(id);
-			return RedirectToAction("ViewTeams");
+			return Json(new {result = string.Format("Team {0} deleted", id)});
 		}
-		
 		 
-		public JsonResult ToogleAdmin(int id)
+		[HttpPost]
+		public JsonResult ToogleTeamPowerUser(int userId, int teamId)
 		{
-			return Json(new { isTeamAdmin = true }, JsonRequestBehavior.AllowGet);
+			bool isTeamAdminNow = _security.ToogleTeamPowerUser(userId, teamId);
+			return Json(new { newState = isTeamAdminNow }, JsonRequestBehavior.AllowGet);
 		}
 
-		public void ExcludeFromTeam(int id)
+		[HttpPost]
+		public JsonResult ToogleAdministrator(int userId)
 		{
-			_userRepository.RemoveFromTeam(id);
+			bool isTeamAdminNow = _security.ToogleAdministrator(userId);
+			return Json(new { newState = isTeamAdminNow }, JsonRequestBehavior.AllowGet);
+		}
+
+		[HttpPost]
+		public JsonResult ExcludeFromTeam(int userId, int teamId)
+		{
+			_userRepository.RemoveFromTeam(userId);
+			return Json(new {result = string.Format("User {0} excluded from team {1}", userId, teamId)});
 		}
 
 		public ActionResult Team(int id)
 		{
-			// TODO: check permissions
 			var team = _teamRepository.TryGetTeam(id);
-
+			
 			if (team == null)
 				throw new HttpException(404, "Could not find team");
 
 			var teamModel = Mapper.Map<Team, TeamModel>(team);
 			return View("ViewTeam", teamModel);
-
 		}
 
 		public ActionResult ViewTeams()
 		{
-			// TODO: check permissions
-
 			var teams = _teamRepository.GetTeams();
-			AdministratorPageModel model = new AdministratorPageModel(teams);
+			var model = new AdministratorPageModel(teams);
 			return View(model);
 		}
+
 	}
 }

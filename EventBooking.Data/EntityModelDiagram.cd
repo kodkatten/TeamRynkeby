@@ -3,7 +3,7 @@
   <Class Name="EventBooking.Data.User">
     <Position X="3.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAACAAAAACAAAAAIACAAAAQAAAAAAAQAEAAAAQAAABA=</HashCode>
+      <HashCode>IAACAAAAACAACAAIACAAAAQAAAAAAAQAEAAAAQAAABA=</HashCode>
       <FileName>Entities\User.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -13,7 +13,7 @@
   <Class Name="EventBooking.Data.Session">
     <Position X="0.5" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACCAAAAAAAAAAAAAAAgAAIAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <HashCode>AAACCAAAAAAAAAAAAAEAgAAIAAAAAAAABAAAAEAAAAA=</HashCode>
       <FileName>Entities\Session.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -24,9 +24,9 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="EventBooking.Data.Activity">
-    <Position X="3.25" Y="3.75" Width="1.5" />
+    <Position X="3.5" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AACCAAAAAAAgAAAAACAAAAQAAAAAAAABQQEAAAAAAAA=</HashCode>
+      <HashCode>AACCAAAAAAAgAAAAECAAAAQAAAAAAAABQQEAAAAAAAA=</HashCode>
       <FileName>Entities\Activity.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -34,7 +34,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="EventBooking.Data.Item">
-    <Position X="6" Y="2.5" Width="1.5" />
+    <Position X="8" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAADAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAEAAAAA=</HashCode>
       <FileName>Entities\Item.cs</FileName>
@@ -47,21 +47,21 @@
   <Class Name="EventBooking.Data.Team">
     <Position X="6" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAQIAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQIAAAAAAAAAAAAAYAAAAA=</HashCode>
       <FileName>Entities\Team.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Enum Name="EventBooking.Data.ActivityType">
     <Position X="0.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAQgA=</HashCode>
+      <HashCode>AAEAAAAAAAAAAAAAAAQAAAAAAAAAAAEAAEAAAAAEAAA=</HashCode>
       <FileName>Entities\ActivityType.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="EventBooking.Data.UserType">
     <Position X="0.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>ABAAAAAAAAAAAAAAAAAAIAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Entities\UserType.cs</FileName>
     </TypeIdentifier>
   </Enum>

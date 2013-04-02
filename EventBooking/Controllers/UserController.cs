@@ -1,26 +1,22 @@
 ﻿using System;
-using System.Data;
 using System.Web.Mvc;
-using AutoMapper;
 using EventBooking.Controllers.ViewModels;
-using EventBooking.Data;
 using EventBooking.Data.Repositories;
 using EventBooking.Services;
-using WebMatrix.WebData;
 
 namespace EventBooking.Controllers
 {
 	public class UserController : Controller
 	{
-		private readonly ISecurityService security;
-		private readonly IUserRepository userRepository;
-		private readonly ITeamRepository teamRepository;
+        private readonly ISecurityService _securityService;
+		private readonly IUserRepository _userRepository;
+		private readonly ITeamRepository _teamRepository;
 
 		public UserController(ISecurityService security, IUserRepository userRepository, ITeamRepository teamRepository)
 		{
-			this.security = security;
-			this.userRepository = userRepository;
-			this.teamRepository = teamRepository;
+			_securityService = security;
+			_userRepository = userRepository;
+			_teamRepository = teamRepository;
 		}
 
 		public ActionResult SignUp()
@@ -33,14 +29,14 @@ namespace EventBooking.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				if (userRepository.Exists(model.Email))
+				if (_userRepository.Exists(model.Email))
 				{
-					ModelState.AddModelError("Email", "E-postaddressen finns redan registrerad.");
+					ModelState.AddModelError("Email", "Epostadressen finns redan registrerad.");
 					return View();
 				}
 
-				security.CreateUserAndAccount(model.Email, model.Password, created: DateTime.UtcNow);
-				security.SignIn(model.Email, model.Password);
+				_securityService.CreateUserAndAccount(model.Email, model.Password, created: DateTime.UtcNow);
+				_securityService.SignIn(model.Email, model.Password);
 
 				return RedirectToAction("MyProfile");
 			}
@@ -48,13 +44,17 @@ namespace EventBooking.Controllers
 			return View();
 		}
 
-		[Authorize]
 		[HttpPost]
 		public ActionResult MyProfile(MyProfileModel model)
 		{
+            if (!_securityService.IsLoggedIn())
+            {
+                return RedirectToAction("Checkpoint", "Security", new { returnUrl = Url.Action("MyProfile") });
+            }
+
 			if (ModelState.IsValid)
 			{
-				var user = security.GetCurrentUser();
+				var user = _securityService.GetCurrentUser();
 				//user.Birthdate = model.Birthdate;
 				user.Cellphone = model.Cellphone;
 				user.City = model.City;
@@ -67,24 +67,23 @@ namespace EventBooking.Controllers
 				}
 
 				user.Team = model.Team;
-				userRepository.Save(user);
+				_userRepository.Save(user);
 
 				return RedirectToAction("Index", "Home");
 			}
 
-			var viewModel = new MyProfileModel(model.ToUser(), teamRepository.GetTeams());
+			var viewModel = new MyProfileModel(model.ToUser(), _teamRepository.GetTeams());
 			return View(viewModel);
 		}
 
-		public ActionResult AlreadyRegistrered(string message)
-		{
-			return View();
-		}
-
-		[Authorize]
 		public ActionResult MyProfile()
 		{
-			var model = new MyProfileModel(security.GetCurrentUser(), teamRepository.GetTeams());
+            if (!_securityService.IsLoggedIn())
+            {
+                return RedirectToAction("Checkpoint", "Security", new { returnUrl = Url.Action("MyProfile") });
+            }
+
+			var model = new MyProfileModel(_securityService.GetCurrentUser(), _teamRepository.GetTeams());
 			return View(model);
 		}
 	}
