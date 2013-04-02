@@ -1,3 +1,5 @@
+using EventBooking.Data.Entities;
+
 namespace EventBooking.Data.Migrations
 {
 	using System;
