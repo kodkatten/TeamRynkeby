@@ -30,7 +30,7 @@
             <div>
                 <input type="number" name="sessions[{{index}}].volunteersNeeded" class="input-mini" min="1" value="1" />
             </div>
-            <a href="#" class="undo"><i class="icon-remove"></i>Släng</a>
+            <a href="#" class="undo"><i class="icon-remove"></i>Ta bort</a>
         </div>
     </script>
 
@@ -38,7 +38,7 @@
         <div>
             <div>
                 <select name="items[{{index}}].name">
-                    <option value="-1">Välj materiel</option>
+                    <option value="Ospecificerat">Välj materiel</option>
 
                     @foreach (var item in Model)
                     {
@@ -51,7 +51,20 @@
             <div>
                 <input name="items[{{index}}].quantity" type="number" class="input-mini" value="1" min="1" />
             </div>
-            <a href="#" class="undo"><i class="icon-remove"></i>Släng</a>
+            <a href="#" class="undo"><i class="icon-remove"></i>Ta bort</a>
+        </div>
+    </script>
+    
+    <script id="specificItemsTemplate" type="text/html">
+        <div>
+            <div>
+                <input name="items[{{index}}].name" type="text" placeholder="Ange matriel" />
+            </div>
+
+            <div>
+                <input name="items[{{index}}].quantity" type="number" class="input-mini" value="1" min="1" />
+            </div>
+            <a href="#" class="undo"><i class="icon-remove"></i>Ta bort</a>
         </div>
     </script>
 }
@@ -65,11 +78,11 @@
     {
         <ul class="nav nav-pills">
             <li data-wizard-header="pageOne" class="active">
-                <a href="#">1. Beskrivning</a>
+                <a href="#" data-wizard-link="pageOne">1. Beskrivning</a>
             </li>
 
             <li data-wizard-header="pageTwo">
-                <a href="#">2. Datum/Tid </a>
+                <a href="#" data-wizard-link="pageTwo">2. Datum/Tid </a>
             </li>
 
             <li data-wizard-header="pageThree">
@@ -163,7 +176,7 @@
                         </div>
                     </div>
                     <div>
-                        <a id="addMoreSessions" href="#">Fler pass</a>
+                        <a id="addMoreSessions" href="#">Lägg till pass</a>
                     </div>
 
                     <div id="overlappingWarning" class="alert alert-block" style="display: none">
@@ -206,7 +219,7 @@
                         <div>
                             <div>
                                 <select name="items[0].name">
-                                    <option value="-1">Välj materiel</option>
+                                    <option value="Ospecificerat">Välj materiel</option>
 
                                     @foreach (var item in Model)
                                     {
@@ -222,7 +235,8 @@
                         </div>
                     </div>
 
-                    <a id="addMoreItems" href="#">Flera saker</a>
+                    <a id="addMoreItems" href="#">Lägg till sak</a>
+                    <a id="addSpecificItem" href="#">Lägg till aktivitets-specifik sak</a>
                 </div>
             </div>
 
