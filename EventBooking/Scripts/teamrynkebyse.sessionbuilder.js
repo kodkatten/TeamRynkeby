@@ -125,12 +125,19 @@ teamrynkebyse.sessionbuilder = (function () {
                         .children()
                         .last();
         
+        if (count > 0) {
+            $('#removeSession_' + (count-1)).hide();
+        }
+        
         result.find(textboxClass).on('change', validate);
         
         result.find(undoClass).on('click', function () {
             result.remove();
             validate();
             count--;
+            if (count > 0) {
+                $('#removeSession_' + (count )).show();
+            }
         });
         
         hockTimePicker(result.find(timePickerClass));

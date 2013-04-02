@@ -18,7 +18,7 @@ teamrynkebyse.itemsbuilder = (function () {
                         .last();
 
         if (count > 0) {
-            $('#remove_' + (count - 1)).hide();
+            $('#removeItem_' + (count - 1)).hide();
         }
 
         count++;
@@ -26,7 +26,7 @@ teamrynkebyse.itemsbuilder = (function () {
             result.remove();
             count--;
             if (count > 0) {
-                $('#remove_' + (count - 1)).show();
+                $('#removeItem_' + (count - 1)).show();
             }
 
         });
@@ -41,7 +41,7 @@ teamrynkebyse.itemsbuilder = (function () {
 
         
         if (count > 0) {
-            $('#remove_' + (count - 1)).hide();
+            $('#removeItem_' + (count - 1)).hide();
         }
 
         count++;
@@ -49,7 +49,7 @@ teamrynkebyse.itemsbuilder = (function () {
             result.remove();
             count--;
             if (count > 0) {
-                $('#remove_' + (count - 1)).show();
+                $('#removeItem_' + (count - 1)).show();
             }
         });
     }

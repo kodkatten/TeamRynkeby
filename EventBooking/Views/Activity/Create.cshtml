@@ -30,7 +30,7 @@
             <div>
                 <input type="number" name="sessions[{{index}}].volunteersNeeded" class="input-mini" min="1" value="1" />
             </div>
-            <a href="#" class="undo"><i class="icon-remove"></i>Ta bort</a>
+            <a id="removeSession_{{index}}" href="#" class="undo"><i class="icon-remove"></i>Ta bort</a>
         </div>
     </script>
 
@@ -51,7 +51,7 @@
             <div>
                 <input name="items[{{index}}].quantity" type="number" class="input-mini" value="1" min="1" />
             </div>
-            <a id="remove_{{index}}" href="#" class="undo"><i class="icon-remove"></i>Ta bort</a>
+            <a id="removeItem_{{index}}" href="#" class="undo"><i class="icon-remove"></i>Ta bort</a>
         </div>
     </script>
     
@@ -64,7 +64,7 @@
             <div>
                 <input name="items[{{index}}].quantity" type="number" class="input-mini" value="1" min="1" />
             </div>
-            <a id="remove_{{index}}" href="#" class="undo"><i class="icon-remove"></i>Ta bort</a>
+            <a id="removeItem_{{index}}" href="#" class="undo"><i class="icon-remove"></i>Ta bort</a>
         </div>
     </script>
 }
