@@ -1,0 +1,101 @@
+﻿@using System.Web.Optimization
+@model EventBooking.Controllers.ViewModels.DetailActivityViewModel
+
+<div class="row-fluid">
+    <div class="page-header">
+        <h2>@Model.Name</h2>
+    </div>
+
+    <h3>@Model.DateFormatted, @Model.OrganizingTeam</h3>
+    <p>
+        <strong>
+            @Model.Summary
+        </strong>
+    </p>
+    @if (@Model.ShouldShowDescription)
+    {
+        <p>
+            @Model.Description
+        </p>
+    }
+    @if (@Model.ShouldShowSessions)
+    {
+        <br/>
+        <h3>Pass</h3>
+        <ul>
+            @foreach (var session in Model.Sessions)
+            {
+                <li><span>@session.FromTimeFormatted - @session.ToTimeFormatted</span>
+                    @if (session.CanSignUp)
+                    {
+                        <a href="@Url.Action("SignUp", "Sessions", new { sessionId = session.Id })" class="link">Anmäl mig!</a>
+                        <text>Antal platser kvar:</text>
+                        @session.AvailablePlaces
+                    }
+                    else if (session.CanLeave)
+                    {
+                        <a href="@Url.Action("Leave", "Sessions", new { activityId = Model.Id })" class="link">Ta bort mig!</a>
+                        <text>Antal platser kvar:</text>
+                        @session.AvailablePlaces
+                    }
+                    else
+                    {
+                        <text>Antal platser kvar:</text>
+                        @session.AvailablePlaces
+                    }
+                </li>            
+            }
+        </ul>
+    }
+
+    @if (@Model.ShouldShowItems)
+    {
+        <br/>
+        <h3>Materiel till aktivitet</h3>
+        <table class="table table-hover">
+            <tr>
+                <th>Namn</th>
+                <th>Behövt antal</th>
+                <th>Totalt medtages</th>
+                <th>Jag tar med</th>
+            </tr>
+
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.RequiredQuantity</td>
+                    <td>@item.TotalContributedQuantity</td>
+                    <td>
+                        @if (@Model.CanBringItems)
+                        {
+                            <select onchange="location = this.value;">
+                                @for (var i = 0; i <= item.RequiredQuantity - item.TotalContributedQuantity + item.ContributedByUser; i++)
+                                {
+                                    if (i == item.ContributedByUser)
+                                    {
+                                    <option selected value="@Url.Action("ContributeItems", "Sessions", new { activityItemId = item.Id, quantity = i })">@i</option>
+                                    }
+                                    else
+                                    {
+                                    <option value="@Url.Action("ContributeItems", "Sessions", new { activityItemId = item.Id, quantity = i })">@i</option>    
+                                    }
+
+                                }
+                            </select>
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+
+    @if (@Model.ShouldShowItems)
+    {
+        <a href="@Url.Action("Details", "Team")" class="link">Tillbaka till laget</a>
+    }
+    else
+    {
+        <a href="@Url.Action("Index", "Home")" class="link">Tillbaka till startsidan</a>         
+    }
+</div>
