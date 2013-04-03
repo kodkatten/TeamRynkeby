@@ -18,12 +18,14 @@ namespace EventBooking.Tests
 		public void SetUp()
 		{
 			SecurityService = new MockupSecurityService { ReturnUser = new User { Team = new Team { Name = "The team" } } };
+		    EmailServices = new Moq.Mock<IEmailService>();
 		}
 
 		public static readonly DateTime Tomorrow = DateTime.Now.AddDays(1);
 		public static readonly DateTime Yesterday = DateTime.Now.AddDays(-1);
 
 		protected MockupSecurityService SecurityService { get; set; }
+        protected Mock<IEmailService> EmailServices { get; set; }
 
 		private static ActionResult CreateValidActivity(ActivityControllerShunt controller)
 		{
@@ -88,7 +90,7 @@ namespace EventBooking.Tests
 
 		private ActivityControllerShunt CreateController()
 		{
-			return new ActivityControllerShunt(new ActivityRepositoryShunt(), SecurityService, null, null);
+            return new ActivityControllerShunt(new ActivityRepositoryShunt(), SecurityService, null, null, EmailServices.Object);
 		}
 	}
 
@@ -107,8 +109,8 @@ namespace EventBooking.Tests
 
 	public class ActivityControllerShunt : ActivityController
 	{
-		public ActivityControllerShunt(ActivityRepository activityRepository, ISecurityService securityService, IActivityItemRepository itemRepository, ITeamRepository teams)
-			: base(securityService, activityRepository, itemRepository, teams, null)
+        public ActivityControllerShunt(ActivityRepository activityRepository, ISecurityService securityService, IActivityItemRepository itemRepository, ITeamRepository teams, IEmailService emailService)
+			: base(securityService, activityRepository, itemRepository, teams,emailService)
 		{
 		}
 
