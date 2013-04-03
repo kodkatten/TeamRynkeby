@@ -67,6 +67,10 @@
     <Compile Include="Migrations\201303021745439_InitialCreate.Designer.cs">
       <DependentUpon>201303021745439_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201304031519553_Lund.cs" />
+    <Compile Include="Migrations\201304031519553_Lund.Designer.cs">
+      <DependentUpon>201304031519553_Lund.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\Session.cs" />
@@ -105,6 +109,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201303021745439_InitialCreate.resx">
       <DependentUpon>201303021745439_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201304031519553_Lund.resx">
+      <DependentUpon>201304031519553_Lund.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
