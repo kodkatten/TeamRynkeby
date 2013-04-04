@@ -56,7 +56,8 @@
             </div>
             
 
-            <div class="upcoming-activity-list" data-update-uri=@Url.Action("Upcoming", "Activity", null, Request.Url.Scheme)>
+        @*    <div class="upcoming-activity-list" data-update-uri=@Url.Action("Upcoming", "Activity", null, Request.Url.Scheme)*@>
+            <div class="upcoming-activity-list" data-update-uri=@Url.Action("Upcoming", "Activity")>
                 @Html.Action("Upcoming", "Activity")
             </div>
             <ul class="pager">
