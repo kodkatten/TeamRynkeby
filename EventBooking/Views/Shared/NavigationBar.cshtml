@@ -27,7 +27,8 @@
                         <li>@Html.ActionLink(User.Identity.Name, "MyProfile", "User")</li>
                         <li>@Html.ActionLink("Mitt lag", "Details", "Team")</li>
                         <li>@Html.ActionLink("Skapa aktivitet", "Create", "Activity")</li>
-
+                        <li>@Html.ActionLink("Mina Teammedlemmar", "TeamMember","Team")</li>
+                        
                         if (showAdmin)
                         {
                               <li>@Html.ActionLink("Hantera lag", "ViewTeams", "Admin")</li>

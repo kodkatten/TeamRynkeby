@@ -52,5 +52,15 @@ namespace EventBooking.Controllers
         {
             return DetailsWithDate(currentDate.AddMonths(1));
         }
+
+        public ActionResult TeamMember()
+        {
+            var model = new TeamMemberViewModel();
+            var currentUser = _securityService.GetCurrentUser();
+
+            model.TeamMembers =_teamRepository.GetTeamMembers(currentUser.Team.Id);
+
+            return View("TeamMember", model);
+        }
     }
 }

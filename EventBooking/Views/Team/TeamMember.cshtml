@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Teammedlemmar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model EventBooking.Controllers.ViewModels.TeamMemberViewModel
+
+<table class="table table-hover">
+    <tr>
+        <th>Namn</th>
+        <th>Telefonnr</th>
+        <th>E-post</th>
+    </tr>
+    @{
+        foreach (var teamMember in Model.TeamMembers)
+        {
+        <tr>
+            <td>@teamMember.Name</td>
+            <td>@teamMember.Cellphone</td>
+            <td>@teamMember.Email</td>
+        </tr>
+        }
+    }
+</table>
