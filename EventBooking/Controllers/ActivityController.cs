@@ -16,8 +16,7 @@ namespace EventBooking.Controllers
 		private readonly ISecurityService _securityService;
 		private readonly IActivityRepository _activityRepository;
 		private readonly IActivityItemRepository _activityItemRepository;
-		private readonly ITeamRepository _teamRepository;
-		private readonly IEmailService _emailService;
+	    private readonly IEmailService _emailService;
 		private const int NumberOfActivitiesPerPage = 6;
 
 		public ActivityController(ISecurityService securityService, IActivityRepository activityRepository,
@@ -26,8 +25,7 @@ namespace EventBooking.Controllers
 			_securityService = securityService;
 			_activityRepository = activityRepository;
 			_activityItemRepository = activityItemRepository;
-			_teamRepository = teamRepository;
-			_emailService = emailService;
+		    _emailService = emailService;
 		}
 
 		public ActionResult Create()

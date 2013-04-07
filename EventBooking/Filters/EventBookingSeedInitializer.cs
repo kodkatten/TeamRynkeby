@@ -10,7 +10,7 @@ using WebMatrix.WebData;
 
 namespace EventBooking.Filters
 {
-    internal class EventBookingSeedInitializer : DropCreateDatabaseAlways<EventBookingContext>   // DropCreateDatabaseIfModelChanges<EventBookingContext> //
+    internal class EventBookingSeedInitializer : DropCreateDatabaseIfModelChanges<EventBookingContext> //DropCreateDatabaseAlways<EventBookingContext>   //
 	{
 		protected override void Seed(EventBookingContext context)
 		{
@@ -107,10 +107,6 @@ $ActivityManager"
         private void CreateAwesomeUsers(SimpleMembershipProvider membership, EventBookingContext context)
         {
             EnsureUserExists(membership, context, "henrik.andersson@tretton37.com", new User { Cellphone = "123455", Name = "henrik", Team = context.Teams.First(), Email = "henrik.andersson@tretton37.com" });
-            //EnsureUserExists(membership, context, "tidaholm69@hotmail.com", new User { Cellphone = "3457", Name = "Henkepolarn", Team = context.Teams.First(), Email = "tidaholm69@hotmail.com" });
-            //EnsureUserExists(membership, context, "henkepolarn@gmail.com", new User { Cellphone = "3457", Name = "Henkepolarn", Team = context.Teams.First(), Email = "henkepolarn@gmail.com" });
-            //EnsureUserExists(membership, context, "henkeofsweden@live.com", new User { Cellphone = "3457", Name = "Henkeofsweden", Team = context.Teams.First(), Email = "henkeofsweden@live.com" });
-            //EnsureUserExists(membership, context, "jhofstam@hotmail.com", new User { Cellphone = "3457", Name = "Johanna", Team = context.Teams.First(), Email = "jhofstam@hotmail.com" });
         }
 
 		private void CreatePredefinedActivityItems(EventBookingContext context)

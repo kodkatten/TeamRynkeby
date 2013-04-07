@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using AutoMapper;
-using EventBooking.Data;
 using EventBooking.Data.Entities;
 
 namespace EventBooking.Controllers.ViewModels
@@ -32,12 +31,13 @@ namespace EventBooking.Controllers.ViewModels
 		public string Cellphone { get; set; }
 
 		[Display(Name = "Födelsedatum")]
-        [Range(typeof(DateTime), "1801-1-1", "2113-12-31", ErrorMessage = "{0} måste vara mellan {1:d} och {2:d}")]
+        //[Range(typeof(DateTime), "1801-1-1", "2113-12-31", ErrorMessage = "{0} måste vara mellan {1:d} och {2:d}")]
+        [Range(typeof(DateTime), "1801-1-1", "2113-12-31", ErrorMessage = "Det måste vara på formatet YYYY-MM-DD")]
 		public DateTime? Birthdate { get; set; }
 
 		[Display(Name = "Lag")]
 		[Required(ErrorMessage = "Du måste välja ett lag")]
-		public Team Team { get; set; }
+		public Team Team { get; set;}
 
 		public IEnumerable<TeamModel> Teams { get; private set; }
 

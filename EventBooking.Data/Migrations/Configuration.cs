@@ -27,7 +27,7 @@ namespace EventBooking.Data.Migrations
                 //context.Teams.Add(new Team {Name = "Team Växjö"});
                 //context.Teams.Add(new Team {Name = "Team Helsingborg"});
                 //context.Teams.Add(new Team {Name = "Team Malmö"});
-                //context.SaveChanges();
+                context.SaveChanges();
 
             }
             if (!context.MailTemplates.Any())
@@ -37,8 +37,8 @@ namespace EventBooking.Data.Migrations
                     Name = "newactivity",
                     Subject = "Team Rynkeby - Ny aktivitet $ActivityName",
                     Content = @"Hej bäste $Team medlem
-Nu är det en ny aktivitet på gång.
-$Date mellan $FirstTime och $LastTime
+Nu är det en ny aktivitet på gång.<br/>
+$Date mellan $FirstTime och $LastTime<br/>
 
 $Summary
 
@@ -74,6 +74,7 @@ Vänligen<br/>
 $ActivityManager"
                 };
                 context.MailTemplates.Add(activityInfoTemplate);
+                context.SaveChanges();
             }
 
             if (!context.ActivityItemTemplates.Any())
@@ -85,6 +86,12 @@ $ActivityManager"
                 context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Priser" });
                 context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Bössor" });
                 context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Beach flaggor" });
+                context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Projektor" });
+                context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Duk till projektor" });
+                context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Dator till projektorn" });
+                context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Broschyrer" });
+                context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Team Rynkeby tröjor" });
+                context.SaveChanges();
             }
         }
     }

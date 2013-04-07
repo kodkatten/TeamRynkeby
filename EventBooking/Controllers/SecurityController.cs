@@ -20,13 +20,7 @@ namespace EventBooking.Controllers
 		{
 		}
 
-		public RedirectToRouteResult Haxor()
-		{
-			if( HttpContext.Request.Headers["Host"].StartsWith("localhost"))
-				_securityService.SignIn( "email@email.com", "email@email.com" );
-			return RedirectToAction("Index", "Home");
-		}
-
+		
 		//
 		// GET: /Security/
 
