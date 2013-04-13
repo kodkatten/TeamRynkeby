@@ -167,6 +167,7 @@
     <Compile Include="Controllers\ViewModels\ContributedInventoryModel.cs" />
     <Compile Include="Controllers\ViewModels\DetailActivityViewModel.cs" />
     <Compile Include="Controllers\ViewModels\EditSessionModel.cs" />
+    <Compile Include="Controllers\ViewModels\HasNotSignedUp.cs" />
     <Compile Include="Controllers\ViewModels\MailData.cs" />
     <Compile Include="Controllers\ViewModels\SessionModel.cs" />
     <Compile Include="Controllers\ViewModels\SessionViewModel.cs" />
@@ -301,6 +302,7 @@
     <Content Include="Scripts\teamrynkebyse.sessionbuilder.js" />
     <Content Include="Scripts\teamrynkebyse.timehelper.js" />
     <Content Include="Views\Team\TeamMember.cshtml" />
+    <Content Include="Views\Activity\WhoHasNotSignedUp.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

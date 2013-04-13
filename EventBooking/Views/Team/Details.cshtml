@@ -83,9 +83,14 @@
                             </a>*@
                             <a href="@Url.Action("WhoHasSignup", "Activity", new {activityId = @e.Id})" class="link" rel="tooltip" data-original-title="Vilka kommer?">
                                 <span class="icon icon-eye-open"></span></a>
-	                        <a href="#" class="link send-email" rel="tooltip" data-original-title="Skicka e-post">
+                            
+                            <a href="@Url.Action("WhoHasNotSignedUp", "Activity", new {activityId = @e.Id})" class="link" rel="tooltip" data-original-title="Vilka kommer inte?">
+                                <span class="icon icon-barcode"></span></a>
+                            
+                            <a href="#" class="link send-email" rel="tooltip" data-original-title="Skicka e-post">
                                 <span class="icon icon-envelope"></span>
                             </a>
+                            
 						}
                     </li>
                 }

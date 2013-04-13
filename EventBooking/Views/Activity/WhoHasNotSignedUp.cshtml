@@ -1,26 +1,19 @@
-﻿@{
-    ViewBag.title="Teamkompisar"
+﻿@model EventBooking.Controllers.ViewModels.HasNotSignedUp
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-@model EventBooking.Controllers.ViewModels.TeamMemberViewModel
 
 <table class="table table-striped">
     <tr>
         <th>Namn</th>
-        <th>Adress</th>
-        <th>Ort</th>
         <th>Telefonnr</th>
         <th>E-post</th>
     </tr>
     @{
-        foreach (var teamMember in Model.TeamMembers)
+        foreach (var teamMember in Model.Users)
         {
-         
         <tr>
             <td>@teamMember.Name</td>
-            <td>@teamMember.StreetAddress</td>
-            <td>@teamMember.City</td>
             <td>@teamMember.Cellphone</td>
             <td>@teamMember.Email</td>
         </tr>
