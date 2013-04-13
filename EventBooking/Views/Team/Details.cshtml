@@ -85,7 +85,7 @@
                                 <span class="icon icon-eye-open"></span></a>
                             
                             <a href="@Url.Action("WhoHasNotSignedUp", "Activity", new {activityId = @e.Id})" class="link" rel="tooltip" data-original-title="Vilka kommer inte?">
-                                <span class="icon icon-barcode"></span></a>
+                                <span class="icon icon-question-sign"></span></a>
                             
                             <a href="#" class="link send-email" rel="tooltip" data-original-title="Skicka e-post">
                                 <span class="icon icon-envelope"></span>
@@ -105,7 +105,7 @@
 			<ul>
 				<li>
 					<label class="checkbox">
-						<input type="checkbox" checked="checked" onclick="$('li.Publikt').toggle()"><span class="badge @Html.BadgeColorPicker(ActivityType.Publikt)">Offentligt</span>
+						<input type="checkbox" checked="checked" onclick="$('li.Publikt').toggle()"><span class="badge @Html.BadgeColorPicker(ActivityType.Publikt)">Publikt</span>
 					</label>
 				</li>
 				<li>
