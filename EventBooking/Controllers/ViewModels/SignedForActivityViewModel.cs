@@ -6,8 +6,7 @@ namespace EventBooking.Controllers.ViewModels
 {
     public class SignedForActivityViewModel : DetailActivityViewModel
     {
-        public SignedForActivityViewModel(Activity activityData, User user)
-            : base(activityData, user)
+        public SignedForActivityViewModel(Activity activityData, User user) : base(activityData, user)
         {
             Session = activityData.Sessions;
         }
