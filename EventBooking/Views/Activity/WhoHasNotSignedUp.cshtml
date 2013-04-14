@@ -2,22 +2,29 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<table class="table table-striped">
-    <tr>
-        <th>Namn</th>
-        <th>Telefonnr</th>
-        <th>E-post</th>
-    </tr>
-    @{
-        foreach (var teamMember in Model.Users)
-        {
+<div>
+    <table class="table table-striped">
         <tr>
-            <td>@teamMember.Name</td>
-            <td>@teamMember.Cellphone</td>
-            <td>@teamMember.Email</td>
+            <th>Namn</th>
+            <th>Telefonnr</th>
+            <th>E-post</th>
         </tr>
+        @{
+            foreach (var teamMember in Model.Users)
+            {
+            <tr>
+                <td>@teamMember.Name</td>
+                <td>@teamMember.Cellphone</td>
+                <td>@teamMember.Email</td>
+            </tr>
+            }
         }
-    }
-   
-</table>
+    </table>
+</div>
+<div>
+    @{ var activity = Model.ActivityId;
+        var senderLists = Model.Users;
+          
+          }
+    <a href="@Url.Action("SendReminderMail", "Activity", new { activityIds = activity })"><span>Skicka påminnelsemail</span></a>
+</div>

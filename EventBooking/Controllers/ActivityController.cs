@@ -126,19 +126,26 @@ namespace EventBooking.Controllers
         public ActionResult WhoHasNotSignedUp(int activityId)
         {
 
+            var howHasNotSignedUp = HowHasNotSignedUp(activityId);
+
+            var viewModel = new HasNotSignedUp {Users = howHasNotSignedUp, ActivityId = activityId};
+
+            ViewBag.title = "Vem har inte anmält sig";
+            return View("WhoHasNotSignedUp",viewModel);
+
+           
+        }
+
+        private IEnumerable<User> HowHasNotSignedUp(int activityId)
+        {
             var activity = _activityRepository.GetActivityById(activityId);
-            var currentUser = _securityService.GetCurrentUser();
 
             var howHasSignedUp = activity.Sessions.SelectMany(v => v.Volunteers);
             var teamMembers = _teamRepository.GetTeamMembers(_securityService.GetCurrentUser().Team.Id).ToList();
             var howHasNotSignedUp = teamMembers.Except(howHasSignedUp);
-
-            HasNotSignedUp viewModel = new HasNotSignedUp();
-
-            viewModel.Users = howHasNotSignedUp; 
-            ViewBag.title = "Vem har inte anmält sig";
-            return View("WhoHasNotSignedUp",viewModel);
+            return howHasNotSignedUp;
         }
+
 
         [ImportModelStateFromTempData]
         public ActionResult SelectExistingItem(int activityId)
@@ -198,6 +205,16 @@ namespace EventBooking.Controllers
         {
             _emailService.SendMail(id, EmailService.EmailType.InfoActivity, text);
             return new EmptyResult();
+        }
+
+  
+        public ActionResult SendReminderMail(int activityIds)
+        {
+            var howHasNotSignedUp = HowHasNotSignedUp(activityIds).AsQueryable();
+
+            _emailService.SendReminderMail(activityIds, howHasNotSignedUp, EmailService.EmailType.NewActivity);
+
+            return RedirectToAction("WhoHasNotSignedUp",new {activityId = activityIds});
         }
 
         public JsonResult GetEmailPreview(int id, string text)
