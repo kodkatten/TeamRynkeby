@@ -1,7 +1,17 @@
-﻿@model EventBooking.Controllers.ViewModels.EditActivityViewModel
+﻿@using System.Web.Optimization
+@model EventBooking.Controllers.ViewModels.EditActivityViewModel
 
 @{
     ViewBag.Title = "EditActivity";
+}
+
+@section Styles
+{
+    @Styles.Render("~/Styles/CreateEvent")
+}
+@section Scripts
+{
+    @Scripts.Render("~/Scripts/CreateEvent")
 }
 
 
@@ -16,9 +26,9 @@
 
 @using (Html.BeginForm("EditActivity", "Activity"))
 {
-   
+
     @Html.HiddenFor(m => m.Activity.Id)
-    
+
     @Html.LabelFor(m => m.Activity.Name)
     @Html.TextAreaFor(m => m.Activity.Name)
 
@@ -49,12 +59,120 @@
                 <input name="type" type="radio" value="Preliminärt" />
                 Preliminärt</label>
         </div>
+    </div>@*
+
+
+
+    <div class="control-group">
+        <label class="control-label">Saker att ha med</label>
+        <div class="controls">
+            <div id="itemsContainer">
+
+                <div>
+                    <p>Sak</p>
+                    <p>Antal</p>
+                </div>
+
+
+            </div>
+
+            <a id="addMoreItems" href="#">Lägg till sak</a>
+            <a id="addSpecificItem" href="#">Lägg till aktivitets-specifik sak</a>
+        </div>
+    </div>*@
+
+        
+        
+    <div class="control-group">
+        <label class="control-label">Datum</label>
+        <div class="controls">
+            <input type="text" name="date" placeholder="Välj datum" class="datepicker" />
+        </div>
     </div>
 
-    @*
-    uppdatera items
-    *@
-    
-    
-    <input type="submit" value="Updatera"/>
+    <div class="control-group">
+        <label class="control-label">Tid/Pass</label>
+
+        <div class="controls">
+            <div id="sessionContainer">
+
+                <div>
+                    <p>Börjar</p>
+                    <p>Slutar</p>
+                    <p>Min. deltagare</p>
+                </div>
+
+                @foreach (var session in Model.Activity.Sessions)
+                {
+
+                    var startTime = session.FromTime.ToString();
+                    var endTime = session.ToTime.ToString();
+                    var frivilliga = session.VolunteersNeeded;
+                    
+                    <div class="sessionRow">
+                        <div class="bootstrap-timepicker input-append">
+                            <input name="sessions[0].fromTime" value="startTime" type="text" class="timepicker input-mini" />
+                            <span class="add-on"><i class="icon-time"></i></span>
+                        </div>
+
+                        <div class="bootstrap-timepicker input-append">
+                            <input name="sessions[0].toTime" value="endTime" type="text" class="timepicker input-mini" />
+                            <span class="add-on"><i class="icon-time"></i></span>
+                        </div>
+                        <div>
+                            <input id="volunteer0" type="number" name="sessions[0].volunteersNeeded" class="input-mini" min="1" value="frivilliga" />
+                        </div>
+                    </div>
+
+                }
+
+
+           @*     <div class="sessionRow">
+                    <div class="bootstrap-timepicker input-append">
+                        <input name="sessions[0].fromTime" value="12:00" type="text" class="timepicker input-mini" />
+                        <span class="add-on"><i class="icon-time"></i></span>
+                    </div>
+
+                    <div class="bootstrap-timepicker input-append">
+                        <input name="sessions[0].toTime" value="14:00" type="text" class="timepicker input-mini" />
+                        <span class="add-on"><i class="icon-time"></i></span>
+                    </div>
+
+                    <div>
+                        <input id="volunteer0" type="number" name="sessions[0].volunteersNeeded" class="input-mini" min="1" value="1" />
+                    </div>
+                </div>*@
+            </div>
+            <div>
+                <a id="addMoreSessions" href="#">Lägg till pass</a>
+            </div>
+
+            <div id="overlappingWarning" class="alert alert-block" style="display: none">
+                <h3>Regler för pass</h3>
+                <p>
+                    Aktiviteten får börja tidigast imorgon.
+                </p>
+                <p>
+                    Pass får inte överlappa varandra.
+                </p>
+                <p>
+                    Pass får inte sluta före de börjar.
+                </p>
+                <p>
+                    Pass får inte sträcka sig till eller över midnatt.
+                </p>
+                <p>
+                    Antal deltagare måste vara över noll.
+                </p>
+            </div>
+        </div>
+    </div>
+        
+        
+        
+        
+        
+        
+        
+    <input type="submit" value="Updatera" />
 }
