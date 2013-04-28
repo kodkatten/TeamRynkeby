@@ -1,0 +1,60 @@
+﻿@model EventBooking.Controllers.ViewModels.EditActivityViewModel
+
+@{
+    ViewBag.Title = "EditActivity";
+}
+
+
+@*@Html.HiddenFor(m => m.Activity.Coordinator)
+    @Html.HiddenFor(m => m.Activity.Date)
+    @Html.HiddenFor(m => m.Activity.OrganizingTeam)
+    @Html.LabelFor(m => m.Activity.Id)
+    @Html.TextAreaFor(m => m.Activity.Id)
+    @Html.HiddenFor(m => m.Activity.Sessions)
+*@
+
+
+@using (Html.BeginForm("EditActivity", "Activity"))
+{
+   
+    @Html.HiddenFor(m => m.Activity.Id)
+    
+    @Html.LabelFor(m => m.Activity.Name)
+    @Html.TextAreaFor(m => m.Activity.Name)
+
+    @Html.LabelFor(m => m.Activity.Summary)
+    @Html.TextAreaFor(m => m.Activity.Summary)
+
+
+    @Html.LabelFor(m => m.Activity.Description)
+    @Html.TextAreaFor(m => m.Activity.Description)
+
+
+    <div class="control-group">
+        <label class="control-label">Typ</label>
+        <div class="controls">
+            <label class="radio">
+                <input name="type" type="radio" value="Träning" checked="checked" />
+                Träning</label>
+            <label class="radio">
+                <input name="type" type="radio" value="Publikt" />
+                Publikt</label>
+            <label class="radio">
+                <input name="type" type="radio" value="Teammöte" />
+                Teammöte</label>
+            <label class="radio">
+                <input name="type" type="radio" value="Sponsor" />
+                Sponsor</label>
+            <label class="radio">
+                <input name="type" type="radio" value="Preliminärt" />
+                Preliminärt</label>
+        </div>
+    </div>
+
+    @*
+    uppdatera items
+    *@
+    
+    
+    <input type="submit" value="Updatera"/>
+}
