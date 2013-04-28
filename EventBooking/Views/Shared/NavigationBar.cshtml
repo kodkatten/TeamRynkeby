@@ -2,7 +2,7 @@
 @using EventBooking.Data.Entities
 
 @{
-    bool showAdmin = Roles.GetRolesForUser().Any(x => x == UserType.Administrator.ToString() || x.EndsWith("PowerUser"));
+     bool showAdmin = Roles.GetRolesForUser().Any(x => x == UserType.Administrator.ToString() || x.EndsWith("PowerUser"));
 }
 
 <div class="navbar navbar-inverse navbar-fixed-top">

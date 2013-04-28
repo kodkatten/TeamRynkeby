@@ -36,6 +36,17 @@ namespace EventBooking.Data.Repositories
 			_context.SaveChanges();
 		}
 
+        public virtual void UpdateActivity(Activity activity)
+        {
+            var c =_context.Activities.First(a => a.Id == activity.Id);
+            c.Name = activity.Name;
+            c.Summary = activity.Summary;
+            c.Description = activity.Description;
+
+            _context.SaveChanges();
+
+        }
+
         public IEnumerable<Activity> GetUpcomingActivities(int skip, int take)
         {
             return _context.Activities

@@ -166,6 +166,7 @@
     <Compile Include="Controllers\ViewModels\ContributedInventoryItemModel.cs" />
     <Compile Include="Controllers\ViewModels\ContributedInventoryModel.cs" />
     <Compile Include="Controllers\ViewModels\DetailActivityViewModel.cs" />
+    <Compile Include="Controllers\ViewModels\EditActivityViewModel.cs" />
     <Compile Include="Controllers\ViewModels\EditSessionModel.cs" />
     <Compile Include="Controllers\ViewModels\HasNotSignedUp.cs" />
     <Compile Include="Controllers\ViewModels\MailData.cs" />
@@ -303,6 +304,7 @@
     <Content Include="Scripts\teamrynkebyse.timehelper.js" />
     <Content Include="Views\Team\TeamMember.cshtml" />
     <Content Include="Views\Activity\WhoHasNotSignedUp.cshtml" />
+    <Content Include="Views\Activity\EditActivity.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

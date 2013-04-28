@@ -64,6 +64,16 @@ namespace EventBooking.Controllers
             return RedirectToAction("Details", "Activity", new { Id = activity.Id });
         }
 
+        public ActionResult Edit(int activityId)
+        {
+            var activity = new EditActivityViewModel
+                {
+                    Activity = _activityRepository.GetActivityById(activityId)
+                };
+
+            return View("EditActivity", activity);
+        }
+
         public ActionResult Upcoming(int page = 0, string teamIds = "")
         {
             page = page < 0 ? 0 : page;
@@ -223,5 +233,16 @@ namespace EventBooking.Controllers
             return Json(new { content = preview }, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult EditActivity(EventBooking.Controllers.ViewModels.EditActivityViewModel model)
+        {
+            var activity =_activityRepository.GetActivityById(model.Activity.Id);
+            activity.Name = model.Activity.Name;
+            activity.Summary = model.Activity.Summary;
+            activity.Description = model.Activity.Description;
+
+            _activityRepository.UpdateActivity(activity);
+
+            return RedirectToAction("Details","Team");
+        }
     }
 }
