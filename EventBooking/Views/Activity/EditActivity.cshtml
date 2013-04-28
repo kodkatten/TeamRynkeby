@@ -1,5 +1,4 @@
-﻿@using EventBooking.Data.Entities
-@model EventBooking.Controllers.ViewModels.EditActivityViewModel
+﻿@model EventBooking.Controllers.ViewModels.EditActivityViewModel
 
 @{
     ViewBag.Title = "EditActivity";
@@ -9,17 +8,10 @@
 @*@Html.HiddenFor(m => m.Activity.Coordinator)
     @Html.HiddenFor(m => m.Activity.Date)
     @Html.HiddenFor(m => m.Activity.OrganizingTeam)
-    
     @Html.LabelFor(m => m.Activity.Id)
     @Html.TextAreaFor(m => m.Activity.Id)
-
     @Html.HiddenFor(m => m.Activity.Sessions)
-    @Html.HiddenFor(m => m.Activity.Items)
-    @Html.HiddenFor(m => m.Activity.Date)
-    @Html.HiddenFor(m => m.Activity.Type)*@
-
-
-
+*@
 
 
 @using (Html.BeginForm("EditActivity", "Activity"))
@@ -59,31 +51,10 @@
         </div>
     </div>
 
-    <input type="submit" />
+    @*
+    uppdatera items
+    *@
+    
+    
+    <input type="submit" value="Updatera"/>
 }
-
-
-
-
-
-
-@*@for (var itemIndex = 0; itemIndex < Model.Activity.Items.Count(); itemIndex++)
-{
-    @Html.TextAreaFor(m => m.Activity.Items.ElementAt(itemIndex).ToString())
-}*@
-
-@*@for(var themeIndex = 0; themeIndex < Model.Theme.Count(); themeIndex++)
-{
-   @Html.LabelFor(model => model.Theme[themeIndex])
-
-   @for(var productIndex=0; productIndex < Model.Theme[themeIndex].Products.Count(); productIndex++)
-   {
-      @Html.LabelFor(model=>model.Theme[themeIndex].Products[productIndex].name)
-      @for(var orderIndex=0; orderIndex < Model.Theme[themeIndex].Products[productIndex].Orders; orderIndex++)
-      {
-          @Html.TextBoxFor(model => model.Theme[themeIndex].Products[productIndex].Orders[orderIndex].Quantity)
-          @Html.TextAreaFor(model => model.Theme[themeIndex].Products[productIndex].Orders[orderIndex].Note)
-          @Html.EditorFor(model => model.Theme[themeIndex].Products[productIndex].Orders[orderIndex].DateRequestedDeliveryFor)
-      }
-   }
-}*@
