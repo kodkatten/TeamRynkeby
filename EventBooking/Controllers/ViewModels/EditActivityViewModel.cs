@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using EventBooking.Data.Entities;
 
 namespace EventBooking.Controllers.ViewModels
@@ -10,5 +7,7 @@ namespace EventBooking.Controllers.ViewModels
     {
         public ICollection<Session> Sessions { get; set; }
         public Activity Activity { get; set; }
+        public List<string> ActivityTypes { get; set; }
+        public ActivityType SelectedActivity { get; set; }
     }
 }

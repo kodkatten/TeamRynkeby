@@ -71,6 +71,16 @@ namespace EventBooking.Controllers
                     Activity = _activityRepository.GetActivityById(activityId)
                 };
 
+            activity.ActivityTypes = new List<string> 
+            {
+                "Träning",
+                "Publikt",
+                "Teammöte",
+                "Sponsor",
+                "Preliminärt"
+            };
+
+
             return View("EditActivity", activity);
         }
 
@@ -138,12 +148,12 @@ namespace EventBooking.Controllers
 
             var howHasNotSignedUp = HowHasNotSignedUp(activityId);
 
-            var viewModel = new HasNotSignedUp {Users = howHasNotSignedUp, ActivityId = activityId};
+            var viewModel = new HasNotSignedUp { Users = howHasNotSignedUp, ActivityId = activityId };
 
             ViewBag.title = "Vem har inte anmält sig";
-            return View("WhoHasNotSignedUp",viewModel);
+            return View("WhoHasNotSignedUp", viewModel);
 
-           
+
         }
 
         private IEnumerable<User> HowHasNotSignedUp(int activityId)
@@ -217,14 +227,14 @@ namespace EventBooking.Controllers
             return new EmptyResult();
         }
 
-  
+
         public ActionResult SendReminderMail(int activityIds)
         {
             var howHasNotSignedUp = HowHasNotSignedUp(activityIds).AsQueryable();
 
             _emailService.SendReminderMail(activityIds, howHasNotSignedUp, EmailService.EmailType.NewActivity);
 
-            return RedirectToAction("WhoHasNotSignedUp",new {activityId = activityIds});
+            return RedirectToAction("WhoHasNotSignedUp", new { activityId = activityIds });
         }
 
         public JsonResult GetEmailPreview(int id, string text)
@@ -235,14 +245,16 @@ namespace EventBooking.Controllers
 
         public ActionResult EditActivity(EventBooking.Controllers.ViewModels.EditActivityViewModel model)
         {
-            var activity =_activityRepository.GetActivityById(model.Activity.Id);
+            var activity = _activityRepository.GetActivityById(model.Activity.Id);
             activity.Name = model.Activity.Name;
             activity.Summary = model.Activity.Summary;
             activity.Description = model.Activity.Description;
+            activity.Type = model.SelectedActivity;
 
             _activityRepository.UpdateActivity(activity);
+            
 
-            return RedirectToAction("Details","Team");
+            return RedirectToAction("Details", "Team");
         }
     }
 }
