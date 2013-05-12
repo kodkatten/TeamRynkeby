@@ -1,45 +1,224 @@
-﻿@model EventBooking.Controllers.ViewModels.EditActivityViewModel
+﻿@using System.Web.Optimization
+@model EventBooking.Controllers.ViewModels.EditActivityViewModel
 
 @{
     ViewBag.Title = "Redigera aktivitet";
 }
 
-
-
-
-@using (Html.BeginForm("EditActivity", "Activity"))
+@section Styles
 {
- 
-    @Html.HiddenFor(m => m.Activity.Id)
-
-        @Html.LabelFor(m => m.Activity.Name)
-        @Html.TextAreaFor(m => m.Activity.Name)
-
-        @Html.LabelFor(m => m.Activity.Summary)
-        @Html.TextAreaFor(m => m.Activity.Summary)
-
-
-        @Html.LabelFor(m => m.Activity.Description)
-        @Html.TextAreaFor(m => m.Activity.Description)
-
-
-        <div>
-            @foreach (var activityType in Model.ActivityTypes)
-            {
-                <p>
-
-                    @if (Model.Activity.Type.ToString() == activityType)
-                    {
-                        @Html.RadioButtonFor(m => m.SelectedActivity, activityType, new { Checked = "checked" }) @activityType
-                    }
-                    else
-                    {
-                        @Html.RadioButtonFor(m => m.SelectedActivity, activityType)  @activityType
-                    }
-                </p>
-            }
-        </div>
-    
-    <input type="submit" value="Updatera" />
+    @Styles.Render("~/Styles/CreateEvent")
 }
 
+@section Scripts
+{
+    @Scripts.Render("~/Scripts/CreateEvent")
+    <script id="sessionTemplate" type="text/html">
+        <div class="sessionRow">
+            <div class="bootstrap-timepicker input-append">
+                <input type="text" name="sessions[{{index}}].fromTime" value="{{fromTime}}" class="timepicker input-mini" />
+                <span class="add-on"><i class="icon-time"></i></span>
+            </div>
+
+
+            <div class="bootstrap-timepicker input-append">
+                <input type="text" name="sessions[{{index}}].toTime" value="{{toTime}}" class="timepicker input-mini" />
+                <span class="add-on"><i class="icon-time"></i></span>
+            </div>
+
+            <div>
+                <input type="number" name="sessions[{{index}}].volunteersNeeded" class="input-mini" min="1" value="1" />
+            </div>
+            <a id="removeSession_{{index}}" href="#" class="undo"><i class="icon-remove"></i>Ta bort</a>
+        </div>
+    </script>
+
+
+    <script id="itemsTemplate" type="text/html">
+        <div>
+            <div>
+                <select name="items[{{index}}].name">
+                    <option value="Ospecificerat">Välj materiel</option>
+
+
+                </select>
+            </div>
+
+            <div>
+                <input name="items[{{index}}].quantity" type="number" class="input-mini" value="1" min="1" />
+            </div>
+            <a id="removeItem_{{index}}" href="#" class="undo"><i class="icon-remove"></i>Ta bort</a>
+        </div>
+    </script>
+
+    <script id="specificItemsTemplate" type="text/html">
+        <div>
+            <div>
+                <input name="items[{{index}}].name" type="text" placeholder="Ange matriel" />
+            </div>
+
+            <div>
+                <input name="items[{{index}}].quantity" type="number" class="input-mini" value="1" min="1" />
+            </div>
+            <a id="removeItem_{{index}}" href="#" class="undo"><i class="icon-remove"></i>Ta bort</a>
+        </div>
+    </script>
+}
+
+
+<div class="span8">
+    @using (Html.BeginForm("EditActivity", "Activity"))
+    {
+        <ul class="nav nav-pills">
+            <li data-wizard-header="pageOne" class="active">
+                <a href="#" data-wizard-link="pageOne">1. Beskrivning</a>
+            </li>
+
+            <li data-wizard-header="pageTwo">
+                <a href="#" data-wizard-link="pageTwo">2. Datum/Tid </a>
+            </li>
+
+            <li data-wizard-header="pageThree">
+                <a href="#">3. Materiel</a>
+            </li>
+        </ul>
+
+        /***** PAGE ONE ******************** */
+        <div data-wizard-page="pageOne">
+
+            @Html.HiddenFor(m => m.Activity.Id)
+
+            @Html.LabelFor(m => m.Activity.Name)
+            @Html.TextAreaFor(m => m.Activity.Name)
+
+            @Html.LabelFor(m => m.Activity.Summary)
+            @Html.TextAreaFor(m => m.Activity.Summary)
+
+
+            @Html.LabelFor(m => m.Activity.Description)
+            @Html.TextAreaFor(m => m.Activity.Description)
+
+
+            <div>
+                @foreach (var activityType in Model.ActivityTypes)
+                {
+                    <p>
+
+                        @if (Model.Activity.Type.ToString() == activityType)
+                        {
+                            @Html.RadioButtonFor(m => m.SelectedActivity, activityType, new { Checked = "checked" }) @activityType
+                        }
+                        else
+                        {
+                            @Html.RadioButtonFor(m => m.SelectedActivity, activityType)  @activityType
+                        }
+                    </p>
+                }
+            </div>
+
+            <a href="#" class="btn pull-right btn-primary" data-wizard-link="pageTwo">Nästa</a>
+        </div>
+    
+                /***** PAGE TWO ******************** */
+        <div data-wizard-page="pageTwo">
+
+            <div class="control-group">
+                <label class="control-label">Datum</label>
+                <div class="controls">
+                     @Html.TextBoxFor(m => m.Activity.Date, new { @class = "datepicker", @placeholder = "Välj datum" })
+                    @*<input type="text" name="date" placeholder="Välj datum" class="datepicker" value="@Model.Activity.Date" />*@
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Tid/Pass</label>
+
+                <div class="controls">
+                    <div id="sessionContainer">
+
+                        <div>
+                            <p>Börjar</p>
+                            <p>Slutar</p>
+                            <p>Min. deltagare</p>
+                        </div>
+                        
+                        @{ int ordinal = 0; }
+                        @foreach (var session in Model.Activity.Sessions)
+                        {
+                            
+                        
+                            <div class="sessionRow">
+                                <div class="bootstrap-timepicker input-append">
+                                    <input name="sessions[@ordinal].fromTime" value="@session.FromTime.ToString()" type="text" class="timepicker input-mini" />
+                                    <span class="add-on"><i class="icon-time"></i></span>
+                                </div>
+
+                                <div class="bootstrap-timepicker input-append">
+                                    <input name="sessions[@ordinal].toTime" value="@session.ToTime.ToString()" type="text" class="timepicker input-mini" />
+                                    <span class="add-on"><i class="icon-time"></i></span>
+                                </div>
+
+                                <div>
+                                    <input id="volunteer0" type="number" name="sessions[@ordinal].volunteersNeeded" class="input-mini" min="1" value="@session.VolunteersNeeded" />
+                                </div>
+                                
+                                <a id="removeSession_@ordinal" href="#" class="undo"><i class="icon-remove"></i>Ta bort</a>
+                            </div>
+
+                            ordinal++;
+                        }
+                    </div>
+                    <div>
+                        <a id="addMoreSessions" href="#">Lägg till pass</a>
+                    </div>
+
+                    <div id="overlappingWarning" class="alert alert-block" style="display: none">
+                        <h3>Regler för pass</h3>
+                        <p>
+                            Aktiviteten får börja tidigast imorgon.
+                        </p>
+                        <p>
+                            Pass får inte överlappa varandra.
+                        </p>
+                        <p>
+                            Pass får inte sluta före de börjar.
+                        </p>
+                        <p>
+                            Pass får inte sträcka sig till eller över midnatt.
+                        </p>
+                        <p>
+                            Antal deltagare måste vara över noll.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <a href="#" class="btn" data-wizard-link="pageOne">Föregående</a>
+            <a href="#" class="btn pull-right btn-primary" data-wizard-link="pageThree">Nästa</a>
+        </div>
+
+        /***** PAGE THREE ******************** */
+        <div data-wizard-page="pageThree">
+            <div class="control-group">
+                <label class="control-label">Saker att ha med</label>
+                <div class="controls">
+                    <div id="itemsContainer">
+
+                        <div>
+                            <p>Sak</p>
+                            <p>Antal</p>
+                        </div>
+
+
+                    </div>
+
+                    <a id="addMoreItems" href="#">Lägg till sak</a>
+                    <a id="addSpecificItem" href="#">Lägg till aktivitets-specifik sak</a>
+                </div>
+            </div>
+
+            <a href="#" class="btn" data-wizard-link="pageTwo">Föregående</a>
+            <input type="submit" value="Updatera" />
+        </div>
+    }
+</div>

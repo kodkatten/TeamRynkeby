@@ -243,13 +243,15 @@ namespace EventBooking.Controllers
             return Json(new { content = preview }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult EditActivity(EventBooking.Controllers.ViewModels.EditActivityViewModel model)
+        public ActionResult EditActivity(EditActivityViewModel model)
         {
             var activity = _activityRepository.GetActivityById(model.Activity.Id);
             activity.Name = model.Activity.Name;
             activity.Summary = model.Activity.Summary;
             activity.Description = model.Activity.Description;
             activity.Type = model.SelectedActivity;
+            activity.Sessions = model.Sessions;
+            activity.Date = model.Activity.Date;
 
             _activityRepository.UpdateActivity(activity);
             
