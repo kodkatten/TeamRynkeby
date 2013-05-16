@@ -64,25 +64,7 @@ namespace EventBooking.Controllers
             return RedirectToAction("Details", "Activity", new { Id = activity.Id });
         }
 
-        public ActionResult Edit(int activityId)
-        {
-            var activity = new EditActivityViewModel
-                {
-                    Activity = _activityRepository.GetActivityById(activityId)
-                };
-
-            activity.ActivityTypes = new List<string> 
-            {
-                "Träning",
-                "Publikt",
-                "Teammöte",
-                "Sponsor",
-                "Preliminärt"
-            };
-
-
-            return View("EditActivity", activity);
-        }
+       
 
         public ActionResult Upcoming(int page = 0, string teamIds = "")
         {
@@ -252,11 +234,32 @@ namespace EventBooking.Controllers
             activity.Type = model.SelectedActivity;
             activity.Sessions = model.Sessions;
             activity.Date = model.Activity.Date;
+            activity.Items = model.Activity.Items;
 
             _activityRepository.UpdateActivity(activity);
             
 
             return RedirectToAction("Details", "Team");
+        }
+
+        public ActionResult Edit(int activityId)
+        {
+            var activity = new EditActivityViewModel
+                {
+                    Activity = _activityRepository.GetActivityById(activityId),
+                    ItemList = _activityItemRepository.GetTemplates(),
+                    ActivityTypes = new List<string>
+                        {
+                            "Träning",
+                            "Publikt",
+                            "Teammöte",
+                            "Sponsor",
+                            "Preliminärt"
+                        }
+                };
+
+
+            return View("EditActivity", activity);
         }
     }
 }

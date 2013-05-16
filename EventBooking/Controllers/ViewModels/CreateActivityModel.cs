@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using EventBooking.Data;
 using EventBooking.Data.Entities;
 using EventBooking.Validators;
 

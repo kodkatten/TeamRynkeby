@@ -45,6 +45,7 @@ namespace EventBooking.Data.Repositories
             c.Type = activity.Type;
             c.Sessions = activity.Sessions;
             c.Date = activity.Date;
+            c.Items = activity.Items;
 
             _context.SaveChanges();
 

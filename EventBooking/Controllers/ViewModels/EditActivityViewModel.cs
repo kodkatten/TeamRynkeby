@@ -9,5 +9,6 @@ namespace EventBooking.Controllers.ViewModels
         public Activity Activity { get; set; }
         public List<string> ActivityTypes { get; set; }
         public ActivityType SelectedActivity { get; set; }
+        public IEnumerable<ActivityItemTemplate> ItemList { get; set; }
     }
 }
