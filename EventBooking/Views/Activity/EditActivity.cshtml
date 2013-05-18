@@ -31,6 +31,12 @@
         </div>
     </script>
 
+    <<script type="text/javascript">
+         $(document).ready(function () {
+             $("date").datepicker();
+             $("#date").data({ date: startDate }).datepicker('update').children("input").val(2013 - 03 - 20);
+         });
+    </script>
 
     <script id="itemsTemplate" type="text/html">
         <div>
@@ -77,7 +83,7 @@
             </li>
 
             <li data-wizard-header="pageThree">
-                <a href="#"  data-wizard-link="pageThree">3. Materiel</a>
+                <a href="#" data-wizard-link="pageThree">3. Materiel</a>
             </li>
         </ul>
 
@@ -86,14 +92,14 @@
 
             @Html.HiddenFor(m => m.Activity.Id)
 
-            @Html.LabelFor(m => m.Activity.Name,"Titel")
+            @Html.LabelFor(m => m.Activity.Name, "Titel")
             @Html.TextAreaFor(m => m.Activity.Name)
 
-            @Html.LabelFor(m => m.Activity.Summary,"Publik Beskrivning")
+            @Html.LabelFor(m => m.Activity.Summary, "Publik Beskrivning")
             @Html.TextAreaFor(m => m.Activity.Summary)
 
 
-            @Html.LabelFor(m => m.Activity.Description,"Intern Beskrivning")
+            @Html.LabelFor(m => m.Activity.Description, "Intern Beskrivning")
             @Html.TextAreaFor(m => m.Activity.Description)
 
 
@@ -114,8 +120,9 @@
                 }
             </div>
             <input type="submit" value="Updatera" />
-            <a href="#" class="btn pull-right btn-primary" data-wizard-link="pageTwo">Nästa</a>
+            @*<a href="#" class="btn pull-right btn-primary" data-wizard-link="pageTwo">Nästa</a>*@
         </div>
+        
     
                 /***** PAGE TWO ******************** */
         <div data-wizard-page="pageTwo">
@@ -123,11 +130,10 @@
             <div class="control-group">
                 <label class="control-label">Datum</label>
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Activity.Date, new { @class = "datepicker", @placeholder = "Välj datum" })
-                    @*<input type="text" name="date" placeholder="Välj datum" class="datepicker" value="@Model.Activity.Date" />*@
+                    <input type="text" id="datepicker" placeholder="Välj datum" class="datepicker" />
+                    @Html.TextBoxFor(m => m.Activity.Date, new { @class = "datepicker" })
                 </div>
             </div>
-
             <div class="control-group">
                 <label class="control-label">Tid/Pass</label>
 
@@ -143,8 +149,7 @@
                         @{ int ordinal = 0; }
                         @foreach (var session in Model.Activity.Sessions)
                         {
-                            
-                        
+                
                             <div class="sessionRow">
                                 <div class="bootstrap-timepicker input-append">
                                     <input name="sessions[@ordinal].fromTime" value="@session.FromTime.ToString()" type="text" class="timepicker input-mini" />
@@ -203,7 +208,7 @@
                     <div id="itemsContainer">
 
                         <div>
-                            @*<p>Sak</p>*@
+                            <p>Sak</p>
                             <p>Antal</p>
                         </div>
                         @{ int itemOrdinal = 0; }
@@ -215,17 +220,17 @@
                             <div>
                                 <div>
                                     @Html.DropDownListFor(m => m.Activity.Items, new SelectList(Model.ItemList, "Id", "Name"))
-                                    @*@Html.DropDownList("items[" + itemOrdinal + "].name", new SelectList(Model.ItemList, "Id", "Name", item.Id))*@
-                                    @*<select name="items[@itemOrdinal].name">
+                                    @Html.DropDownList("items[" + itemOrdinal + "].name", new SelectList(Model.ItemList, "Id", "Name", item.Id))
+                                    <select name="items[@itemOrdinal].name">
                                         <option value="Ospecificerat" selected="@item.Name">Välj materiel</option>
 
 
-                                    </select>*@
+                                    </select>
                                 </div>
 
-                                @*<div>
+                                <div>
                                     <input name="items[@itemOrdinal].quantity" type="number" class="input-mini" value="@item.Quantity" min="1" />
-                                </div>*@
+                                </div>
                                 <a id="removeItem_@itemOrdinal" href="#" class="undo"><i class="icon-remove"></i>Ta bort</a>
                             </div>
                             

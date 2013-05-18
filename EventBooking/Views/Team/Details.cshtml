@@ -78,9 +78,9 @@
 						}
                         @if (e.Coordinator.Email == User.Identity.Name)
                         {
-                            <a href="@Url.Action("Edit", "Activity", new {activityId = @e.Id})" class="link" rel="tooltip" data-original-title="Redigera">
+                            @*<a href="@Url.Action("Edit", "Activity", new {activityId = @e.Id})" class="link" rel="tooltip" data-original-title="Redigera">
                                 <span class="icon icon-pencil"></span>
-                            </a>
+                            </a>*@
                             <a href="@Url.Action("WhoHasSignup", "Activity", new {activityId = @e.Id})" class="link" rel="tooltip" data-original-title="Vilka kommer?">
                                 <span class="icon icon-eye-open"></span></a>
                             
