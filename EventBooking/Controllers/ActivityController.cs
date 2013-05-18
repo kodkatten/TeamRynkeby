@@ -64,15 +64,7 @@ namespace EventBooking.Controllers
             return RedirectToAction("Details", "Activity", new { Id = activity.Id });
         }
 
-        public ActionResult Edit(int activityId)
-        {
-            var activity = new EditActivityViewModel
-                {
-                    Activity = _activityRepository.GetActivityById(activityId)
-                };
-
-            return View("EditActivity", activity);
-        }
+       
 
         public ActionResult Upcoming(int page = 0, string teamIds = "")
         {
@@ -138,12 +130,12 @@ namespace EventBooking.Controllers
 
             var howHasNotSignedUp = HowHasNotSignedUp(activityId);
 
-            var viewModel = new HasNotSignedUp {Users = howHasNotSignedUp, ActivityId = activityId};
+            var viewModel = new HasNotSignedUp { Users = howHasNotSignedUp, ActivityId = activityId };
 
             ViewBag.title = "Vem har inte anmält sig";
-            return View("WhoHasNotSignedUp",viewModel);
+            return View("WhoHasNotSignedUp", viewModel);
 
-           
+
         }
 
         private IEnumerable<User> HowHasNotSignedUp(int activityId)
@@ -217,14 +209,14 @@ namespace EventBooking.Controllers
             return new EmptyResult();
         }
 
-  
+
         public ActionResult SendReminderMail(int activityIds)
         {
             var howHasNotSignedUp = HowHasNotSignedUp(activityIds).AsQueryable();
 
             _emailService.SendReminderMail(activityIds, howHasNotSignedUp, EmailService.EmailType.NewActivity);
 
-            return RedirectToAction("WhoHasNotSignedUp",new {activityId = activityIds});
+            return RedirectToAction("WhoHasNotSignedUp", new { activityId = activityIds });
         }
 
         public JsonResult GetEmailPreview(int id, string text)
@@ -233,16 +225,41 @@ namespace EventBooking.Controllers
             return Json(new { content = preview }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult EditActivity(EventBooking.Controllers.ViewModels.EditActivityViewModel model)
+        public ActionResult EditActivity(EditActivityViewModel model)
         {
-            var activity =_activityRepository.GetActivityById(model.Activity.Id);
+            var activity = _activityRepository.GetActivityById(model.Activity.Id);
             activity.Name = model.Activity.Name;
             activity.Summary = model.Activity.Summary;
             activity.Description = model.Activity.Description;
+            activity.Type = model.SelectedActivity;
+            activity.Sessions = model.Sessions;
+            activity.Date = model.Activity.Date;
+            activity.Items = model.Activity.Items;
 
             _activityRepository.UpdateActivity(activity);
+            
 
-            return RedirectToAction("Details","Team");
+            return RedirectToAction("Details", "Team");
+        }
+
+        public ActionResult Edit(int activityId)
+        {
+            var activity = new EditActivityViewModel
+                {
+                    Activity = _activityRepository.GetActivityById(activityId),
+                    ItemList = _activityItemRepository.GetTemplates(),
+                    ActivityTypes = new List<string>
+                        {
+                            "Träning",
+                            "Publikt",
+                            "Teammöte",
+                            "Sponsor",
+                            "Preliminärt"
+                        }
+                };
+
+
+            return View("EditActivity", activity);
         }
     }
 }

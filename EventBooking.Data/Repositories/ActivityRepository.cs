@@ -42,6 +42,10 @@ namespace EventBooking.Data.Repositories
             c.Name = activity.Name;
             c.Summary = activity.Summary;
             c.Description = activity.Description;
+            c.Type = activity.Type;
+            c.Sessions = activity.Sessions;
+            c.Date = activity.Date;
+            c.Items = activity.Items;
 
             _context.SaveChanges();
 
@@ -75,7 +79,7 @@ namespace EventBooking.Data.Repositories
 	    public virtual Activity GetActivityById(int id)
 	    {
 	        return _context.Activities
-                                .Include(x => x.OrganizingTeam)
+                                .Include(x => x.OrganizingTeam)                                
                                 .Include(x => x.Items)
                                 .Include(x => x.Sessions.Select(session => session.Volunteers))
                                 .SingleOrDefault(x => x.Id == id);

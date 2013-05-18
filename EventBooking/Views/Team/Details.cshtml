@@ -66,32 +66,33 @@
                 {
 
                     <li class="@e.Type" data-activity-id="@e.Id">
-	                    <a href="@Url.Action("Details", "Activity", new { @e.Id })" class="link" rel="tooltip" data-original-title="@e.Description">
-		                    <span class="badge @Html.BadgeColorPicker(@e.Type)">@e.Date.ToSwedishShortDateString()</span>
-		                    @e.Name
-	                    </a>
-						@if (Model.CanLeaveActivity(e.Id))
-						{
-							<a href="@Url.Action("Leave", "Sessions", new {activityId = @e.Id})" class="link" rel="tooltip" data-original-title="Avanmäl" >
-								<span class="icon icon-thumbs-down"></span>
-							</a>						
-						}
+                        <a href="@Url.Action("Details", "Activity", new { @e.Id })" class="link" rel="tooltip" data-original-title="@e.Description">
+                            <span class="badge @Html.BadgeColorPicker(@e.Type)">@e.Date.ToSwedishShortDateString()</span>
+                            @e.Name
+                        </a>
+                        @if (Model.CanLeaveActivity(e.Id))
+                        {
+                            <a href="@Url.Action("Leave", "Sessions", new { activityId = @e.Id })" class="link" rel="tooltip" data-original-title="Avanmäl" >
+                                <span class="icon icon-thumbs-down"></span>
+                            </a>						
+                        }
                         @if (e.Coordinator.Email == User.Identity.Name)
                         {
-                           @*<a href="@Url.Action("Edit", "Activity", new {activityId = @e.Id})" class="link" rel="tooltip" data-original-title="Redigera">
-                                <span class="icon icon-pencil"></span>
+
+@*<a href="@Url.Action("Edit", "Activity", new {activityId = @e.Id})" class="link" rel="tooltip" data-original-title="Redigera">
+                                                            <span class="icon icon-pencil"></span>
                             </a>*@
-                            <a href="@Url.Action("WhoHasSignup", "Activity", new {activityId = @e.Id})" class="link" rel="tooltip" data-original-title="Vilka kommer?">
+                            <a href="@Url.Action("WhoHasSignup", "Activity", new { activityId = @e.Id })" class="link" rel="tooltip" data-original-title="Vilka kommer?">
                                 <span class="icon icon-eye-open"></span></a>
                             
-                            <a href="@Url.Action("WhoHasNotSignedUp", "Activity", new {activityId = @e.Id})" class="link" rel="tooltip" data-original-title="Vilka kommer inte?">
+                            <a href="@Url.Action("WhoHasNotSignedUp", "Activity", new { activityId = @e.Id })" class="link" rel="tooltip" data-original-title="Vilka kommer inte?">
                                 <span class="icon icon-question-sign"></span></a>
                             
                             <a href="#" class="link send-email" rel="tooltip" data-original-title="Skicka e-post">
                                 <span class="icon icon-envelope"></span>
                             </a>
                             
-						}
+                        }
                     </li>
                 }
             </ul>
@@ -99,58 +100,58 @@
     </div>
 </div>
 <div class="row">
-	<div class="span8">
-		<small><b>Visa följande aktiviteter:</b></small>
-		<p>
-			<ul>
-				<li>
-					<label class="checkbox">
-						<input type="checkbox" checked="checked" onclick="$('li.Publikt').toggle()"><span class="badge @Html.BadgeColorPicker(ActivityType.Publikt)">Publikt</span>
-					</label>
-				</li>
-				<li>
-					<label class="checkbox">
-						<input type="checkbox" checked="checked" onclick="$('li.Sponsor').toggle()"><span class="badge @Html.BadgeColorPicker(ActivityType.Sponsor)">Sponsor</span>
-					</label>
-				</li>
-				<li>
-					<label class="checkbox">
-						<input type="checkbox" checked="checked" onclick="$('li.Träning').toggle()"><span class="badge @Html.BadgeColorPicker(ActivityType.Träning)">Träning</span>
-					</label>
-				</li>
-				<li>
-					<label class="checkbox">
-						<input type="checkbox" checked="checked" onclick="$('li.Preliminärt').toggle()"><span class="badge @Html.BadgeColorPicker(ActivityType.Preliminärt)">Preliminärt</span>
-					</label>
-				</li>
-				<li>
-					<label class="checkbox">
-						<input type="checkbox" checked="checked" onclick="$('li.Teammöte').toggle()"><span class="badge @Html.BadgeColorPicker(ActivityType.Teammöte)">Teammöte</span>
-					</label>
-				</li>
-			</ul>
-		</p>
-	</div>
+    <div class="span8">
+        <small><b>Visa följande aktiviteter:</b></small>
+        <p>
+            <ul>
+                <li>
+                    <label class="checkbox">
+                        <input type="checkbox" checked="checked" onclick="$('li.Publikt').toggle()"><span class="badge @Html.BadgeColorPicker(ActivityType.Publikt)">Publikt</span>
+                    </label>
+                </li>
+                <li>
+                    <label class="checkbox">
+                        <input type="checkbox" checked="checked" onclick="$('li.Sponsor').toggle()"><span class="badge @Html.BadgeColorPicker(ActivityType.Sponsor)">Sponsor</span>
+                    </label>
+                </li>
+                <li>
+                    <label class="checkbox">
+                        <input type="checkbox" checked="checked" onclick="$('li.Träning').toggle()"><span class="badge @Html.BadgeColorPicker(ActivityType.Träning)">Träning</span>
+                    </label>
+                </li>
+                <li>
+                    <label class="checkbox">
+                        <input type="checkbox" checked="checked" onclick="$('li.Preliminärt').toggle()"><span class="badge @Html.BadgeColorPicker(ActivityType.Preliminärt)">Preliminärt</span>
+                    </label>
+                </li>
+                <li>
+                    <label class="checkbox">
+                        <input type="checkbox" checked="checked" onclick="$('li.Teammöte').toggle()"><span class="badge @Html.BadgeColorPicker(ActivityType.Teammöte)">Teammöte</span>
+                    </label>
+                </li>
+            </ul>
+        </p>
+    </div>
 </div>
 
-    <div id="sendEmailPopup" class="modal hide fade" data-backdrop="static">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h3>Skicka e-post</h3>
-        </div>
-        
-	    <div class="modal-body">
-		    <div class="alert alert-error hidden">Det gick inte att skicka e-post.</div>
-		    <textarea id="freeText" rows="5" placeholder="Fritext"></textarea>
-		    <div id="previewSubject"></div>
-			<button id="refreshPreview" class="btn btn-primary"><i class="icon-refresh icon-white"></i> Uppdatera</button>
-			<div id="previewArea"></div>
-	    </div>
-        <div class="modal-footer">
-            <button data-dismiss="modal" class="btn">Avbryt</button>
-            <button id="sendEmail" class="btn btn-primary"><i class="icon-envelope icon-white"></i> Skicka</button>
-        </div>
+<div id="sendEmailPopup" class="modal hide fade" data-backdrop="static">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Skicka e-post</h3>
     </div>
+
+    <div class="modal-body">
+        <div class="alert alert-error hidden">Det gick inte att skicka e-post.</div>
+        <textarea id="freeText" rows="5" placeholder="Fritext"></textarea>
+        <div id="previewSubject"></div>
+        <button id="refreshPreview" class="btn btn-primary"><i class="icon-refresh icon-white"></i>Uppdatera</button>
+        <div id="previewArea"></div>
+    </div>
+    <div class="modal-footer">
+        <button data-dismiss="modal" class="btn">Avbryt</button>
+        <button id="sendEmail" class="btn btn-primary"><i class="icon-envelope icon-white"></i>Skicka</button>
+    </div>
+</div>
 
 
 
