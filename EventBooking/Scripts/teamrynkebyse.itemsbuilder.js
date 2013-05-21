@@ -33,13 +33,21 @@ teamrynkebyse.itemsbuilder = (function () {
     }
 
     function addSpecificItem() {
-        var viewData = { index: count };
-        var result = $(itemsContainerId)
-                        .mustache(specificItemsTemplateId, viewData)
-                        .children()
-                        .last();
+        addExplicitSpecificItem('', 1);
+    }
 
+    function addExplicitSpecificItem(name, quantity) {
+        var viewData = {
+            name: name,
+            quantity: quantity,
+            index: count
+        };
         
+        var result = $(itemsContainerId)
+                .mustache(specificItemsTemplateId, viewData)
+                .children()
+                .last();
+
         if (count > 0) {
             $('#removeItem_' + (count - 1)).hide();
         }
@@ -58,6 +66,10 @@ teamrynkebyse.itemsbuilder = (function () {
         init: function () {
             $(addMoreItemsId).on('click', addItem);
             $(addSpecificItemsId).on('click', addSpecificItem);
+        },
+        
+        addItem: function(name, quantity) {
+            addExplicitSpecificItem(name, quantity);
         }
     };
 })();

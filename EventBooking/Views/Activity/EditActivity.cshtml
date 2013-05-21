@@ -49,11 +49,11 @@
     <script id="specificItemsTemplate" type="text/html">
         <div>
             <div>
-                <input name="items[{{index}}].name" type="text" placeholder="Ange matriel" />
+                <input name="items[{{index}}].name" type="text" placeholder="Ange matriel" value="{{name}}" />
             </div>
 
             <div>
-                <input name="items[{{index}}].quantity" type="number" class="input-mini" value="1" min="1" />
+                <input name="items[{{index}}].quantity" type="number" class="input-mini" value="{{quantity}}" min="1" />
             </div>
             <a id="removeItem_{{index}}" href="#" class="undo"><i class="icon-remove"></i>Ta bort</a>
         </div>
@@ -63,6 +63,10 @@
             @foreach (var session in Model.Activity.Sessions.Skip(1))
             {
                 <text>teamrynkebyse.sessionbuilder.addSession('@session.FromTime.ToString()', '@session.ToTime.ToString()', @session.VolunteersNeeded);</text>
+            }
+            @foreach (var item in Model.Activity.Items)
+            {
+                <text>teamrynkebyse.itemsbuilder.addItem('@item.Name', @item.Quantity);</text>
             }
         });
     </script>
@@ -199,31 +203,6 @@
                             <p>Sak</p>
                             <p>Antal</p>
                         </div>
-                        @{ int itemOrdinal = 0; }
-
-
-                        @foreach (var item in Model.Activity.Items)
-                        {
-                        
-                            <div>
-                                <div>
-                                    @Html.DropDownListFor(m => m.Activity.Items, new SelectList(Model.ItemList, "Id", "Name"))
-                                    @Html.DropDownList("items[" + itemOrdinal + "].name", new SelectList(Model.ItemList, "Id", "Name", item.Id))
-                                    <select name="items[@itemOrdinal].name">
-                                        <option value="Ospecificerat" selected="@item.Name">Välj materiel</option>
-
-
-                                    </select>
-                                </div>
-
-                                <div>
-                                    <input name="items[@itemOrdinal].quantity" type="number" class="input-mini" value="@item.Quantity" min="1" />
-                                </div>
-                                <a id="removeItem_@itemOrdinal" href="#" class="undo"><i class="icon-remove"></i>Ta bort</a>
-                            </div>
-                            
-                            //itemOrdinal++;
-                        }
 
                     </div>
 
