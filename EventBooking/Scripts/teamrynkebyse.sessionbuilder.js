@@ -158,7 +158,12 @@ teamrynkebyse.sessionbuilder = (function () {
                 dateMin: 1    
             }).data('pickadate');
 
-            picker.val(calendar.getDateLimit(false, "d mmmm, yyyy"));
+            if (picker.val() == '') {
+                picker.val(calendar.getDateLimit(false, "d mmmm, yyyy"));
+            } else {
+                var parts = picker.val().split('-');
+                calendar.setDate(parts[0], parts[1], parts[2], false);
+            }
             $.Mustache.addFromDom();
         },
         

@@ -29,14 +29,7 @@
             </div>
             <a id="removeSession_{{index}}" href="#" class="undo"><i class="icon-remove"></i>Ta bort</a>
         </div>
-    </script>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("date").datepicker();
-            $("#date").data({ date: startDate }).datepicker('update').children("input").val(2013 - 03 - 20);
-        });
-    </script>
+    </script>  
 
     <script id="itemsTemplate" type="text/html">
         <div>
@@ -128,8 +121,7 @@
             <div class="control-group">
                 <label class="control-label">Datum</label>
                 <div class="controls">
-                    <input type="text" id="datepicker" placeholder="Välj datum" class="datepicker" />
-                    @Html.TextBoxFor(m => m.Activity.Date, new { @class = "datepicker" })
+                    @Html.TextBoxFor(m => m.Activity.Date, "{0:yyyy-MM-dd}", new { @class = "datepicker" })                   
                 </div>
             </div>
             <div class="control-group">
