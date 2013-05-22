@@ -38,11 +38,11 @@ teamrynkebyse.itemsbuilder = (function () {
 
     function addExplicitSpecificItem(name, quantity) {
         var viewData = {
-            name: name,
+            name: HtmlDecode(name),
             quantity: quantity,
             index: count
         };
-        
+
         var result = $(itemsContainerId)
                 .mustache(specificItemsTemplateId, viewData)
                 .children()
