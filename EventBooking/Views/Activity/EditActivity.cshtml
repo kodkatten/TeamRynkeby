@@ -77,7 +77,7 @@
 }
 
 
-<div class="span8">
+<div class="span5">
     @using (Html.BeginForm("EditActivity", "Activity"))
     {
         <ul class="nav nav-pills">
@@ -126,8 +126,8 @@
                     </p>
                 }
             </div>
-            <input type="submit" value="Updatera" />
-            @*<a href="#" class="btn pull-right btn-primary" data-wizard-link="pageTwo">Nästa</a>*@
+            <input type="submit" value="Updatera" class="btn" />
+            <a href="#" class="btn pull-right btn-primary" data-wizard-link="pageTwo">Nästa</a>
         </div>
         
     
@@ -191,7 +191,7 @@
                     </div>
                 </div>
             </div>
-            <input type="submit" value="Updatera" />
+            <input type="submit" value="Updatera" class="btn" />
             <a href="#" class="btn" data-wizard-link="pageOne">Föregående</a>
             <a href="#" class="btn pull-right btn-primary" data-wizard-link="pageThree">Nästa</a>
         </div>
@@ -216,8 +216,7 @@
             </div>
 
             <a href="#" class="btn" data-wizard-link="pageTwo">Föregående</a>
-            <input type="submit" value="Updatera" />
+            <input type="submit" value="Updatera" class="btn btn-success pull-right" />
         </div>
     }
 </div>
->>>>>>> Edit_activity
