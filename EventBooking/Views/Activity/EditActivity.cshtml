@@ -13,6 +13,7 @@
 @section Scripts
 {
     @Scripts.Render("~/Scripts/CreateEvent")
+    @Scripts.Render("~/Scripts/HtmlDecode.js")
     <script id="sessionTemplate" type="text/html">
         <div class="sessionRow">
             <div class="bootstrap-timepicker input-append">
@@ -25,24 +26,21 @@
             </div>
 
             <div>
-                <input type="number" name="sessions[{{index}}].volunteersNeeded" class="input-mini" min="1" value="1" />
+                <input type="number" name="sessions[{{index}}].volunteersNeeded" class="input-mini" min="1" value="{{volunteersNeeded}}" />
             </div>
             <a id="removeSession_{{index}}" href="#" class="undo"><i class="icon-remove"></i>Ta bort</a>
         </div>
-    </script>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("date").datepicker();
-            $("#date").data({ date: startDate }).datepicker('update').children("input").val(2013 - 03 - 20);
-        });
-    </script>
+    </script>  
 
     <script id="itemsTemplate" type="text/html">
         <div>
             <div>
                 <select name="items[{{index}}].name">
                     <option value="Ospecificerat">Välj materiel</option>
+                    @foreach (var itemTemplate in Model.ItemList)
+                    {
+                        <option value="@itemTemplate.Name">@itemTemplate.Name</option>
+                    }
                 </select>
             </div>
 
@@ -56,19 +54,31 @@
     <script id="specificItemsTemplate" type="text/html">
         <div>
             <div>
-                <input name="items[{{index}}].name" type="text" placeholder="Ange matriel" />
+                <input name="items[{{index}}].name" type="text" placeholder="Ange matriel" value="{{name}}" />
             </div>
 
             <div>
-                <input name="items[{{index}}].quantity" type="number" class="input-mini" value="1" min="1" />
+                <input name="items[{{index}}].quantity" type="number" class="input-mini" value="{{quantity}}" min="1" />
             </div>
             <a id="removeItem_{{index}}" href="#" class="undo"><i class="icon-remove"></i>Ta bort</a>
         </div>
     </script>
+    <script type="text/javascript">
+        $(function() {
+            @foreach (var session in Model.Activity.Sessions.Skip(1))
+            {
+                <text>teamrynkebyse.sessionbuilder.addSession('@session.FromTime.ToString()', '@session.ToTime.ToString()', @session.VolunteersNeeded);</text>
+            }
+            @foreach (var item in Model.Activity.Items)
+            {
+                <text>teamrynkebyse.itemsbuilder.addItem('@item.Name', @item.Quantity);</text>
+            }
+        });
+    </script>
 }
 
 
-<div class="span8">
+<div class="span5">
     @using (Html.BeginForm("EditActivity", "Activity"))
     {
         <ul class="nav nav-pills">
@@ -117,8 +127,8 @@
                     </p>
                 }
             </div>
-            <input type="submit" value="Updatera" />
-            @*<a href="#" class="btn pull-right btn-primary" data-wizard-link="pageTwo">Nästa</a>*@
+            <input type="submit" value="Updatera" class="btn" />
+            <a href="#" class="btn pull-right btn-primary" data-wizard-link="pageTwo">Nästa</a>
         </div>
         
     
@@ -128,8 +138,7 @@
             <div class="control-group">
                 <label class="control-label">Datum</label>
                 <div class="controls">
-                    <input type="text" id="datepicker" placeholder="Välj datum" class="datepicker" />
-                    @Html.TextBoxFor(m => m.Activity.Date, new { @class = "datepicker" })
+                    @Html.TextBoxFor(m => m.Activity.Date, "{0:yyyy-MM-dd}", new { @class = "datepicker" })                   
                 </div>
             </div>
             <div class="control-group">
@@ -137,37 +146,27 @@
 
                 <div class="controls">
                     <div id="sessionContainer">
-
                         <div>
                             <p>Börjar</p>
                             <p>Slutar</p>
                             <p>Min. deltagare</p>
                         </div>
 
-                        @{ int ordinal = 0; }
-                        @foreach (var session in Model.Activity.Sessions)
-                        {
-                
-                            <div class="sessionRow">
-                                <div class="bootstrap-timepicker input-append">
-                                    <input name="sessions[@ordinal].fromTime" value="@session.FromTime.ToString()" type="text" class="timepicker input-mini" />
-                                    <span class="add-on"><i class="icon-time"></i></span>
-                                </div>
-
-                                <div class="bootstrap-timepicker input-append">
-                                    <input name="sessions[@ordinal].toTime" value="@session.ToTime.ToString()" type="text" class="timepicker input-mini" />
-                                    <span class="add-on"><i class="icon-time"></i></span>
-                                </div>
-
-                                <div>
-                                    <input id="volunteer0" type="number" name="sessions[@ordinal].volunteersNeeded" class="input-mini" min="1" value="@session.VolunteersNeeded" />
-                                </div>
-
-                                <a id="removeSession_@ordinal" href="#" class="undo"><i class="icon-remove"></i>Ta bort</a>
+                        <div class="sessionRow">
+                            <div class="bootstrap-timepicker input-append">
+                                <input name="sessions[0].fromTime" value="@Model.Activity.Sessions.First().FromTime" type="text" class="timepicker input-mini" />
+                                <span class="add-on"><i class="icon-time"></i></span>
                             </div>
 
-                            ordinal++;
-                        }
+                            <div class="bootstrap-timepicker input-append">
+                                <input name="sessions[0].toTime" value="@Model.Activity.Sessions.First().ToTime" type="text" class="timepicker input-mini" />
+                                <span class="add-on"><i class="icon-time"></i></span>
+                            </div>
+
+                            <div>
+                                <input id="volunteer0" type="number" name="sessions[0].volunteersNeeded" class="input-mini" min="1" value="@Model.Activity.Sessions.First().VolunteersNeeded" />
+                            </div>
+                        </div>
                     </div>
                     <div>
                         <a id="addMoreSessions" href="#">Lägg till pass</a>
@@ -193,7 +192,7 @@
                     </div>
                 </div>
             </div>
-            <input type="submit" value="Updatera" />
+            <input type="submit" value="Updatera" class="btn" />
             <a href="#" class="btn" data-wizard-link="pageOne">Föregående</a>
             <a href="#" class="btn pull-right btn-primary" data-wizard-link="pageThree">Nästa</a>
         </div>
@@ -209,31 +208,6 @@
                             <p>Sak</p>
                             <p>Antal</p>
                         </div>
-                        @{ int itemOrdinal = 0; }
-
-
-                        @foreach (var item in Model.Activity.Items)
-                        {
-                        
-                            <div>
-                                <div>
-                                    @Html.DropDownListFor(m => m.Activity.Items, new SelectList(Model.ItemList, "Id", "Name"))
-                                    @Html.DropDownList("items[" + itemOrdinal + "].name", new SelectList(Model.ItemList, "Id", "Name", item.Id))
-                                    <select name="items[@itemOrdinal].name">
-                                        <option value="Ospecificerat" selected="@item.Name">Välj materiel</option>
-
-
-                                    </select>
-                                </div>
-
-                                <div>
-                                    <input name="items[@itemOrdinal].quantity" type="number" class="input-mini" value="@item.Quantity" min="1" />
-                                </div>
-                                <a id="removeItem_@itemOrdinal" href="#" class="undo"><i class="icon-remove"></i>Ta bort</a>
-                            </div>
-                            
-                            //itemOrdinal++;
-                        }
 
                     </div>
 
@@ -243,8 +217,7 @@
             </div>
 
             <a href="#" class="btn" data-wizard-link="pageTwo">Föregående</a>
-            <input type="submit" value="Updatera" />
+            <input type="submit" value="Updatera" class="btn btn-success pull-right" />
         </div>
     }
 </div>
->>>>>>> Edit_activity
