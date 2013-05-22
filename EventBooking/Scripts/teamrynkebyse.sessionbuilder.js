@@ -113,33 +113,37 @@ teamrynkebyse.sessionbuilder = (function () {
     function addSession() {
         var lasttoTime = getLastToTime();
 
+        addExplicitSession(lasttoTime.toString(), lasttoTime.addHours(2).toString(), 1);
+    }
+    
+    function addExplicitSession(from, to, volunteersNeeded) {
         count++;
-        
         var viewData = {};
-        viewData.fromTime = lasttoTime.toString();
-        viewData.toTime = lasttoTime.addHours(2).toString();
+        viewData.fromTime = from.toString();
+        viewData.toTime = to.toString();
+        viewData.volunteersNeeded = volunteersNeeded;
         viewData.index = count;
-        
+
         var result = $(sessioncontainerId)
                         .mustache(sessionTemplateId, viewData)
                         .children()
                         .last();
-        
+
         if (count > 0) {
-            $('#removeSession_' + (count-1)).hide();
+            $('#removeSession_' + (count - 1)).hide();
         }
-        
+
         result.find(textboxClass).on('change', validate);
-        
+
         result.find(undoClass).on('click', function () {
             result.remove();
             validate();
             count--;
             if (count > 0) {
-                $('#removeSession_' + (count )).show();
+                $('#removeSession_' + (count)).show();
             }
         });
-        
+
         hockTimePicker(result.find(timePickerClass));
         validate();
     }
@@ -158,8 +162,17 @@ teamrynkebyse.sessionbuilder = (function () {
                 dateMin: 1    
             }).data('pickadate');
 
-            picker.val(calendar.getDateLimit(false, "d mmmm, yyyy"));
+            if (picker.val() == '') {
+                picker.val(calendar.getDateLimit(false, "d mmmm, yyyy"));
+            } else {
+                var parts = picker.val().split('-');
+                calendar.setDate(parts[0], parts[1], parts[2], false);
+            }
             $.Mustache.addFromDom();
+        },
+        
+        addSession: function(from, to,  volunteersNeeded) {
+            addExplicitSession(from, to, volunteersNeeded);
         },
         
         isValid: function() {

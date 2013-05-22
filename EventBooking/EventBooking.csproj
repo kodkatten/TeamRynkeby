@@ -254,6 +254,7 @@
     <Content Include="Content\fonts\museo_slab_500-webfont.woff" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\admin.js" />
+    <Content Include="Scripts\htmlDecode.js" />
     <Content Include="Scripts\teamrynkebyse.itemsbuilder.js" />
     <Content Include="Scripts\createevent.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
