@@ -234,7 +234,7 @@ namespace EventBooking.Controllers
             activity.Type = model.SelectedActivity;
             activity.Sessions = model.Sessions;
             activity.Date = model.Activity.Date;
-            activity.Items = model.Activity.Items;
+            activity.Items = model.Items;
 
             _activityRepository.UpdateActivity(activity);
             

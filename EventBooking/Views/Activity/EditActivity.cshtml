@@ -36,6 +36,10 @@
             <div>
                 <select name="items[{{index}}].name">
                     <option value="Ospecificerat">Välj materiel</option>
+                    @foreach (var itemTemplate in Model.ItemList)
+                    {
+                        <option value="@itemTemplate.Name">@itemTemplate.Name</option>
+                    }
                 </select>
             </div>
 
