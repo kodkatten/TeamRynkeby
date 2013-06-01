@@ -13,6 +13,7 @@
 @section Scripts
 {
     @Scripts.Render("~/Scripts/CreateEvent")
+    @Scripts.Render("~/Scripts/HtmlDecode.js")
 
     <script id="sessionTemplate" type="text/html">
         <div class="sessionRow">
@@ -54,7 +55,7 @@
             <a id="removeItem_{{index}}" href="#" class="undo"><i class="icon-remove"></i>Ta bort</a>
         </div>
     </script>
-    
+
     <script id="specificItemsTemplate" type="text/html">
         <div>
             <div>
@@ -183,17 +184,17 @@
                         <h3>Regler för pass</h3>
                         <p>
                             Aktiviteten får börja tidigast imorgon.
-                        </p>  
+                        </p>
                         <p>
                             Pass får inte överlappa varandra.
                         </p>
                         <p>
                             Pass får inte sluta före de börjar.
                         </p>
-                         <p>
+                        <p>
                             Pass får inte sträcka sig till eller över midnatt.
                         </p>
-                         <p>
+                        <p>
                             Antal deltagare måste vara över noll.
                         </p>
                     </div>
@@ -216,7 +217,7 @@
                             <p>Antal</p>
                         </div>
 
-                       
+
                     </div>
 
                     <a id="addMoreItems" href="#">Lägg till sak</a>
