@@ -35,6 +35,11 @@ namespace EventBooking.Services
             _mailMessage = new MailMessage();
         }
 
+        public EmailService(EmailSettings emailSettings)
+        {
+            
+        }
+
         public void SendMail(int activityId, EmailType emailType, string freeText = "")
         {
             var activity = _activityRepository.GetActivityById(activityId);
@@ -59,6 +64,12 @@ namespace EventBooking.Services
         {
             var activity = _activityRepository.GetActivityById(activityId);
             return NewEventText(activity, emailType, freeText);
+        }
+
+        public void SendResetPassword(string email, string message)
+        {
+           _mailMessage.To.Add(new MailAddress(email,email));
+            Send("noreply@teamrynkeby.apphb.com", "Team Rynkeby","Change password", message);
         }
 
         private MailData NewEventText(Activity activity, EmailType emailType, string freeText)
@@ -143,5 +154,6 @@ namespace EventBooking.Services
                 throw new Exception(e.Message.ToString(CultureInfo.InvariantCulture));
             }
         }
+
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using EventBooking.Data;
 using EventBooking.Data.Entities;
 
 namespace EventBooking.Services
@@ -20,5 +19,7 @@ namespace EventBooking.Services
 		bool IsCurrentUserAdministratorOrPowerUser(int teamId);
 		string GetPowerUserRoleForTeam(Team team);
 		bool ToogleAdministrator(int userId);
+	    void ResetPassword(string email, string urlAddress);
+	    void SetPassword(string token, string password);
 	}
 }

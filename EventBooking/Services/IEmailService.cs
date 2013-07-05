@@ -9,5 +9,6 @@ namespace EventBooking.Services
 		void SendMail(int activityId, EmailService.EmailType emailType, string freeText = "");
         void SendReminderMail(int activityId, IQueryable<User> senderList, EmailService.EmailType emailType, string freeText = "");
 		MailData GetPreview(int activityId, EmailService.EmailType emailType, string freeText);
+        void SendResetPassword(string email, string message);
     }
 }

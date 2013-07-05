@@ -44,6 +44,8 @@ namespace EventBooking.Controllers
 			return View();
 		}
 
+
+
 		[HttpPost]
 		public ActionResult MyProfile(MyProfileModel model)
 		{

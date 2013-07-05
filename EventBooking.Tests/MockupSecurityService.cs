@@ -12,7 +12,7 @@ namespace EventBooking.Tests
 		public User ReturnUser { get; set; }
 
 		public MockupSecurityService()
-			: base(null)
+			: base(null,null)
 		{
 		}
 

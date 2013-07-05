@@ -168,6 +168,7 @@
     <Compile Include="Controllers\ViewModels\DetailActivityViewModel.cs" />
     <Compile Include="Controllers\ViewModels\EditActivityViewModel.cs" />
     <Compile Include="Controllers\ViewModels\EditSessionModel.cs" />
+    <Compile Include="Controllers\ViewModels\ForgottenPasswordViewModel.cs" />
     <Compile Include="Controllers\ViewModels\HasNotSignedUp.cs" />
     <Compile Include="Controllers\ViewModels\MailData.cs" />
     <Compile Include="Controllers\ViewModels\SessionModel.cs" />
@@ -306,6 +307,9 @@
     <Content Include="Views\Team\TeamMember.cshtml" />
     <Content Include="Views\Activity\WhoHasNotSignedUp.cshtml" />
     <Content Include="Views\Activity\EditActivity.cshtml" />
+    <Content Include="Views\Security\ForgottenPassword.cshtml" />
+    <Content Include="Views\Security\ClearPassword.cshtml" />
+    <Content Include="Views\Security\ResetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
