@@ -61,6 +61,8 @@ namespace EventBooking.Controllers
 
         public ActionResult ForgottenPassword()
         {
+            ViewBag.Title = "Återställ ditt lösenord";
+
             var model = new ForgottenPasswordViewModel();
             return View("ForgottenPassword", model);
         }
@@ -77,15 +79,19 @@ namespace EventBooking.Controllers
             }
             else
             {
-                throw new Exception("NoUserExist");
+                ViewBag.Title = "Ingen användare funnen";
+                ViewBag.ErrorMessage = "Ingen användare funnen med e-postadress: " + model.Email;
+                
+                return View("NoUserFound");
             }
-
+            ViewBag.Title = "Återställ ditt lösenord";
             return View();
         }
 
 
         public ActionResult ClearPassword(string token)
         {
+            ViewBag.Title = "Återställ ditt lösenord";
             var model = new ForgottenPasswordViewModel { Token = token };
             return View("ClearPassword", model);
         }

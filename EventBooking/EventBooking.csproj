@@ -310,6 +310,7 @@
     <Content Include="Views\Security\ForgottenPassword.cshtml" />
     <Content Include="Views\Security\ClearPassword.cshtml" />
     <Content Include="Views\Security\ResetPassword.cshtml" />
+    <Content Include="Views\Security\NoUserFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
