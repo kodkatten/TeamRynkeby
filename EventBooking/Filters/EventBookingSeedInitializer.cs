@@ -11,55 +11,75 @@ using WebMatrix.WebData;
 namespace EventBooking.Filters
 {
     internal class EventBookingSeedInitializer : DropCreateDatabaseAlways<EventBookingContext>   // DropCreateDatabaseIfModelChanges<EventBookingContext> // 
-	{
-		protected override void Seed(EventBookingContext context)
-		{
+    {
+        protected override void Seed(EventBookingContext context)
+        {
             WebSecurity.InitializeDatabaseConnection("EventBookingContext", "Users", "Id", "Email", autoCreateTables: true);
 
-			var membership = (SimpleMembershipProvider)Membership.Provider;
-			var roles = (SimpleRoleProvider)Roles.Provider;
+            var membership = (SimpleMembershipProvider)Membership.Provider;
+            var roles = (SimpleRoleProvider)Roles.Provider;
 
-			EnsureRole(roles, UserType.Administrator.ToString());
-			EnsureRole(roles, UserType.PowerUser.ToString());
+            EnsureRole(roles, UserType.Administrator.ToString());
+            EnsureRole(roles, UserType.PowerUser.ToString());
 
-			CreateDefaultMailTemplates(context);
+            CreateDefaultMailTemplates(context);
 
 
-		    CreateTeams(context);
-			var teamStockholm = context.Teams.First();
-			if (membership.GetUser("henrik.andersson@tretton37.com", false) == null)
-				EnsureUserExists(membership, context, "henrik.andersson@tretton37.com",
-					new User
-						{
-							Cellphone = "0727-133740",
-							Name = "Henrik Andersson",
-							Team = teamStockholm,
-							Email = "henrik.andersson@tretton37.com"
-						});
+            CreateTeams(context);
+            var teamStockholm = context.Teams.First();
+            if (membership.GetUser("henrik.andersson@tretton37.com", false) == null)
+            {
+                EnsureUserExists(membership, context, "henrik.andersson@tretton37.com",
+                    new User
+                        {
+                            Cellphone = "0727-133740",
+                            Name = "Henrik Andersson",
+                            Team = teamStockholm,
+                            Email = "henrik.andersson@tretton37.com"
+                        });
+            }
 
-			if (!roles.GetRolesForUser("henrik.andersson@tretton37.com").Contains(UserType.Administrator.ToString()))
-				roles.AddUsersToRoles(new[] { "henrik.andersson@tretton37.com" }, new[] { UserType.Administrator.ToString() });
+            if (membership.GetUser("henkeofsweden@live.com", false) == null)
+            {
+                EnsureUserExists(membership, context, "henkeofsweden@live.com",
+                    new User
+                    {
+                        Cellphone = "0727-133740",
+                        Name = "Henrik Andersson",
+                        Team = teamStockholm,
+                        Email = "henkeofsweden@live.com"
+                    });
+            }
+            if (!roles.GetRolesForUser("henrik.andersson@tretton37.com").Contains(UserType.Administrator.ToString()))
+            {
+                roles.AddUsersToRoles(new[] { "henrik.andersson@tretton37.com" }, new[] { UserType.Administrator.ToString() });
+            }
 
-			CreatePredefinedActivityItems(context);
-		    var activities = context.Activities.ToList();
+            if (!roles.GetRolesForUser("henkeofsweden@live.com").Contains(UserType.Administrator.ToString()))
+            {
+                roles.AddUsersToRoles(new[] { "henkeofsweden@live.com" }, new[] { UserType.PowerUser.ToString() });
+            }
+
+            CreatePredefinedActivityItems(context);
+            var activities = context.Activities.ToList();
             activities.ForEach(x => x.Coordinator = context.Users.First());
 
-			context.SaveChanges();
-		}
+            context.SaveChanges();
+        }
 
         private void CreateTeams(EventBookingContext context)
         {
-            context.Teams.Add(new Team {Name = "Team Stockholm"});
+            context.Teams.Add(new Team { Name = "Team Stockholm" });
             context.SaveChanges();
         }
 
         private static void CreateDefaultMailTemplates(EventBookingContext context)
-		{
-			var newActivityTemplate = new MailTemplate
-				{
-					Name = "newactivity",
-					Subject = "Team Rynkeby - Ny aktivitet $ActivityName",
-					Content = @"Hej bäste $Team medlem
+        {
+            var newActivityTemplate = new MailTemplate
+                {
+                    Name = "newactivity",
+                    Subject = "Team Rynkeby - Ny aktivitet $ActivityName",
+                    Content = @"Hej bäste $Team medlem
 Nu är det en ny aktivitet på gång.
 $Date mellan $FirstTime och $LastTime
 
@@ -67,14 +87,14 @@ $Summary
 
 
 $Description"
-				};
-			context.MailTemplates.Add(newActivityTemplate);
+                };
+            context.MailTemplates.Add(newActivityTemplate);
 
-			var activityInfoTemplate = new MailTemplate
-				{
-					Name = "infoactivity",
-					Subject = "Team Rynkeby - Angående $ActivityName",
-					Content = @"<h4>Hej bäste ${Team}-medlem!</h4>
+            var activityInfoTemplate = new MailTemplate
+                {
+                    Name = "infoactivity",
+                    Subject = "Team Rynkeby - Angående $ActivityName",
+                    Content = @"<h4>Hej bäste ${Team}-medlem!</h4>
 
 <h5>$ActivityName - $Date mellan $FirstTime och $LastTime</h5>
 <p>$Summary</p>
@@ -94,45 +114,45 @@ $Description"
 
 Vänligen<br/>
 $ActivityManager"
-				};
-			context.MailTemplates.Add(activityInfoTemplate);
-		}
+                };
+            context.MailTemplates.Add(activityInfoTemplate);
+        }
 
-		private static void EnsureRole(SimpleRoleProvider roles, string role)
-		{
-			if (!roles.RoleExists(role))
-				roles.CreateRole(role);
-		}
+        private static void EnsureRole(SimpleRoleProvider roles, string role)
+        {
+            if (!roles.RoleExists(role))
+                roles.CreateRole(role);
+        }
 
         private void CreateAwesomeUsers(SimpleMembershipProvider membership, EventBookingContext context)
         {
             EnsureUserExists(membership, context, "henrik.andersson@tretton37.com", new User { Cellphone = "123455", Name = "henrik", Team = context.Teams.First(), Email = "henrik.andersson@tretton37.com" });
         }
 
-		private void CreatePredefinedActivityItems(EventBookingContext context)
-		{
-			context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Cykel" });
-			context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Trainer" });
-			context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Tält" });
-			context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Bord" });
-			context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Priser" });
-		}
+        private void CreatePredefinedActivityItems(EventBookingContext context)
+        {
+            context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Cykel" });
+            context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Trainer" });
+            context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Tält" });
+            context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Bord" });
+            context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Priser" });
+        }
 
-		private static void EnsureUserExists(SimpleMembershipProvider membership, EventBookingContext context,
-											 string email, User specification = null)
-		{
-			if (membership.GetUser(email, false) != null)
-			{
-				return;
-			}
+        private static void EnsureUserExists(SimpleMembershipProvider membership, EventBookingContext context,
+                                             string email, User specification = null)
+        {
+            if (membership.GetUser(email, false) != null)
+            {
+                return;
+            }
 
-			var result = membership.CreateUserAndAccount(email, email, new Dictionary<string, object> { { "Created", DateTime.Now } });
-			var user = context.Users.First(user1 => user1.Email == email);
-			specification = specification ?? new User { Name = "One of the three very beared wise men" };
-			UserMapper.MapUserTemp(user, specification);
-			user.Created = DateTime.UtcNow;
-			//context.Sessions.First().Volunteers.Add(user);
-			context.SaveChanges();
-		}
-	}
+            var result = membership.CreateUserAndAccount(email, email, new Dictionary<string, object> { { "Created", DateTime.Now } });
+            var user = context.Users.First(user1 => user1.Email == email);
+            specification = specification ?? new User { Name = "One of the three very beared wise men" };
+            UserMapper.MapUserTemp(user, specification);
+            user.Created = DateTime.UtcNow;
+            //context.Sessions.First().Volunteers.Add(user);
+            context.SaveChanges();
+        }
+    }
 }
