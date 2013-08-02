@@ -2,7 +2,8 @@
 @using EventBooking.Data.Entities
 
 @{
-     bool showAdmin = Roles.GetRolesForUser().Any(x => x == UserType.Administrator.ToString() || x.EndsWith("PowerUser"));
+    bool showAdmin = Roles.GetRolesForUser().Any(x => x == UserType.Administrator.ToString() || x.EndsWith("PowerUser"));
+
 }
 
 <div class="navbar navbar-inverse navbar-fixed-top">
@@ -27,13 +28,14 @@
                         <li>@Html.ActionLink(User.Identity.Name, "MyProfile", "User")</li>
                         <li>@Html.ActionLink("Mitt lag", "Details", "Team")</li>
                         <li>@Html.ActionLink("Skapa aktivitet", "Create", "Activity")</li>
-                        <li>@Html.ActionLink("Mina Teammedlemmar", "TeamMember","Team")</li>
+                        <li>@Html.ActionLink("Mina Teammedlemmar", "TeamMember", "Team")</li>
                         
                         if (showAdmin)
                         {
-                              <li>@Html.ActionLink("Hantera lag", "ViewTeams", "Admin")</li>
+                        <li>@Html.ActionLink("Hantera lag", "ViewTeams", "Admin")</li>
                         }
-
+                       
+                        
                         <li>@Html.ActionLink("Logga ut", "SignOff", "Security")</li>
                     }
                 </ul>
