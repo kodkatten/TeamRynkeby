@@ -1,5 +1,4 @@
 ﻿@using System.Web.Optimization
-@using EventBooking.Data
 @using EventBooking.Data.Entities
 @model EventBooking.Controllers.ViewModels.TeamModel
 @{
@@ -7,6 +6,7 @@
 
     var isCurrentUserAdmin = Roles.IsUserInRole(UserType.Administrator.ToString());
     var isCurrentUserPowerUser = Roles.IsUserInRole(Model.PowerUserRole);
+
 }
 
 @section Styles {
@@ -18,7 +18,8 @@
 }
 
 <div class="page-header">
-    <h2>@Model.Name</h2>
+    <h2>@Model.Name
+    </h2>
 </div>
 
 <h3>Medlemmar</h3>
@@ -64,7 +65,7 @@
                 </div>
                 
                 <div class="align-right">
-                    @if (isCurrentUserAdmin || isCurrentUserPowerUser)
+                    @if (isCurrentUserPowerUser)
                     {
                         <a 
                             href="#" 

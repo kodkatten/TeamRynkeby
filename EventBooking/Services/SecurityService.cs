@@ -7,15 +7,18 @@ using EventBooking.Data;
 using EventBooking.Data.Entities;
 using WebMatrix.WebData;
 
+
 namespace EventBooking.Services
 {
 	public class SecurityService : ISecurityService
 	{
 		private readonly IEventBookingContext _context;
+        private readonly IEmailService _emailService;
 
-		public SecurityService(IEventBookingContext context)
+		public SecurityService(IEventBookingContext context, IEmailService emailService)
 		{
 			_context = context;
+            _emailService = emailService;
 		}
 
 		public virtual User GetUser(string userName)
@@ -129,7 +132,9 @@ namespace EventBooking.Services
 			return true;
 		}
 
-		public virtual bool IsLoggedIn()
+	  
+
+	    public virtual bool IsLoggedIn()
 		{
 			return WebSecurity.IsAuthenticated && WebSecurity.CurrentUserId != -1;
 		}
@@ -160,6 +165,24 @@ namespace EventBooking.Services
 		{
 			WebSecurity.Logout();
 		}
+
+        public void ResetPassword(string email, string urlAddress)
+        {
+            string resetToken = WebSecurity.GeneratePasswordResetToken(email, 30);
+           
+            const string resetMessage = "Klicka på länken nedan för att komma till sidan" +
+                                        " för att nollställa ditt lösenord\n\r";
+            string url = urlAddress + "/Security/ClearPassword?token=" + resetToken;
+
+            string message = resetMessage + url;
+            _emailService.SendResetPassword(email,message);
+
+        }
+
+        public void SetPassword(string token, string password)
+        {
+            WebSecurity.ResetPassword(token, password);
+        }
 
 		private Team GetTeamOrThrow(int teamId)
 		{

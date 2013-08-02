@@ -1,7 +1,7 @@
 ﻿@model EventBooking.Controllers.ViewModels.LoginModel
 
 @{
-    ViewBag.Title = "Checkpoint";
+    ViewBag.Title = "Inloggning";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -40,5 +40,7 @@
         <div class="controls">
             <button type="submit" class="btn">Logga in</button>
         </div>
+
     </div>
 }
+@Html.ActionLink("Glömt lösenordet","ForgottenPassword","Security")
