@@ -33,7 +33,7 @@
             <td>
                 @{
                     var nameBuilder = new StringBuilder();
-                    foreach (var item in user.Items.Where(item => item.Item.Activity.Id == Model.Id))
+                    foreach (var item in user.Items.Where(item => item.Item.Activity != null && item.Item.Activity.Id == Model.Id))
                     {
                         nameBuilder.Append(item.Item.Name);
                         nameBuilder.Append("(");

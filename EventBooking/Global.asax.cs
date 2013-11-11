@@ -51,7 +51,7 @@ namespace EventBooking
 			Trace.WriteLine("[EF] Running migrations...");
 			DataMigrator.EnableMigrations();
             Trace.WriteLine("[WebSecurity] Initializing database connection...5");
-            WebSecurity.InitializeDatabaseConnection("EventBookingContext", "Users", "Id", "Email", autoCreateTables: true);
+            WebSecurity.InitializeDatabaseConnection("EventBookingContext", "Users", "Id", "Email", autoCreateTables: false);
 #endif
         }
 	}
