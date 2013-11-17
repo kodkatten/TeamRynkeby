@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using EventBooking.Data.Entities;
@@ -73,7 +71,7 @@ namespace EventBooking.Data.Repositories
 				throw new ArgumentNullException("teamId");
 			}
 
-			return context.Users.Where(u => u.Team.Id == teamId);
+		    return context.Users.Where(u => u.Team.Id == teamId).OrderBy(p => p.Name);
 		}
 	}
 }
