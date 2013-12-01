@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 using EventBooking.Controllers;
 using EventBooking.Controllers.ViewModels;
@@ -11,115 +12,126 @@ using NUnit.Framework;
 
 namespace EventBooking.Tests
 {
-	[TestFixture]
-	public class CreateActivityTests
-	{
-		[SetUp]
-		public void SetUp()
-		{
-			SecurityService = new MockupSecurityService { ReturnUser = new User { Team = new Team { Name = "The team" } } };
-		    EmailServices = new Moq.Mock<IEmailService>();
-		}
+    [TestFixture]
+    public class CreateActivityTests
+    {
+        [SetUp]
+        public void SetUp()
+        {
+            SecurityService = new MockupSecurityService { ReturnUser = new User { Team = new Team { Name = "The team" } } };
+            EmailServices = new Moq.Mock<IEmailService>();
+            userRepository = new Mock<IUserRepository>();
+            teamRepository = new Mock<ITeamRepository>();
+            userController = new UserController(security, userRepository.Object, teamRepository.Object);
 
-		public static readonly DateTime Tomorrow = DateTime.Now.AddDays(1);
-		public static readonly DateTime Yesterday = DateTime.Now.AddDays(-1);
+        }
 
-		protected MockupSecurityService SecurityService { get; set; }
+        private UserController userController;
+        private MockupSecurityService security;
+        private Mock<IUserRepository> userRepository;
+        private Mock<ITeamRepository> teamRepository;
+
+        public static readonly DateTime Tomorrow = DateTime.Now.AddDays(1);
+        public static readonly DateTime Yesterday = DateTime.Now.AddDays(-1);
+
+        protected MockupSecurityService SecurityService { get; set; }
         protected Mock<IEmailService> EmailServices { get; set; }
 
-		private static ActionResult CreateValidActivity(ActivityControllerShunt controller)
-		{
-			return controller.Create(NewModel());
-		}
+        private static ActionResult CreateValidActivity(ActivityControllerShunt controller)
+        {
+            return controller.Create(NewModel());
+        }
 
-		private static CreateActivityModel NewModel()
-		{
-			return new CreateActivityModel
-				{
-					Name = "Name",
-					Date = Tomorrow,
-					Description = "Description",
-					Summary = "Summary",
-					Type = ActivityType.Preliminärt
-					//Sessions = new SessionModel { FromTime = new TimeSpan(10, 0, 0), ToTime = new TimeSpan(11, 0, 0), VolunteersNeeded = 2 }
-				};
-		}
+        private static CreateActivityModel NewModel()
+        {
+            return new CreateActivityModel
+                {
+                    Name = "Name",
+                    Date = Tomorrow,
+                    Description = "Description",
+                    Summary = "Summary",
+                    Type = ActivityType.Preliminärt
+                    //Sessions = new SessionModel { FromTime = new TimeSpan(10, 0, 0), ToTime = new TimeSpan(11, 0, 0), VolunteersNeeded = 2 }
+                };
+        }
 
-		[Test]
-		public void GivenDataForNewActivityIsPersisted()
-		{
-			var controller = CreateController();
+        [Test]
+        public void GivenDataForNewActivityIsPersisted()
+        {
+            var controller = CreateController();
 
-			CreateValidActivity(controller);
+            CreateValidActivity(controller);
 
-			Assert.IsNotNull(controller.CreatedActivity);
-			Assert.AreEqual("Name", controller.CreatedActivity.Name);
-			Assert.AreEqual(Tomorrow, controller.CreatedActivity.Date);
-			Assert.AreEqual("Description", controller.CreatedActivity.Description);
-			Assert.AreEqual("Summary", controller.CreatedActivity.Summary);
-			Assert.AreEqual(ActivityType.Preliminärt, controller.CreatedActivity.Type);
-			Assert.AreEqual(SecurityService.ReturnUser.Team.Name, controller.CreatedActivity.OrganizingTeam.Name);
-		}
+            Assert.IsNotNull(controller.CreatedActivity);
+            Assert.AreEqual("Name", controller.CreatedActivity.Name);
+            Assert.AreEqual(Tomorrow, controller.CreatedActivity.Date);
+            Assert.AreEqual("Description", controller.CreatedActivity.Description);
+            Assert.AreEqual("Summary", controller.CreatedActivity.Summary);
+            Assert.AreEqual(ActivityType.Preliminärt, controller.CreatedActivity.Type);
+            Assert.AreEqual(SecurityService.ReturnUser.Team.Name, controller.CreatedActivity.OrganizingTeam.Name);
+        }
 
-		[Test]
-		public void RedirectsToActivityDetailsAfterSuccessfulCreation()
-		{
-			var controller = CreateController();
+        [Test]
+        public void RedirectsToActivityDetailsAfterSuccessfulCreation()
+        {
+            var controller = CreateController();
 
-			var result = CreateValidActivity(controller) as RedirectToRouteResult;
+            var result = CreateValidActivity(controller) as RedirectToRouteResult;
 
-			Assert.NotNull(result);
-			Assert.AreEqual("Details", result.RouteValues["Action"]);
-			Assert.AreEqual("Activity", result.RouteValues["controller"]);
-			Assert.IsNotNull(result.RouteValues["Id"]);
-		}
+            Assert.NotNull(result);
+            Assert.AreEqual("Details", result.RouteValues["Action"]);
+            Assert.AreEqual("Activity", result.RouteValues["controller"]);
+            Assert.IsNotNull(result.RouteValues["Id"]);
+        }
 
-		[Test]
-		public void StaysOnViewIfTryingToCreateActivity_ForYesterday()
-		{
-			var controller = this.CreateController();
+        [Test]
+        public void StaysOnViewIfTryingToCreateActivity_ForYesterday()
+        {
+            var controller = this.CreateController();
 
-			CreateActivityModel forYesterday = NewModel();
-			forYesterday.Date = Yesterday;
+            CreateActivityModel forYesterday = NewModel();
+            forYesterday.Date = Yesterday;
 
-			ActionResult result = controller.Create(forYesterday);
+            ActionResult result = controller.Create(forYesterday);
 
-			Assert.NotNull(result);
-			Assert.IsInstanceOf<RedirectToRouteResult>(result);
-		}
+            Assert.NotNull(result);
+            Assert.IsInstanceOf<RedirectToRouteResult>(result);
+        }
 
-		private ActivityControllerShunt CreateController()
-		{
+        
+
+        private ActivityControllerShunt CreateController()
+        {
             return new ActivityControllerShunt(new ActivityRepositoryShunt(), SecurityService, null, null, EmailServices.Object);
-		}
-	}
+        }
+    }
 
-	public class ActivityRepositoryShunt : ActivityRepository
-	{
-		public ActivityRepositoryShunt()
-			: base(null)
-		{
-		}
+    public class ActivityRepositoryShunt : ActivityRepository
+    {
+        public ActivityRepositoryShunt()
+            : base(null)
+        {
+        }
 
-		public override Activity GetActivityById(int id)
-		{
-			return new Activity();
-		}
-	}
+        public override Activity GetActivityById(int id)
+        {
+            return new Activity();
+        }
+    }
 
-	public class ActivityControllerShunt : ActivityController
-	{
+    public class ActivityControllerShunt : ActivityController
+    {
         public ActivityControllerShunt(ActivityRepository activityRepository, ISecurityService securityService, IActivityItemRepository itemRepository, ITeamRepository teams, IEmailService emailService)
-			: base(securityService, activityRepository, itemRepository, teams,emailService)
-		{
-		}
+            : base(securityService, activityRepository, itemRepository, teams, emailService,null)
+        {
+        }
 
-		public Activity CreatedActivity { get; set; }
+        public Activity CreatedActivity { get; set; }
 
-		protected override void StoreActivity(Activity activity)
-		{
-			CreatedActivity = activity;
-		}
+        protected override void StoreActivity(Activity activity)
+        {
+            CreatedActivity = activity;
+        }
 
-	}
+    }
 }

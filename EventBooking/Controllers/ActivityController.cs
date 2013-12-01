@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -18,16 +19,18 @@ namespace EventBooking.Controllers
         private readonly IActivityItemRepository _activityItemRepository;
         private readonly ITeamRepository _teamRepository;
         private readonly IEmailService _emailService;
+        private readonly ISessionRepository _sessionRepository;
         private const int NumberOfActivitiesPerPage = 6;
 
         public ActivityController(ISecurityService securityService, IActivityRepository activityRepository,
-            IActivityItemRepository activityItemRepository, ITeamRepository teamRepository, IEmailService emailService)
+            IActivityItemRepository activityItemRepository, ITeamRepository teamRepository, IEmailService emailService, ISessionRepository sessionRepository)
         {
             _securityService = securityService;
             _activityRepository = activityRepository;
             _activityItemRepository = activityItemRepository;
             _teamRepository = teamRepository;
             _emailService = emailService;
+            _sessionRepository = sessionRepository;
         }
 
         public ActionResult Create()
@@ -63,9 +66,7 @@ namespace EventBooking.Controllers
 
             return RedirectToAction("Details", "Activity", new { Id = activity.Id });
         }
-
-       
-
+   
         public ActionResult Upcoming(int page = 0, string teamIds = "")
         {
             page = page < 0 ? 0 : page;
@@ -148,7 +149,6 @@ namespace EventBooking.Controllers
             return howHasNotSignedUp;
         }
 
-
         [ImportModelStateFromTempData]
         public ActionResult SelectExistingItem(int activityId)
         {
@@ -228,12 +228,47 @@ namespace EventBooking.Controllers
         public ActionResult EditActivity(EditActivityViewModel model)
         {
             var activity = _activityRepository.GetActivityById(model.Activity.Id);
+            
+            var sessions = _sessionRepository.GetSessionsForActivity(model.Activity.Id).OrderBy(x => x.Id).ToList();
+          
+            var sessionsFromModel = model.Sessions.OrderBy(x=> x.FromTime).ToList();
+
+            
+
+            bool sameSessionTimes = sessions.SequenceEqual(sessionsFromModel, new SessionComparer());
+
+            if (!sameSessionTimes)
+            {
+                // behöver då se till att alla ting som volouterns lämmar tillbaks också "lämnas tillbaks"
+
+                foreach (var session in sessions)
+                {
+                    ICollection<User> users = session.Volunteers;
+                    foreach (var user in users)
+                    {
+                       _sessionRepository.LeaveSession(session, user);
+                    }
+                }
+
+
+                activity.Sessions = model.Sessions;                
+            }
+
+            if (activity.Date != model.Activity.Date)
+            {
+                // lämna tillbaks alla ting, inte bara droppan deltagarn
+                activity.Date = model.Activity.Date;
+                activity.Sessions = model.Sessions; 
+            }
+            //else
+            //{
+            //    activity.Date = model.Activity.Date; 
+            //}
+            
             activity.Name = model.Activity.Name;
             activity.Summary = model.Activity.Summary;
             activity.Description = model.Activity.Description;
             activity.Type = model.SelectedActivity;
-            activity.Sessions = model.Sessions;
-            activity.Date = model.Activity.Date;
             activity.Items = model.Items;
 
             _activityRepository.UpdateActivity(activity);
@@ -260,6 +295,27 @@ namespace EventBooking.Controllers
 
 
             return View("EditActivity", activity);
+        }
+    }
+
+    public class SessionComparer : IEqualityComparer<ISession>
+    {
+        public bool Equals(ISession x, ISession y)
+        {
+            //Check whether the compared objects reference the same data. 
+            if (Object.ReferenceEquals(x, y)) return true;
+
+            //Check whether any of the compared objects is null. 
+            if (Object.ReferenceEquals(x, null) || Object.ReferenceEquals(y, null))
+                return false;
+
+            //Check whether the products' properties are equal. 
+            return x.FromTime == y.FromTime && x.ToTime == y.ToTime && x.VolunteersNeeded == y.VolunteersNeeded;
+        }
+
+        public int GetHashCode(ISession obj)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -60,7 +60,7 @@ namespace EventBooking.Tests
 			var itemRepository = new Mock<IActivityItemRepository>();
 			itemRepository.Setup(r => r.GetTemplates()).Returns(Enumerable.Empty<ActivityItemTemplate>().AsQueryable);
 			var controllerContext = new ControllerContext(mockHttpContext.Object, new RouteData(), new Mock<ControllerBase>().Object);
-			var activityController = new ActivityController(securityService, new ActivityRepositoryShunt(), itemRepository.Object,null, null)
+			var activityController = new ActivityController(securityService, new ActivityRepositoryShunt(), itemRepository.Object,null, null,null)
 				{
 					ControllerContext = controllerContext,
 					Url = new UrlHelper(controllerContext.RequestContext)

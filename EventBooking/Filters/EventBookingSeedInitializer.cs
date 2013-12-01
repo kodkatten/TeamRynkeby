@@ -10,7 +10,7 @@ using WebMatrix.WebData;
 
 namespace EventBooking.Filters
 {
-    internal class EventBookingSeedInitializer : DropCreateDatabaseIfModelChanges<EventBookingContext> // DropCreateDatabaseAlways<EventBookingContext> // 
+    internal class EventBookingSeedInitializer : DropCreateDatabaseAlways<EventBookingContext> //  DropCreateDatabaseIfModelChanges<EventBookingContext> // 
     {
         protected override void Seed(EventBookingContext context)
         {
