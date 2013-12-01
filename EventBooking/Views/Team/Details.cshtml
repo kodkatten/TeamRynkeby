@@ -65,6 +65,10 @@
                 @foreach (var e in Model.MyActivites)
                 {
 
+                    var datum = DateTime.Now;
+                    if (datum <= e.Date.AddDays(1))
+                    {
+ 
                     <li class="@e.Type" data-activity-id="@e.Id">
                         <a href="@Url.Action("Details", "Activity", new { @e.Id })" class="link" rel="tooltip" data-original-title="@e.Description">
                             <span class="badge @Html.BadgeColorPicker(@e.Type)">@e.Date.ToSwedishShortDateString()</span>
@@ -78,7 +82,7 @@
                         }
                         @if (e.Coordinator.Email == User.Identity.Name)
                         {
-                            <a href="@Url.Action("Edit", "Activity", new {activityId = @e.Id})" class="link" rel="tooltip" data-original-title="Redigera">
+                            <a href="@Url.Action("Edit", "Activity", new { activityId = @e.Id })" class="link" rel="tooltip" data-original-title="Redigera">
                                 <span class="icon icon-pencil"></span></a>
                             
                             <a href="@Url.Action("WhoHasSignup", "Activity", new { activityId = @e.Id })" class="link" rel="tooltip" data-original-title="Vilka kommer?">
@@ -93,7 +97,10 @@
                             
                         }
                     </li>
+                   
+                    }
                 }
+
             </ul>
         </p>
     </div>
