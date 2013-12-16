@@ -228,54 +228,56 @@ namespace EventBooking.Controllers
         public ActionResult EditActivity(EditActivityViewModel model)
         {
             var activity = _activityRepository.GetActivityById(model.Activity.Id);
-            
             var sessions = _sessionRepository.GetSessionsForActivity(model.Activity.Id).OrderBy(x => x.Id).ToList();
-          
-            var sessionsFromModel = model.Sessions.OrderBy(x=> x.FromTime).ToList();
-
-            
-
+            var activityItems = _activityItemRepository.GetItemsForActivity(model.Activity.Id);
+            var sessionsFromModel = model.Sessions.OrderBy(x => x.FromTime).ToList();
             bool sameSessionTimes = sessions.SequenceEqual(sessionsFromModel, new SessionComparer());
 
-            if (!sameSessionTimes)
-            {
-                // behöver då se till att alla ting som volouterns lämmar tillbaks också "lämnas tillbaks"
 
-                foreach (var session in sessions)
+            if (!HasSomeoneSignedUp(sessions))
+            {
+                activity.Name = model.Activity.Name;
+                activity.Summary = model.Activity.Summary;
+                activity.Description = model.Activity.Description;
+                activity.Type = model.SelectedActivity;
+                activity.Date = model.Activity.Date;
+                activity.Sessions = model.Sessions;
+                activity.Items = model.Items;
+            }
+            else
+            {
+                // todo: funkar. ändrar man tiden tas allt bort
+                if (!sameSessionTimes || activity.Date != model.Activity.Date)
                 {
-                    ICollection<User> users = session.Volunteers;
-                    foreach (var user in users)
+                    activity.Date = model.Activity.Date;
+
+                    foreach (var session in sessions)
                     {
-                       _sessionRepository.LeaveSession(session, user);
+                        ICollection<User> users = session.Volunteers.ToList();
+                        foreach (var user in users)
+                        {
+                            _sessionRepository.LeaveSession(session, user);
+                        }
                     }
+
+                    activity.Sessions = model.Sessions;
                 }
 
+                if (!HasSomeoneSignedUp(sessions))
+                {
+                    activity.Items = model.Items;
+                }
 
-                activity.Sessions = model.Sessions;                
+                activity.Name = model.Activity.Name;
+                activity.Summary = model.Activity.Summary;
+                activity.Description = model.Activity.Description;
+                activity.Type = model.SelectedActivity;
             }
-
-            if (activity.Date != model.Activity.Date)
-            {
-                // lämna tillbaks alla ting, inte bara droppan deltagarn
-                activity.Date = model.Activity.Date;
-                activity.Sessions = model.Sessions; 
-            }
-            //else
-            //{
-            //    activity.Date = model.Activity.Date; 
-            //}
-            
-            activity.Name = model.Activity.Name;
-            activity.Summary = model.Activity.Summary;
-            activity.Description = model.Activity.Description;
-            activity.Type = model.SelectedActivity;
-            activity.Items = model.Items;
 
             _activityRepository.UpdateActivity(activity);
-            
-
             return RedirectToAction("Details", "Team");
         }
+
 
         public ActionResult Edit(int activityId)
         {
@@ -296,6 +298,44 @@ namespace EventBooking.Controllers
 
             return View("EditActivity", activity);
         }
+
+
+        private static bool HasSomeoneSignedUp(IEnumerable<Session> sessions)
+        {
+            var hasSomeoneSignedUp = false;
+
+            foreach (var session in sessions)
+            {
+                var numberOfSignedup = session.Volunteers.Count();
+                if (numberOfSignedup > 0)
+                {
+                    hasSomeoneSignedUp = true;
+                }
+            }
+
+            return hasSomeoneSignedUp;
+        }
+
+        private bool HasItemQuantityInCreased(ActivityItem item, IEnumerable<ActivityItem> modelItems)
+        {
+
+            foreach (var modelItem in modelItems)
+            {
+                if (modelItem.Name == item.Name)
+                {
+                    if (modelItem.Quantity < item.Quantity)
+                    {
+                        return true;
+                    }
+                }
+
+            }
+            return false;
+        }
+
+
+
+
     }
 
     public class SessionComparer : IEqualityComparer<ISession>
