@@ -37,7 +37,7 @@ namespace EventBooking.Services
 
         public EmailService(EmailSettings emailSettings)
         {
-            
+
         }
 
         public void SendMail(int activityId, EmailType emailType, string freeText = "")
@@ -56,7 +56,7 @@ namespace EventBooking.Services
             var activity = _activityRepository.GetActivityById(activityId);
             var toAddressToName = senderList.ToDictionary(teamMember => teamMember.Email, teamMember => teamMember.Name);
             var text = NewEventText(activity, emailType, "");
-            
+
             SendMail(toAddressToName, _emailSettings.From, activity.OrganizingTeam.Name, text.Subject, text.Body);
         }
 
@@ -68,8 +68,8 @@ namespace EventBooking.Services
 
         public void SendResetPassword(string email, string message)
         {
-           _mailMessage.To.Add(new MailAddress(email,email));
-            Send("noreply@teamrynkeby.apphb.com", "Team Rynkeby","Change password", message);
+            _mailMessage.To.Add(new MailAddress(email, email));
+            Send("noreply@teamrynkeby.apphb.com", "Team Rynkeby", "Change password", message);
         }
 
         private MailData NewEventText(Activity activity, EmailType emailType, string freeText)

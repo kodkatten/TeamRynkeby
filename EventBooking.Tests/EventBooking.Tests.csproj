@@ -97,6 +97,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ActivityControllerTests.cs" />
+    <Compile Include="ActivityTest.cs" />
     <Compile Include="ClassSetup.cs" />
     <Compile Include="CreateActivityTests.cs" />
     <Compile Include="MailTemplateServiceTest.cs" />
