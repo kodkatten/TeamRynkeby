@@ -100,6 +100,7 @@
     <Compile Include="ActivityTest.cs" />
     <Compile Include="ClassSetup.cs" />
     <Compile Include="CreateActivityTests.cs" />
+    <Compile Include="EditActivityTest.cs" />
     <Compile Include="MailTemplateServiceTest.cs" />
     <Compile Include="ManageActivitySessionsTests.cs" />
     <Compile Include="MockupSecurityService.cs" />

@@ -39,27 +39,4 @@ namespace EventBooking.Data.Entities
             return Volunteers.Any(v => v.Id == user.Id);
         }
     }
-
-    //class SessionComparer : IEqualityComparer<ISession>
-    //{
-    //    public bool Equals(ISession x, ISession y)
-    //    {
-    //        //Check whether the compared objects reference the same data. 
-    //        if (Object.ReferenceEquals(x, y)) return true;
-
-    //        //Check whether any of the compared objects is null. 
-    //        if (Object.ReferenceEquals(x, null) || Object.ReferenceEquals(y, null))
-    //            return false;
-
-    //        //Check whether the products' properties are equal. 
-    //        return x.ToTime == y.ToTime && x.FromTime == y.FromTime && x.VolunteersNeeded == y.VolunteersNeeded;
-    //    }
-
-    //    public int GetHashCode(ISession obj)
-    //    {
-    //        throw new NotImplementedException();
-    //    }
-    //}
-
-
 }

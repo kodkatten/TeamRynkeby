@@ -22,8 +22,10 @@ namespace EventBooking.Controllers
         private readonly ISessionRepository _sessionRepository;
         private const int NumberOfActivitiesPerPage = 6;
 
-        public ActivityController(ISecurityService securityService, IActivityRepository activityRepository,
-            IActivityItemRepository activityItemRepository, ITeamRepository teamRepository, IEmailService emailService, ISessionRepository sessionRepository)
+        public ActivityController(
+            ISecurityService securityService, IActivityRepository activityRepository,
+            IActivityItemRepository activityItemRepository, ITeamRepository teamRepository, 
+            IEmailService emailService, ISessionRepository sessionRepository)
         {
             _securityService = securityService;
             _activityRepository = activityRepository;
@@ -56,7 +58,7 @@ namespace EventBooking.Controllers
                   .ForMember(dest => dest.Name, options => options.MapFrom(source => source.Name))
                   .ForMember(dest => dest.Quantity, options => options.MapFrom(source => source.Quantity));
 
-
+            
             var activity = Mapper.Map<Activity>(model);
             activity.OrganizingTeam = _securityService.GetCurrentUser().Team;
             activity.Coordinator = _securityService.GetCurrentUser();
@@ -279,7 +281,7 @@ namespace EventBooking.Controllers
         }
 
 
-        public ActionResult Edit(int activityId)
+        public ViewResult Edit(int activityId)
         {
             var activity = new EditActivityViewModel
                 {
