@@ -37,8 +37,6 @@ namespace EventBooking.Security
 
 					config.For<SessionsController>().DenyAnonymousAccess();					
 					
-					config.For<QuestionsController>().DenyAnonymousAccess();
-
 					config.For<AdminController>().DenyAnonymousAccess();
 					config.For<AdminController>(a => a.CreateTeam("")).RequireRole(UserType.Administrator.ToString());
 					config.For<AdminController>(a => a.DeleteTeam(0)).RequireRole(UserType.Administrator.ToString());

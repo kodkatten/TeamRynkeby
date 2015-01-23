@@ -15,8 +15,6 @@ namespace EventBooking.Data
 		public IDbSet<Activity> Activities { get; set; }
 		public IDbSet<Team> Teams { get; set; }
 		public IDbSet<Session> Sessions { get; set; }
-		public IDbSet<InterviewQuestion> InterviewQuestions { get; set; }
-		public IDbSet<TrainingQuestion> TrainingQuestions { get; set; }
 		public IDbSet<ActivityItemTemplate> ActivityItemTemplates { get; set; }
 		public IDbSet<ActivityItem> ActivityItems { get; set; }
 		public IDbSet<MailTemplate> MailTemplates { get; set; }
@@ -34,8 +32,7 @@ namespace EventBooking.Data
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
-			modelBuilder.Entity<TrainingQuestion>().HasRequired(q => q.Team);
-			modelBuilder.Entity<InterviewQuestion>().HasRequired(q => q.Team);
+			
 		}
 	}
 }

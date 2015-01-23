@@ -9,8 +9,6 @@ namespace EventBooking.Data
 		IDbSet<User> Users { get; set; }
 		IDbSet<Activity> Activities { get; set; }
 		IDbSet<Team> Teams { get; set; }
-		IDbSet<InterviewQuestion> InterviewQuestions { get; set; }
-		IDbSet<TrainingQuestion> TrainingQuestions { get; set; }
 		IDbSet<Session> Sessions { get; set; }
 		IDbSet<ActivityItemTemplate> ActivityItemTemplates { get; set; }
 		IDbSet<ActivityItem> ActivityItems { get; set; }
