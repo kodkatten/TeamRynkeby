@@ -13,7 +13,7 @@ using NUnit.Framework;
 namespace EventBooking.Tests
 {
     [TestFixture]
-    public class CreateActivityTests
+    public class CreateActivityTestsII
     {
         [SetUp]
         public void SetUp()
