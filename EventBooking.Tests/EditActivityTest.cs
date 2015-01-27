@@ -18,7 +18,7 @@ namespace EventBooking.Tests
         private readonly Mock<IEmailService> _emailService = new Mock<IEmailService>();
         private readonly Mock<HttpRequestBase> _request = new Mock<HttpRequestBase>();
         private readonly Mock<HttpContextBase> _mockHttpContext = new Mock<HttpContextBase>();
-        private readonly Mock<IActivityItemRepository> _itemRepository = new Mock<IActivityItemRepository>();
+
         private readonly Mock<ISecurityService> _securityService = new Mock<ISecurityService>();
         private readonly Mock<IActivityRepository> _activityRepository = new Mock<IActivityRepository>();
         private readonly Mock<ISessionRepository> _sessionRepository = new Mock<ISessionRepository>(); 
@@ -32,7 +32,7 @@ namespace EventBooking.Tests
             _emailService.Setup(x => x.SendMail(1, EmailService.EmailType.NewActivity, "test"));
             _request.Setup(r => r.HttpMethod).Returns("GET");
             _mockHttpContext.Setup(c => c.Request).Returns(_request.Object);
-            _itemRepository.Setup(r => r.GetTemplates()).Returns(Enumerable.Empty<ActivityItemTemplate>().AsQueryable);
+           
             _sessionRepository.Setup(s => s.GetSessionsForActivity(It.IsAny<int>())).Returns(sessionList);
 
             var activity = new Activity
@@ -56,7 +56,7 @@ namespace EventBooking.Tests
         {
            
             var controller = new ActivityController(_securityService.Object, _activityRepository.Object,
-                                                    _itemRepository.Object, null, _emailService.Object, _sessionRepository.Object);
+                                                     null, _emailService.Object, _sessionRepository.Object);
 
             var result = controller.Edit(1) as ViewResult;
 

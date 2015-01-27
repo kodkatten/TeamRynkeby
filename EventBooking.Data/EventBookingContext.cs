@@ -15,10 +15,8 @@ namespace EventBooking.Data
 		public IDbSet<Activity> Activities { get; set; }
 		public IDbSet<Team> Teams { get; set; }
 		public IDbSet<Session> Sessions { get; set; }
-		public IDbSet<ActivityItemTemplate> ActivityItemTemplates { get; set; }
-		public IDbSet<ActivityItem> ActivityItems { get; set; }
 		public IDbSet<MailTemplate> MailTemplates { get; set; }
-	    public IDbSet<UserActivityItem> UserActivityItems { get; set; }
+	   
 
 	    void IEventBookingContext.SaveChanges()
 		{

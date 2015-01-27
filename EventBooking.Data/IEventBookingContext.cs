@@ -10,10 +10,8 @@ namespace EventBooking.Data
 		IDbSet<Activity> Activities { get; set; }
 		IDbSet<Team> Teams { get; set; }
 		IDbSet<Session> Sessions { get; set; }
-		IDbSet<ActivityItemTemplate> ActivityItemTemplates { get; set; }
-		IDbSet<ActivityItem> ActivityItems { get; set; }
 		IDbSet<MailTemplate> MailTemplates { get; set; }
-        IDbSet<UserActivityItem> UserActivityItems { get; set; }
+       
 
 		void SaveChanges();
 		DbEntityEntry Entry<TEntity>(TEntity entity) where TEntity : class;

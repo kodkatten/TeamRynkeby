@@ -26,7 +26,7 @@ namespace EventBooking.Tests
         private readonly Mock<IEmailService> _emailService = new Mock<IEmailService>();
         private readonly Mock<HttpRequestBase> _request = new Mock<HttpRequestBase>();
         private readonly Mock<HttpContextBase> _mockHttpContext = new Mock<HttpContextBase>();
-        private readonly Mock<IActivityItemRepository> _itemRepository = new Mock<IActivityItemRepository>();
+        
         private readonly Mock<ISecurityService> _securityService = new Mock<ISecurityService>();
         private readonly Mock<IActivityRepository> _activityRepository = new Mock<IActivityRepository>();
         private ControllerContext _controllerContext;
@@ -37,7 +37,7 @@ namespace EventBooking.Tests
             _emailService.Setup(mock => mock.SendMail(1, EmailService.EmailType.InfoActivity, "Test"));
             _request.Setup(r => r.HttpMethod).Returns("GET");
             _mockHttpContext.Setup(c => c.Request).Returns(_request.Object);
-            _itemRepository.Setup(r => r.GetTemplates()).Returns(Enumerable.Empty<ActivityItemTemplate>().AsQueryable);
+            
             _securityService.Setup(mock => mock.GetCurrentUser())
                            .Returns(new User
                            {
@@ -79,7 +79,7 @@ namespace EventBooking.Tests
 
                 };
 
-            var activityController = new ActivityController(_securityService.Object, _activityRepository.Object, _itemRepository.Object, null, _emailService.Object, null)
+            var activityController = new ActivityController(_securityService.Object, _activityRepository.Object, null, _emailService.Object, null)
             {
                 ControllerContext = controllerContext,
                 Url = new UrlHelper(controllerContext.RequestContext)
@@ -136,13 +136,11 @@ namespace EventBooking.Tests
             var mockHttpContext = new Mock<HttpContextBase>();
             mockHttpContext.Setup(c => c.Request).Returns(request.Object);
 
-            var itemRepository = new Mock<IActivityItemRepository>();
-            itemRepository.Setup(r => r.GetTemplates()).Returns(Enumerable.Empty<ActivityItemTemplate>().AsQueryable);
-
+           
 
             var activityRepository = new Mock<IActivityRepository>();
             var controllerContext = new ControllerContext(mockHttpContext.Object, new RouteData(), new Mock<ControllerBase>().Object);
-            var activityController = new ActivityController(securityService, activityRepository.Object, itemRepository.Object, null, emailService.Object, null)
+            var activityController = new ActivityController(securityService, activityRepository.Object, null, emailService.Object, null)
                 {
                     ControllerContext = controllerContext,
                     Url = new UrlHelper(controllerContext.RequestContext)

@@ -1,6 +1,5 @@
 ﻿using System.Configuration;
 using System.Data.Entity;
-using System.Diagnostics;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -13,7 +12,6 @@ using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
 using EventBooking.Filters;
 using EventBooking.Security;
-using WebMatrix.WebData;
 
 namespace EventBooking
 {
@@ -21,10 +19,12 @@ namespace EventBooking
 	{
 		protected void Application_Start()
 		{
-			var builder = new ContainerBuilder();			
+            WebSecurityInitializer.Instance.EnsureInitialize();
+
+			var builder = new ContainerBuilder();
+            builder.RegisterModule(new ControllerDependencyModule());
 			builder.RegisterModule(new EasySettingsModule(ConfigurationManager.AppSettings));
 			builder.RegisterModule(new DataDependencyModule());
-			builder.RegisterModule(new ControllerDependencyModule());
 			builder.RegisterControllers(typeof(MvcApplication).Assembly);
 
 			var container = builder.Build();

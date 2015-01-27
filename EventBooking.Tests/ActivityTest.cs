@@ -31,7 +31,7 @@ namespace EventBooking.Tests
             _teamRepository = new Mock<ITeamRepository>();
             _userController = new UserController(_security, _userRepository.Object, _teamRepository.Object);
             _activityRepository = new Mock<IActivityRepository>();
-            _activityItemRepository = new Mock<IActivityItemRepository>();
+           
 
             _teamRepository.Setup(t => t.CreateTeam("Team Ninja"));
            
@@ -43,7 +43,7 @@ namespace EventBooking.Tests
         private Mock<IUserRepository> _userRepository;
         private Mock<ITeamRepository> _teamRepository;
         private Mock<IActivityRepository> _activityRepository;
-        private Mock<IActivityItemRepository> _activityItemRepository;
+       
         private readonly MockupSecurityService _security;
 
         public ActivityTest(MockupSecurityService security)
@@ -79,11 +79,10 @@ namespace EventBooking.Tests
                     Description = "Henrik testar",
                     Name = "Henrik",
                     Date = DateTime.Now.AddDays(1),
-                    Items = null,
                     Sessions = sessions,
                     Summary = "Henrik är bäst"
                 };
-            var activityController = new ActivityController(SecurityService, _activityRepository.Object, _activityItemRepository.Object, _teamRepository.Object, EmailServices.Object,null);
+            var activityController = new ActivityController(SecurityService, _activityRepository.Object, _teamRepository.Object, EmailServices.Object,null);
             var id = activityController.Create(createActivityModel) as ActionResult;
            
 

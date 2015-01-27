@@ -76,23 +76,6 @@ $ActivityManager"
                 context.MailTemplates.Add(activityInfoTemplate);
                 context.SaveChanges();
             }
-
-            if (!context.ActivityItemTemplates.Any())
-            {
-                context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Cykel" });
-                context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Trainer"});
-                context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Tält" });
-                context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Bord" });
-                context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Priser" });
-                context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Bössor" });
-                context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Beach flaggor" });
-                context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Projektor" });
-                context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Duk till projektor" });
-                context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Dator till projektorn" });
-                context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Broschyrer" });
-                context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Team Rynkeby tröjor" });
-                context.SaveChanges();
-            }
         }
     }
 }

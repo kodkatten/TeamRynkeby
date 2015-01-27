@@ -18,12 +18,11 @@ namespace EventBooking.Data.Entities
 		public DateTime? Birthdate { get; set; }
 		public virtual Team Team { get; set; }
 		public virtual ICollection<Session> Sessions { get; set; }
-		public virtual ICollection<UserActivityItem> Items { get; set; }
+		
 
 		public User()
 		{
-			Items = new Collection<UserActivityItem>();
-			Sessions = new Collection<Session>();
+            Sessions = new Collection<Session>();
 		}
 
 		public bool IsMemberOfATeam()

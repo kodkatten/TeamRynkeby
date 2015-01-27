@@ -50,48 +50,6 @@
 
     @if (@Model.ShouldShowItems)
     {
-        <br/>
-        <h3>Materiel till aktivitet</h3>
-        <table class="table table-hover">
-            <tr>
-                <th>Namn</th>
-                <th>Behövt antal</th>
-                <th>Totalt medtages</th>
-                <th>Jag tar med</th>
-            </tr>
-
-            @foreach (var item in Model.Items)
-            {
-                <tr>
-                    <td>@item.Name</td>
-                    <td>@item.RequiredQuantity</td>
-                    <td>@item.TotalContributedQuantity</td>
-                    <td>
-                        @if (@Model.CanBringItems)
-                        {
-                            <select onchange="location = this.value;">
-                                @for (var i = 0; i <= item.RequiredQuantity - item.TotalContributedQuantity + item.ContributedByUser; i++)
-                                {
-                                    if (i == item.ContributedByUser)
-                                    {
-                                    <option selected value="@Url.Action("ContributeItems", "Sessions", new { activityItemId = item.Id, quantity = i })">@i</option>
-                                    }
-                                    else
-                                    {
-                                    <option value="@Url.Action("ContributeItems", "Sessions", new { activityItemId = item.Id, quantity = i })">@i</option>    
-                                    }
-
-                                }
-                            </select>
-                        }
-                    </td>
-                </tr>
-            }
-        </table>
-    }
-
-    @if (@Model.ShouldShowItems)
-    {
         <a href="@Url.Action("Details", "Team")" class="link">Tillbaka till laget</a>
     }
     else

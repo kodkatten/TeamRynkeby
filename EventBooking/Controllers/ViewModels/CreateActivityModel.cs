@@ -30,7 +30,7 @@ namespace EventBooking.Controllers.ViewModels
         [FutureDate(ErrorMessage = "Du måste ange ett datum i framtiden")]
         public DateTime Date { get; set; }
 
-		public IList<ContributedInventoryModel> Items { get; set; }
+		
 
 		[Display(Name = "Pass")]
 		[Required(ErrorMessage = "Du måste ha minst ett pass")]
@@ -39,7 +39,6 @@ namespace EventBooking.Controllers.ViewModels
 
 		public CreateActivityModel()
 		{
-            this.Items = new List<ContributedInventoryModel>();
             this.Sessions = new List<SessionModel>();
 		}
 	}

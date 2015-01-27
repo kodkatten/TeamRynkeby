@@ -6,6 +6,7 @@ using System.Web.Security;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
 using EventBooking.Data.Entities;
+using EventBooking.Security;
 using WebMatrix.WebData;
 
 namespace EventBooking.Filters
@@ -14,8 +15,10 @@ namespace EventBooking.Filters
     {
         protected override void Seed(EventBookingContext context)
         {
-            WebSecurity.InitializeDatabaseConnection("EventBookingContext", "Users", "Id", "Email", autoCreateTables: true);
+            
+           // WebSecurity.InitializeDatabaseConnection("EventBookingContext", "Users", "Id", "Email", autoCreateTables: true);
 
+            WebSecurityInitializer.Instance.EnsureInitialize();
             var membership = (SimpleMembershipProvider)Membership.Provider;
             var roles = (SimpleRoleProvider)Roles.Provider;
 
@@ -60,7 +63,6 @@ namespace EventBooking.Filters
                 roles.AddUsersToRoles(new[] { "henkeofsweden@live.com" }, new[] { UserType.PowerUser.ToString() });
             }
 
-            CreatePredefinedActivityItems(context);
             var activities = context.Activities.ToList();
             activities.ForEach(x => x.Coordinator = context.Users.First());
 
@@ -127,15 +129,6 @@ $ActivityManager"
         private void CreateAwesomeUsers(SimpleMembershipProvider membership, EventBookingContext context)
         {
             EnsureUserExists(membership, context, "henrik.andersson@tretton37.com", new User { Cellphone = "123455", Name = "henrik", Team = context.Teams.First(), Email = "henrik.andersson@tretton37.com" });
-        }
-
-        private void CreatePredefinedActivityItems(EventBookingContext context)
-        {
-            context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Cykel" });
-            context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Trainer" });
-            context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Tält" });
-            context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Bord" });
-            context.ActivityItemTemplates.Add(new ActivityItemTemplate() { Name = "Priser" });
         }
 
         private static void EnsureUserExists(SimpleMembershipProvider membership, EventBookingContext context,
