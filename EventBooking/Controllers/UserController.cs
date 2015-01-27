@@ -44,8 +44,6 @@ namespace EventBooking.Controllers
 			return View();
 		}
 
-
-
 		[HttpPost]
 		public ActionResult MyProfile(MyProfileModel model)
 		{
@@ -57,18 +55,10 @@ namespace EventBooking.Controllers
 			if (ModelState.IsValid)
 			{
 				var user = _securityService.GetCurrentUser();
-				//user.Birthdate = model.Birthdate;
-				user.Cellphone = model.Cellphone;
-				user.City = model.City;
+                user.Cellphone = model.Cellphone;
 				user.Name = model.Name;
-				user.StreetAddress = model.StreetAddress;
-				if (!string.IsNullOrWhiteSpace(model.ZipCode))
-				{
-					// Needs validation?
-					user.Zipcode = model.ZipCode.Replace(" ", string.Empty);
-				}
-
 				user.Team = model.Team;
+
 				_userRepository.Save(user);
 
 				return RedirectToAction("Index", "Home");

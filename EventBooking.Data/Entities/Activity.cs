@@ -15,6 +15,5 @@ namespace EventBooking.Data.Entities
         public DateTime Date { get; set; }
 		public virtual Team OrganizingTeam { get; set; }
         public ICollection<Session> Sessions { get; set; }
-        public ICollection<ActivityItem> Items { get; set; }
     }
 }

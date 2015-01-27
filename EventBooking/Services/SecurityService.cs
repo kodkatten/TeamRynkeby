@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web.Security;
 using EventBooking.Data;
 using EventBooking.Data.Entities;
+using EventBooking.Security;
 using WebMatrix.WebData;
 
 
@@ -19,7 +20,9 @@ namespace EventBooking.Services
 		{
 			_context = context;
             _emailService = emailService;
+            WebSecurityInitializer.Instance.EnsureInitialize();
 		}
+
 
 		public virtual User GetUser(string userName)
 		{

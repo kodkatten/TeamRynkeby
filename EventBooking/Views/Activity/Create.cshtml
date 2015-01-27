@@ -1,5 +1,5 @@
 ﻿@using System.Web.Optimization
-@model IQueryable<EventBooking.Data.Entities.ActivityItemTemplate>
+
 
 @{
     ViewBag.Title = "Skapa aktivitet";
@@ -35,27 +35,7 @@
         </div>
     </script>
 
-    <script id="itemsTemplate" type="text/html">
-        <div>
-            <div>
-                <select name="items[{{index}}].name">
-                    <option value="Ospecificerat">Välj materiel</option>
-
-                    @foreach (var item in Model)
-                    {
-                        <option value="@item.Name">@item.Name</option>
-                    }
-
-                </select>
-            </div>
-
-            <div>
-                <input name="items[{{index}}].quantity" type="number" class="input-mini" value="1" min="1" />
-            </div>
-            <a id="removeItem_{{index}}" href="#" class="undo"><i class="icon-remove"></i>Ta bort</a>
-        </div>
-    </script>
-
+    
     <script id="specificItemsTemplate" type="text/html">
         <div>
             <div>
@@ -85,10 +65,6 @@
             <li data-wizard-header="pageTwo">
                 <a href="#" data-wizard-link="pageTwo">2. Datum/Tid </a>
             </li>
-
-            <li data-wizard-header="pageThree">
-                <a href="#">3. Materiel</a>
-            </li>
         </ul>
 
         /***** PAGE ONE ******************** */
@@ -100,16 +76,11 @@
                 </div>
             </div>
 
+
             <div class="control-group">
-                <label class="control-label">Publik beskrivning</label>
+                <label class="control-label">Information</label>
                 <div class="controls">
-                    <textarea name="summary" placeholder="Beskrivning som ses av alla"></textarea>
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label">Intern beskrivning</label>
-                <div class="controls">
-                    <textarea name="description" placeholder="Beskrivning för medlemmar"></textarea>
+                    <textarea name="information" placeholder="Beskrivning för medlemmar"></textarea>
                 </div>
             </div>
 
@@ -121,7 +92,7 @@
                         Träning</label>
                     <label class="radio">
                         <input name="type" type="radio" value="Publikt" />
-                        Publikt</label>
+                        Event</label>
                     <label class="radio">
                         <input name="type" type="radio" value="Teammöte" />
                         Teammöte</label>
@@ -202,30 +173,6 @@
             </div>
 
             <a href="#" class="btn" data-wizard-link="pageOne">Föregående</a>
-            <a href="#" class="btn pull-right btn-primary" data-wizard-link="pageThree">Nästa</a>
-        </div>
-
-        /***** PAGE THREE ******************** */
-        <div data-wizard-page="pageThree">
-            <div class="control-group">
-                <label class="control-label">Saker att ha med</label>
-                <div class="controls">
-                    <div id="itemsContainer">
-
-                        <div>
-                            <p>Sak</p>
-                            <p>Antal</p>
-                        </div>
-
-
-                    </div>
-
-                    <a id="addMoreItems" href="#">Lägg till sak</a>
-                    <a id="addSpecificItem" href="#">Lägg till aktivitets-specifik sak</a>
-                </div>
-            </div>
-
-            <a href="#" class="btn" data-wizard-link="pageTwo">Föregående</a>
             <button class="btn pull-right btn-warning" type="submit">Skapa</button>
         </div>
     }

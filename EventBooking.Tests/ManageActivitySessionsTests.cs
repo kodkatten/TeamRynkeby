@@ -140,7 +140,7 @@ namespace EventBooking.Tests
 
 		private SessionsController CreateController(IActivityRepository activityRepository, ISessionRepository repository)
 		{
-			return new SessionsController(activityRepository, repository, new Mock<ISecurityService>().Object, new Mock<IActivityItemRepository>().Object, new Mock<IUserActivityItemRepository>().Object );
+			return new SessionsController(activityRepository, repository, new Mock<ISecurityService>().Object);
 		}
 	}
 }

@@ -1,8 +1,6 @@
-﻿using System.Linq;
-using System.Web.Security;
+﻿using System.Web.Security;
 using AutoMapper;
 using Autofac;
-using EventBooking.Data;
 using EventBooking.Data.Entities;
 using EventBooking.Services;
 
@@ -17,9 +15,7 @@ namespace EventBooking.Controllers.ViewModels
 			Mapper.CreateMap<Session, SessionModel>();
 		    Mapper.CreateMap<MyProfileModel, User>();
 		    Mapper.CreateMap<User, MyProfileModel>();
-			Mapper.CreateMap<ActivityItem, ContributedInventoryItemModel>();
-			Mapper.CreateMap<ContributedInventoryItemModel, ActivityItem>();
-
+	
 			var securityService = container.Resolve<ISecurityService>();
 
 			Mapper.CreateMap<Team, TeamModel>()

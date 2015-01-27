@@ -19,8 +19,8 @@ namespace EventBooking.Controllers.ViewModels
         [Compare("Password", ErrorMessage = "Lösenorden stämmer inte med varandra.")]
         public string ConfirmPassword { get; set; }
 
-        [Display(Name="Kom ihåg mig")]
-        [Required]
-        public bool RememberMe { get; set; }
+        //[Display(Name="Kom ihåg mig")]
+        //[Required]
+        //public bool RememberMe { get; set; }
     }
 }

@@ -13,7 +13,7 @@ using NUnit.Framework;
 namespace EventBooking.Tests
 {
     [TestFixture]
-    public class CreateActivityTests
+    public class CreateActivityTestsII
     {
         [SetUp]
         public void SetUp()
@@ -48,10 +48,8 @@ namespace EventBooking.Tests
                 {
                     Name = "Name",
                     Date = Tomorrow,
-                    Description = "Description",
-                    Summary = "Summary",
+                    Information = "Description",
                     Type = ActivityType.Preliminärt
-                    //Sessions = new SessionModel { FromTime = new TimeSpan(10, 0, 0), ToTime = new TimeSpan(11, 0, 0), VolunteersNeeded = 2 }
                 };
         }
 
@@ -102,7 +100,7 @@ namespace EventBooking.Tests
 
         private ActivityControllerShunt CreateController()
         {
-            return new ActivityControllerShunt(new ActivityRepositoryShunt(), SecurityService, null, null, EmailServices.Object);
+            return new ActivityControllerShunt(new ActivityRepositoryShunt(), SecurityService, null, EmailServices.Object);
         }
     }
 
@@ -121,8 +119,8 @@ namespace EventBooking.Tests
 
     public class ActivityControllerShunt : ActivityController
     {
-        public ActivityControllerShunt(ActivityRepository activityRepository, ISecurityService securityService, IActivityItemRepository itemRepository, ITeamRepository teams, IEmailService emailService)
-            : base(securityService, activityRepository, itemRepository, teams, emailService,null)
+        public ActivityControllerShunt(ActivityRepository activityRepository, ISecurityService securityService, ITeamRepository teams, IEmailService emailService)
+            : base(securityService, activityRepository, teams, emailService,null)
         {
         }
 
