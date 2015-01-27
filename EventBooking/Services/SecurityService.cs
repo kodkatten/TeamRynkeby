@@ -20,6 +20,7 @@ namespace EventBooking.Services
 		{
 			_context = context;
             _emailService = emailService;
+            WebSecurityInitializer.Instance.EnsureInitialize();
 		}
 
 

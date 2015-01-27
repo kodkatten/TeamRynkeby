@@ -48,10 +48,8 @@ namespace EventBooking.Tests
                 {
                     Name = "Name",
                     Date = Tomorrow,
-                    Description = "Description",
-                    Summary = "Summary",
+                    Information = "Description",
                     Type = ActivityType.Preliminärt
-                    //Sessions = new SessionModel { FromTime = new TimeSpan(10, 0, 0), ToTime = new TimeSpan(11, 0, 0), VolunteersNeeded = 2 }
                 };
         }
 

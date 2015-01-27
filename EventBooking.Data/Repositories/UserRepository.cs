@@ -23,12 +23,8 @@ namespace EventBooking.Data.Repositories
 			var databaseTeam = _context.Teams.First(t => t.Id == user.Team.Id);
 
 			databaseUser.Name = user.Name;
-			databaseUser.StreetAddress = user.StreetAddress;
 			databaseUser.Team = databaseTeam;
-			databaseUser.Zipcode = user.Zipcode;
-			databaseUser.Birthdate = user.Birthdate;
-			databaseUser.Cellphone = user.Cellphone;
-			databaseUser.City = user.City;
+            databaseUser.Cellphone = user.Cellphone;
 
 			// Save the user.
 			_context.SaveChanges();

@@ -76,11 +76,10 @@ namespace EventBooking.Tests
 
             var createActivityModel = new CreateActivityModel
                 {
-                    Description = "Henrik testar",
+                    Information = "Henrik testar",
                     Name = "Henrik",
                     Date = DateTime.Now.AddDays(1),
-                    Sessions = sessions,
-                    Summary = "Henrik är bäst"
+                    Sessions = sessions
                 };
             var activityController = new ActivityController(SecurityService, _activityRepository.Object, _teamRepository.Object, EmailServices.Object,null);
             var id = activityController.Create(createActivityModel) as ActionResult;

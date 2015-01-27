@@ -14,11 +14,9 @@ namespace EventBooking.Controllers.ViewModels
 
 		[Display(Name = "Beskrivning")]
 		[Required(ErrorMessage = "*")]
-		public string Description { get; set; }
+		public string Information { get; set; }
 
-		[Display(Name = "Publik information")]
-		public string Summary { get; set; }
-
+		
 		[Display(Name = "Typ")]
 		[Required(ErrorMessage = "*")]
 		public ActivityType Type { get; set; }
@@ -31,7 +29,6 @@ namespace EventBooking.Controllers.ViewModels
         public DateTime Date { get; set; }
 
 		
-
 		[Display(Name = "Pass")]
 		[Required(ErrorMessage = "Du måste ha minst ett pass")]
 		public IList<SessionModel> Sessions { get; set; }

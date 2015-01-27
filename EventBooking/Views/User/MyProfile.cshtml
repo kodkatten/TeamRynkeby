@@ -11,8 +11,6 @@
 
 @using (Html.BeginForm("MyProfile", "User", FormMethod.Post, new { @class = "form-horizontal" }))
 {
-@*Html.ValidationSummary()*@
-    
     <div class="control-group">
         @Html.LabelFor(m => m.Name, new { @class = "control-label" })
         <div class="controls">
@@ -20,31 +18,7 @@
             @Html.ValidationMessageFor(m => m.Name)
         </div>
     </div>
-
-    <div class="control-group">
-        @Html.LabelFor(m => m.StreetAddress, new { @class = "control-label" })
-        <div class="controls">
-            @Html.TextBoxFor(m => m.StreetAddress, new { placeholder = "Gatuadress" })
-            @Html.ValidationMessageFor(m => m.StreetAddress)
-        </div>
-    </div>
-
-    <div class="control-group">
-        @Html.LabelFor(m => m.ZipCode, new { @class = "control-label" })
-        <div class="controls">
-            @Html.TextBoxFor(m => m.ZipCode, new { placeholder = "222 33" })
-            @Html.ValidationMessageFor(m => m.ZipCode)
-        </div>
-    </div>
-
-    <div class="control-group">
-        @Html.LabelFor(m => m.City, new { @class = "control-label" })
-        <div class="controls">
-            @Html.TextBoxFor(m => m.City, new { placeholder = "Ort" })
-            @Html.ValidationMessageFor(m => m.City)
-        </div>
-    </div>
-
+    
     <div class="control-group">
         @Html.LabelFor(m => m.Cellphone, new { @class = "control-label" })
         <div class="controls">
@@ -53,13 +27,6 @@
         </div>
     </div>
 
-    <div class="control-group">
-        @Html.LabelFor(m => m.Birthdate, new { @class = "control-label" })
-        <div class="controls">
-            @Html.TextBoxFor(m => m.Birthdate, "{0:yyyy-MM-dd}", new { placeholder = "YYYY-MM-DD" })
-            @Html.ValidationMessageFor(m => m.Birthdate)
-        </div>
-    </div>
     
     <div class="control-group">
         @Html.LabelFor(m => m.Team, new { @class = "control-label" })

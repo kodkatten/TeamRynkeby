@@ -72,9 +72,8 @@ namespace EventBooking.Tests
             var createActivityModel = new CreateActivityModel
                 {
                     Date = new DateTime().AddDays(1),
-                    Description = "Description",
+                    Information = "Description",
                     Name = "Name",
-                    Summary = "Summary",
                     Sessions = sessions
 
                 };

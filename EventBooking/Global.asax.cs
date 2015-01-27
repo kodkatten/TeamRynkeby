@@ -19,7 +19,7 @@ namespace EventBooking
 	{
 		protected void Application_Start()
 		{
-            WebSecurityInitializer.Instance.EnsureInitialize();
+            //WebSecurityInitializer.Instance.EnsureInitialize();
 
 			var builder = new ContainerBuilder();
             builder.RegisterModule(new ControllerDependencyModule());

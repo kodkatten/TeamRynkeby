@@ -14,26 +14,12 @@ namespace EventBooking.Controllers.ViewModels
 		[MinLength(2, ErrorMessage = "Ditt namn är för kort")]
 		public string Name { get; set; }
 
-		[Display(Name = "Gatuadress")]
-		public string StreetAddress { get; set; }
+       
+        [Display(Name = "Mobiltelefon")]
+        [Required(ErrorMessage = " * Mobiltelefon måste anges")]
+        public string Cellphone { get; set; }
 
-		[Display(Name = "Postnummer")]
-		[MinLength(5)]
-		[MaxLength(6)]
-		[RegularExpression(@"^(\d\d\d \d\d|\d\d\d\d\d)$", ErrorMessage = "Felaktigt postnummer")]
-		public string ZipCode { get; set; }
-
-		[Display(Name = "Ort")]
-		public string City { get; set; }
-
-		[Display(Name = "Mobiltelefon")]
-		[Required(ErrorMessage = " * Mobiltelefon måste anges")]
-		public string Cellphone { get; set; }
-
-		[Display(Name = "Födelsedatum")]
-        //[Range(typeof(DateTime), "1801-1-1", "2113-12-31", ErrorMessage = "{0} måste vara mellan {1:d} och {2:d}")]
-        [Range(typeof(DateTime), "1801-1-1", "2113-12-31", ErrorMessage = "Det måste vara på formatet YYYY-MM-DD")]
-		public DateTime? Birthdate { get; set; }
+       
 
 		[Display(Name = "Lag")]
 		[Required(ErrorMessage = "Du måste välja ett lag")]
