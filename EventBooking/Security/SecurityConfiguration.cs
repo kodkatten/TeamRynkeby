@@ -38,10 +38,10 @@ namespace EventBooking.Security
 					config.For<SessionsController>().DenyAnonymousAccess();					
 					
 					config.For<AdminController>().DenyAnonymousAccess();
-					config.For<AdminController>(a => a.CreateTeam("")).RequireRole(UserType.Administrator.ToString());
-					config.For<AdminController>(a => a.DeleteTeam(0)).RequireRole(UserType.Administrator.ToString());
-					config.For<AdminController>(a => a.ToogleAdministrator(0)).RequireRole(UserType.Administrator.ToString());
-					config.For<AdminController>(a => a.ToogleTeamPowerUser(0, 0)).RequireRole(UserType.Administrator.ToString());
+					config.For<AdminController>(a => a.CreateTeam("")).RequireAnyRole(UserType.Administrator.ToString());
+                    config.For<AdminController>(a => a.DeleteTeam(0)).RequireAnyRole(UserType.Administrator.ToString());
+                    config.For<AdminController>(a => a.ToogleAdministrator(0)).RequireAnyRole(UserType.Administrator.ToString());
+                    config.For<AdminController>(a => a.ToogleTeamPowerUser(0, 0)).RequireAnyRole(UserType.Administrator.ToString());
 					config.For<AdminController>(a => a.ExcludeFromTeam(0, 0)).AddPolicy(resolver.GetService<RequireAdminOrTeamPowerUser>());
 					config.For<AdminController>(a => a.Team(0)).AddPolicy(resolver.GetService<RequireAdminOrPowerUser>());
 					config.For<AdminController>(a => a.ViewTeams()).AddPolicy(resolver.GetService<RequireAdminOrPowerUser>());

@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBooking.Data", "EventBooking.Data\EventBooking.Data.csproj", "{4F7A1658-6752-4920-8D8F-67A391E548F4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBooking", "EventBooking\EventBooking.csproj", "{2A54B809-3E76-43C9-B0BE-E47AE731FBC9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBooking.Tests", "EventBooking.Tests\EventBooking.Tests.csproj", "{D7FA8CD2-AB6C-439A-B090-05D21CD28953}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +21,6 @@ Global
 		{2A54B809-3E76-43C9-B0BE-E47AE731FBC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A54B809-3E76-43C9-B0BE-E47AE731FBC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A54B809-3E76-43C9-B0BE-E47AE731FBC9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D7FA8CD2-AB6C-439A-B090-05D21CD28953}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D7FA8CD2-AB6C-439A-B090-05D21CD28953}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D7FA8CD2-AB6C-439A-B090-05D21CD28953}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D7FA8CD2-AB6C-439A-B090-05D21CD28953}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
