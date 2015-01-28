@@ -254,7 +254,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap-timepicker.js" />
-    <Content Include="Scripts\bootstrap.js" />
     <Content Include="myBalsamiqProject.pdf" />
     <Content Include="Content\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\fonts\fontawesome-webfont.ttf" />
@@ -266,10 +265,14 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\admin.js" />
+    <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\htmlDecode.js" />
+    <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\teamrynkebyse.itemsbuilder.js" />
     <Content Include="Scripts\createevent.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
