@@ -32,24 +32,7 @@
         </div>
     </script>  
 
-    <script id="itemsTemplate" type="text/html">
-        <div>
-            <div>
-                <select name="items[{{index}}].name">
-                    <option value="Ospecificerat">Välj materiel</option>
-                    @foreach (var itemTemplate in Model.ItemList)
-                    {
-                        <option value="@itemTemplate.Name">@itemTemplate.Name</option>
-                    }
-                </select>
-            </div>
-
-            <div>
-                <input name="items[{{index}}].quantity" type="number" class="input-mini" value="1" min="1" />
-            </div>
-            <a id="removeItem_{{index}}" href="#" class="undo"><i class="icon-remove"></i>Ta bort</a>
-        </div>
-    </script>
+    
 
     <script id="specificItemsTemplate" type="text/html">
         <div>
@@ -69,10 +52,7 @@
             {
                 <text>teamrynkebyse.sessionbuilder.addSession('@session.FromTime.ToString()', '@session.ToTime.ToString()', @session.VolunteersNeeded);</text>
             }
-            @foreach (var item in Model.Activity.Items)
-            {
-                <text>teamrynkebyse.itemsbuilder.addItem('@item.Name', @item.Quantity);</text>
-            }
+           
         });
     </script>
 }
@@ -103,11 +83,8 @@
             @Html.LabelFor(m => m.Activity.Name, "Titel")
             @Html.TextAreaFor(m => m.Activity.Name)
 
-            @Html.LabelFor(m => m.Activity.Summary, "Publik Beskrivning")
-            @Html.TextAreaFor(m => m.Activity.Summary)
-
-
-            @Html.LabelFor(m => m.Activity.Description, "Intern Beskrivning")
+           
+            @Html.LabelFor(m => m.Activity.Description, "Information")
             @Html.TextAreaFor(m => m.Activity.Description)
 
 
@@ -192,31 +169,8 @@
                     </div>
                 </div>
             </div>
-            <input type="submit" value="Uppdatera" class="btn" />
+
             <a href="#" class="btn" data-wizard-link="pageOne">Föregående</a>
-            <a href="#" class="btn pull-right btn-primary" data-wizard-link="pageThree">Nästa</a>
-        </div>
-
-                        /***** PAGE THREE ******************** */
-        <div data-wizard-page="pageThree">
-            <div class="control-group">
-                <label class="control-label">Saker att ha med</label>
-                <div class="controls">
-                    <div id="itemsContainer">
-
-                        <div>
-                            <p>Sak</p>
-                            <p>Antal</p>
-                        </div>
-
-                    </div>
-
-                    <a id="addMoreItems" href="#">Lägg till sak</a>
-                    <a id="addSpecificItem" href="#">Lägg till aktivitets-specifik sak</a>
-                </div>
-            </div>
-
-            <a href="#" class="btn" data-wizard-link="pageTwo">Föregående</a>
             <input type="submit" value="Uppdatera" class="btn btn-success pull-right" />
         </div>
     }
