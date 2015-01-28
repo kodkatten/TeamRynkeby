@@ -233,6 +233,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\fonts\museo_slab_500-webfont.svg" />
     <Content Include="Content\images\expo.png" />
     <Content Include="Content\styles\bootstrap-responsive.css" />
@@ -244,11 +248,10 @@
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\styles\landingpage-tablet.css" />
     <Content Include="Content\styles\landingpage-phone.css" />
-    <Content Include="Content\images\glyphicons-halflings-white.png" />
-    <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Content\styles\landingpage.css" />
     <Content Include="Content\styles\pickadate.css" />
     <Content Include="Content\styles\site.css" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap-timepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -260,8 +263,12 @@
     <Content Include="Content\fonts\museo_slab_500-webfont.eot" />
     <Content Include="Content\fonts\museo_slab_500-webfont.ttf" />
     <Content Include="Content\fonts\museo_slab_500-webfont.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\admin.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\htmlDecode.js" />
     <Content Include="Scripts\teamrynkebyse.itemsbuilder.js" />
     <Content Include="Scripts\createevent.js" />
