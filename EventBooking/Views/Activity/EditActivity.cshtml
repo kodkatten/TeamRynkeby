@@ -32,20 +32,6 @@
         </div>
     </script>  
 
-    
-
-    <script id="specificItemsTemplate" type="text/html">
-        <div>
-            <div>
-                <input name="items[{{index}}].name" type="text" placeholder="Ange matriel" value="{{name}}" />
-            </div>
-
-            <div>
-                <input name="items[{{index}}].quantity" type="number" class="input-mini" value="{{quantity}}" min="1" />
-            </div>
-            <a id="removeItem_{{index}}" href="#" class="undo"><i class="icon-remove"></i>Ta bort</a>
-        </div>
-    </script>
     <script type="text/javascript">
         $(function() {
             @foreach (var session in Model.Activity.Sessions.Skip(1))
@@ -68,10 +54,6 @@
 
             <li data-wizard-header="pageTwo">
                 <a href="#" data-wizard-link="pageTwo">2. Datum/Tid </a>
-            </li>
-
-            <li data-wizard-header="pageThree">
-                <a href="#" data-wizard-link="pageThree">3. Materiel</a>
             </li>
         </ul>
 
