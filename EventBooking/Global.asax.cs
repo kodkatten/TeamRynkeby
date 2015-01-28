@@ -11,7 +11,6 @@ using CoderMike.Autofac.EasySettings;
 using EventBooking.Controllers.ViewModels;
 using EventBooking.Data;
 using EventBooking.Filters;
-using EventBooking.Security;
 
 namespace EventBooking
 {
